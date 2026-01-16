@@ -1,59 +1,115 @@
-/**
- * DỮ LIỆU TƯ VẤN TUYỂN SINH - CÔNG AN TỈNH QUẢNG TRỊ
- * Cập nhật theo Thông tư 62/2023 (Sức khỏe), 50/2021 (Tuyển sinh) và 99/2025 (Sơ tuyển)
- */
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tư vấn Tuyển sinh Công an Quảng Trị</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; margin: 0; padding: 0; }
+        .chat-container { height: 100vh; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; background: white; }
+        .message-bubble { max-width: 85%; animation: slideIn 0.2s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="chat-container shadow-xl border-x border-gray-200">
+        <!-- Header -->
+        <div class="bg-[#0b3c6d] p-4 flex items-center gap-4 text-white shadow-md">
+            <div class="bg-white p-2 rounded-full w-12 h-12 flex items-center justify-center shadow-inner">
+                <i class="fas fa-user-shield text-[#0b3c6d] text-2xl"></i>
+            </div>
+            <div class="flex-1">
+                <h1 class="font-bold text-sm uppercase tracking-tight">Tuyển sinh CAND Quảng Trị 2026</h1>
+                <p class="text-blue-100 text-[10px]">Đại úy Lê Hoàng Trung - Phòng PX01</p>
+            </div>
+            <div class="bg-green-500/20 px-2 py-1 rounded-full border border-green-500/30 flex items-center gap-1">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-[9px] font-bold text-green-300">ONLINE</span>
+            </div>
+        </div>
 
-const chatData = [
-    {
-        keywords: ['sức khỏe', 'chiều cao', 'cân nặng', 'bmi', '62/2023', 'thông tư 62', 'xăm', 'vết xăm', 'xăm trổ', 'phun xăm', 'thẩm mỹ'],
-        answer: `<b>Tiêu chuẩn sức khỏe & Hình dáng bên ngoài (TT 62/2023/TT-BCA):</b><br>
-        - <b>Chiều cao:</b> Nam từ 1m64 đến 1m95; Nữ từ 1m58 đến 1m80.<br>
-        - <b>Vùng ưu tiên (Dân tộc, biên giới):</b> Nam từ 1m62; Nữ từ 1m56.<br>
-        - <b>Chỉ số BMI:</b> Từ 18.5 đến dưới 30.<br>
-        - <b>Quy định về XĂM TRỔ:</b> Không tuyển các trường hợp có vết trổ, vết xăm trên da (kể cả phun xăm thẩm mỹ lông mày, môi... nếu không tự nhiên, gây phản cảm hoặc không đúng quy định của lực lượng vũ trang).<br>
-        - <b>Yêu cầu khác:</b> Thân hình cân đối, không dị hình, dị dạng, không mắc bệnh truyền nhiễm.`
-    },
-    {
-        keywords: ['mắt', 'cận thị', 'viễn thị', 'thị lực', 'đeo kính', 'loạn thị', 'mù màu'],
-        answer: `<b>Quy định về thị lực (TT 62/2023):</b><br>
-        - Thị lực không kính mỗi mắt phải đạt 9-10/10, tổng thị lực 2 mắt đạt 18-20/10.<br>
-        - <b>Nếu cận/viễn thị:</b> Không quá 3 diop mỗi mắt.<br>
-        - <b>Kiểm tra qua kính:</b> Mắt bị tật phải đạt 9-10/10 và tổng 2 mắt đạt từ 19/10 trở lên.<br>
-        - <b>Lưu ý:</b> Không tuyển thí sinh bị loạn thị hoặc mù màu.`
-    },
-    {
-        keywords: ['độ tuổi', 'tuổi', 'bao nhiêu tuổi', 'sinh năm'],
-        answer: `<b>Quy định về độ tuổi (TT 50/2021):</b><br>
-        - <b>Học sinh phổ thông:</b> Không quá 22 tuổi tính đến năm dự tuyển.<br>
-        - <b>Người dân tộc thiểu số:</b> Không quá 25 tuổi.<br>
-        - <b>Chiến sĩ nghĩa vụ:</b> Theo quy định về thời hạn phục vụ tại ngũ.`
-    },
-    {
-        keywords: ['học lực', 'hạnh kiểm', 'học bạ', 'điểm', '7.0', 'khá', 'giỏi'],
-        answer: `<b>Tiêu chuẩn văn hóa & Hạnh kiểm:</b><br>
-        - <b>Học lực:</b> Xếp loại <b>Khá</b> trở lên trong cả 3 năm THPT.<br>
-        - <b>Điểm môn tổ hợp:</b> Từng môn thuộc tổ hợp xét tuyển phải đạt từ <b>7.0 điểm</b> trở lên trong từng năm học.<br>
-        - <b>Hạnh kiểm:</b> Đạt loại Khá hoặc Tốt trong cả 3 năm học.`
-    },
-    {
-        keywords: ['sơ tuyển', 'nộp hồ sơ', 'công an cấp xã', '99/2025', 'địa điểm', 'đăng ký'],
-        answer: `<b>Cập nhật địa điểm sơ tuyển (TT 99/2025/TT-BCA):</b><br>
-        - <b>Nơi tiếp nhận:</b> Thí sinh đăng ký và sơ tuyển bước đầu tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú (không cần lên Công an huyện như trước).<br>
-        - <b>Khám sức khỏe:</b> Việc khám chuyên khoa sâu sẽ thực hiện tại bệnh viện đa khoa cấp tỉnh.`
-    },
-    {
-        keywords: ['phương thức', 'xét tuyển', 'ielts', 'tuyển thẳng', 'đánh giá năng lực'],
-        answer: `<b>Các phương thức tuyển sinh chính:</b><br>
-        - <b>PT1:</b> Tuyển thẳng theo quy chế Bộ GD&ĐT.<br>
-        - <b>PT2:</b> Xét chứng chỉ ngoại ngữ quốc tế (IELTS từ 7.5, HSK 5...) kết hợp học bạ.<br>
-        - <b>PT3:</b> Xét điểm thi tốt nghiệp THPT kết hợp bài thi Đánh giá năng lực của Bộ Công an.`
-    },
-    {
-        keywords: ['địa chỉ', 'liên hệ', 'quảng trị', 'lê hoàng trung', 'tccb', 'px01'],
-        answer: `<b>Thông tin liên hệ Công an tỉnh Quảng Trị:</b><br>
-        - <b>Đơn vị:</b> Phòng Tổ chức cán bộ (Phòng PX01).<br>
-        - <b>Địa chỉ:</b> Số 06 Nguyễn Văn Linh, phường Đồng Hới, Quảng Trị.<br>
-        - <b>Cán bộ trực tiếp:</b> Đại úy Lê Hoàng Trung.<br>
-        - <b>Lưu ý:</b> Anh/Chị nên theo dõi thông báo tại Công an xã/phường/đặc khu nơi cư trú để nắm lịch sơ tuyển.`
-    }
-];
+        <!-- Chat Area -->
+        <div id="chat-box" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
+            <div class="flex justify-start">
+                <div class="message-bubble bg-white border border-blue-100 p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-800">
+                    <p class="font-bold text-[#0b3c6d] mb-2 text-base">Xin chào!</p>
+                    Đây là hệ thống hỗ trợ tự động của <b>Phòng Tổ chức cán bộ - Công an tỉnh Quảng Trị</b>.<br><br>
+                    Nội dung đã cập nhật đầy đủ các quy định mới nhất về <b>Xăm trổ, Chiều cao (TT 62)</b> và <b>Sơ tuyển tại Xã (TT 99)</b>.<br><br>
+                    Anh/Chị cần hỗ trợ thông tin gì ạ?
+                </div>
+            </div>
+        </div>
+
+        <!-- Suggestions -->
+        <div class="px-2 py-3 flex gap-2 overflow-x-auto bg-white border-t border-gray-100">
+            <button onclick="ask('Xăm trổ')" class="whitespace-nowrap bg-blue-50 border border-blue-200 text-[#0b3c6d] px-4 py-2 rounded-full text-xs font-semibold">Vết xăm/Xăm trổ</button>
+            <button onclick="ask('Sức khỏe')" class="whitespace-nowrap bg-blue-50 border border-blue-200 text-[#0b3c6d] px-4 py-2 rounded-full text-xs font-semibold">Chiều cao/BMI</button>
+            <button onclick="ask('Sơ tuyển')" class="whitespace-nowrap bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-full text-xs font-bold">Nơi sơ tuyển (Xã)</button>
+        </div>
+
+        <!-- Input -->
+        <div class="p-4 bg-white border-t border-gray-200">
+            <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-1 border border-gray-200 focus-within:border-[#0b3c6d] focus-within:bg-white transition-all">
+                <input type="text" id="userInput" class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2" placeholder="Hỏi về chiều cao, mắt, xăm trổ..." onkeypress="if(event.key === 'Enter') handleSend()">
+                <button onclick="handleSend()" class="text-[#0b3c6d] p-2 hover:scale-110 transition-transform">
+                    <i class="fas fa-paper-plane text-xl"></i>
+                </button>
+            </div>
+            <p class="text-[9px] text-gray-400 mt-2 text-center font-bold uppercase tracking-widest">Dữ liệu PX01 - CA Quảng Trị</p>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            {
+                keys: ['xăm', 'vết trổ', 'thẩm mỹ', 'phun xăm'],
+                ans: `<b>Quy định về XĂM TRỔ (TT 62/2023):</b><br>- Không tuyển thí sinh có các vết trổ, vết xăm trên da.<br>- Kể cả phun xăm thẩm mỹ (lông mày, môi...) nếu không tự nhiên, gây phản cảm hoặc không đúng quy định của lực lượng vũ trang đều không đạt tiêu chuẩn.`
+            },
+            {
+                keys: ['sức khỏe', 'chiều cao', 'bmi', 'cân nặng', '62/2023'],
+                ans: `<b>Tiêu chuẩn sức khỏe (TT 62/2023):</b><br>- <b>Chiều cao:</b> Nam từ 1m64; Nữ từ 1m58 (Vùng ưu tiên: Nam 1m62; Nữ 1m56).<br>- <b>BMI:</b> Từ 18.5 đến dưới 30.<br>- Thân hình cân đối, không dị hình dị dạng.`
+            },
+            {
+                keys: ['mắt', 'cận thị', 'thị lực', 'kính'],
+                ans: `<b>Quy định về Mắt:</b><br>- Thị lực không kính mỗi mắt đạt 9-10/10, tổng 2 mắt đạt 18-20/10.<br>- Nếu bị cận/viễn thị: Không quá 3 diop mỗi mắt.<br>- Sau khi đeo kính kiểm tra phải đạt 19/10 trở lên.`
+            },
+            {
+                keys: ['sơ tuyển', 'nộp hồ sơ', 'xã', '99/2025'],
+                ans: `<b>Nơi nộp hồ sơ (TT 99/2025):</b><br>Thí sinh đăng ký và sơ tuyển bước đầu tại <b>CÔNG AN CẤP XÃ</b> (Xã, Phường, Thị trấn) nơi thường trú.`
+            },
+            {
+                keys: ['địa chỉ', 'liên hệ', 'trung'],
+                ans: `<b>Thông tin liên hệ:</b><br>- Phòng Tổ chức cán bộ (PX01) - CA tỉnh Quảng Trị.<br>- Địa chỉ: <b>Số 06 Nguyễn Văn Linh</b>, P. Đồng Hới.<br>- Cán bộ: Đại úy Lê Hoàng Trung.`
+            }
+        ];
+
+        const chatBox = document.getElementById('chat-box');
+        const input = document.getElementById('userInput');
+
+        function addMsg(txt, type) {
+            const d = document.createElement('div');
+            d.className = `flex ${type==='u'?'justify-end':'justify-start'}`;
+            d.innerHTML = `<div class="message-bubble p-3 rounded-2xl text-sm shadow-sm ${type==='u'?'bg-[#0b3c6d] text-white rounded-tr-none':'bg-white border border-blue-100 text-gray-800 rounded-tl-none'}">${txt}</div>`;
+            chatBox.appendChild(d);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function handleSend() {
+            const val = input.value.trim();
+            if(!val) return;
+            addMsg(val, 'u');
+            input.value = '';
+            setTimeout(() => {
+                const low = val.toLowerCase();
+                const match = data.find(i => i.keys.some(k => low.includes(k)));
+                addMsg(match ? match.ans : "Tôi chưa có thông tin này. Vui lòng liên hệ <b>Đại úy Lê Hoàng Trung</b> tại 06 Nguyễn Văn Linh để được hỗ trợ.", 'b');
+            }, 500);
+        }
+
+        function ask(t) { input.value = t; handleSend(); }
+    </script>
+</body>
+</html>
