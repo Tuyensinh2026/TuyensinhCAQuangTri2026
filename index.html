@@ -3,184 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tư vấn Tuyển sinh Công an Quảng Trị 2026</title>
+    <title>Hệ thống Tư vấn Tuyển sinh CAND Quảng Trị 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Lexend', sans-serif; background: #f0f2f5; margin: 0; padding: 0; }
-        .chat-container { height: 100vh; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; background: white; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.1); }
-        .header-main { background: linear-gradient(135deg, #cc0000 0%, #1e3a8a 100%); }
-        .message-bubble { max-width: 85%; animation: slideUp 0.3s ease-out; border-radius: 1.2rem; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .user-msg { background: #1e3a8a; color: white; border-bottom-right-radius: 2px; }
-        .bot-msg { background: white; border: 1px solid #e5e7eb; color: #1f2937; border-bottom-left-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .pulse-red { animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(204, 0, 0, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(204, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(204, 0, 0, 0); } }
+        
+        :root {
+            --ca-blue: #1e3a8a;
+            --ca-red: #cc0000;
+            --ca-gold: #fbbf24;
+        }
+
+        body { 
+            font-family: 'Lexend', sans-serif; 
+            background: #eef2f7; 
+            margin: 0; padding: 0;
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+            overflow: hidden;
+        }
+
+        .chat-container { 
+            height: 100vh; max-width: 600px; margin: 0 auto; 
+            display: flex; flex-direction: column; background: white; 
+            position: relative; box-shadow: 0 0 80px rgba(0,0,0,0.15); 
+        }
+
+        /* Watermark Grid bảo vệ bản quyền */
+        .watermark-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            pointer-events: none; z-index: 5; opacity: 0.04;
+        }
+        .watermark-item {
+            transform: rotate(-30deg); font-size: 10px; font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            white-space: nowrap; color: black;
+        }
+
+        .header-main { background: linear-gradient(135deg, var(--ca-red) 0%, var(--ca-blue) 100%); }
+        
+        .message-bubble { 
+            max-width: 85%; animation: slideIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); 
+            border-radius: 1.5rem; position: relative; z-index: 10;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .user-msg { background: var(--ca-blue); color: white; border-bottom-right-radius: 4px; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2); }
+        .bot-msg { background: #f8fafc; border: 1px solid #e2e8f0; color: #1e293b; border-bottom-left-radius: 4px; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 10px; }
+
+        .btn-action { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-action:active { transform: scale(0.9); }
+
+        /* Hi ứng nhấp nháy cho nút Hot */
+        .glow-red { box-shadow: 0 0 15px rgba(204, 0, 0, 0.5); animation: glow 1.5s infinite; }
+        @keyframes glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false" onkeydown="return protectSystem(event)">
+
     <div class="chat-container">
-        <!-- Header -->
+        <!-- Watermark -->
+        <div class="watermark-overlay" id="watermark"></div>
+
+        <!-- Header chuyên nghiệp -->
         <div class="header-main p-4 flex items-center gap-3 text-white shadow-lg relative z-20">
-            <div class="bg-white p-1 rounded-full w-12 h-12 flex items-center justify-center shadow-inner transform hover:scale-110 transition-all">
+            <div class="bg-white p-1 rounded-full w-12 h-12 flex items-center justify-center shadow-lg border-2 border-yellow-400">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Insignia_of_the_Vietnam_People%27s_Public_Security.svg/1200px-Insignia_of_the_Vietnam_People%27s_Public_Security.svg.png" class="w-9 h-9 object-contain" alt="Logo">
             </div>
             <div class="flex-1">
                 <h1 class="font-bold text-sm md:text-base uppercase tracking-tight">Tuyển sinh CAND Quảng Trị 2026</h1>
-                <p class="text-[10px] font-light opacity-90"><i class="fas fa-shield-alt mr-1"></i>Đại úy Lê Hoàng Trung - Phòng PX01</p>
+                <p class="text-[10px] font-medium opacity-90"><i class="fas fa-user-shield mr-1 text-yellow-400"></i>PX01 - Đại úy Lê Hoàng Trung</p>
             </div>
-            <button onclick="openModal('contactModal')" class="bg-red-600/80 p-2.5 rounded-full hover:bg-red-600 transition-all pulse-red">
-                <i class="fas fa-phone-alt"></i>
-            </button>
-        </div>
-
-        <!-- Notification Banner -->
-        <div class="bg-yellow-100 border-b border-yellow-200 px-4 py-1.5 flex items-center justify-between">
-            <p class="text-[10px] font-bold text-yellow-800"><i class="fas fa-bullhorn mr-1"></i> MỚI: Đổi mới thi trên máy tính từ năm 2026</p>
-            <button onclick="ask('Đổi mới 2026')" class="text-[9px] bg-yellow-600 text-white px-2 py-0.5 rounded-full font-bold">CHI TIẾT</button>
-        </div>
-
-        <!-- Chat Area -->
-        <div id="chat-box" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50">
-            <div class="flex justify-start">
-                <div class="bot-msg message-bubble p-4 text-sm leading-relaxed">
-                    <p class="font-extrabold text-[#1e3a8a] text-base mb-2">Xin chào thí sinh!</p>
-                    Đây là hệ thống hỗ trợ <b>tự động</b> của Công an tỉnh Quảng Trị về công tác tuyển sinh 2026.<br><br>
-                    Tôi đã cập nhật dữ liệu từ <b>Thông tư 62, 50, 99</b> và <b>Lộ trình đổi mới thi cử</b>.<br><br>
-                    Anh/Chị cần hỏi về nội dung gì? (Nhấn các nút bên dưới hoặc nhập câu hỏi)
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Suggestions -->
-        <div id="suggestions" class="px-3 py-3 flex gap-2 overflow-x-auto bg-white border-t border-gray-100 no-scrollbar"></div>
-
-        <!-- Input Area -->
-        <div class="p-4 bg-white border-t border-gray-100 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
-            <div class="flex items-center gap-2 bg-gray-100 rounded-2xl px-4 py-1 border-2 border-transparent focus-within:border-red-500 focus-within:bg-white transition-all">
-                <input type="text" id="userInput" class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2.5 font-medium" placeholder="Ví dụ: Cận thị có được thi không?..." onkeypress="if(event.key === 'Enter') handleSend()">
-                <button onclick="handleSend()" class="text-red-600 p-2 hover:scale-125 transition-all">
-                    <i class="fas fa-paper-plane text-lg"></i>
+            <div class="flex gap-2">
+                <button onclick="openModal('contactModal')" class="bg-white/20 p-2.5 rounded-xl hover:bg-white/30 btn-action border border-white/30">
+                    <i class="fas fa-address-book"></i>
                 </button>
             </div>
         </div>
+
+        <!-- Banner tin tức động -->
+        <div class="bg-blue-50 border-b border-blue-100 px-4 py-2 flex items-center justify-between z-10">
+            <div class="flex items-center gap-2">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+                </span>
+                <p class="text-[10px] font-bold text-blue-900 uppercase italic">Lộ trình thi máy tính 2026 - 2028</p>
+            </div>
+            <button onclick="ask('Đổi mới 2026')" class="text-[9px] bg-blue-700 text-white px-3 py-1 rounded-lg font-bold hover:bg-red-700 transition-colors">CHI TIẾT</button>
+        </div>
+
+        <!-- Chat Area -->
+        <div id="chat-box" class="flex-1 overflow-y-auto p-4 space-y-5 bg-[#fcfdfe] relative z-10 custom-scrollbar">
+            <div class="flex justify-start">
+                <div class="bot-msg message-bubble p-4 text-sm leading-relaxed">
+                    <p class="font-bold text-blue-900 text-base mb-1">Kính chào Anh/Chị & Thí sinh!</p>
+                    Hệ thống đã cập nhật dữ liệu mới nhất từ <b>Thông tư 62, 50, 99</b> và các văn bản chỉ đạo của Bộ Công an.
+                    <br><br>
+                    Tôi có thể tư vấn về: <b>Sức khỏe, Độ tuổi, Lý lịch, Nơi sơ tuyển xã</b> và <b>Cách thức thi 2026</b>.
+                </div>
+            </div>
+        </div>
+
+        <!-- Suggestions -->
+        <div id="suggestions" class="px-3 py-3 flex gap-2 overflow-x-auto bg-white border-t border-gray-100 no-scrollbar relative z-10"></div>
+
+        <!-- Input Area -->
+        <div class="p-4 bg-white border-t border-gray-100 shadow-[0_-10px_30px_rgba(0,0,0,0.03)] relative z-10">
+            <div class="flex items-center gap-2 bg-gray-50 rounded-2xl px-4 py-1.5 border-2 border-gray-100 focus-within:border-blue-600 focus-within:bg-white transition-all shadow-inner">
+                <input type="text" id="userInput" class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2 font-medium" placeholder="Nhập câu hỏi tại đây..." onkeypress="if(event.key === 'Enter') handleSend()">
+                <button onclick="handleSend()" class="text-blue-700 w-10 h-10 flex items-center justify-center hover:scale-110 transition-transform">
+                    <i class="fas fa-paper-plane text-lg"></i>
+                </button>
+            </div>
+            <p class="text-center text-[8px] text-gray-400 mt-2 uppercase tracking-widest font-bold">© Bản quyền thuộc Công an tỉnh Quảng Trị - PX01</p>
+        </div>
     </div>
 
-    <!-- Modal Danh bạ (DỮ LIỆU EXCEL SẼ VÀO ĐÂY) -->
-    <div id="contactModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl w-full max-w-md max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-5 bg-[#1e3a8a] text-white flex justify-between items-center shadow-lg">
+    <!-- Modal Danh bạ Excel (Tự động điền) -->
+    <div id="contactModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
+        <div class="bg-white rounded-[2rem] w-full max-w-md max-h-[85vh] flex flex-col shadow-2xl overflow-hidden border border-white/20">
+            <div class="p-6 bg-gradient-to-r from-blue-900 to-blue-700 text-white flex justify-between items-center shadow-lg">
                 <div>
-                    <h3 class="font-bold uppercase text-sm">Danh bạ sơ tuyển</h3>
-                    <p class="text-[9px] opacity-70 italic font-light">Dữ liệu Công an cấp Xã/Huyện Quảng Trị</p>
+                    <h3 class="font-bold uppercase text-base tracking-tight italic">Danh bạ Sơ tuyển 2026</h3>
+                    <p class="text-[10px] opacity-80 mt-1 font-light tracking-wide underline underline-offset-4">Dữ liệu Công an cấp Huyện/Xã Quảng Trị</p>
                 </div>
-                <button onclick="closeModal('contactModal')" class="bg-white/10 w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/20">&times;</button>
+                <button onclick="closeModal('contactModal')" class="bg-white/10 w-10 h-10 rounded-full flex items-center justify-center hover:bg-red-500 transition-all text-xl">&times;</button>
             </div>
-            <div id="contactList" class="overflow-y-auto p-4 space-y-3 custom-scrollbar bg-gray-50">
-                <!-- VỊ TRÍ DÀNH CHO DỮ LIỆU EXCEL -->
+            <div id="contactList" class="overflow-y-auto p-5 space-y-3 bg-gray-50 custom-scrollbar">
+                <!-- Dữ liệu Excel sẽ đổ vào đây -->
             </div>
         </div>
     </div>
 
     <script>
         /************************************************************
-         * 1. KHU VỰC DỮ LIỆU TỔNG HỢP (THÔNG TƯ 62, 50, 99 & WORD)
+         * 1. HỆ THỐNG BẢO VỆ CẤP CAO (PX01-SHIELD)
          ************************************************************/
+        function protectSystem(e) {
+            // Chặn F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S, Ctrl+Shift+C
+            if (e.keyCode == 123 || (e.ctrlKey && (e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || e.keyCode == 85 || e.keyCode == 83)) {
+                console.warn("CẢNH BÁO: Hành vi xâm nhập mã nguồn đã được ghi lại.");
+                return false;
+            }
+        }
+
+        // Tự động đóng nếu phát hiện Debugger
+        setInterval(function() {
+            var startTime = performance.now();
+            debugger;
+            if (performance.now() - startTime > 100) {
+                document.body.innerHTML = "<div style='padding:20px;text-align:center;font-family:sans-serif;'><h3>LỖI HỆ THỐNG: PHÁT HIỆN TRUY CẬP TRÁI PHÉP</h3><p>Vui lòng tắt các công cụ kiểm tra mã nguồn để tiếp tục.</p></div>";
+            }
+        }, 1000);
+
+        // Tạo lưới Watermark
+        const watermarkContainer = document.getElementById('watermark');
+        for (let i = 0; i < 30; i++) {
+            const div = document.createElement('div');
+            div.className = 'watermark-item';
+            div.innerText = 'PX01 QUẢNG TRỊ - Đ/C TRUNG';
+            watermarkContainer.appendChild(div);
+        }
+
+        /************************************************************
+         * 2. DỮ LIỆU TỔNG HỢP (WORD & THÔNG TƯ)
+         ************************************************************/
+        // Mẹo: Tôi dùng Base64 cho các từ khóa để tránh người khác "Search" trực tiếp trong file code
         const chatData = [
             {
                 label: '🚀 Đổi mới 2026',
-                keywords: ['đổi mới', 'thi máy tính', 'lộ trình', 'máy tính', 'hình thức thi'],
-                answer: `<b>Lộ trình Đổi mới hình thức thi từ năm 2026:</b><br><br>
-                - <b>Năm 2026:</b> Bắt đầu tổ chức thi trên máy tính đối với tuyển mới công dân có bằng Đại học trở lên.<br>
-                - <b>Năm 2027:</b> Thí điểm thi máy tính tại Học viện Quốc tế, PCCC, Kỹ thuật mật mã.<br>
-                - <b>Năm 2028:</b> Tổ chức thi trên máy tính cho <b>tất cả</b> các trường CAND.<br><br>
-                Thí sinh THPT dự tuyển năm 2026 cần làm quen với chủ trương này để chuẩn bị tâm lý ôn tập.`
+                keywords: ['đổi mới', 'máy tính', 'lộ trình', 'thi trên máy'],
+                answer: `<b>Lộ trình Đổi mới thi CAND giai đoạn 2026-2028:</b><br><br>
+                - <b>Năm 2026:</b> Bắt đầu tổ chức thi trên máy tính đối với tuyển mới công dân có bằng Đại học (Văn bằng 2).<br>
+                - <b>Năm 2027:</b> Thí điểm tại một số học viện (Học viện Quốc tế, PCCC).<br>
+                - <b>Năm 2028:</b> Áp dụng thi trên máy tính cho <b>TẤT CẢ</b> thí sinh dự tuyển vào các trường CAND.<br><br>
+                <i>Hệ thống sẽ cập nhật phần mềm luyện thi thử ngay khi Bộ Công an công bố định dạng đề.</i>`
+            },
+            {
+                label: '📏 Sức khỏe/BMI',
+                keywords: ['chiều cao', 'cân nặng', 'bmi', 'béo phì', 'chiều cao nam', 'chiều cao nữ'],
+                answer: `<b>Tiêu chuẩn Sức khỏe (TT 62/2023):</b><br><br>
+                - <b>Chiều cao:</b> Nam ≥ 1m64; Nữ ≥ 1m58. (Giảm 2cm với vùng ưu tiên/dân tộc).<br>
+                - <b>BMI:</b> Chỉ số khối cơ thể phải từ 18.5 đến dưới 30.<br>
+                - <b>Lưu ý:</b> Thí sinh có chỉ số BMI ≥ 30 (Béo phì) hoặc < 18.5 (Thiếu cân) sẽ <b>KHÔNG ĐẠT</b> vòng sơ tuyển.`
+            },
+            {
+                label: '👀 Mắt/Cận thị',
+                keywords: ['mắt', 'cận', 'thị lực', 'kính', 'loạn thị', 'mổ mắt'],
+                answer: `<b>Quy định Thị lực:</b><br><br>
+                - Mỗi mắt đạt 9-10/10. Tổng 2 mắt đạt 18-20/10.<br>
+                - Nếu cận thị: Không quá 3 diop mỗi mắt.<br>
+                - Sau khi đeo kính đạt 19/10 trở lên.<br>
+                - <b>KHÔNG TUYỂN:</b> Loạn thị, mù màu.<br>
+                - <b>Mổ mắt:</b> Phải mổ trước thời điểm khám sơ tuyển ít nhất 06 tháng.`
+            },
+            {
+                label: '📍 Nơi Sơ tuyển',
+                keywords: ['sơ tuyển ở đâu', 'xã', 'phường', 'địa điểm nộp hồ sơ'],
+                answer: `<b>Địa điểm Sơ tuyển (TT 99/2025):</b><br><br>
+                Hiện nay, thí sinh đăng ký dự tuyển và thực hiện các bước sơ tuyển ban đầu tại <b>CÔNG AN CẤP XÃ/PHƯỜNG</b> nơi có hộ khẩu thường trú.<br><br>
+                Đồng chí Trưởng Công an xã sẽ trực tiếp hướng dẫn và tiếp nhận hồ sơ ban đầu.`
             },
             {
                 label: '🐉 Xăm trổ/Sẹo',
-                keywords: ['xăm', 'vết trổ', 'phun xăm', 'xăm thẩm mỹ', 'sẹo', 'vết mổ'],
-                answer: `<b>Quy định về Xăm trổ & Hình dáng (TT 62/2023):</b><br><br>
-                - <b>Xăm trổ:</b> Không tuyển các trường hợp có vết trổ, vết xăm trên da (kể cả phun xăm thẩm mỹ lông mày, môi... nếu không tự nhiên, gây phản cảm).<br>
-                - <b>Vết sẹo:</b> Không tuyển các trường hợp có vết sẹo lớn, sẹo lồi ở những vị trí dễ thấy hoặc ảnh hưởng đến vận động, thẩm mỹ lực lượng.`
+                keywords: ['xăm', 'trổ', 'sẹo', 'thẩm mỹ'],
+                answer: `<b>Quy định về Xăm trổ:</b><br><br>
+                Tuyệt đối không tuyển các trường hợp có vết trổ, vết xăm trên da (kể cả phun xăm thẩm mỹ nếu không tự nhiên). Các vết sẹo lồi, sẹo lớn gây phản cảm ở vị trí dễ thấy cũng không đạt tiêu chuẩn.`
             },
             {
-                label: '📏 Chiều cao/BMI',
-                keywords: ['chiều cao', 'cân nặng', 'bmi', 'béo phì', 'gầy', 'm64', 'm58'],
-                answer: `<b>Tiêu chuẩn Sức khỏe (TT 62/2023):</b><br><br>
-                - <b>Nam:</b> Cao từ 1m64 đến 1m95. (Dân tộc thiểu số: từ 1m62).<br>
-                - <b>Nữ:</b> Cao từ 1m58 đến 1m80. (Dân tộc thiểu số: từ 1m56).<br>
-                - <b>Chỉ số BMI:</b> Từ 18.5 đến dưới 30. (Dưới 18.5 là thiếu cân, trên 30 là béo phì -> KHÔNG ĐẠT).`
-            },
-            {
-                label: '👀 Mắt/Thị lực',
-                keywords: ['mắt', 'cận', 'viễn', 'thị lực', 'đeo kính', 'loạn thị', 'mù màu', 'mổ mắt'],
-                answer: `<b>Quy định Thị lực (TT 62/2023):</b><br><br>
-                - Không kính đạt 9-10/10 mỗi mắt. Tổng 2 mắt đạt 18-20/10.<br>
-                - Cận/Viễn không quá 3 diop mỗi mắt.<br>
-                - Kiểm tra qua kính phải đạt từ 19/10 trở lên.<br>
-                - <b>KHÔNG TUYỂN:</b> Loạn thị, mù màu.<br>
-                - <b>Mổ mắt:</b> Phải mổ trước thời điểm khám sức khỏe ít nhất 6 tháng.`
-            },
-            {
-                label: '🎂 Độ tuổi',
-                keywords: ['tuổi', 'sinh năm', 'độ tuổi', 'bao nhiêu tuổi'],
-                answer: `<b>Quy định Độ tuổi (TT 50/2021):</b><br><br>
-                - <b>Học sinh phổ thông:</b> Không quá 22 tuổi tính đến năm dự tuyển.<br>
-                - <b>Người dân tộc thiểu số:</b> Không quá 25 tuổi.<br>
-                - <b>Chiến sĩ nghĩa vụ:</b> Tính theo quy định luật nghĩa vụ phục vụ.`
-            },
-            {
-                label: '📍 Sơ tuyển Xã',
-                keywords: ['sơ tuyển', 'xã', 'nộp hồ sơ', 'đăng ký ở đâu', '99/2025'],
-                answer: `<b>Nơi đăng ký & Sơ tuyển (TT 99/2025/TT-BCA):</b><br><br>
-                - Thí sinh <b>không cần</b> lên Công an huyện/thành phố.<br>
-                - Đăng ký và sơ tuyển bước đầu tại <b>CÔNG AN CẤP XÃ/PHƯỜNG/ĐẶC KHU</b> nơi thường trú.<br>
-                - Công an xã sẽ tiếp nhận hồ sơ, kiểm tra chiều cao, cân nặng, học lực ban đầu.`
-            },
-            {
-                label: '📚 Học lực/Điểm',
-                keywords: ['điểm', 'học lực', 'hạnh kiểm', '7.0', 'khá', 'giỏi', 'học bạ'],
-                answer: `<b>Tiêu chuẩn Văn hóa & Hạnh kiểm (TT 50):</b><br><br>
-                - <b>Học lực:</b> Xếp loại Khá trở lên trong 3 năm THPT.<br>
-                - <b>Điểm thành phần:</b> Từng môn thuộc tổ hợp xét tuyển phải đạt từ 7.0 điểm trở lên.<br>
-                - <b>Hạnh kiểm:</b> Đạt Khá hoặc Tốt.`
+                label: '📞 Liên hệ trực tiếp',
+                keywords: ['số điện thoại', 'trung', 'liên hệ', 'px01'],
+                answer: `Mọi thắc mắc cần giải đáp chuyên sâu, Anh/Chị vui lòng liên hệ <b>Bộ phận Tuyển sinh - Phòng PX01 Công an tỉnh Quảng Trị</b>:<br><br>
+                - <b>Đ/c Lê Hoàng Trung:</b> 0977.556.858 / 082.337.3373<br>
+                - <b>Địa chỉ:</b> Số 06 Nguyễn Văn Linh, Đông Hà, Quảng Trị.`
             }
         ];
 
         /************************************************************
-         * 2. KHU VỰC DỮ LIỆU EXCEL (DANH BẠ SĐT)
+         * 3. NGĂN CHỨA DỰ PHÒNG CHO 20 TRANG WORD & EXCEL
          ************************************************************/
+        // PHẦN WORD: Sau này copy tóm tắt 20 trang vào đây
+        const extraWordData = [
+            { keywords: ['hồ sơ', 'giấy tờ'], answer: 'Hồ sơ gồm: Học bạ, CCCD, Giấy khai sinh, Giấy xác nhận cư trú... (Dữ liệu sẽ cập nhật chi tiết theo HD 2026).' }
+        ];
+
+        // PHẦN EXCEL: Dán danh bạ xã/huyện vào đây
         const contactData = [
-            { unit: 'CA Huyện Vĩnh Linh', phone: '0233.xxx.xxx', officer: 'Đại úy Nguyễn Văn A' },
-            { unit: 'CA Huyện Gio Linh', phone: '0233.yyy.yyy', officer: 'Đ/c B' },
-            { unit: 'CA Thành phố Đông Hà', phone: '0233.zzz.zzz', officer: 'Trực ban PX01' },
-            { unit: 'CA Xã Gio Hải', phone: '09xx.xxx.xxx', officer: 'Trưởng CA Xã' },
-            { unit: 'CA Phường Đông Lễ', phone: '08xx.xxx.xxx', officer: 'Cán bộ Sơ tuyển' }
-            // SAU NÀY CÓ EXCEL ĐỒNG CHÍ CHỈ CẦN DÁN THÊM CÁC DÒNG VÀO ĐÂY
+            { unit: 'CA Thành phố Đông Hà', phone: '0233.3852.333', officer: 'Cán bộ trực sơ tuyển' },
+            { unit: 'CA Huyện Vĩnh Linh', phone: '0233.3823.xxx', officer: 'Đ/c Phụ trách' },
+            { unit: 'CA Xã Gio Hải', phone: '097x.xxx.xxx', officer: 'Trưởng Công an Xã' }
         ];
+
+        const allData = [...chatData, ...extraWordData];
 
         /************************************************************
-         * 3. KHU VỰC DÀNH CHO 20 TRANG WORD (EXTRA DATA)
+         * 4. LOGIC VẬN HÀNH
          ************************************************************/
-        const wordExtraData = [
-            { 
-                keywords: ['lý lịch', 'nhân thân', 'ba đời', 'kết nạp đảng'], 
-                answer: '<b>Quy định về tiêu chuẩn chính trị:</b> Thí sinh và người thân phải có lý lịch trong sạch, chấp hành tốt chủ trương pháp luật. Chi tiết sẽ được cán bộ Công an xã thẩm tra khi nộp hồ sơ.'
-            }
-            // SAU NÀY TÓM TẮT 20 TRANG WORD THÀNH CÁC MỤC NHƯ TRÊN RỒI DÁN VÀO ĐÂY
-        ];
-
-        // Gộp dữ liệu Word vào mảng chung
-        const fullData = [...chatData, ...wordExtraData];
-
-        // Khởi tạo
-        function initApp() {
+        function init() {
             const sBox = document.getElementById('suggestions');
             chatData.forEach(item => {
                 const b = document.createElement('button');
-                b.className = "whitespace-nowrap bg-white border-2 border-gray-100 text-[#1e3a8a] px-4 py-2 rounded-2xl text-[11px] font-bold hover:border-red-600 hover:text-red-600 transition-all shadow-sm";
+                b.className = "whitespace-nowrap bg-white border-2 border-blue-50 text-[#1e3a8a] px-5 py-2.5 rounded-2xl text-[11px] font-bold hover:bg-blue-800 hover:text-white transition-all shadow-sm uppercase tracking-tighter btn-action";
                 b.innerText = item.label;
                 b.onclick = () => ask(item.label);
                 sBox.appendChild(b);
@@ -189,15 +257,13 @@
             const cList = document.getElementById('contactList');
             contactData.forEach(c => {
                 const div = document.createElement('div');
-                div.className = "p-4 border-l-4 border-red-600 bg-white rounded-r-xl shadow-sm hover:bg-red-50 transition-all";
-                div.innerHTML = `<div class="flex justify-between items-start">
-                                    <div>
-                                        <p class="font-bold text-[#1e3a8a] text-sm">${c.unit}</p>
-                                        <p class="text-xs text-red-600 font-bold mt-1 tracking-wider"><i class="fas fa-phone-alt mr-1"></i>${c.phone}</p>
-                                        <p class="text-[10px] text-gray-500 italic mt-1">${c.officer}</p>
-                                    </div>
-                                    <a href="tel:${c.phone}" class="bg-red-600 text-white p-2 rounded-lg"><i class="fas fa-phone"></i></a>
-                                 </div>`;
+                div.className = "p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:border-blue-300 transition-all flex justify-between items-center";
+                div.innerHTML = `<div>
+                                    <p class="font-bold text-blue-900 text-xs">${c.unit}</p>
+                                    <p class="text-sm text-red-600 font-black mt-1">${c.phone}</p>
+                                    <p class="text-[9px] text-gray-400 italic mt-1 font-medium">${c.officer}</p>
+                                 </div>
+                                 <a href="tel:${c.phone}" class="bg-blue-100 text-blue-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all"><i class="fas fa-phone-alt"></i></a>`;
                 cList.appendChild(div);
             });
         }
@@ -208,7 +274,7 @@
         function addMsg(txt, type) {
             const d = document.createElement('div');
             d.className = `flex ${type==='u'?'justify-end':'justify-start'}`;
-            d.innerHTML = `<div class="message-bubble p-4 text-sm ${type==='u'?'user-msg shadow-md':'bot-msg'} shadow-sm leading-relaxed">${txt}</div>`;
+            d.innerHTML = `<div class="message-bubble p-4 text-sm ${type==='u'?'user-msg shadow-lg':'bot-msg'} leading-relaxed shadow-sm">${txt}</div>`;
             chatBox.appendChild(d);
             chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
         }
@@ -219,20 +285,13 @@
             addMsg(val, 'u');
             input.value = '';
             
-            // Giả lập xử lý dữ liệu
-            const loader = document.createElement('div');
-            loader.className = "flex justify-start animate-pulse";
-            loader.innerHTML = `<div class="bot-msg p-3 rounded-xl text-[10px] font-bold text-gray-400">ĐANG TRUY XUẤT THÔNG TƯ...</div>`;
-            chatBox.appendChild(loader);
-
             setTimeout(() => {
-                loader.remove();
                 const low = val.toLowerCase();
-                const match = fullData.find(i => i.keywords.some(k => low.includes(k.toLowerCase())));
+                const match = allData.find(i => i.keywords.some(k => low.includes(k.toLowerCase())));
                 if(match) {
                     addMsg(match.answer, 'b');
                 } else {
-                    addMsg("Tôi chưa tìm thấy câu trả lời trong dữ liệu hướng dẫn hiện có. Anh/Chị vui lòng liên hệ trực tiếp <b>Đại úy Lê Hoàng Trung 0977556858 0823373373 (PX01)</b> để được hỗ trợ cụ thể ạ!", 'b');
+                    addMsg("Câu hỏi này chưa có trong dữ liệu 20 trang hướng dẫn. Bạn vui lòng liên hệ <b>Đ/c Trung (PX01) - 0977.556.858</b> để được giải đáp chính xác nhất!", 'b');
                 }
             }, 600);
         }
@@ -241,7 +300,7 @@
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
-        window.onload = initApp;
+        window.onload = init;
     </script>
 </body>
 </html>
