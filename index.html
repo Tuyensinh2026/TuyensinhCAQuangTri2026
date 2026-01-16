@@ -1,62 +1,59 @@
 /**
  * DỮ LIỆU TƯ VẤN TUYỂN SINH - CÔNG AN TỈNH QUẢNG TRỊ
- * Cập nhật theo Thông tư 62/2023, 50/2021 và 99/2025 BCA
+ * Cập nhật theo Thông tư 62/2023 (Sức khỏe), 50/2021 (Tuyển sinh) và 99/2025 (Sơ tuyển)
  */
 
 const chatData = [
-{
-    keywords: ['chỉ tiêu', 'bao nhiêu suất', 'quảng trị tuyển bao nhiêu'],
-    answer: "Năm 2026, Công an tỉnh Quảng Trị được giao ... chỉ tiêu hệ đại học và ... chỉ tiêu hệ trung cấp. Chi tiết vui lòng xem tại thông báo số..."
-}
     {
-        keywords: ['sức khỏe', 'chiều cao', 'cân nặng', 'xăm trổ', 'bmi', '62/2023', 'thông tư 62'],
-        answer: `<b>Tiêu chuẩn sức khỏe đặc thù (TT 62/2023/TT-BCA):</b><br>
+        keywords: ['sức khỏe', 'chiều cao', 'cân nặng', 'bmi', '62/2023', 'thông tư 62', 'xăm', 'vết xăm', 'xăm trổ', 'phun xăm', 'thẩm mỹ'],
+        answer: `<b>Tiêu chuẩn sức khỏe & Hình dáng bên ngoài (TT 62/2023/TT-BCA):</b><br>
         - <b>Chiều cao:</b> Nam từ 1m64 đến 1m95; Nữ từ 1m58 đến 1m80.<br>
-        - <b> Thí sinh không được có các vết trổ, xăm trên da, kể cả phun xăm thẩm mỹ (lông mày, môi) không tự nhiên hoặc gây phản cảm.`
-        - <b>Vùng sâu/xa, dân tộc:</b> Nam từ 1m62; Nữ từ 1m56.<br>
-        - <b>Chỉ số BMI:</b> Phải đạt từ 18.5 đến dưới 30.<br>
-        - <b>Yêu cầu:</b> Không mắc bệnh kinh niên, truyền nhiễm; thân hình cân đối, không dị hình, dị dạng.`
+        - <b>Vùng ưu tiên (Dân tộc, biên giới):</b> Nam từ 1m62; Nữ từ 1m56.<br>
+        - <b>Chỉ số BMI:</b> Từ 18.5 đến dưới 30.<br>
+        - <b>Quy định về XĂM TRỔ:</b> Không tuyển các trường hợp có vết trổ, vết xăm trên da (kể cả phun xăm thẩm mỹ lông mày, môi... nếu không tự nhiên, gây phản cảm hoặc không đúng quy định của lực lượng vũ trang).<br>
+        - <b>Yêu cầu khác:</b> Thân hình cân đối, không dị hình, dị dạng, không mắc bệnh truyền nhiễm.`
     },
     {
-        keywords: ['mắt', 'cận thị', 'viễn thị', 'thị lực', 'đeo kính'],
+        keywords: ['mắt', 'cận thị', 'viễn thị', 'thị lực', 'đeo kính', 'loạn thị', 'mù màu'],
         answer: `<b>Quy định về thị lực (TT 62/2023):</b><br>
         - Thị lực không kính mỗi mắt phải đạt 9-10/10, tổng thị lực 2 mắt đạt 18-20/10.<br>
         - <b>Nếu cận/viễn thị:</b> Không quá 3 diop mỗi mắt.<br>
-        - <b>Kiểm tra qua kính:</b> Mắt bị tật phải đạt 9-10/10 và tổng 2 mắt đạt từ 19/10 trở lên mới đạt tiêu chuẩn.`
+        - <b>Kiểm tra qua kính:</b> Mắt bị tật phải đạt 9-10/10 và tổng 2 mắt đạt từ 19/10 trở lên.<br>
+        - <b>Lưu ý:</b> Không tuyển thí sinh bị loạn thị hoặc mù màu.`
     },
     {
-        keywords: ['độ tuổi', 'tuổi', 'bao nhiêu tuổi', 'thông tư 50'],
+        keywords: ['độ tuổi', 'tuổi', 'bao nhiêu tuổi', 'sinh năm'],
         answer: `<b>Quy định về độ tuổi (TT 50/2021):</b><br>
         - <b>Học sinh phổ thông:</b> Không quá 22 tuổi tính đến năm dự tuyển.<br>
         - <b>Người dân tộc thiểu số:</b> Không quá 25 tuổi.<br>
         - <b>Chiến sĩ nghĩa vụ:</b> Theo quy định về thời hạn phục vụ tại ngũ.`
     },
     {
-        keywords: ['học lực', 'hạnh kiểm', 'học bạ', 'điểm', '7.0'],
+        keywords: ['học lực', 'hạnh kiểm', 'học bạ', 'điểm', '7.0', 'khá', 'giỏi'],
         answer: `<b>Tiêu chuẩn văn hóa & Hạnh kiểm:</b><br>
-        - <b>Học lực:</b> Các năm học THPT đạt loại <b>Khá</b> trở lên.<br>
+        - <b>Học lực:</b> Xếp loại <b>Khá</b> trở lên trong cả 3 năm THPT.<br>
         - <b>Điểm môn tổ hợp:</b> Từng môn thuộc tổ hợp xét tuyển phải đạt từ <b>7.0 điểm</b> trở lên trong từng năm học.<br>
-        - <b>Hạnh kiểm:</b> Đạt loại Khá hoặc Tốt trong tất cả các năm học THPT.`
+        - <b>Hạnh kiểm:</b> Đạt loại Khá hoặc Tốt trong cả 3 năm học.`
     },
     {
-        keywords: ['sơ tuyển', 'nộp hồ sơ', 'công an cấp xã', '99/2025', 'địa điểm'],
-        answer: `<b>Cập nhật mới về thủ tục (TT 99/2025/TT-BCA):</b><br>
-        - <b>Nơi tiếp nhận:</b> Thí sinh đăng ký và thực hiện sơ tuyển bước đầu tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú (thay vì cấp huyện như trước).<br>
-        - <b>Giám định:</b> Việc khám chuyên khoa sâu sẽ thực hiện tại bệnh viện đa khoa cấp tỉnh để đảm bảo tính chính xác cao nhất.`
+        keywords: ['sơ tuyển', 'nộp hồ sơ', 'công an xã', '99/2025', 'địa điểm', 'đăng ký'],
+        answer: `<b>Cập nhật địa điểm sơ tuyển (TT 99/2025/TT-BCA):</b><br>
+        - <b>Nơi tiếp nhận:</b> Thí sinh đăng ký và sơ tuyển bước đầu tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú (không cần lên Công an huyện như trước).<br>
+        - <b>Khám sức khỏe:</b> Việc khám chuyên khoa sâu sẽ thực hiện tại bệnh viện đa khoa cấp tỉnh.`
     },
     {
-        keywords: ['phương thức', 'xét tuyển', 'ielts', 'tuyển thẳng'],
+        keywords: ['phương thức', 'xét tuyển', 'ielts', 'tuyển thẳng', 'đánh giá năng lực'],
         answer: `<b>Các phương thức tuyển sinh chính:</b><br>
         - <b>PT1:</b> Tuyển thẳng theo quy chế Bộ GD&ĐT.<br>
-        - <b>PT2:</b> Xét kết hợp chứng chỉ ngoại ngữ quốc tế (IELTS từ 7.5, HSK 5,...) với học bạ.<br>
-        - <b>PT3:</b> Xét kết hợp điểm thi tốt nghiệp THPT và bài thi đánh giá năng lực của Bộ Công an.`
+        - <b>PT2:</b> Xét chứng chỉ ngoại ngữ quốc tế (IELTS từ 7.5, HSK 5...) kết hợp học bạ.<br>
+        - <b>PT3:</b> Xét điểm thi tốt nghiệp THPT kết hợp bài thi Đánh giá năng lực của Bộ Công an.`
     },
     {
-        keywords: ['địa chỉ', 'liên hệ', 'quảng trị', 'lê hoàng trung', 'tccb'],
+        keywords: ['địa chỉ', 'liên hệ', 'quảng trị', 'lê hoàng trung', 'tccb', 'px01'],
         answer: `<b>Thông tin liên hệ Công an tỉnh Quảng Trị:</b><br>
         - <b>Đơn vị:</b> Phòng Tổ chức cán bộ (Phòng PX01).<br>
-        - <b>Địa chỉ:</b> Số 06 Nguyễn Văn Linh, phường Đồng Hới, tỉnh Quảng Trị.<br>
-        - <b>Cán bộ phụ trách:</b> Đại úy Lê Hoàng Trung.<br>
-        - <b>Lưu ý:</b> Thí sinh nên thường xuyên theo dõi thông báo tại Công an xã/phường/đặc khu để không bỏ lỡ lịch sơ tuyển.`
+        - <b>Địa chỉ:</b> Số 06 Nguyễn Văn Linh, phường Đồng Hới, Quảng Trị.<br>
+        - <b>Cán bộ trực tiếp:</b> Đại úy Lê Hoàng Trung.<br>
+        - <b>Lưu ý:</b> Anh/Chị nên theo dõi thông báo tại Công an xã/phường/đặc khu nơi cư trú để nắm lịch sơ tuyển.`
     }
 ];
