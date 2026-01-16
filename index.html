@@ -30,19 +30,19 @@
             position: relative; overflow: hidden; box-shadow: 0 0 100px rgba(0,0,0,0.8);
         }
 
-        /* Lớp bảo vệ Watermark động */
+        /* Watermark bảo mật PX01 */
         .security-mesh {
             position: absolute; inset: 0; display: grid;
             grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(10, 1fr);
             pointer-events: none; z-index: 50; opacity: 0.04;
         }
         .mesh-item {
-            transform: rotate(-30deg); font-size: 9px; font-weight: 800;
+            transform: rotate(-30deg); font-size: 8px; font-weight: 800;
             display: flex; align-items: center; justify-content: center;
             color: #000; white-space: nowrap; text-transform: uppercase;
         }
 
-        /* Header sang trọng */
+        /* Header Premium */
         .header-premium {
             background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
             padding: 24px 16px 20px 16px; position: relative; z-index: 60;
@@ -52,7 +52,7 @@
 
         .status-pill {
             background: rgba(251, 191, 36, 0.15); backdrop-filter: blur(8px);
-            border-radius: 50px; padding: 4px 12px; font-size: 10px;
+            border-radius: 50px; padding: 4px 12px; font-size: 9px;
             color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4);
             font-weight: 700;
         }
@@ -60,11 +60,11 @@
         /* Chat Area */
         .chat-area { 
             background: #f1f5f9; flex: 1; overflow-y: auto; padding: 20px; 
-            background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px);
-            background-size: 15px 15px;
+            background-image: radial-gradient(#cbd5e1 0.7px, transparent 0.7px);
+            background-size: 20px 20px;
         }
         
-        .msg { margin-bottom: 22px; display: flex; flex-direction: column; max-width: 90%; animation: fadeIn 0.3s ease-out; }
+        .msg { margin-bottom: 22px; display: flex; flex-direction: column; max-width: 88%; animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .msg.bot { align-items: flex-start; }
@@ -72,51 +72,58 @@
 
         .bubble {
             padding: 14px 18px; font-size: 14px; line-height: 1.6;
-            border-radius: 22px; position: relative; transition: all 0.3s;
+            border-radius: 20px; position: relative; transition: all 0.3s;
         }
         .bot .bubble { 
             background: white; color: #0f172a; 
             border: 1px solid #e2e8f0; border-bottom-left-radius: 4px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         .user .bubble { 
             background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); 
             color: white; border-bottom-right-radius: 4px;
-            box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.3);
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.2);
         }
 
-        /* Suggestion Chips */
+        /* Suggestions */
         .suggestion-chip {
             background: white; border: 1px solid #e2e8f0; color: #1e40af;
-            padding: 10px 18px; border-radius: 14px; font-size: 11px;
+            padding: 10px 16px; border-radius: 12px; font-size: 11px;
             font-weight: 700; white-space: nowrap; cursor: pointer;
-            transition: all 0.2s; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: all 0.2s; flex-shrink: 0;
         }
-        .suggestion-chip:active { transform: scale(0.95); background: #f8fafc; }
+        .suggestion-chip:active { transform: scale(0.95); background: #eff6ff; }
 
-        /* Input Bar - Sửa lỗi gõ chữ */
+        /* Input Container */
         .input-container {
-            padding: 16px; background: white; border-top: 1px solid #e2e8f0;
-            display: flex; gap: 12px; align-items: center; z-index: 60;
+            padding: 14px 16px; background: white; border-top: 1px solid #e2e8f0;
+            display: flex; gap: 10px; align-items: center; z-index: 60;
         }
         .input-field {
-            flex: 1; background: #f8fafc; border-radius: 18px;
-            padding: 14px 20px; font-size: 15px; border: 2px solid #e2e8f0;
-            transition: all 0.3s; color: #0f172a;
+            flex: 1; background: #f8fafc; border-radius: 15px;
+            padding: 12px 18px; font-size: 15px; border: 2px solid #e2e8f0;
+            transition: all 0.3s; color: #0f172a; outline: none;
         }
-        .input-field:focus { border-color: #1e40af; background: white; outline: none; box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1); }
+        .input-field:focus { border-color: #1e40af; background: white; }
 
         /* Modal */
         .modal-overlay {
-            position: absolute; inset: 0; background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px); z-index: 100; display: none;
+            position: absolute; inset: 0; background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px); z-index: 100; display: none;
             align-items: center; justify-content: center; padding: 20px;
         }
         .modal-content {
-            background: white; border-radius: 35px; width: 100%; max-height: 85%;
+            background: white; border-radius: 30px; width: 100%; max-height: 90%;
             overflow: hidden; display: flex; flex-direction: column;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
+
+        /* Tab System */
+        .tab-btn {
+            padding: 12px 8px; font-size: 11px; font-weight: 800; text-transform: uppercase;
+            color: #94a3b8; border-bottom: 2px solid transparent; flex: 1; text-align: center;
+        }
+        .tab-btn.active { color: #1e40af; border-bottom-color: #1e40af; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
@@ -129,223 +136,184 @@
         <!-- Header -->
         <div class="header-premium">
             <div class="flex items-center justify-between mb-4">
-                <div class="status-pill"><i class="fas fa-shield-check mr-1 text-[8px]"></i> MÃ HÓA ĐỘC QUYỀN PHÒNG PX01</div>
-                <div class="text-[10px] text-white/50 font-bold tracking-widest uppercase">CAT QUẢNG TRỊ - PX01</div>
+                <div class="status-pill"><i class="fas fa-shield-check mr-1"></i> PX01 QUẢNG TRỊ - ENCRYPTED</div>
+                <div class="text-[9px] text-white/50 font-bold tracking-[2px]">CÔNG AN TỈNH QUẢNG TRỊ</div>
             </div>
             <div class="flex items-center gap-4">
-                <div class="relative group">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-2xl transition-transform group-hover:rotate-0 -rotate-3 border-2 border-yellow-500/30">
+                <div class="relative">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-xl border-2 border-yellow-500/50">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Insignia_of_the_Vietnam_People%27s_Public_Security.svg/1200px-Insignia_of_the_Vietnam_People%27s_Public_Security.svg.png" 
                              class="w-12 h-12 object-contain" alt="Công an hiệu">
                     </div>
                     <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-4 border-[#0f172a] rounded-full"></div>
                 </div>
                 <div class="flex-1">
-                    <h1 class="text-white font-extrabold text-xl tracking-tight uppercase leading-none">Cổng Tuyển sinh 2026</h1>
-                    <p class="text-yellow-400 text-[11px] font-bold mt-2 uppercase italic tracking-wide">Đại úy Lê Hoàng Trung - Công an Quảng Trị</p>
+                    <h1 class="text-white font-black text-xl tracking-tight uppercase">Tuyển sinh CAND 2026</h1>
+                    <p class="text-yellow-400 text-[10px] font-bold mt-1 uppercase italic">Đại úy Lê Hoàng Trung - Cán bộ tuyển sinh</p>
                 </div>
-                <button onclick="toggleModal('contactModal')" class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white hover:bg-white/20 hover:scale-105 active:scale-95 transition-all">
-                    <i class="fas fa-address-book text-lg text-yellow-400"></i>
+                <button onclick="toggleModal('infoModal')" class="w-11 h-11 bg-white/10 rounded-xl flex items-center justify-center text-yellow-400">
+                    <i class="fas fa-folder-open"></i>
                 </button>
             </div>
         </div>
 
         <!-- Chat Area -->
-        <div id="chatBox" class="chat-area no-scrollbar flex flex-col">
-            <div class="msg bot text-center px-4 py-6 border-b border-slate-200 mb-6 bg-white/50 rounded-3xl">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Insignia_of_the_Vietnam_People%27s_Public_Security.svg/1200px-Insignia_of_the_Vietnam_People%27s_Public_Security.svg.png" 
-                     class="w-10 h-10 mx-auto mb-3 opacity-80" alt="Logo">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Hệ thống trợ lý số hóa 2026</p>
-                <h3 class="font-black text-slate-800 text-lg uppercase mb-2">Trung tâm tư vấn PX01</h3>
-                <p class="text-xs text-slate-500 leading-relaxed px-4">Được đồng bộ trực tiếp với Thông tư 62, Thông tư 50 và Thông tư 99.</p>
-            </div>
+        <div id="chatBox" class="chat-area no-scrollbar">
+            <!-- Chào mừng mặc định -->
         </div>
 
         <!-- Suggestions -->
-        <div class="px-4 py-4 bg-white/80 backdrop-blur-md overflow-x-auto no-scrollbar flex gap-3 border-t border-slate-100">
-            <div class="suggestion-chip" onclick="ask('Tiêu chuẩn chính trị mới nhất')">🛡️ CHÍNH TRỊ</div>
-            <div class="suggestion-chip" onclick="ask('Khám sức khỏe Thông tư 62')">📏 SỨC KHỎE</div>
-            <div class="suggestion-chip" onclick="ask('Lộ trình thi máy tính 2026')">💻 THI MÁY TÍNH</div>
-            <div class="suggestion-chip" onclick="ask('Sơ tuyển tại Công an cấp xã')">📍 NƠI NỘP HỒ SƠ</div>
-            <div class="suggestion-chip" onclick="ask('Tiêu chuẩn chiều cao cân nặng')">⚖️ CHIỀU CAO</div>
+        <div class="px-4 py-3 bg-white flex gap-3 overflow-x-auto no-scrollbar border-t border-slate-100">
+            <div class="suggestion-chip" onclick="ask('Hồ sơ dự tuyển')">📂 HỒ SƠ CẦN GÌ?</div>
+            <div class="suggestion-chip" onclick="ask('Tiêu chuẩn sức khỏe')">📏 CHIỀU CAO/BMI</div>
+            <div class="suggestion-chip" onclick="ask('Xăm trổ và sẹo')">🐉 XĂM & SẸO</div>
+            <div class="suggestion-chip" onclick="ask('Lịch trình dự kiến')">🗓️ LỊCH TRÌNH</div>
         </div>
 
         <!-- Input Bar -->
         <div class="input-container">
-            <!-- Sử dụng type="text" và bỏ các event cản trở gõ tiếng Việt -->
-            <input type="text" id="userInput" class="input-field" 
-                   placeholder="Nhập nội dung cần tư vấn..." 
-                   autocomplete="off"
-                   onkeydown="if(event.key === 'Enter') handleSend()">
-            <button onclick="handleSend()" class="w-14 h-14 bg-ca-accent text-white rounded-2xl shadow-xl shadow-blue-900/30 hover:bg-blue-700 active:scale-90 transition-all flex items-center justify-center">
-                <i class="fas fa-paper-plane text-xl"></i>
+            <input type="text" id="userInput" class="input-field" placeholder="Hỏi về hồ sơ, sức khỏe, chính trị..." autocomplete="off">
+            <button onclick="handleSend()" class="w-14 h-14 bg-ca-accent text-white rounded-2xl shadow-lg active:scale-90 transition-all flex items-center justify-center">
+                <i class="fas fa-paper-plane text-lg"></i>
             </button>
         </div>
     </div>
 
-    <!-- MODAL -->
-    <div id="contactModal" class="modal-overlay">
+    <!-- MODAL TRUNG TÂM DỮ LIỆU -->
+    <div id="infoModal" class="modal-overlay">
         <div class="modal-content">
-            <div class="p-8 bg-slate-950 text-white relative">
-                <div class="absolute top-0 right-0 p-4 opacity-10">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Insignia_of_the_Vietnam_People%27s_Public_Security.svg/1200px-Insignia_of_the_Vietnam_People%27s_Public_Security.svg.png" class="w-32 h-32">
+            <div class="p-6 bg-slate-900 text-white flex justify-between items-center">
+                <div>
+                    <h2 class="font-black text-xl uppercase leading-none">Cổng thông tin 2026</h2>
+                    <p class="text-yellow-400 text-[9px] font-bold uppercase mt-2 tracking-widest">PX01 - Công an tỉnh Quảng Trị</p>
                 </div>
-                <h2 class="font-black text-2xl uppercase tracking-tighter">Danh bạ Sơ tuyển</h2>
-                <p class="text-yellow-400 text-xs font-bold uppercase mt-1">Hỗ trợ trực tiếp bởi Đ/c Lê Hoàng Trung</p>
-                <button onclick="toggleModal('contactModal')" class="absolute top-6 right-6 text-3xl text-white/40 hover:text-white">&times;</button>
+                <button onclick="toggleModal('infoModal')" class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full">&times;</button>
             </div>
-            <div class="flex-1 overflow-y-auto p-6 space-y-8 bg-slate-50 no-scrollbar">
-                <section>
-                    <h3 class="text-[10px] font-black text-slate-400 uppercase mb-4 tracking-widest border-l-4 border-ca-accent pl-3">📞 Danh bạ cán bộ tuyển sinh (PX01)</h3>
-                    <div id="directoryList" class="grid grid-cols-1 gap-4">
-                        <div class="p-5 bg-white rounded-3xl border border-slate-200 shadow-sm flex items-center gap-4">
-                            <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
-                                <i class="fas fa-user-shield text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] font-bold text-slate-400 uppercase">Đ/C CHỦ TRÌ - CÔNG AN TỈNH</p>
-                                <p class="font-extrabold text-slate-900">Đại úy Lê Hoàng Trung</p>
-                                <p class="text-ca-red font-black text-lg select-all">0977.556.858</p>
-                            </div>
-                        </div>
+            
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-200">
+                <div class="tab-btn active" onclick="switchTab(this, 'tab-hoso')">Hồ sơ</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-danhba')">Danh bạ</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-huongdan')">Hướng dẫn</div>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="p-5 flex-1 overflow-y-auto no-scrollbar bg-slate-50 space-y-4">
+                <!-- Tab Hồ Sơ -->
+                <div id="tab-hoso" class="tab-content">
+                    <h4 class="text-[11px] font-black text-blue-800 mb-3 uppercase">📂 Danh mục hồ sơ cần chuẩn bị</h4>
+                    <div id="list-hoso" class="space-y-2">
+                        <!-- Tự động điền từ script -->
                     </div>
-                </section>
-                
-                <section>
-                    <h3 class="text-[10px] font-black text-slate-400 uppercase mb-4 tracking-widest border-l-4 border-yellow-500 pl-3">🗓️ Lịch trình & Hướng dẫn 2026</h3>
-                    <div class="space-y-4">
-                        <div class="p-5 bg-white rounded-3xl border border-slate-200 shadow-sm">
-                            <div class="flex items-start gap-3">
-                                <i class="fas fa-info-circle text-blue-500 mt-1"></i>
-                                <div>
-                                    <p class="font-bold text-slate-800 text-sm">Giai đoạn Sơ tuyển (Dự kiến):</p>
-                                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">Từ tháng 03/2026 đến hết tháng 05/2026 tại Công an cấp Xã/Phường.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-5 bg-blue-600 rounded-3xl text-white shadow-xl shadow-blue-900/20">
-                            <p class="font-bold text-sm mb-1">Cập nhật lộ trình thi mới:</p>
-                            <p class="text-[11px] opacity-90 leading-relaxed">Bộ Công an dự kiến triển khai bài thi Đánh giá năng lực tại các điểm thi tập trung khu vực miền Trung vào tháng 7/2026.</p>
-                        </div>
+                </div>
+
+                <!-- Tab Danh Bạ -->
+                <div id="tab-danhba" class="tab-content hidden">
+                    <h4 class="text-[11px] font-black text-red-700 mb-3 uppercase">📞 Danh bạ cán bộ tuyển sinh</h4>
+                    <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 mb-4">
+                        <p class="text-[10px] font-bold text-blue-400 uppercase">Cán bộ chủ trì cấp tỉnh</p>
+                        <p class="font-black text-slate-900 text-lg">Đại úy Lê Hoàng Trung</p>
+                        <p class="text-blue-700 font-black text-xl select-all">0977.556.858</p>
                     </div>
-                </section>
+                    <div id="list-danhba" class="space-y-2">
+                        <!-- Tự động điền từ script -->
+                    </div>
+                </div>
+
+                <!-- Tab Hướng Dẫn -->
+                <div id="tab-huongdan" class="tab-content hidden">
+                    <h4 class="text-[11px] font-black text-yellow-600 mb-3 uppercase">🗓️ Lịch trình & Hướng dẫn mới nhất</h4>
+                    <div id="list-huongdan" class="space-y-3">
+                        <!-- Tự động điền từ script -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        /************************************************************
-         * 1. BẢO MẬT ĐẶC VỤ
-         ************************************************************/
-        // Chặn phím tắt nhưng KHÔNG chặn các ký tự gõ tiếng Việt
-        window.onkeydown = (e) => {
-            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false;
-            if (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83)) return false;
-        };
+        /****************************************************************
+         * DỮ LIỆU DỰ PHÒNG - BẠN CÓ THỂ DÁN TỪ EXCEL/WORD VÀO ĐÂY
+         ****************************************************************/
+        
+        // 1. DỮ LIỆU HỒ SƠ
+        const HO_SO_DATA = [
+            { item: "Học bạ THPT", desc: "Bản chính và bản photocopy công chứng." },
+            { item: "CCCD mẫu mới", desc: "Bản photocopy công chứng trên 1 mặt giấy." },
+            { item: "Giấy khai sinh", desc: "Bản sao trích lục hoặc bản sao có chứng thực." },
+            { item: "Ảnh thẻ (4x6)", desc: "4 ảnh nền trắng, mặc quân phục hoặc sơ mi trắng có cổ." },
+            { item: "Giấy xác nhận cư trú", desc: "Trích lục thông tin cư trú từ dữ liệu dân cư." },
+            { item: "Chứng chỉ ngoại ngữ", desc: "IELTS từ 5.0 trở lên (nếu có để xét tuyển thẳng)." },
+            { item: "Giấy chứng nhận ưu tiên", desc: "Con em ngành, giấy chứng nhận gia đình cách mạng (nếu có)." }
+        ];
 
-        const mesh = document.getElementById('mesh');
-        for (let i = 0; i < 30; i++) {
-            const d = document.createElement('div');
-            d.className = 'mesh-item';
-            d.innerText = 'PX01 QUẢNG TRỊ - Đ/C HOÀNG TRUNG';
-            mesh.appendChild(d);
+        // 2. DỮ LIỆU DANH BẠ (Excel dán vào đây)
+        const DANH_BA_DATA = [
+            { unit: "CA Thành phố Đông Hà", phone: "0233.3852.333", note: "Đ/c Trực sơ tuyển" },
+            { unit: "CA Thị xã Quảng Trị", phone: "0233.3861.214", note: "Bộ phận Tuyển sinh" },
+            { unit: "CA Huyện Vĩnh Linh", phone: "0233.3823.204", note: "Đ/c Phụ trách" },
+            { unit: "CA Huyện Gio Linh", phone: "0233.3825.214", note: "Trực ban nội vụ" },
+            { unit: "CA Huyện Triệu Phong", phone: "0233.3827.214", note: "Phòng Chính trị" },
+            { unit: "CA Huyện Cam Lộ", phone: "0233.3821.214", note: "Đ/c Tiếp nhận" },
+            { unit: "CA Huyện Đakrông", phone: "0233.3886.114", note: "Trực sơ tuyển" },
+            { unit: "CA Huyện Hướng Hóa", phone: "0233.3881.214", note: "Bộ phận Chính trị" }
+        ];
+
+        // 3. DỮ LIỆU HƯỚNG DẪN (Word dán vào đây)
+        const HUONG_DAN_DATA = [
+            { title: "Thời gian đăng ký", content: "Dự kiến từ tháng 03/2026 đến hết 15/05/2026." },
+            { title: "Địa điểm nộp", content: "Tại Công an cấp Xã/Phường nơi thí sinh đăng ký thường trú." },
+            { title: "Lệ phí sơ tuyển", content: "Theo quy định chung của Bộ Công an (Sẽ cập nhật sau)." },
+            { title: "Lưu ý viết phiếu", content: "Viết bằng bút mực xanh, không tẩy xóa, thông tin khớp với CCCD." }
+        ];
+
+        // 4. KHO TRI THỨC TRỢ LÝ ẢO
+        const KNOWLEDGE_BASE = [
+            { keys: ['hồ sơ', 'cần những gì', 'chuẩn bị'], answer: "Hồ sơ dự tuyển 2026 bao gồm: Học bạ, CCCD công chứng, Giấy khai sinh, 4 ảnh 4x6, Giấy xác nhận cư trú và các chứng chỉ ưu tiên (nếu có). Bạn có thể nhấn vào biểu tượng <b>Thư mục</b> ở góc trên bên phải để xem danh sách chi tiết!" },
+            { keys: ['tuổi', 'sinh năm'], answer: "Học sinh phổ thông không quá 22 tuổi, người dân tộc thiểu số không quá 25 tuổi tính đến năm 2026." },
+            { keys: ['chiều cao', 'cân nặng', 'bmi'], answer: "Nam cao ≥ 1m64, Nữ cao ≥ 1m58. Chỉ số BMI từ 18.5 đến dưới 30. (Vùng ưu tiên giảm 2cm chiều cao)." },
+            { keys: ['xăm', 'sẹo', 'phun môi'], answer: "Cấm các hình xăm, chữ xăm trên da. Phun xăm thẩm mỹ (môi/mày) phải cực kỳ tự nhiên. Sẹo lồi, sẹo lớn gây phản cảm sẽ bị loại." },
+            { keys: ['loạn thị', 'cận thị', 'mắt'], answer: "Không tuyển thí sinh loạn thị. Cận thị không quá 3 diop, thị lực sau chỉnh kính đạt 19/10." },
+            { keys: ['đổi mới', 'thi trên máy tính'], answer: "Năm 2026 thi trên máy tính đối với văn bằng 2 tuyển mới (công dân đã tốt nghiệp đại học ngoài ngành). Năm 2027 thí điểm tổ chức tại B06, T06, T07. Năm 2028 100% thi trên máy tính." },
+            { keys: ['lịch', 'khi nào'], answer: "Thời gian sơ tuyển thường bắt đầu từ tháng 3 đến tháng 5 hàng năm. Lịch cụ thể 2026 sẽ được PX01 thông báo rộng rãi khi có văn bản chính thức." }
+        ];
+
+        /****************************************************************
+         * HỆ THỐNG VẬN HÀNH
+         ****************************************************************/
+        
+        function initData() {
+            // Đổ dữ liệu Hồ sơ
+            const hosoBox = document.getElementById('list-hoso');
+            HO_SO_DATA.forEach(i => {
+                hosoBox.innerHTML += `<div class="p-3 bg-white rounded-xl border border-slate-200">
+                    <p class="text-xs font-bold text-slate-800">📌 ${i.item}</p>
+                    <p class="text-[10px] text-slate-500 mt-1">${i.desc}</p>
+                </div>`;
+            });
+
+            // Đổ dữ liệu Danh bạ
+            const danhbaBox = document.getElementById('list-danhba');
+            DANH_BA_DATA.forEach(i => {
+                danhbaBox.innerHTML += `<div class="p-3 bg-white rounded-xl border border-slate-200 flex justify-between items-center">
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-800">${i.unit}</p>
+                        <p class="text-[9px] text-slate-400 uppercase">${i.note}</p>
+                    </div>
+                    <p class="text-[11px] font-black text-blue-700">${i.phone}</p>
+                </div>`;
+            });
+
+            // Đổ dữ liệu Hướng dẫn
+            const hdBox = document.getElementById('list-huongdan');
+            HUONG_DAN_DATA.forEach(i => {
+                hdBox.innerHTML += `<div class="p-3 bg-yellow-50 rounded-xl border border-yellow-100">
+                    <p class="text-[11px] font-bold text-yellow-800">${i.title}</p>
+                    <p class="text-[10px] text-slate-600 mt-1 leading-relaxed">${i.content}</p>
+                </div>`;
+            });
         }
 
-        /************************************************************
-         * 2. DỮ LIỆU SIÊU CẤP 2026
-         ************************************************************/
-        const DATA_2026 = [
-            {
-                q: ['tuổi', 'sinh năm', 'độ tuổi', 'bao nhiêu tuổi'],
-                a: `<b>🎂 Quy định độ tuổi dự tuyển 2026:</b><br>
-                    - <b>Học sinh phổ thông:</b> Không quá 22 tuổi tính đến năm dự tuyển.<br>
-                    - <b>Dân tộc thiểu số:</b> Không quá 25 tuổi.<br>
-                    - <b>Cán bộ chiến sĩ:</b> Không quá 30 tuổi đối với Văn bằng 2 tuyển mới.<br>
-                    - <b>Lưu ý:</b> Tính đủ theo ngày tháng năm sinh trên CCCD.`
-            },
-            {
-                q: ['chiều cao', 'cân nặng', 'bmi', 'm64', 'm58', 'm62', 'm56', 'béo', 'gầy'],
-                a: `<b>⚖️ Tiêu chuẩn sức khỏe (TT 62/2023):</b><br>
-                    - <b>Nam:</b> Cao từ 1m64 trở lên (Vùng ưu tiên 1m62).<br>
-                    - <b>Nữ:</b> Cao từ 1m58 trở lên (Vùng ưu tiên 1m56).<br>
-                    - <b>Cân nặng:</b> Tính theo BMI = (Cân nặng) / (Chiều cao x Chiều cao).<br>
-                    - <b>Chỉ số BMI:</b> Phải từ 18.5 đến dưới 30. (Ví dụ: Bạn cao 1m70, cân nặng lý tưởng là 55kg - 85kg).`
-            },
-            {
-                q: ['xăm', 'phun', 'môi', 'mày', 'thẩm mỹ', 'vết trổ', 'hình xăm', 'sẹo'],
-                a: `<b>🐉 Quy định về thẩm mỹ, sẹo & Xăm trổ:</b><br>
-                    - <b>Xăm trổ:</b> Cấm tuyệt đối các hình xăm, chữ xăm trên da (kể cả đã xóa nhưng còn sẹo phản cảm).<br>
-                    - <b>Phun xăm thẩm mỹ (Nữ):</b> Được chấp nhận nếu <b>TỰ NHIÊN</b>, không đậm, không thay đổi diện mạo quá mức. Hội đồng y tế sẽ đánh giá trực tiếp khi sơ tuyển.<br>
-                    - <b>Sẹo:</b> Tuyệt đối không tuyển các trường hợp có vết trổ, vết xăm trên da (kể cả phun xăm thẩm mỹ nếu không tự nhiên). Các vết sẹo lồi, sẹo lớn gây phản cảm ở vị trí dễ thấy cũng không đạt tiêu chuẩn.`
-            },
-            {
-                q: ['cận', 'mắt', 'kính', 'loạn', 'viễn', 'mù màu'],
-                a: `<b>👁️ Tiêu chuẩn về Mắt:</b><br>
-                    - <b>Cận thị:</b> Không quá 3 diop mỗi mắt.<br>
-                    - <b>Thị lực:</b> Không kính đạt 10/20 tổng 2 mắt. Qua kính đạt 19/10 tổng 2 mắt.<br>
-                    - <b>Loạn thị:</b> KHÔNG TUYỂN (Nếu phát hiện loạn thị dù nhẹ vẫn bị loại).<br>
-                    - <b>Mù màu:</b> KHÔNG TUYỂN.`
-            },
-            {
-                q: ['thi máy tính', 'đề thi', '2026', 'lộ trình', 'đổi mới', 'đánh giá năng lực'],
-                a: `<b>💻 Lộ trình thi máy tính 2026 - 2028:</b><br>
-                    - Theo kế hoạch của Bộ, bắt đầu áp dụng thi trên máy tính cho đối tượng tuyển mới có bằng Đại học (Văn bằng 2).<br>
-                    - <b>Năm 2027:</b> Mở rộng thí điểm tại các trường B06, T06, T07.<br>
-                    - <b>Năm 2028:</b> Dự kiến áp dụng 100% thi máy tính cho tất cả các hệ tuyển sinh vào các trường CAND.`
-                    - <b>Cấu trúc đề:</b> Trắc nghiệm (80%) và Tự luận/Câu hỏi tư duy (20%).<br>
-                    - <b>Địa điểm thi:</b> Thí sinh Quảng Trị dự kiến thi tại Thừa Thiên Huế hoặc Đà Nẵng.`
-            },
-            {
-                q: ['lý lịch', 'chính trị', 'ba đời', 'kết hôn', 'đi nước ngoài', 'đạo', 'tôn giáo'],
-                a: `<b>🛡️ Tiêu chuẩn Chính trị:</b><br>
-                    - Thẩm tra 3 đời (Ông bà, Bố mẹ, Anh chị em).<br>
-                    - <b>Yêu cầu:</b> Tuyệt đối trung thành với Đảng. Không có người thân vi phạm các tội xâm phạm ANQG.<br>
-                    - <b>Tôn giáo:</b> Thí sinh có đạo vẫn dự tuyển bình thường nếu gia đình chấp hành tốt chính sách pháp luật.`
-            },
-            {
-                q: ['nơi nộp', 'sơ tuyển ở đâu', 'xã', 'địa chỉ', 'quảng trị', 'nơi nộp hồ sơ', 'thông tư 99'],
-                a: `<b>📍 Địa điểm nộp hồ sơ & Sơ tuyển:</b><br>
-                    - <b>TUYỆT ĐỐI LƯU Ý:</b> Thí sinh nộp hồ sơ tại <b>CÔNG AN CẤP XÃ/PHƯỜNG/ĐẶC KHU</b> nơi đăng ký thường trú.<br>
-                    - <b>Cán bộ tiếp nhận:</b> Trưởng/Phó Công an cấp xã sẽ trực tiếp hướng dẫn ghi phiếu và kiểm tra sức khỏe cơ bản.`
-            },
-            {
-                q: ['điểm', '7.0', 'khá', 'giỏi', 'học lực'],
-                a: `<b>📚 Điều kiện Học lực:</b><br>
-                    - 3 năm THPT đạt loại <b>Khá</b> trở lên.<br>
-                    - Điểm các môn trong tổ hợp dự tuyển phải đạt <b>7.0 trở lên</b> (ví dụ thi khối C03 thì Văn, Toán, Sử 3 năm đều phải ≥ 7.0).`
-            },
-            {
-                q: ['hồ sơ', 'thủ tục', 'giấy tờ', 'viết phiếu', 'cccd', 'học bạ', 'cần những gì'],
-                a: `<b>📂 Thủ tục hồ sơ cần chuẩn bị:</b><br>
-                    1. <b>Học bạ THPT</b> (Bản chính hoặc công chứng).<br>
-                    2. <b>CCCD</b> (Bản công chứng).<br>
-                    3. <b>Giấy khai sinh</b>.<br>
-                    4. <b>Ảnh 4x6</b> (Nên chuẩn bị 4-6 tấm quân phục hoặc sơ mi trắng).<br>
-                    5. <b>Các giấy tờ ưu tiên</b> (Nếu có: Chứng chỉ IELTS, con em ngành, dân tộc...).<br><br>
-                    Thí sinh đến <b>Công an cấp Xã</b> để được phát "Phiếu đăng ký dự tuyển" và hướng dẫn kê khai.`
-            }
-        ];
-
-        /************************************************************
-         * 3. NGĂN CHỨA DỰ PHÒNG CHO HƯỚNG DẪN TUYỂN SINH 2026 WORD & EXCEL
-         ************************************************************/
-        // PHẦN WORD: Sau này copy tóm tắt vào đây
-        const extraWordData = [
-            { keywords: ['chỉ tiêu', 'thời gian cụ thể'], answer: 'Dữ liệu sẽ cập nhật chi tiết theo HD 2026.' }
-        ];
-
-        // PHẦN EXCEL: Dán danh bạ xã/huyện vào đây
-        const contactData = [
-            { unit: 'CA Thành phố Đông Hà', phone: '0233.3852.333', officer: 'Cán bộ trực sơ tuyển' },
-            { unit: 'CA Huyện Vĩnh Linh', phone: '0233.3823.xxx', officer: 'Đ/c Phụ trách' },
-            { unit: 'CA Xã Gio Hải', phone: '097x.xxx.xxx', officer: 'Trưởng Công an Xã' }
-        ];
-
-        const allData = [...chatData, ...extraWordData];
-        
-        /************************************************************
-         * 4. VẬN HÀNH
-         ************************************************************/
         const chatBox = document.getElementById('chatBox');
         const userInput = document.getElementById('userInput');
 
@@ -364,25 +332,25 @@
             addMessage(text, 'user');
             userInput.value = '';
 
-            const typingId = "typing_" + Date.now();
-            const typingDiv = document.createElement('div');
-            typingDiv.className = "msg bot";
-            typingDiv.id = typingId;
-            typingDiv.innerHTML = `<div class="bubble flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce"></div><div class="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.15s]"></div><div class="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.3s]"></div> <span class="text-xs ml-2 font-bold text-slate-400 uppercase">Đang đối soát dữ liệu...</span></div>`;
-            chatBox.appendChild(typingDiv);
+            const id = "t_" + Date.now();
+            const tDiv = document.createElement('div');
+            tDiv.className = "msg bot";
+            tDiv.id = id;
+            tDiv.innerHTML = `<div class="bubble flex gap-1"><div class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce"></div><div class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div><div class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div></div>`;
+            chatBox.appendChild(tDiv);
             chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
 
             setTimeout(() => {
-                const botMsg = document.getElementById(typingId);
-                if (botMsg) botMsg.remove();
+                const typing = document.getElementById(id);
+                if(typing) typing.remove();
                 
-                const search = text.toLowerCase();
-                const result = DATA_2026.find(item => item.q.some(keyword => search.includes(keyword)));
-                
-                if (result) {
-                    addMessage(result.a, 'bot');
+                const query = text.toLowerCase();
+                const response = KNOWLEDGE_BASE.find(i => i.keys.some(k => query.includes(k)));
+
+                if(response) {
+                    addMessage(response.answer, 'bot');
                 } else {
-                    addMessage("Hệ thống chưa tìm thấy dữ liệu khớp 100% trong kho văn bản hiện có. Vui lòng liên hệ trực tiếp <b>Đại úy Lê Hoàng Trung: 0977.556.858</b> để được giải đáp chi tiết.", 'bot');
+                    addMessage("Hệ thống chưa tìm thấy thông tin cụ thể cho câu hỏi này. Đồng chí vui lòng liên hệ <b>Đại úy Lê Hoàng Trung (0977.556.858)</b> để được giải đáp chi tiết nhất.", "bot");
                 }
             }, 800);
         }
@@ -397,13 +365,30 @@
             m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
         }
 
+        function switchTab(btn, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.remove('hidden');
+        }
+
         window.onload = () => {
-            console.log("PX01-QT SHIELD ACTIVE");
-            // Gửi tin nhắn chào mừng
+            initData();
+            // Watermark
+            const mesh = document.getElementById('mesh');
+            for (let i = 0; i < 30; i++) {
+                const d = document.createElement('div');
+                d.className = 'mesh-item';
+                d.innerText = 'PX01 - QUẢNG TRỊ';
+                mesh.appendChild(d);
+            }
+            
             setTimeout(() => {
-                addMessage("Chào đồng chí và các bạn! Đây là hệ thống Trợ lý ảo hỗ trợ công tác Tuyển sinh năm 2026 của Công an tỉnh Quảng Trị. Vui lòng chọn các từ khóa gợi ý hoặc đặt câu hỏi trực tiếp để được tư vấn.", "bot");
+                addMessage("<b>Chào đồng chí và các bạn!</b><br>Tôi là trợ lý ảo Tuyển sinh 2026 của Công an tỉnh Quảng Trị. Tôi đã sẵn sàng tư vấn về Hồ sơ, Sức khỏe và các tiêu chuẩn mới nhất. Hãy nhập câu hỏi hoặc chọn các gợi ý bên dưới.", "bot");
             }, 500);
         };
+
+        userInput.onkeydown = (e) => { if(e.key === "Enter") handleSend(); };
     </script>
 </body>
 </html>
