@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PX01 QUẢNG TRỊ - DỮ LIỆU TUYỂN SINH 2026</title>
+    <title>HỆ THỐNG DỮ LIỆU PX01 - TUYỂN SINH 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -87,7 +87,7 @@
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .bubble {
-            padding: 14px 18px; font-size: 13px; line-height: 1.6;
+            padding: 14px 18px; font-size: 13.5px; line-height: 1.6;
             border-radius: 12px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .bot .bubble { 
@@ -95,7 +95,7 @@
             border-left: 4px solid var(--police-red);
         }
         .user .bubble { 
-            background: var(--police-red); color: white; font-weight: 600;
+            background: var(--police-red); color: white; font-weight: 500;
             border-bottom-right-radius: 2px;
         }
 
@@ -125,7 +125,7 @@
         }
         .suggestion-chip {
             border: 1px solid #e5e7eb; color: var(--police-red); background: white;
-            padding: 8px 14px; font-size: 10px; font-weight: 700; white-space: nowrap;
+            padding: 8px 14px; font-size: 11px; font-weight: 700; white-space: nowrap;
             border-radius: 6px; transition: all 0.2s; text-transform: uppercase;
         }
         .suggestion-chip:active { background: var(--police-red); color: white; border-color: var(--police-red); }
@@ -194,7 +194,7 @@
             
             <div class="tab-bar">
                 <div class="tab-btn active" onclick="switchTab(this, 'tab-danhba')">DANH BẠ</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">SỨC KHỎE</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">SỨC KHỎE (TT62)</div>
                 <div class="tab-btn" onclick="switchTab(this, 'tab-dieukien')">ĐIỀU KIỆN</div>
             </div>
 
@@ -263,14 +263,18 @@
             { unit: "Công an Xã La Lay", name: "Nguyễn Tất Đạt", phone: "0944.626.234" },
             { unit: "Công an Xã Tà Rụt", name: "Hoàng Văn Hải", phone: "0975.995.116" },
             { unit: "Công an Xã Đakrông", name: "Trần Quốc Hoàn", phone: "0985.887.469" },
+            { unit: "Công an Xã Hướng Hiệp", name: "Hồ Văn Cải", phone: "0356.225.653" },
+            { unit: "Công an Xã Cam Lộ", name: "Hoàng Hà Nguyên", phone: "0944.236.090" },
             { unit: "Công an Xã Ba Lòng", name: "Hồ Ngọc Hoàn", phone: "0979.194.789" }
         ];
 
-        // DỮ LIỆU SỨC KHỎE (TỪ FILE WORD TT62)
+        // DỮ LIỆU SỨC KHỎE CHI TIẾT (Từ file Word TT62)
         const SUC_KHOE_DATA = [
-            { title: "KHÁM CẬN LÂM SÀNG", content: "• Xét nghiệm Máu: HIV, Viêm gan B (HBsAg), Viêm gan C, Đường huyết, Chức năng gan/thận.<br>• Xét nghiệm Nước tiểu: Tổng phân tích và <b>tìm chất ma túy</b>.<br>• Chẩn đoán: X-quang phổi, Siêu âm bụng, Điện tim." },
-            { title: "CHỈ SỐ SINH TỒN", content: "• Huyết áp: 100-130 mmHg.<br>• Mạch: 60-80 lần/phút." },
-            { title: "CHIỀU CAO (ƯU TIÊN)", content: "• Người dân tộc: Nam ≥ 1m62, Nữ ≥ 1m56.<br>• Đối tượng UT1: Nam ≥ 1m60, Nữ ≥ 1m55.<br>• Tốt nghiệp Đại học: Nam ≥ 1m62, Nữ ≥ 1m56." }
+            { title: "Xét nghiệm Máu", content: "Bắt buộc: Công thức máu, Nhóm máu, Đường huyết (Glucose), Chức năng gan (AST, ALT), Chức năng thận (Ure, Creatinin), HIV, Viêm gan B (HBsAg), Viêm gan C (Anti-HCV)." },
+            { title: "Xét nghiệm Nước tiểu", content: "Tổng phân tích nước tiểu. Đặc biệt: Xét nghiệm tìm chất ma túy và tiền chất (Morphin, Heroin, Methamphetamin...)." },
+            { title: "Chẩn đoán hình ảnh", content: "Chụp X-quang tim phổi thẳng; Siêu âm ổ bụng tổng quát; Điện tim." },
+            { title: "Chỉ số sinh tồn", content: "Huyết áp: 100-130 mmHg (tâm thu). Mạch: 60-80 lần/phút (VĐV có thể thấp hơn nhưng không dưới 50)." },
+            { title: "Ưu tiên chiều cao", content: "Người dân tộc: Nam ≥ 1m62, Nữ ≥ 1m56.<br>Đối tượng UT1: Nam ≥ 1m60, Nữ ≥ 1m55.<br>Đại học (KHTN/Kỹ thuật): Nam ≥ 1m62, Nữ ≥ 1m56." }
         ];
 
         // DỮ LIỆU ĐIỀU KIỆN & ĐỐI TƯỢNG (TỪ FILE DOCX)
@@ -281,7 +285,8 @@
         ];
 
         /****************************************************************
-         * 2. KHO TRI THỨC THÔNG MINH
+         * 2. KHO TRI THỨC (CÂU HỎI & TRẢ LỜI)
+         * Đã tích hợp Điểm nổi bật tuyển quân 2025
          ****************************************************************/
         const KNOWLEDGE_BASE = [
             { 
@@ -290,7 +295,7 @@
             },
             { 
                 keys: ['tuổi', 'sinh năm', 'độ tuổi'], 
-                answer: "<b>Quy định độ tuổi (Mới nhất):</b><br>- Học sinh phổ thông: Không quá 22 tuổi.<br>- Người dân tộc thiểu số: Không quá 25 tuổi.<br>- Cán bộ/Văn bằng 2: Không quá 30 tuổi." 
+                answer: "<b>Quy định độ tuổi (TT 50/2021):</b><br>- Học sinh phổ thông: Không quá 22 tuổi.<br>- Người dân tộc thiểu số: Không quá 25 tuổi.<br>- Công dân có bằng Đại học: Không quá 30 tuổi." 
             },
             { 
                 keys: ['chiều cao', 'cân nặng', 'bmi', '62/2023'], 
@@ -314,19 +319,19 @@
             },
             {
                 keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025', 'ưu tiên'],
-                answer: "<b>Điểm mới Tuyển quân 2025:</b> Khuyến khích công dân có trình độ Đại học, Cao đẳng tham gia nghĩa vụ CAND. Đây là nguồn quan trọng để xét chuyển chuyên nghiệp lâu dài trong lực lượng."
+                answer: "<b>Điểm mới Tuyển quân 2025:</b> Khuyến khích công dân có trình độ Đại học, Cao đẳng tham gia nghĩa vụ CAND. Đây là nguồn để chuyển chuyên nghiệp sau này."
             }
         ];
 
         const SUGGESTIONS = [
             { label: "SỨC KHỎE (TT62)", query: "Chiều cao BMI 62/2023" },
             { label: "XÉT NGHIỆM MÁU", query: "Xét nghiệm viêm gan ma túy" },
-            { label: "QUY ĐỊNH TUỔI", query: "Độ tuổi dự tuyển" },
+            { label: "DANH MỤC HỒ SƠ", query: "Hồ sơ cần những gì" },
             { label: "NƠI NỘP HỒ SƠ", query: "Nơi nộp hồ sơ sơ tuyển" }
         ];
 
         /****************************************************************
-         * LOGIC VẬN HÀNH
+         * LOGIC HỆ THỐNG
          ****************************************************************/
         const chatBox = document.getElementById('chatBox');
         const userInput = document.getElementById('userInput');
@@ -352,7 +357,7 @@
             }
 
             renderModalData();
-            addMessage("<b>Kính chào Đồng chí! Đây là trợ lý ảo trực tuyến Tuyển sinh năm 2026 của Phòng Tổ chức cán bộ - Công an tỉnh Quảng Trị, kính mời đồng chí, thí sinh, phụ huynh đặt câu hỏi tra cứu.", "bot");
+            addMessage("<b>Kính chào Đồng chí! Đây là trợ lý ảo tuyển sinh của Phòng Tổ chức cán bộ Công an tỉnh Quảng Trị, kính mời đồng chí, thí sinh, phụ huynh đặt câu hỏi tra cứu.", "bot");
         }
 
         function renderModalData() {
@@ -372,7 +377,7 @@
                 </div>
             `).join('');
 
-            // Danh bạ (Render lần đầu)
+            // Danh bạ (Initial Render)
             filterContact();
         }
 
