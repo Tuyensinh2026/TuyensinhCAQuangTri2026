@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HỆ THỐNG DỮ LIỆU PX01 - TUYỂN SINH 2026</title>
+    <title>PX01 QUẢNG TRỊ - DỮ LIỆU TUYỂN SINH 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap');
         
         :root {
-            --police-red: #ce181e; /* Đỏ cờ chuẩn */
-            --police-gold: #ffda44; /* Vàng huy hiệu */
+            --police-red: #ce181e; 
+            --police-gold: #ffda44;
             --police-dark: #111827;
+            --bg-tech: #f0f2f5;
         }
 
         body { 
             font-family: 'Lexend', sans-serif; 
-            background: #f0f2f5; 
+            background: #000; 
             margin: 0; padding: 0;
             -webkit-user-select: none; user-select: none;
             overflow: hidden; touch-action: manipulation;
@@ -26,65 +27,67 @@
         .app-shell {
             height: 100vh; max-width: 500px; margin: 0 auto;
             background: #fff; display: flex; flex-direction: column;
-            position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(255, 218, 68, 0.1);
         }
 
-        /* HEADER CHUẨN ĐIỀU LỆNH */
+        /* --- HEADER CHUẨN ĐIỀU LỆNH --- */
         .header-official {
-            background: var(--police-red);
-            padding: 30px 20px 25px;
+            background: linear-gradient(180deg, #ce181e 0%, #b01419 100%);
+            padding: 30px 20px 20px;
             text-align: center;
-            border-bottom: 5px solid var(--police-gold);
-            box-shadow: 0 10px 30px rgba(206, 24, 30, 0.3);
+            border-bottom: 4px solid var(--police-gold);
+            box-shadow: 0 10px 30px rgba(206, 24, 30, 0.4);
             position: relative; z-index: 50;
         }
         .header-official h2 {
             color: var(--police-gold); font-size: 10px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 3px; margin-bottom: 5px;
-            opacity: 0.9;
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;
+            opacity: 0.95;
         }
         .header-official h1 {
-            color: var(--police-gold); font-size: 22px; font-weight: 900;
-            text-transform: uppercase; letter-spacing: 1px; line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            color: white; font-size: 20px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         .header-official p {
-            color: white; font-size: 11px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1.5px; margin-top: 8px;
+            color: var(--police-gold); font-size: 11px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px; margin-top: 8px;
         }
-        .menu-btn {
+        
+        /* Nút mở Modal dữ liệu */
+        .data-btn {
             position: absolute; top: 20px; right: 20px;
-            color: white; font-size: 20px; cursor: pointer;
-            opacity: 0.8; transition: opacity 0.2s;
+            color: var(--police-gold); font-size: 18px; cursor: pointer;
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255, 218, 68, 0.3);
+            transition: all 0.2s; animation: pulse-gold 2s infinite;
         }
-        .menu-btn:hover { opacity: 1; }
+        @keyframes pulse-gold { 0% { box-shadow: 0 0 0 0 rgba(255, 218, 68, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 218, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 218, 68, 0); } }
 
-        /* CHAT AREA */
+        /* --- CHAT AREA --- */
         .chat-area { 
-            background: #f8fafc; flex: 1; overflow-y: auto; padding: 20px; 
+            background: #f9fafb; flex: 1; overflow-y: auto; padding: 20px; 
             position: relative;
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-image: radial-gradient(#ce181e 0.5px, transparent 0.5px);
+            background-size: 20px 20px; opacity: 0.98;
         }
 
         .watermark {
             position: absolute; inset: 0; display: grid;
             grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(8, 1fr);
-            pointer-events: none; z-index: 0; opacity: 0.03;
+            pointer-events: none; z-index: 0; opacity: 0.04;
         }
         .watermark-item {
-            transform: rotate(-30deg); font-size: 10px; font-weight: 900;
-            display: flex; align-items: center; justify-content: center; color: black;
+            transform: rotate(-30deg); font-size: 11px; font-weight: 900;
+            display: flex; align-items: center; justify-content: center; 
+            color: var(--police-red);
         }
         
-        .msg { margin-bottom: 24px; display: flex; flex-direction: column; max-width: 88%; position: relative; z-index: 10; animation: fadeUp 0.3s ease-out; }
+        .msg { margin-bottom: 20px; display: flex; flex-direction: column; max-width: 88%; position: relative; z-index: 10; animation: fadeUp 0.3s ease-out; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .msg.bot { align-items: flex-start; }
-        .msg.user { align-items: flex-end; margin-left: auto; }
-
         .bubble {
-            padding: 16px 20px; font-size: 13.5px; line-height: 1.6;
+            padding: 14px 18px; font-size: 13px; line-height: 1.6;
             border-radius: 12px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .bot .bubble { 
@@ -92,63 +95,64 @@
             border-left: 4px solid var(--police-red);
         }
         .user .bubble { 
-            background: var(--police-red); color: white; font-weight: 500;
+            background: var(--police-red); color: white; font-weight: 600;
+            border-bottom-right-radius: 2px;
         }
 
-        /* INPUT AREA */
+        /* --- INPUT AREA --- */
         .input-container {
-            padding: 15px; background: white; border-top: 1px solid #e5e7eb;
+            padding: 15px; background: white; border-top: 2px solid #f3f4f6;
             display: flex; gap: 10px; align-items: center; z-index: 60;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.03);
         }
         .input-field {
             flex: 1; background: #f3f4f6; border-radius: 8px;
             padding: 14px 16px; font-size: 14px; border: 1px solid transparent;
-            transition: all 0.3s; color: #111; outline: none;
+            transition: all 0.3s; color: #111; outline: none; font-weight: 500;
         }
-        .input-field:focus { background: white; border-color: var(--police-red); }
+        .input-field:focus { background: white; border-color: var(--police-red); box-shadow: 0 0 0 3px rgba(206, 24, 30, 0.1); }
 
         .send-btn {
-            width: 48px; height: 48px; background: var(--police-red); color: white;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 8px; transition: all 0.2s; cursor: pointer;
+            width: 48px; height: 48px; background: var(--police-red); color: var(--police-gold);
+            display: flex; align-items: center; justify-content: center; font-size: 18px;
+            border-radius: 8px; transition: all 0.2s; cursor: pointer; border: none;
         }
         .send-btn:active { transform: scale(0.95); background: #b91c1c; }
 
-        /* SUGGESTIONS */
+        /* --- SUGGESTIONS --- */
         .suggestion-box {
             padding: 12px 20px; background: white; display: flex; gap: 8px; overflow-x: auto;
             border-top: 1px solid #f0f0f0;
         }
         .suggestion-chip {
             border: 1px solid #e5e7eb; color: var(--police-red); background: white;
-            padding: 8px 14px; font-size: 11px; font-weight: 700; white-space: nowrap;
-            border-radius: 6px; transition: all 0.2s;
+            padding: 8px 14px; font-size: 10px; font-weight: 700; white-space: nowrap;
+            border-radius: 6px; transition: all 0.2s; text-transform: uppercase;
         }
         .suggestion-chip:active { background: var(--police-red); color: white; border-color: var(--police-red); }
 
-        /* MODAL */
+        /* --- MODAL --- */
         .modal-overlay {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.8);
+            position: absolute; inset: 0; background: rgba(0,0,0,0.85);
             backdrop-filter: blur(5px); z-index: 100; display: none;
-            align-items: center; justify-content: center; padding: 20px;
+            align-items: center; justify-content: center; padding: 15px;
         }
         .modal-content {
-            background: white; width: 100%; max-height: 80%; border-radius: 12px;
+            background: white; width: 100%; height: 90%; border-radius: 12px;
             overflow: hidden; display: flex; flex-direction: column;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(255,218,68,0.2); border: 1px solid var(--police-gold);
         }
         .modal-header {
-            background: var(--police-red); padding: 20px; color: white;
+            background: var(--police-red); padding: 15px 20px; color: white;
             display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 4px solid var(--police-gold);
         }
-        .tab-bar { display: flex; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+        .tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e5e7eb; }
         .tab-btn {
-            flex: 1; text-align: center; padding: 15px 5px; font-size: 11px;
-            font-weight: 700; color: #6b7280; text-transform: uppercase; cursor: pointer;
-            border-bottom: 3px solid transparent;
+            flex: 1; text-align: center; padding: 12px 5px; font-size: 10px;
+            font-weight: 800; color: #9ca3af; text-transform: uppercase; cursor: pointer;
+            border-bottom: 3px solid transparent; transition: all 0.3s;
         }
-        .tab-btn.active { color: var(--police-red); border-bottom-color: var(--police-red); background: white; }
+        .tab-btn.active { color: var(--police-red); border-bottom-color: var(--police-red); background: #fef2f2; }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
@@ -157,10 +161,10 @@
 
     <div class="app-shell">
         <header class="header-official">
-            <div class="menu-btn" onclick="toggleModal('infoModal')"><i class="fas fa-bars"></i></div>
-            <h2>Hệ thống dữ liệu PX01</h2>
-            <h1>Tuyển sinh CAND 2026</h1>
-            <p>Công an tỉnh Quảng Trị</p>
+            <div class="data-btn" onclick="toggleModal('infoModal')"><i class="fas fa-database"></i></div>
+            <h2>HỆ THỐNG DỮ LIỆU PX01</h2>
+            <h1>TUYỂN SINH 2026</h1>
+            <p>CÔNG AN TỈNH QUẢNG TRỊ</p>
         </header>
 
         <div id="chatBox" class="chat-area no-scrollbar">
@@ -181,31 +185,45 @@
     <div id="infoModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="font-bold uppercase text-sm tracking-wider">Cơ sở dữ liệu</h3>
-                <button onclick="toggleModal('infoModal')" class="text-xl">&times;</button>
-            </div>
-            <div class="tab-bar">
-                <div class="tab-btn active" onclick="switchTab(this, 'tab-hoso')">Hồ sơ</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-danhba')">Danh bạ</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-huongdan')">Hướng dẫn</div>
-            </div>
-            <div class="flex-1 overflow-y-auto p-5 bg-white space-y-4 no-scrollbar">
-                <!-- Tab Hồ Sơ -->
-                <div id="tab-hoso" class="tab-content">
-                    <div id="list-hoso" class="space-y-3"></div>
+                <div>
+                    <h3 class="font-bold uppercase text-sm tracking-wider text-white">CƠ SỞ DỮ LIỆU GỐC</h3>
+                    <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">PX01 - QUẢNG TRỊ</p>
                 </div>
-                <!-- Tab Danh Bạ -->
-                <div id="tab-danhba" class="tab-content hidden">
-                    <div class="p-4 border border-red-100 bg-red-50 rounded-lg mb-4 text-center">
-                        <p class="text-[10px] font-bold text-red-500 uppercase">Cán bộ chủ trì</p>
-                        <p class="font-black text-gray-900 text-lg">Đại úy Lê Hoàng Trung</p>
-                        <p class="text-red-600 font-bold text-xl mt-1 select-all">0977.556.858</p>
+                <button onclick="toggleModal('infoModal')" class="text-2xl text-white hover:text-yellow-300">&times;</button>
+            </div>
+            
+            <div class="tab-bar">
+                <div class="tab-btn active" onclick="switchTab(this, 'tab-danhba')">DANH BẠ</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">SỨC KHỎE</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-dieukien')">ĐIỀU KIỆN</div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-4 bg-slate-50 space-y-4 no-scrollbar">
+                
+                <!-- Tab Danh Bạ (Tích hợp Excel) -->
+                <div id="tab-danhba" class="tab-content">
+                    <div class="p-3 bg-white border border-red-200 rounded-lg mb-3 text-center shadow-sm">
+                        <p class="text-[9px] font-bold text-red-500 uppercase tracking-widest">Cán bộ chủ trì PX01</p>
+                        <p class="font-black text-gray-900 text-base mt-1">Đại úy LÊ HOÀNG TRUNG</p>
+                        <p class="text-red-600 font-black text-lg mt-1 select-all">0977.556.858 - 0823.373.373</p>
+                    </div>
+                    <div class="relative mb-3">
+                        <input type="text" id="searchContact" oninput="filterContact()" placeholder="Tìm xã/phường/đặc khu (VD: Gio Linh, Ba Đồn)..." class="w-full p-2 pl-9 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 font-semibold text-gray-700">
+                        <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-xs"></i>
                     </div>
                     <div id="list-danhba" class="space-y-2"></div>
                 </div>
-                <!-- Tab Hướng Dẫn -->
-                <div id="tab-huongdan" class="tab-content hidden">
-                    <div id="list-huongdan" class="space-y-3"></div>
+                
+                <!-- Tab Sức khỏe (Tích hợp TT62) -->
+                <div id="tab-suckhoe" class="tab-content hidden">
+                    <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">TIÊU CHUẨN LÂM SÀNG & CẬN LÂM SÀNG</h4>
+                    <div id="list-suckhoe" class="space-y-2"></div>
+                </div>
+
+                <!-- Tab Điều kiện (Tích hợp Văn bản mới) -->
+                <div id="tab-dieukien" class="tab-content hidden">
+                    <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">ĐỐI TƯỢNG & NGUYÊN TẮC</h4>
+                    <div id="list-dieukien" class="space-y-2"></div>
                 </div>
             </div>
         </div>
@@ -213,93 +231,108 @@
 
     <script>
         /****************************************************************
-         * 1. KHU VỰC DỮ LIỆU TĨNH (ĐỂ ĐỒNG CHÍ DÁN WORD/EXCEL VÀO)
+         * 1. CƠ SỞ DỮ LIỆU TỰ ĐỘNG HÓA (ĐÃ CẬP NHẬT TỪ FILE)
          ****************************************************************/
         
-        // HỒ SƠ DỰ TUYỂN (Dựa trên quy định chung)
-        const HO_SO_DATA = [
-            { item: "Phiếu đăng ký sơ tuyển", desc: "Theo mẫu của Bộ Công an, nhận tại Công an xã." },
-            { item: "Học bạ THPT", desc: "Bản chính (để đối chiếu) và bản sao công chứng." },
-            { item: "Căn cước công dân", desc: "Bản sao có công chứng (mặt trước & sau)." },
-            { item: "Giấy khai sinh", desc: "Bản sao trích lục hoặc bản sao từ sổ gốc." },
-            { item: "Giấy xác nhận cư trú", desc: "Mẫu CT07 (nếu cần xác minh vùng ưu tiên)." },
-            { item: "Ảnh thẻ 4x6", desc: "04 ảnh màu, phông nền trắng, trang phục lịch sự." },
-            { item: "Giấy tờ ưu tiên", desc: "Con thương binh, liệt sĩ, chứng chỉ ngoại ngữ (nếu có)." }
-        ];
-
-        // DANH BẠ LIÊN HỆ (Chờ dữ liệu Excel của đồng chí)
+        // DỮ LIỆU DANH BẠ (TỪ EXCEL)
         const DANH_BA_DATA = [
-            { unit: "CA TP Đông Hà", phone: "0233.3852.333" },
-            { unit: "CA TX Quảng Trị", phone: "0233.3861.214" },
-            { unit: "CA Huyện Vĩnh Linh", phone: "0233.3823.204" },
-            { unit: "CA Huyện Gio Linh", phone: "0233.3825.214" }
+            { unit: "Công an Phường Đồng Hới", name: "Lâm Hải Đăng", phone: "0395.995.636" },
+            { unit: "Công an Phường Đồng Thuận", name: "Đặng Diệp Tuấn Anh", phone: "0945.788.588" },
+            { unit: "Công an Phường Đồng Sơn", name: "Đinh Quốc Toàn", phone: "0986.687.373" },
+            { unit: "Công an Xã Nam Gianh", name: "Võ Chiến Thắng", phone: "0327.688.823" },
+            { unit: "Công an Xã Nam Ba Đồn", name: "Trần Bảo Hoàng", phone: "0836.680.080" },
+            { unit: "Công an Phường Ba Đồn", name: "Trần Văn Hưng", phone: "0338.052.046" },
+            { unit: "Công an Phường Bắc Gianh", name: "Phan Việt Chung", phone: "0354.733.222" },
+            { unit: "Công an Xã Dân Hóa", name: "Nguyễn Duy Thành", phone: "0378.417.456" },
+            { unit: "Công an Xã Kim Điền", name: "Phạm Thế Anh", phone: "0828.235.028" },
+            { unit: "Công an Xã Kim Phú", name: "Cao Đinh Sỹ Hùng", phone: "0336.020.120" },
+            { unit: "Công an Xã Minh Hóa", name: "Đinh Trọng Kiều", phone: "0909.038.099" },
+            { unit: "Công an Xã Tân Thành", name: "Đinh Sỹ Tuấn", phone: "0946.266.087" },
+            { unit: "Công an Xã Tuyên Lâm", name: "Đặng Duy Hạnh", phone: "0918.973.5xx" },
+            { unit: "Công an Xã Cồn Tiên", name: "Nguyễn Việt Dũng", phone: "0844.069.555" },
+            { unit: "Công an Xã Cửa Việt", name: "Trần Công Thức", phone: "0977.407.287" },
+            { unit: "Công an Xã Gio Linh", name: "Lê Quốc Khánh", phone: "0916.387.678" },
+            { unit: "Công an Xã Bến Hải", name: "Nguyễn Thị Kiều Nhi", phone: "0943.138.174" },
+            { unit: "Công an Xã Hướng Lập", name: "Trần Hữu Đức", phone: "0912.237.456" },
+            { unit: "Công an Xã Hướng Phùng", name: "Trần Lâm Chi", phone: "0935.450.126" },
+            { unit: "Công an Xã Khe Sanh", name: "Bùi Hữu Ta", phone: "0338.480.673" },
+            { unit: "Công an Xã Tân Lập", name: "Trần Bình Dương", phone: "0973.670.611" },
+            { unit: "Công an Xã Lao Bảo", name: "Trần Hoàng Việt", phone: "0348.578.713" },
+            { unit: "Công an Xã Lìa", name: "Hồ Ái Đôn", phone: "0905.371.123" },
+            { unit: "Công an Xã A Dơi", name: "Nguyễn Đình Quyết", phone: "0382.291.164" },
+            { unit: "Công an Xã La Lay", name: "Nguyễn Tất Đạt", phone: "0944.626.234" },
+            { unit: "Công an Xã Tà Rụt", name: "Hoàng Văn Hải", phone: "0975.995.116" },
+            { unit: "Công an Xã Đakrông", name: "Trần Quốc Hoàn", phone: "0985.887.469" },
+            { unit: "Công an Xã Ba Lòng", name: "Hồ Ngọc Hoàn", phone: "0979.194.789" }
         ];
 
-        // HƯỚNG DẪN 2026 (Chờ dữ liệu Word chi tiết)
-        const HUONG_DAN_DATA = [
-            { title: "Thời gian sơ tuyển", content: "Dự kiến từ tháng 3/2026 đến tháng 5/2026." },
-            { title: "Địa điểm sơ tuyển", content: "Thực hiện tại Công an cấp Xã/Phường nơi đăng ký thường trú (theo Thông tư 99/2025)." },
-            { title: "Phương thức thi", content: "Thi đánh giá năng lực Bộ Công an kết hợp điểm thi tốt nghiệp THPT." }
+        // DỮ LIỆU SỨC KHỎE (TỪ FILE WORD TT62)
+        const SUC_KHOE_DATA = [
+            { title: "KHÁM CẬN LÂM SÀNG", content: "• Xét nghiệm Máu: HIV, Viêm gan B (HBsAg), Viêm gan C, Đường huyết, Chức năng gan/thận.<br>• Xét nghiệm Nước tiểu: Tổng phân tích và <b>tìm chất ma túy</b>.<br>• Chẩn đoán: X-quang phổi, Siêu âm bụng, Điện tim." },
+            { title: "CHỈ SỐ SINH TỒN", content: "• Huyết áp: 100-130 mmHg.<br>• Mạch: 60-80 lần/phút." },
+            { title: "CHIỀU CAO (ƯU TIÊN)", content: "• Người dân tộc: Nam ≥ 1m62, Nữ ≥ 1m56.<br>• Đối tượng UT1: Nam ≥ 1m60, Nữ ≥ 1m55.<br>• Tốt nghiệp Đại học: Nam ≥ 1m62, Nữ ≥ 1m56." }
+        ];
+
+        // DỮ LIỆU ĐIỀU KIỆN & ĐỐI TƯỢNG (TỪ FILE DOCX)
+        const DIEU_KIEN_DATA = [
+            { title: "ĐỐI TƯỢNG TUYỂN", content: "• Cán bộ Công an (Lĩnh vực nghiệp vụ/Kỹ thuật).<br>• Chiến sĩ nghĩa vụ (tại ngũ 15-24 tháng).<br>• Công dân thường trú tại địa phương." },
+            { title: "ĐỘ TUỔI (TÍNH ĐẾN NĂM DỰ TUYỂN)", content: "• Học sinh phổ thông: ≤ 22 tuổi.<br>• Người dân tộc thiểu số: ≤ 25 tuổi.<br>• Cán bộ CA/Văn bằng 2: ≤ 30 tuổi." },
+            { title: "TIÊU CHUẨN CHÍNH TRỊ", content: "• Bản thân và gia đình chấp hành tốt pháp luật.<br>• Lý lịch trong sạch (kiểm tra 3 đời).<br>• Phẩm chất đạo đức tốt (Hạnh kiểm Khá/Tốt)." }
         ];
 
         /****************************************************************
-         * 2. KHO TRI THỨC (CÂU HỎI & TRẢ LỜI)
-         * Đã tích hợp TT 62, 50, 99 và Lộ trình thi máy tính
+         * 2. KHO TRI THỨC THÔNG MINH
          ****************************************************************/
         const KNOWLEDGE_BASE = [
             { 
-                keys: ['hồ sơ', 'cần gì', 'giấy tờ', 'thủ tục', 'đăng ký'], 
-                answer: "<b>Hồ sơ đăng ký sơ tuyển gồm:</b><br>- Phiếu đăng ký (nhận tại CA xã).<br>- Bản sao công chứng: Học bạ, CCCD, Khai sinh.<br>- 4 ảnh 4x6.<br>- Các giấy tờ ưu tiên (nếu có).<br><i>Đồng chí xem danh mục chi tiết tại Menu > Hồ sơ.</i>" 
+                keys: ['hồ sơ', 'cần gì', 'giấy tờ'], 
+                answer: "<b>Hồ sơ đăng ký sơ tuyển gồm:</b><br>1. Phiếu đăng ký (nhận tại CA xã).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. Giấy khai sinh.<br>5. 4 ảnh 4x6.<br><i>Chi tiết xem tại Menu > Điều kiện.</i>" 
             },
             { 
-                keys: ['tuổi', 'sinh năm', 'độ tuổi', 'bao nhiêu tuổi'], 
-                answer: "<b>Quy định độ tuổi (TT 50/2021):</b><br>- Học sinh phổ thông: Không quá 22 tuổi.<br>- Người dân tộc thiểu số: Không quá 25 tuổi.<br>- Chiến sĩ nghĩa vụ: Theo thời gian phục vụ tại ngũ." 
+                keys: ['tuổi', 'sinh năm', 'độ tuổi'], 
+                answer: "<b>Quy định độ tuổi (Mới nhất):</b><br>- Học sinh phổ thông: Không quá 22 tuổi.<br>- Người dân tộc thiểu số: Không quá 25 tuổi.<br>- Cán bộ/Văn bằng 2: Không quá 30 tuổi." 
             },
             { 
-                keys: ['sức khỏe', 'chiều cao', 'cân nặng', 'bmi', '62/2023'], 
-                answer: "<b>Tiêu chuẩn sức khỏe (TT 62/2023):</b><br>- <b>Nam:</b> Cao ≥ 1m64 (Vùng ưu tiên ≥ 1m62).<br>- <b>Nữ:</b> Cao ≥ 1m58 (Vùng ưu tiên ≥ 1m56).<br>- <b>BMI:</b> Từ 18.5 đến dưới 30." 
+                keys: ['chiều cao', 'cân nặng', 'bmi', '62/2023'], 
+                answer: "<b>Tiêu chuẩn chiều cao (TT 62):</b><br>- <b>Nam:</b> ≥ 1m64 (Dân tộc ≥ 1m62; UT1 ≥ 1m60).<br>- <b>Nữ:</b> ≥ 1m58 (Dân tộc ≥ 1m56; UT1 ≥ 1m55).<br>- <b>BMI:</b> 18.5 - 29.9." 
             },
             { 
-                keys: ['mắt', 'cận', 'thị lực', 'kính', 'loạn thị'], 
-                answer: "<b>Quy định về Mắt:</b><br>- Cận thị: Không quá 3 diop mỗi mắt.<br>- Thị lực qua kính: Đạt 19/10 tổng 2 mắt.<br>- <b>Loạn thị/Mù màu:</b> KHÔNG đủ điều kiện dự tuyển." 
+                keys: ['máu', 'xét nghiệm', 'viêm gan', 'hiv', 'ma túy'], 
+                answer: "<b>Nội dung khám cận lâm sàng (TT 62):</b><br>- Máu: HIV, Viêm gan B, C, đường huyết, chức năng gan thận.<br>- Nước tiểu: Tìm chất ma túy.<br>- Chẩn đoán: X-quang phổi, Siêu âm bụng, Điện tim."
+            },
+            { 
+                keys: ['mắt', 'cận', 'thị lực'], 
+                answer: "<b>Tiêu chuẩn Mắt:</b><br>- Cận thị: Không quá 3 diop.<br>- Thị lực qua kính: Đạt 19/10 tổng 2 mắt.<br>- Không tuyển: Loạn thị, Mù màu." 
             },
             {
-                keys: ['xăm', 'sẹo', 'phun môi', 'thẩm mỹ', 'vết trổ'],
-                answer: "<b>Quy định về Thẩm mỹ:</b><br>- Tuyệt đối không tuyển thí sinh có hình xăm, chữ xăm (kể cả đã xóa để lại sẹo xấu).<br>- Phun xăm thẩm mỹ (nữ) phải tự nhiên, không gây phản cảm.<br>- Sẹo lồi, sẹo lớn ở vị trí lộ diện sẽ bị loại."
+                keys: ['xăm', 'sẹo', 'phun môi'],
+                answer: "<b>Quy định Thẩm mỹ:</b> Cấm tuyệt đối hình xăm, chữ xăm trên da. Phun xăm thẩm mỹ (nữ) phải tự nhiên. Sẹo lồi/xấu ở vị trí lộ diện sẽ bị loại."
             },
             {
                 keys: ['nơi nộp', 'xã', 'huyện', 'ở đâu', 'sơ tuyển', 'thông tư 99'],
-                answer: "<b>Địa điểm Sơ tuyển (TT 99/2025):</b><br>Thí sinh nộp hồ sơ và thực hiện sơ tuyển ban đầu tại <b>CÔNG AN CẤP XÃ/PHƯỜNG</b> nơi đăng ký thường trú (không phải lên Công an huyện như trước)."
+                answer: "<b>Theo Thông tư 99/2025:</b> Thí sinh nộp hồ sơ và sơ tuyển trực tiếp tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú. Không cần lên Công an huyện."
             },
             {
-                keys: ['học lực', 'điểm', '7.0', 'khá', 'giỏi'],
-                answer: "<b>Tiêu chuẩn Học lực (TT 50):</b><br>- 3 năm THPT đạt học lực Khá trở lên.<br>- Các môn trong tổ hợp xét tuyển phải đạt từ <b>7.0 điểm</b> trở lên trong từng năm học."
-            },
-            {
-                keys: ['chính trị', 'lý lịch', 'ba đời', 'kết nạp đảng'],
-                answer: "<b>Tiêu chuẩn Chính trị:</b><br>- Bản thân và gia đình chấp hành tốt chủ trương, pháp luật.<br>- Thẩm tra lý lịch 3 đời.<br>- Không có tiền án, tiền sự, không vi phạm các quy định về an ninh quốc gia."
-            },
-            {
-                keys: ['máy tính', 'lộ trình', 'đổi mới', '2026', 'thi'],
-                answer: "<b>Lộ trình thi trên máy tính:</b><br>- 2026: Áp dụng cho tuyển sinh Văn bằng 2.<br>- 2027: Thí điểm tại một số trường.<br>- 2028: Dự kiến áp dụng toàn diện 100%."
+                keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025', 'ưu tiên'],
+                answer: "<b>Điểm mới Tuyển quân 2025:</b> Khuyến khích công dân có trình độ Đại học, Cao đẳng tham gia nghĩa vụ CAND. Đây là nguồn quan trọng để xét chuyển chuyên nghiệp lâu dài trong lực lượng."
             }
         ];
 
         const SUGGESTIONS = [
-            { label: "DANH MỤC HỒ SƠ", query: "Hồ sơ cần những gì" },
-            { label: "SỨC KHỎE (TT 62)", query: "Chiều cao BMI 62/2023" },
-            { label: "NƠI NỘP HỒ SƠ", query: "Nơi nộp hồ sơ sơ tuyển" },
-            { label: "QUY ĐỊNH XĂM", query: "Quy định về xăm trổ" }
+            { label: "SỨC KHỎE (TT62)", query: "Chiều cao BMI 62/2023" },
+            { label: "XÉT NGHIỆM MÁU", query: "Xét nghiệm viêm gan ma túy" },
+            { label: "QUY ĐỊNH TUỔI", query: "Độ tuổi dự tuyển" },
+            { label: "NƠI NỘP HỒ SƠ", query: "Nơi nộp hồ sơ sơ tuyển" }
         ];
 
         /****************************************************************
-         * LOGIC HỆ THỐNG
+         * LOGIC VẬN HÀNH
          ****************************************************************/
         const chatBox = document.getElementById('chatBox');
         const userInput = document.getElementById('userInput');
 
         function initApp() {
-            // Suggestion Bar
+            // Render Suggestions
             const sBox = document.getElementById('suggestionBox');
             SUGGESTIONS.forEach(s => {
                 const chip = document.createElement('div');
@@ -309,10 +342,7 @@
                 sBox.appendChild(chip);
             });
 
-            // Modal Data Loading
-            renderModalData();
-
-            // Watermark creation
+            // Watermark
             const wm = document.getElementById('watermark');
             for (let i = 0; i < 16; i++) {
                 const d = document.createElement('div');
@@ -321,28 +351,47 @@
                 wm.appendChild(d);
             }
 
-            addMessage("Hệ thống dữ liệu tuyển sinh CAND 2026 - PX01 Quảng Trị đã sẵn sàng. Mời đồng chí, thí sinh, phụ huynh nhập nội dung cần tra cứu.", "bot");
+            renderModalData();
+            addMessage("<b>Kính chào Đồng chí! Đây là trợ lý ảo trực tuyến Tuyển sinh năm 2026 của Phòng Tổ chức cán bộ - Công an tỉnh Quảng Trị, kính mời đồng chí, thí sinh, phụ huynh đặt câu hỏi tra cứu.", "bot");
         }
 
         function renderModalData() {
-            document.getElementById('list-hoso').innerHTML = HO_SO_DATA.map(i => `
-                <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                    <p class="text-xs font-bold text-slate-800 uppercase">📌 ${i.item}</p>
-                    <p class="text-[11px] text-slate-600 mt-1">${i.desc}</p>
+            // Sức khỏe
+            document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `
+                <div class="p-3 bg-white border border-red-100 rounded-lg shadow-sm">
+                    <p class="text-xs font-bold text-[#ce181e] uppercase">⚕️ ${i.title}</p>
+                    <p class="text-[11px] text-gray-700 mt-1 leading-relaxed">${i.content}</p>
                 </div>
             `).join('');
 
-            document.getElementById('list-danhba').innerHTML = DANH_BA_DATA.map(i => `
-                <div class="p-3 bg-white border border-slate-200 rounded-lg flex justify-between items-center">
-                    <span class="text-xs font-bold text-slate-800">${i.unit}</span>
-                    <span class="text-xs font-black text-red-600 select-all">${i.phone}</span>
+            // Điều kiện
+            document.getElementById('list-dieukien').innerHTML = DIEU_KIEN_DATA.map(i => `
+                <div class="p-3 bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <p class="text-xs font-bold text-gray-800 uppercase text-[#ce181e]">📌 ${i.title}</p>
+                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed">${i.content}</p>
                 </div>
             `).join('');
 
-            document.getElementById('list-huongdan').innerHTML = HUONG_DAN_DATA.map(i => `
-                <div class="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <p class="text-xs font-bold text-yellow-800 uppercase">${i.title}</p>
-                    <p class="text-[11px] text-slate-700 mt-1">${i.content}</p>
+            // Danh bạ (Render lần đầu)
+            filterContact();
+        }
+
+        function filterContact() {
+            const term = document.getElementById('searchContact').value.toLowerCase();
+            const filtered = DANH_BA_DATA.filter(i => 
+                i.unit.toLowerCase().includes(term) || 
+                i.name.toLowerCase().includes(term)
+            );
+            
+            document.getElementById('list-danhba').innerHTML = filtered.map(i => `
+                <div class="p-3 bg-white border border-gray-200 rounded-lg flex justify-between items-center hover:border-red-300 transition-all shadow-sm">
+                    <div>
+                        <p class="text-[11px] font-bold text-gray-800">${i.unit}</p>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold mt-0.5"><i class="fas fa-user-shield mr-1"></i>${i.name}</p>
+                    </div>
+                    <a href="tel:${i.phone.replace(/\./g, '')}" class="text-[11px] font-black text-[#ce181e] bg-red-50 px-2 py-1 rounded border border-red-100 hover:bg-red-600 hover:text-white transition-colors">
+                        ${i.phone}
+                    </a>
                 </div>
             `).join('');
         }
@@ -369,7 +418,7 @@
                 if(response) {
                     addMessage(response.answer, 'bot');
                 } else {
-                    addMessage("Thông tin này đang được cập nhật theo hướng dẫn mới nhất của Bộ Công an. Đồng chí vui lòng liên hệ <b>Đ/c Trung (0977.556.858)</b> để được giải đáp.", "bot");
+                    addMessage("Thông tin này đang được cập nhật. Đồng chí vui lòng tra cứu trong phần <b>Danh bạ</b> (góc phải) hoặc liên hệ trực tiếp <b>Đ/c Đại úy Lê Hoàng Trung (0977.556.858 - 0823.373.373)</b>.", "bot");
                 }
             }, 500);
         }
