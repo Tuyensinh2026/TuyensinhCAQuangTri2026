@@ -207,7 +207,7 @@
                         <p class="text-red-600 font-black text-lg mt-1 select-all">0977.556.858 - 0823.373.373</p>
                     </div>
                     <div class="relative mb-3">
-                        <input type="text" id="searchContact" oninput="filterContact()" placeholder="Tìm xã/phường (VD: Hướng Phùng, Lao Bảo)..." class="w-full p-2 pl-9 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 font-semibold text-gray-700">
+                        <input type="text" id="searchContact" oninput="filterContact()" placeholder="Tìm xã/phường/đặc khu (VD: Gio Linh, Ba Đồn)..." class="w-full p-2 pl-9 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 font-semibold text-gray-700">
                         <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-xs"></i>
                     </div>
                     <div id="list-danhba" class="space-y-2"></div>
@@ -365,7 +365,10 @@
 
         function filterContact() {
             const term = document.getElementById('searchContact').value.toLowerCase();
-            const filtered = DANH_BA_DATA.filter(i => i.unit.toLowerCase().includes(term) || i.name.toLowerCase().includes(term));
+            const filtered = DANH_BA_DATA.filter(i => 
+                i.unit.toLowerCase().includes(term) || 
+                i.name.toLowerCase().includes(term)
+            );
             
             document.getElementById('list-danhba').innerHTML = filtered.map(i => `
                 <div class="p-3 bg-white border border-gray-200 rounded-lg flex justify-between items-center hover:border-red-300 transition-all shadow-sm">
@@ -391,21 +394,32 @@
         function handleSend() {
             const text = userInput.value.trim();
             if (!text) return;
+
             addMessage(text, 'user');
             userInput.value = '';
+
             setTimeout(() => {
                 const query = text.toLowerCase();
                 const response = KNOWLEDGE_BASE.find(i => i.keys.some(k => query.includes(k)));
-                if(response) { addMessage(response.answer, 'bot'); } 
-                else { addMessage("Thông tin này đang được cập nhật. Đồng chí vui lòng tra cứu trong phần <b>Danh bạ</b> (góc phải) hoặc liên hệ trực tiếp <b>Đ/c Đại úy Lê Hoàng Trung (0977.556.858 - 0823.373.373)</b>.", "bot"); }
+                
+                if(response) {
+                    addMessage(response.answer, 'bot');
+                } else {
+                    addMessage("Thông tin này đang được cập nhật. Đồng chí vui lòng tra cứu trong phần <b>Danh bạ</b> (góc phải) hoặc liên hệ trực tiếp <b>Đ/c Đại úy Lê Hoàng Trung (0977.556.858 - 0823.373.373)</b>.", "bot");
+                }
             }, 500);
         }
 
-        function ask(q) { userInput.value = q; handleSend(); }
-        function toggleModal(id) { 
+        function ask(q) {
+            userInput.value = q;
+            handleSend();
+        }
+
+        function toggleModal(id) {
             const m = document.getElementById(id);
             m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
         }
+
         function switchTab(btn, tabId) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
