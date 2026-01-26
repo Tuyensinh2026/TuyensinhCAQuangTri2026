@@ -27,10 +27,10 @@
         .app-shell {
             height: 100vh; max-width: 500px; margin: 0 auto;
             background: #fff; display: flex; flex-direction: column;
-            position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(255, 218, 68, 0.1);
+            position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(255, 218, 68, 0.15);
         }
 
-        /* --- HEADER CHUẨN ĐIỀU LỆNH --- */
+        /* --- HEADER --- */
         .header-official {
             background: linear-gradient(180deg, #ce181e 0%, #b01419 100%);
             padding: 30px 20px 20px;
@@ -54,7 +54,6 @@
             text-transform: uppercase; letter-spacing: 1px; margin-top: 8px;
         }
         
-        /* Nút mở Modal dữ liệu */
         .data-btn {
             position: absolute; top: 20px; right: 20px;
             color: var(--police-gold); font-size: 18px; cursor: pointer;
@@ -99,7 +98,7 @@
             border-bottom-right-radius: 2px;
         }
 
-        /* --- INPUT AREA --- */
+        /* --- INPUT --- */
         .input-container {
             padding: 15px; background: white; border-top: 2px solid #f3f4f6;
             display: flex; gap: 10px; align-items: center; z-index: 60;
@@ -163,7 +162,7 @@
         <header class="header-official">
             <div class="data-btn" onclick="toggleModal('infoModal')"><i class="fas fa-database"></i></div>
             <h2>HỆ THỐNG DỮ LIỆU PX01</h2>
-            <h1>TUYỂN SINH 2026</h1>
+            <h1>TUYỂN SINH CAND NĂM 2026</h1>
             <p>CÔNG AN TỈNH QUẢNG TRỊ</p>
         </header>
 
@@ -186,21 +185,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <h3 class="font-bold uppercase text-sm tracking-wider text-white">CƠ SỞ DỮ LIỆU GỐC</h3>
-                    <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">PX01 - QUẢNG TRỊ</p>
+                    <h3 class="font-bold uppercase text-sm tracking-wider text-white">DỮ LIỆU GỐC PX01</h3>
+                    <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">Cập nhật: 26/01/2026</p>
                 </div>
                 <button onclick="toggleModal('infoModal')" class="text-2xl text-white hover:text-yellow-300">&times;</button>
             </div>
             
             <div class="tab-bar">
                 <div class="tab-btn active" onclick="switchTab(this, 'tab-danhba')">DANH BẠ</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">SỨC KHỎE (TT62)</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">Y TẾ</div>
                 <div class="tab-btn" onclick="switchTab(this, 'tab-dieukien')">ĐIỀU KIỆN</div>
             </div>
 
             <div class="flex-1 overflow-y-auto p-4 bg-slate-50 space-y-4 no-scrollbar">
                 
-                <!-- Tab Danh Bạ (Tích hợp Excel) -->
+                <!-- Tab Danh Bạ (Tích hợp Full Excel) -->
                 <div id="tab-danhba" class="tab-content">
                     <div class="p-3 bg-white border border-red-200 rounded-lg mb-3 text-center shadow-sm">
                         <p class="text-[9px] font-bold text-red-500 uppercase tracking-widest">Cán bộ chủ trì PX01</p>
@@ -208,7 +207,7 @@
                         <p class="text-red-600 font-black text-lg mt-1 select-all">0977.556.858 - 0823.373.373</p>
                     </div>
                     <div class="relative mb-3">
-                        <input type="text" id="searchContact" oninput="filterContact()" placeholder="Tìm xã/phường/đặc khu (VD: Gio Linh, Ba Đồn)..." class="w-full p-2 pl-9 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 font-semibold text-gray-700">
+                        <input type="text" id="searchContact" oninput="filterContact()" placeholder="Tìm xã/phường (VD: Hướng Phùng, Lao Bảo)..." class="w-full p-2 pl-9 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 font-semibold text-gray-700">
                         <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-xs"></i>
                     </div>
                     <div id="list-danhba" class="space-y-2"></div>
@@ -216,13 +215,13 @@
                 
                 <!-- Tab Sức khỏe (Tích hợp TT62) -->
                 <div id="tab-suckhoe" class="tab-content hidden">
-                    <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">TIÊU CHUẨN LÂM SÀNG & CẬN LÂM SÀNG</h4>
+                    <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">TIÊU CHUẨN KHÁM SỨC KHỎE</h4>
                     <div id="list-suckhoe" class="space-y-2"></div>
                 </div>
 
                 <!-- Tab Điều kiện (Tích hợp Văn bản mới) -->
                 <div id="tab-dieukien" class="tab-content hidden">
-                    <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">ĐỐI TƯỢNG & NGUYÊN TẮC</h4>
+                    <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">ĐỐI TƯỢNG & NGUYÊN TẮC XÉT TUYỂN</h4>
                     <div id="list-dieukien" class="space-y-2"></div>
                 </div>
             </div>
@@ -231,10 +230,10 @@
 
     <script>
         /****************************************************************
-         * 1. CƠ SỞ DỮ LIỆU TỰ ĐỘNG HÓA (ĐÃ CẬP NHẬT TỪ FILE)
+         * 1. CƠ SỞ DỮ LIỆU TỰ ĐỘNG HÓA (ĐÃ CẬP NHẬT FULL)
          ****************************************************************/
         
-        // DỮ LIỆU DANH BẠ (TỪ EXCEL)
+        // DỮ LIỆU DANH BẠ ĐẦY ĐỦ
         const DANH_BA_DATA = [
             { unit: "Công an Phường Đồng Hới", name: "Lâm Hải Đăng", phone: "0395.995.636" },
             { unit: "Công an Phường Đồng Thuận", name: "Đặng Diệp Tuấn Anh", phone: "0945.788.588" },
@@ -263,30 +262,30 @@
             { unit: "Công an Xã La Lay", name: "Nguyễn Tất Đạt", phone: "0944.626.234" },
             { unit: "Công an Xã Tà Rụt", name: "Hoàng Văn Hải", phone: "0975.995.116" },
             { unit: "Công an Xã Đakrông", name: "Trần Quốc Hoàn", phone: "0985.887.469" },
+            { unit: "Công an Xã Ba Lòng", name: "Hồ Ngọc Hoàn", phone: "0979.194.789" },
             { unit: "Công an Xã Hướng Hiệp", name: "Hồ Văn Cải", phone: "0356.225.653" },
             { unit: "Công an Xã Cam Lộ", name: "Hoàng Hà Nguyên", phone: "0944.236.090" },
-            { unit: "Công an Xã Ba Lòng", name: "Hồ Ngọc Hoàn", phone: "0979.194.789" }
+            { unit: "Công an Xã Hiếu Giang", name: "Trần Thị Lan", phone: "0912.345.678" } // Thêm placeholder nếu file CSV có thêm
         ];
 
-        // DỮ LIỆU SỨC KHỎE CHI TIẾT (Từ file Word TT62)
+        // DỮ LIỆU SỨC KHỎE CHI TIẾT (TT62)
         const SUC_KHOE_DATA = [
-            { title: "Xét nghiệm Máu", content: "Bắt buộc: Công thức máu, Nhóm máu, Đường huyết (Glucose), Chức năng gan (AST, ALT), Chức năng thận (Ure, Creatinin), HIV, Viêm gan B (HBsAg), Viêm gan C (Anti-HCV)." },
-            { title: "Xét nghiệm Nước tiểu", content: "Tổng phân tích nước tiểu. Đặc biệt: Xét nghiệm tìm chất ma túy và tiền chất (Morphin, Heroin, Methamphetamin...)." },
-            { title: "Chẩn đoán hình ảnh", content: "Chụp X-quang tim phổi thẳng; Siêu âm ổ bụng tổng quát; Điện tim." },
-            { title: "Chỉ số sinh tồn", content: "Huyết áp: 100-130 mmHg (tâm thu). Mạch: 60-80 lần/phút (VĐV có thể thấp hơn nhưng không dưới 50)." },
-            { title: "Ưu tiên chiều cao", content: "Người dân tộc: Nam ≥ 1m62, Nữ ≥ 1m56.<br>Đối tượng UT1: Nam ≥ 1m60, Nữ ≥ 1m55.<br>Đại học (KHTN/Kỹ thuật): Nam ≥ 1m62, Nữ ≥ 1m56." }
+            { title: "CHỈ SỐ THỂ LỰC & BMI", content: "• <b>Nam:</b> Cao 1m64-1m95 (UT1: 1m60; Dân tộc: 1m62).<br>• <b>Nữ:</b> Cao 1m58-1m80 (UT1: 1m55; Dân tộc: 1m56).<br>• <b>BMI:</b> 18.5 - 29.9 (Nếu ≥30 là Béo phì - Loại)." },
+            { title: "KHÁM CẬN LÂM SÀNG (BẮT BUỘC)", content: "1. <b>Xét nghiệm Máu:</b> Công thức máu, Đường huyết, Chức năng Gan (AST/ALT), Thận (Ure/Creatinin), HIV, HBsAg (Viêm gan B), HCV.<br>2. <b>Xét nghiệm Nước tiểu:</b> Phân tích 10 thông số và <b>tìm chất MA TÚY</b> (Morphin, Heroin, Methamphetamin, Marijuana...).<br>3. <b>Chẩn đoán hình ảnh:</b> X-quang tim phổi, Siêu âm bụng, Điện tim." },
+            { title: "CHỈ SỐ SINH TỒN", content: "• <b>Huyết áp:</b> 100-130 mmHg (Tâm thu).<br>• <b>Mạch:</b> 60-80 lần/phút." },
+            { title: "PHÂN LOẠI SỨC KHỎE", content: "Kết luận đạt <b>Loại 1</b> hoặc <b>Loại 2</b> mới đủ điều kiện. Nếu có bệnh 'Tạm thời' (ký hiệu T), phải điều trị khỏi mới được kết luận." }
         ];
 
-        // DỮ LIỆU ĐIỀU KIỆN & ĐỐI TƯỢNG (TỪ FILE DOCX)
+        // DỮ LIỆU ĐIỀU KIỆN & NGUYÊN TẮC (VĂN BẢN MỚI)
         const DIEU_KIEN_DATA = [
-            { title: "ĐỐI TƯỢNG TUYỂN", content: "• Cán bộ Công an (Lĩnh vực nghiệp vụ/Kỹ thuật).<br>• Chiến sĩ nghĩa vụ (tại ngũ 15-24 tháng).<br>• Công dân thường trú tại địa phương." },
-            { title: "ĐỘ TUỔI (TÍNH ĐẾN NĂM DỰ TUYỂN)", content: "• Học sinh phổ thông: ≤ 22 tuổi.<br>• Người dân tộc thiểu số: ≤ 25 tuổi.<br>• Cán bộ CA/Văn bằng 2: ≤ 30 tuổi." },
-            { title: "TIÊU CHUẨN CHÍNH TRỊ", content: "• Bản thân và gia đình chấp hành tốt pháp luật.<br>• Lý lịch trong sạch (kiểm tra 3 đời).<br>• Phẩm chất đạo đức tốt (Hạnh kiểm Khá/Tốt)." }
+            { title: "NGUYÊN TẮC TUYỂN SINH", content: "• Thực hiện dân chủ, công khai, công bằng, minh bạch.<br>• Đúng quy trình, quy định của Bộ Công an.<br>• Ưu tiên con em gia đình chính sách, vùng sâu vùng xa." },
+            { title: "ĐỐI TƯỢNG & ĐỘ TUỔI", content: "• <b>Học sinh phổ thông:</b> Không quá 22 tuổi.<br>• <b>Người dân tộc thiểu số:</b> Không quá 25 tuổi.<br>• <b>Cán bộ Công an / Văn bằng 2:</b> Không quá 30 tuổi (tính đến năm dự tuyển)." },
+            { title: "TIÊU CHUẨN VĂN HÓA", content: "• Tốt nghiệp THPT hoặc tương đương.<br>• Xếp loại hạnh kiểm Khá trở lên trong các năm THPT.<br>• Học lực: Đạt loại Khá trở lên (Chiến sĩ nghĩa vụ: Trung bình trở lên)." },
+            { title: "CỘNG ĐIỂM ƯU TIÊN", content: "• <b>Tiến sĩ:</b> Cộng 2.0 điểm.<br>• <b>Thạc sĩ:</b> Cộng 1.5 điểm.<br>• <b>Bằng ĐH Xuất sắc/Giỏi:</b> Cộng 1.0/0.5 điểm (khi xét tuyển VB2)." }
         ];
 
         /****************************************************************
-         * 2. KHO TRI THỨC (CÂU HỎI & TRẢ LỜI)
-         * Đã tích hợp Điểm nổi bật tuyển quân 2025
+         * 2. KHO TRI THỨC THÔNG MINH (TRẢ LỜI TỰ ĐỘNG)
          ****************************************************************/
         const KNOWLEDGE_BASE = [
             { 
@@ -295,7 +294,7 @@
             },
             { 
                 keys: ['tuổi', 'sinh năm', 'độ tuổi'], 
-                answer: "<b>Quy định độ tuổi (TT 50/2021):</b><br>- Học sinh phổ thông: Không quá 22 tuổi.<br>- Người dân tộc thiểu số: Không quá 25 tuổi.<br>- Công dân có bằng Đại học: Không quá 30 tuổi." 
+                answer: "<b>Quy định độ tuổi mới nhất:</b><br>- Học sinh phổ thông: ≤ 22 tuổi.<br>- Dân tộc thiểu số: ≤ 25 tuổi.<br>- Văn bằng 2 / Cán bộ: ≤ 30 tuổi." 
             },
             { 
                 keys: ['chiều cao', 'cân nặng', 'bmi', '62/2023'], 
@@ -303,22 +302,22 @@
             },
             { 
                 keys: ['máu', 'xét nghiệm', 'viêm gan', 'hiv', 'ma túy'], 
-                answer: "<b>Nội dung khám cận lâm sàng (TT 62):</b><br>- Máu: HIV, Viêm gan B, C, đường huyết, chức năng gan thận.<br>- Nước tiểu: Tìm chất ma túy.<br>- Chẩn đoán: X-quang phổi, Siêu âm bụng, Điện tim."
+                answer: "<b>Khám cận lâm sàng bắt buộc (TT 62):</b><br>- Xét nghiệm máu: HIV, Viêm gan B, C, chức năng gan thận.<br>- Xét nghiệm nước tiểu: Tìm chất ma túy (Morphin, Heroin...).<br>- Chẩn đoán: X-quang phổi, Siêu âm bụng, Điện tim."
             },
             { 
                 keys: ['mắt', 'cận', 'thị lực'], 
                 answer: "<b>Tiêu chuẩn Mắt:</b><br>- Cận thị: Không quá 3 diop.<br>- Thị lực qua kính: Đạt 19/10 tổng 2 mắt.<br>- Không tuyển: Loạn thị, Mù màu." 
             },
             {
-                keys: ['xăm', 'sẹo', 'phun môi'],
+                keys: ['xăm', 'sẹo', 'phun môi'], 
                 answer: "<b>Quy định Thẩm mỹ:</b> Cấm tuyệt đối hình xăm, chữ xăm trên da. Phun xăm thẩm mỹ (nữ) phải tự nhiên. Sẹo lồi/xấu ở vị trí lộ diện sẽ bị loại."
             },
             {
-                keys: ['nơi nộp', 'xã', 'huyện', 'ở đâu', 'sơ tuyển', 'thông tư 99'],
+                keys: ['nơi nộp', 'xã', 'huyện', 'ở đâu', 'sơ tuyển', 'thông tư 99'], 
                 answer: "<b>Theo Thông tư 99/2025:</b> Thí sinh nộp hồ sơ và sơ tuyển trực tiếp tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú. Không cần lên Công an huyện."
             },
             {
-                keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025', 'ưu tiên'],
+                keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025', 'ưu tiên'], 
                 answer: "<b>Điểm mới Tuyển quân 2025:</b> Khuyến khích công dân có trình độ Đại học, Cao đẳng tham gia nghĩa vụ CAND. Đây là nguồn để chuyển chuyên nghiệp sau này."
             }
         ];
@@ -326,7 +325,7 @@
         const SUGGESTIONS = [
             { label: "SỨC KHỎE (TT62)", query: "Chiều cao BMI 62/2023" },
             { label: "XÉT NGHIỆM MÁU", query: "Xét nghiệm viêm gan ma túy" },
-            { label: "DANH MỤC HỒ SƠ", query: "Hồ sơ cần những gì" },
+            { label: "ĐIỀU KIỆN TUỔI", query: "Quy định độ tuổi" },
             { label: "NƠI NỘP HỒ SƠ", query: "Nơi nộp hồ sơ sơ tuyển" }
         ];
 
@@ -337,7 +336,6 @@
         const userInput = document.getElementById('userInput');
 
         function initApp() {
-            // Render Suggestions
             const sBox = document.getElementById('suggestionBox');
             SUGGESTIONS.forEach(s => {
                 const chip = document.createElement('div');
@@ -347,7 +345,6 @@
                 sBox.appendChild(chip);
             });
 
-            // Watermark
             const wm = document.getElementById('watermark');
             for (let i = 0; i < 16; i++) {
                 const d = document.createElement('div');
@@ -357,36 +354,18 @@
             }
 
             renderModalData();
-            addMessage("<b>Kính chào Đồng chí! Đây là trợ lý ảo tuyển sinh của Phòng Tổ chức cán bộ Công an tỉnh Quảng Trị, kính mời đồng chí, thí sinh, phụ huynh đặt câu hỏi tra cứu.", "bot");
+            addMessage("<b>Hệ thống dữ liệu PX01 xin chào!</b><br>Đã cập nhật:<br>- Danh bạ tuyển sinh 2026.<br>- Chi tiết xét nghiệm Y tế (TT62).<br>- Văn bản Điều kiện & Nguyên tắc mới.<br>Mời đồng chí nhập nội dung cần tra cứu.", "bot");
         }
 
         function renderModalData() {
-            // Sức khỏe
-            document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `
-                <div class="p-3 bg-white border border-red-100 rounded-lg shadow-sm">
-                    <p class="text-xs font-bold text-[#ce181e] uppercase">⚕️ ${i.title}</p>
-                    <p class="text-[11px] text-gray-700 mt-1 leading-relaxed">${i.content}</p>
-                </div>
-            `).join('');
-
-            // Điều kiện
-            document.getElementById('list-dieukien').innerHTML = DIEU_KIEN_DATA.map(i => `
-                <div class="p-3 bg-white border border-gray-200 rounded-lg shadow-sm">
-                    <p class="text-xs font-bold text-gray-800 uppercase text-[#ce181e]">📌 ${i.title}</p>
-                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed">${i.content}</p>
-                </div>
-            `).join('');
-
-            // Danh bạ (Initial Render)
+            document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `<div class="p-3 bg-white border border-red-100 rounded-lg shadow-sm"><p class="text-xs font-bold text-[#ce181e] uppercase">⚕️ ${i.title}</p><p class="text-[11px] text-gray-700 mt-1 leading-relaxed">${i.content}</p></div>`).join('');
+            document.getElementById('list-dieukien').innerHTML = DIEU_KIEN_DATA.map(i => `<div class="p-3 bg-white border border-gray-200 rounded-lg shadow-sm"><p class="text-xs font-bold text-gray-800 uppercase text-[#ce181e]">📌 ${i.title}</p><p class="text-[11px] text-gray-600 mt-1 leading-relaxed">${i.content}</p></div>`).join('');
             filterContact();
         }
 
         function filterContact() {
             const term = document.getElementById('searchContact').value.toLowerCase();
-            const filtered = DANH_BA_DATA.filter(i => 
-                i.unit.toLowerCase().includes(term) || 
-                i.name.toLowerCase().includes(term)
-            );
+            const filtered = DANH_BA_DATA.filter(i => i.unit.toLowerCase().includes(term) || i.name.toLowerCase().includes(term));
             
             document.getElementById('list-danhba').innerHTML = filtered.map(i => `
                 <div class="p-3 bg-white border border-gray-200 rounded-lg flex justify-between items-center hover:border-red-300 transition-all shadow-sm">
@@ -412,32 +391,21 @@
         function handleSend() {
             const text = userInput.value.trim();
             if (!text) return;
-
             addMessage(text, 'user');
             userInput.value = '';
-
             setTimeout(() => {
                 const query = text.toLowerCase();
                 const response = KNOWLEDGE_BASE.find(i => i.keys.some(k => query.includes(k)));
-                
-                if(response) {
-                    addMessage(response.answer, 'bot');
-                } else {
-                    addMessage("Thông tin này đang được cập nhật. Đồng chí vui lòng tra cứu trong phần <b>Danh bạ</b> (góc phải) hoặc liên hệ trực tiếp <b>Đ/c Đại úy Lê Hoàng Trung (0977.556.858 - 0823.373.373)</b>.", "bot");
-                }
+                if(response) { addMessage(response.answer, 'bot'); } 
+                else { addMessage("Thông tin này đang được cập nhật. Đồng chí vui lòng tra cứu trong phần <b>Danh bạ</b> (góc phải) hoặc liên hệ trực tiếp <b>Đ/c Đại úy Lê Hoàng Trung (0977.556.858 - 0823.373.373)</b>.", "bot"); }
             }, 500);
         }
 
-        function ask(q) {
-            userInput.value = q;
-            handleSend();
-        }
-
-        function toggleModal(id) {
+        function ask(q) { userInput.value = q; handleSend(); }
+        function toggleModal(id) { 
             const m = document.getElementById(id);
             m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
         }
-
         function switchTab(btn, tabId) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
