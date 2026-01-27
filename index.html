@@ -161,7 +161,7 @@
     <div class="app-shell">
         <header class="header-official">
             <div class="data-btn" onclick="toggleModal('infoModal')"><i class="fas fa-database"></i></div>
-            <h2>HỆ THỐNG DỮ LIỆU PX01</h2>
+            <h2>TRỢ LÝ ẢO</h2>
             <h1>TUYỂN SINH CAND NĂM 2026</h1>
             <p>CÔNG AN TỈNH QUẢNG TRỊ</p>
         </header>
@@ -406,8 +406,8 @@
                 answer: "<b>Quy định Thẩm mỹ:</b> Cấm tuyệt đối hình xăm, chữ xăm trên da. Phun xăm thẩm mỹ (nữ) phải tự nhiên. Sẹo lồi/xấu ở vị trí lộ diện sẽ bị loại."
             },
             {
-                keys: ['nơi nộp', 'xã', 'huyện', 'ở đâu', 'sơ tuyển', 'thông tư 99'], 
-                answer: "<b>Theo Thông tư 99/2025:</b> Thí sinh nộp hồ sơ và sơ tuyển trực tiếp tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú. Không cần lên Công an huyện."
+                keys: ['nơi nộp', 'xã', 'phường', 'ở đâu', 'sơ tuyển', 'thông tư 99'], 
+                answer: "<b>Theo Thông tư 99/2025:</b> Thí sinh nộp hồ sơ và sơ tuyển trực tiếp tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú. Không cần lên Công an tỉnh."
             },
             {
                 keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025', 'ưu tiên'], 
@@ -727,7 +727,7 @@
             }
 
             renderModalData();
-            addMessage("<b>Hệ thống dữ liệu PX01 xin chào!</b><br>Đã cập nhật:<br>- Danh bạ tuyển sinh 2026.<br>- Chi tiết xét nghiệm Y tế (TT62).<br>- Văn bản Điều kiện & Nguyên tắc mới.<br>Mời đồng chí nhập nội dung cần tra cứu.", "bot");
+            addMessage("<b>Tôi là Trợ lý ảo tuyển sinh của Công an tỉnh Quảng Trị, kính mời đồng chí, thí sinh, phụ huynh nhập nội dung cần tra cứu.", "bot");
         }
 
         function renderModalData() {
@@ -784,4 +784,24 @@
         }
 
         function ask(q) {
-            userInput.value
+            userInput.value = q;
+            handleSend();
+        }
+
+        function toggleModal(id) {
+            const m = document.getElementById(id);
+            m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function switchTab(btn, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.remove('hidden');
+        }
+
+        userInput.onkeydown = (e) => { if(e.key === "Enter") handleSend(); };
+        window.onload = initApp;
+    </script>
+</body>
+</html>
