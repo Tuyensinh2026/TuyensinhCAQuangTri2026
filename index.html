@@ -88,6 +88,7 @@
         .bubble {
             padding: 14px 18px; font-size: 13.5px; line-height: 1.6;
             border-radius: 12px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            word-wrap: break-word;
         }
         .bot .bubble { 
             background: white; color: #1f2937; border: 1px solid #e5e7eb;
@@ -125,7 +126,7 @@
         .suggestion-chip {
             border: 1px solid #e5e7eb; color: var(--police-red); background: white;
             padding: 8px 14px; font-size: 11px; font-weight: 700; white-space: nowrap;
-            border-radius: 6px; transition: all 0.2s; text-transform: uppercase;
+            border-radius: 6px; transition: all 0.2s; text-transform: uppercase; cursor: pointer;
         }
         .suggestion-chip:active { background: var(--police-red); color: white; border-color: var(--police-red); }
 
@@ -186,20 +187,20 @@
             <div class="modal-header">
                 <div>
                     <h3 class="font-bold uppercase text-sm tracking-wider text-white">DỮ LIỆU GỐC PX01</h3>
-                    <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">Cập nhật: 26/01/2026</p>
+                    <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">Cập nhật: 27/01/2026</p>
                 </div>
                 <button onclick="toggleModal('infoModal')" class="text-2xl text-white hover:text-yellow-300">&times;</button>
             </div>
             
             <div class="tab-bar">
                 <div class="tab-btn active" onclick="switchTab(this, 'tab-danhba')">DANH BẠ</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">Y TẾ</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">Y TẾ (TT62)</div>
                 <div class="tab-btn" onclick="switchTab(this, 'tab-dieukien')">QUY CHẾ</div>
             </div>
 
             <div class="flex-1 overflow-y-auto p-4 bg-slate-50 space-y-4 no-scrollbar">
                 
-                <!-- Tab Danh Bạ -->
+                <!-- Tab Danh Bạ (Tích hợp Full Excel) -->
                 <div id="tab-danhba" class="tab-content">
                     <div class="p-3 bg-white border border-red-200 rounded-lg mb-3 text-center shadow-sm">
                         <p class="text-[9px] font-bold text-red-500 uppercase tracking-widest">Cán bộ chủ trì PX01</p>
@@ -207,21 +208,21 @@
                         <p class="text-red-600 font-black text-lg mt-1 select-all">0977.556.858 - 0823.373.373</p>
                     </div>
                     <div class="relative mb-3">
-                        <input type="text" id="searchContact" oninput="filterContact()" placeholder="Tìm xã/phường (VD: Gio Linh, Ba Đồn)..." class="w-full p-2 pl-9 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 font-semibold text-gray-700">
+                        <input type="text" id="searchContact" oninput="filterContact()" placeholder="Tìm xã/phường/đặc khu (VD: Gio Linh, Ba Đồn, Triệu Phong)..." class="w-full p-2 pl-9 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 font-semibold text-gray-700">
                         <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-xs"></i>
                     </div>
                     <div id="list-danhba" class="space-y-2"></div>
                 </div>
                 
-                <!-- Tab Sức khỏe -->
+                <!-- Tab Sức khỏe (Tích hợp TT62) -->
                 <div id="tab-suckhoe" class="tab-content hidden">
                     <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">TIÊU CHUẨN LÂM SÀNG & CẬN LÂM SÀNG</h4>
                     <div id="list-suckhoe" class="space-y-2"></div>
                 </div>
 
-                <!-- Tab Điều kiện -->
+                <!-- Tab Điều kiện (Tích hợp Văn bản mới) -->
                 <div id="tab-dieukien" class="tab-content hidden">
-                    <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">ĐỐI TƯỢNG, ĐIỀU KIỆN & ƯU TIÊN</h4>
+                    <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">ĐỐI TƯỢNG & NGUYÊN TẮC XÉT TUYỂN</h4>
                     <div id="list-dieukien" class="space-y-2"></div>
                 </div>
             </div>
@@ -233,123 +234,92 @@
          * 1. CƠ SỞ DỮ LIỆU ĐẦY ĐỦ 
          ****************************************************************/
         
-        // DANH BẠ 100% (Đã xóa từ khóa export)
+        // DANH BẠ 100% (Từ file can_bo_tuyen_sinh_raw.js & DANH SÁCH CÁN BỘ TUYỂN SINH CÁC ĐƠN VỊ.xlsx)
         const DANH_BA_DATA = [
-          { unit: "Phòng Tổ chức cán bộ", name: "Lê Hoàng Trung", phone: "0977.556.858 - 0823.373.373" },
-          { unit: "Công an Phường Đồng Hới", name: "Lâm Hải Đăng", phone: "0395.995.636" },
-          { unit: "Công an Phường Đồng Thuận", name: "Đặng Diệp Tuấn Anh", phone: "0945.788.588" },
-          { unit: "Công an Phường Đồng Sơn", name: "Đinh Quốc Toàn", phone: "0986.687.373" },
-          { unit: "Công an Xã Nam Gianh", name: "Võ Chiến Thắng", phone: "0327.688.823" },
-          { unit: "Công an Xã Nam Ba Đồn", name: "Trần Bảo Hoàng", phone: "0836.680.080" },
-          { unit: "Công an Phường Ba Đồn", name: "Trần Văn Hưng", phone: "0338.052.046" },
-          { unit: "Công an Xã Quảng Tiên", name: "Nguyễn Trung Đức", phone: "0827.059.399" },
-          { unit: "Công an Xã Quảng Trung", name: "Đặng Văn Hậu", phone: "0976.706.711" },
-          { unit: "Công an Xã Quảng Thủy", name: "Hồ Anh Tuấn", phone: "0983.746.747" },
-          { unit: "Công an Xã Quảng Văn", name: "Nguyễn Nhật Hoàng", phone: "0385.255.345" },
-          { unit: "Công an Xã Quảng Phú", name: "Nguyễn Đức Vũ", phone: "0978.557.575" },
-          { unit: "Công an Xã Quảng Hòa", name: "Nguyễn Đức Tuyên", phone: "0388.228.748" },
-          { unit: "Công an Xã Quảng Lộc", name: "Hoàng Mạnh Dũng", phone: "0968.569.697" },
-          { unit: "Công an Xã Quảng Thạch", name: "Hoàng Văn Ngọc", phone: "0971.908.114" },
-          { unit: "Công an Xã Quảng Lưu", name: "Phan Hoàng Anh", phone: "0985.291.888" },
-          { unit: "Công an Xã Quảng Phương", name: "Nguyễn Hữu Thắng", phone: "0844.933.888" },
-          { unit: "Công an Xã Quảng Xuân", name: "Võ Thanh Bình", phone: "0984.373.737" },
-          { unit: "Công an Xã Quảng Hưng", name: "Lê Văn Nam", phone: "0988.999.668" },
-          { unit: "Công an Xã Quảng Tân", name: "Phạm Văn Thanh", phone: "0344.660.678" },
-          { unit: "Công an Xã Quảng Hải", name: "Nguyễn Đức Thịnh", phone: "0977.169.699" },
-          { unit: "Công an Xã Quảng Châu", name: "Phạm Minh Tuấn", phone: "0986.129.339" },
-          { unit: "Công an Xã Quảng Đông", name: "Võ Minh Đức", phone: "0905.646.844" },
-          { unit: "Công an Xã Quảng Sơn", name: "Trần Văn Luật", phone: "0919.884.344" },
-          { unit: "Công an Xã Quảng Hợp", name: "Nguyễn Xuân Sơn", phone: "0942.154.367" },
-          { unit: "Công an Xã Quảng Kim", name: "Nguyễn Hoàng Huy", phone: "0935.270.067" },
-          { unit: "Công an Xã Quảng Minh", name: "Nguyễn Đức Mạnh", phone: "0782.217.777" },
-          { unit: "Công an Xã Quảng Trạch", name: "Nguyễn Văn Thành", phone: "0828.214.365" },
-          { unit: "Công an Xã Quảng Lâm", name: "Võ Văn Huy", phone: "0385.994.757" },
-          { unit: "Công an Xã Quảng Hòa (Bố Trạch)", name: "Phan Đình Hoàng", phone: "0905.385.863" },
-          { unit: "Công an Xã Quảng Tùng", name: "Nguyễn Văn Thuận", phone: "0972.346.555" },
-          { unit: "Công an Xã Quảng Liên", name: "Nguyễn Văn Tâm", phone: "0912.275.944" },
-          { unit: "Công an Xã Quảng Hưng (Bố Trạch)", name: "Trần Văn Huy", phone: "0948.586.898" },
-          { unit: "Công an Xã Quảng Phúc (Bố Trạch)", name: "Nguyễn Đức Quang", phone: "0978.275.858" },
-          { unit: "Công an Xã Quảng Thanh", name: "Nguyễn Xuân Hòa", phone: "0963.351.777" },
-          { unit: "Công an Xã Quảng Xuân (Bố Trạch)", name: "Nguyễn Văn Luyện", phone: "0869.386.679" },
-          { unit: "Công an Xã Quảng Tiến", name: "Nguyễn Ngọc Phú", phone: "0979.871.353" },
-          { unit: "Công an Xã Quảng Thọ", name: "Đinh Xuân Tuấn", phone: "0989.155.666" },
-          { unit: "Công an Xã Quảng Trung (Bố Trạch)", name: "Võ Ngọc Hoàng", phone: "0972.290.919" },
-          { unit: "Công an Xã Quảng Long", name: "Võ Văn Minh", phone: "0946.816.115" },
-          { unit: "Công an Xã Quảng Phương (Bố Trạch)", name: "Nguyễn Đức Huy", phone: "0968.788.899" },
-          { unit: "Công an Xã Quảng Lộc (Bố Trạch)", name: "Nguyễn Văn Hưng", phone: "0985.278.833" },
-          { unit: "Công an Xã Quảng Vinh", name: "Nguyễn Văn Nam", phone: "0969.999.699" },
-          { unit: "Công an Xã Quảng Sơn (Bố Trạch)", name: "Nguyễn Trọng Hòa", phone: "0979.090.565" },
-          { unit: "Công an Xã Quảng Minh (Bố Trạch)", name: "Nguyễn Văn Đạt", phone: "0977.697.979" },
-          { unit: "Công an Phường Đông Giang", name: "Nguyễn Văn Trường", phone: "0968.111.258" },
-          { unit: "Công an Phường Hải Thành", name: "Phạm Văn Lâm", phone: "0973.583.939" },
-          { unit: "Công an Phường Bắc Nghĩa", name: "Đặng Thị Thu Trang", phone: "0912.494.268" },
-          { unit: "Công an Phường Nam Lý", name: "Võ Văn Phương", phone: "0983.351.555" },
-          { unit: "Công an Phường Bắc Lý", name: "Nguyễn Thành Luân", phone: "0974.999.228" },
-          { unit: "Công an Phường Đồng Phú", name: "Nguyễn Hồng Phương", phone: "0913.412.201" },
-          { unit: "Công an Phường Đức Ninh Đông", name: "Nguyễn Viết Dương", phone: "0975.957.575" },
-          { unit: "Công an Phường Phú Hải", name: "Nguyễn Văn Dương", phone: "0911.834.777" },
-          { unit: "Công an Phường Đồng Hải", name: "Lê Văn Phúc", phone: "0914.956.955" },
-          { unit: "Công an Xã Lương Ninh", name: "Đinh Văn Đồng", phone: "0906.474.699" },
-          { unit: "Công an Xã Vạn Ninh", name: "Nguyễn Đăng Nam", phone: "0905.814.726" },
-          { unit: "Công an Xã Bảo Ninh", name: "Nguyễn Minh Đức", phone: "0961.327.047" },
-          { unit: "Công an Xã Đức Ninh", name: "Nguyễn Đình Nghĩa", phone: "0945.862.686" },
-          { unit: "Công an Xã Thuận Đức", name: "Nguyễn Hoàng Anh", phone: "0912.721.468" },
-          { unit: "Công an Xã Nghĩa Ninh", name: "Nguyễn Hồng Quân", phone: "0983.774.268" },
-          { unit: "Công an Xã Hải Ninh", name: "Nguyễn Đức Mạnh", phone: "0977.660.888" },
-          { unit: "Công an Xã Võ Ninh", name: "Đặng Hồng Lĩnh", phone: "0974.832.478" },
-          { unit: "Công an Xã Duy Ninh", name: "Nguyễn Văn Nhân", phone: "0965.545.599" },
-          { unit: "Công an Xã Hiền Ninh", name: "Phạm Văn Hải", phone: "0964.847.659" },
-          { unit: "Công an Xã Gia Ninh", name: "Đặng Văn Tùng", phone: "0942.431.268" },
-          { unit: "Công an Xã Tân Ninh", name: "Hoàng Văn Vũ", phone: "0979.479.479" },
-          { unit: "Công an Xã An Ninh", name: "Nguyễn Văn Linh", phone: "0972.627.575" },
-          { unit: "Công an Xã Vĩnh Ninh", name: "Nguyễn Văn Thăng", phone: "0374.865.679" },
-          { unit: "Công an Xã Vĩnh Ninh (2)", name: "Nguyễn Văn Hùng", phone: "0961.431.268" },
-          { unit: "Công an Xã Vĩnh Ninh (3)", name: "Nguyễn Văn Tiến", phone: "0964.427.575" },
-          { unit: "Công an Xã Vĩnh Ninh (4)", name: "Nguyễn Văn Hòa", phone: "0978.427.575" },
-          { unit: "Công an Xã Vĩnh Ninh (5)", name: "Nguyễn Văn Lực", phone: "0969.427.575" },
-          { unit: "Công an Xã Vĩnh Ninh (6)", name: "Nguyễn Văn Duy", phone: "0977.427.575" },
-          { unit: "Công an Xã Hải Lăng", name: "Vương Văn Nhân", phone: "0941.397.779" },
-          { unit: "Công an Xã Vĩnh Định", name: "Đào Thanh Tùng", phone: "0333.053.669" },
-          { unit: "Công an Xã Nam Hải Lăng", name: "Bùi Xuân Lai", phone: "0849.097.357" },
-          { unit: "Công an Đặc khu Cồn Cỏ", name: "Hồ Sỹ Sơn", phone: "0914.595.359" },
-          { unit: "Phòng Cảnh sát cơ động", name: "Lê Quang Sâm", phone: "0919.733.233" },
-          { unit: "Phòng Cảnh sát Phòng cháy chữa cháy", name: "Thái Thị Hà Phượng", phone: "0905.858.456" },
-          { unit: "Phòng Cảnh sát THAHS&HTTP", name: "Hoàng Minh Tuấn", phone: "0901.942.789" },
-          { unit: "Trại Tạm giam số 1", name: "Văn Thị Hoài Thanh", phone: "0916.909.557" },
-          { unit: "Trại Tạm giam số 2", name: "Phan Thành Đạt", phone: "0369.921.108" },
-          { unit: "Công an Phường Bắc Gianh", name: "Phan Việt Chung", phone: "0354.733.222" },
-          { unit: "Công an Xã Dân Hóa", name: "Nguyễn Duy Thành", phone: "0378.417.456" },
-          { unit: "Công an Xã Kim Điền", name: "Phạm Thế Anh", phone: "0828.235.028" },
-          { unit: "Công an Xã Kim Phú", name: "Cao Đinh Sỹ Hùng", phone: "0336.020.120" },
-          { unit: "Công an Xã Minh Hóa", name: "Đinh Trọng Kiều", phone: "0909.038.099" },
-          { unit: "Công an Xã Tân Thành", name: "Đinh Sỹ Tuấn", phone: "0946.266.087" },
-          { unit: "Công an Xã Tuyên Lâm", name: "Đặng Duy Hạnh", phone: "0918.973.5xx" },
-          { unit: "Công an Xã Cồn Tiên", name: "Nguyễn Việt Dũng", phone: "0844.069.555" },
-          { unit: "Công an Xã Cửa Việt", name: "Trần Công Thức", phone: "0977.407.287" },
-          { unit: "Công an Xã Gio Linh", name: "Lê Quốc Khánh", phone: "0916.387.678" },
-          { unit: "Công an Xã Bến Hải", name: "Nguyễn Thị Kiều Nhi", phone: "0943.138.174" },
-          { unit: "Công an Xã Hướng Lập", name: "Trần Hữu Đức", phone: "0912.237.456" },
-          { unit: "Công an Xã Hướng Phùng", name: "Trần Lâm Chi", phone: "0935.450.126" },
-          { unit: "Công an Xã Khe Sanh", name: "Bùi Hữu Ta", phone: "0338.480.673" },
-          { unit: "Công an Xã Tân Lập", name: "Trần Bình Dương", phone: "0973.670.611" },
-          { unit: "Công an Xã Lao Bảo", name: "Trần Hoàng Việt", phone: "0348.578.713" },
-          { unit: "Công an Xã Lìa", name: "Hồ Ái Đôn", phone: "0905.371.123" },
-          { unit: "Công an Xã A Dơi", name: "Nguyễn Đình Quyết", phone: "0382.291.164" },
-          { unit: "Công an Xã La Lay", name: "Nguyễn Tất Đạt", phone: "0944.626.234" },
-          { unit: "Công an Xã Tà Rụt", name: "Hoàng Văn Hải", phone: "0975.995.116" },
-          { unit: "Công an Xã Đakrông", name: "Trần Quốc Hoàn", phone: "0985.887.469" },
-          { unit: "Công an Xã Ba Lòng", name: "Hồ Ngọc Hoàn", phone: "0979.194.789" },
-          { unit: "Công an Xã Hướng Hiệp", name: "Hồ Văn Cải", phone: "0356.225.653" },
-          { unit: "Công an Xã Cam Lộ", name: "Hoàng Hà Nguyên", phone: "0944.236.090" },
-          { unit: "Công an Xã Hiếu Giang", name: "Hoàng Trọng Tấn", phone: "0983.730.379" },
-          { unit: "Công an Xã Triệu Phong", name: "Nguyễn Hoàng Dũng", phone: "0903.239.324" },
-          { unit: "Công an Xã Ái Tử", name: "Nguyễn Phước Kỳ", phone: "0961.679.991" },
-          { unit: "Công an Xã Triệu Bình", name: "Nguyễn Đình Phúc", phone: "0898.178.777" },
-          { unit: "Công an Xã Triệu Cơ", name: "Nguyễn Vĩnh Sum", phone: "0901.900.262" },
-          { unit: "Công an Xã Nam Cửa Việt", name: "Nguyễn Nhật Tường", phone: "0799.341.341" },
-          { unit: "Công an Xã Diên Sanh", name: "Trần Lương Hoàng", phone: "0354.404.558" },
-          { unit: "Công an Xã Mỹ Thủy", name: "Trịnh Xuân Ninh", phone: "0394.351.777" },
-          { unit: "Công an Xã Hải Lăng", name: "Vương Văn Nhân", phone: "0941.397.7..." }
+            { unit: "Phòng Tổ chức cán bộ", name: "Lê Hoàng Trung", phone: "0977.556.858 - 0823.373.373" },
+            { unit: "Công an Phường Đồng Hới", name: "Lâm Hải Đăng", phone: "0395.995.636" },
+            { unit: "Công an Phường Đồng Thuận", name: "Đặng Diệp Tuấn Anh", phone: "0945.788.588" },
+            { unit: "Công an Phường Đồng Sơn", name: "Đinh Quốc Toàn", phone: "0986.687.373" },
+            { unit: "Công an Xã Nam Gianh", name: "Võ Chiến Thắng", phone: "0327.688.823" },
+            { unit: "Công an Xã Nam Ba Đồn", name: "Trần Bảo Hoàng", phone: "0836.680.080" },
+            { unit: "Công an Phường Ba Đồn", name: "Trần Văn Hưng", phone: "0338.052.046" },
+            { unit: "Công an Phường Bắc Gianh", name: "Phan Việt Chung", phone: "0354.733.222" },
+            { unit: "Công an Xã Dân Hóa", name: "Nguyễn Duy Thành", phone: "0378.417.456" },
+            { unit: "Công an Xã Kim Điền", name: "Phạm Thế Anh", phone: "0828.235.028" },
+            { unit: "Công an Xã Kim Phú", name: "Cao Đinh Sỹ Hùng", phone: "0336.020.120" },
+            { unit: "Công an Xã Minh Hóa", name: "Đinh Trọng Kiều", phone: "0909.038.099" },
+            { unit: "Công an Xã Tân Thành", name: "Đinh Sỹ Tuấn", phone: "0946.266.087" },
+            { unit: "Công an Xã Tuyên Lâm", name: "Đặng Duy Hạnh", phone: "0918.973.567" },
+            { unit: "Công an Xã Tuyên Sơn", name: "Phạm Văn Thịnh", phone: "0964.435.189" },
+            { unit: "Công an Xã Đồng Lê", name: "Nguyễn Văn Thiện", phone: "0982.631.742" },
+            { unit: "Công an Xã Tuyên Phú", name: "Nguyễn Sỹ Tân", phone: "0968.712.295" },
+            { unit: "Công an Xã Tuyên Bình", name: "Trần Trung Hải", phone: "0963.991.503" },
+            { unit: "Công an Xã Tuyên Hóa", name: "Nguyễn Thị Ngọc Anh", phone: "0342.583.094" },
+            { unit: "Công an Xã Tân Gianh", name: "Trần Đình Hùng", phone: "0888.043.456" },
+            { unit: "Công an Xã Trung Thuần", name: "Trần Văn Hiền", phone: "0904.746.118" },
+            { unit: "Công an Xã Quảng Trạch", name: "Nguyễn Hồng Quân", phone: "0389.466.805" },
+            { unit: "Công an Xã Hòa Trạch", name: "Hoàng Mạnh Hùng", phone: "0818.386.173" },
+            { unit: "Công an Xã Phú Trạch", name: "Nguyễn Mạnh Cường", phone: "0387.284.573" },
+            { unit: "Công an Xã Thượng Trạch", name: "Lê Chí Hùng", phone: "0847.097.333" },
+            { unit: "Công an Xã Phong Nha", name: "Hoàng Trung Đạt", phone: "0972.013.555" },
+            { unit: "Công an Xã Bắc Trạch", name: "Phan Thế Duy", phone: "0987.896.786" },
+            { unit: "Công an Xã Đông Trạch", name: "Phan Trần Hướng", phone: "0911.467.955" },
+            { unit: "Công an Xã Hoàn Lão", name: "Dương Anh Hoàng", phone: "0945.390.196" },
+            { unit: "Công an Xã Bố Trạch", name: "Lê Chiêu Toàn", phone: "0971.176.381" },
+            { unit: "Công an Xã Nam Trạch", name: "Nguyễn Việt Cường", phone: "0705.950.757" },
+            { unit: "Công an Xã Quảng Ninh", name: "Bùi Quốc Thắng", phone: "0832.739.369" },
+            { unit: "Công an Xã Ninh Châu", name: "Ngô Thị Kim Phụng", phone: "0974.039.135" },
+            { unit: "Công an Xã Trường Ninh", name: "Phạm Ngọc Thế", phone: "0986.446.077" },
+            { unit: "Công an Xã Trường Sơn", name: "Trương Thanh Hải", phone: "0888.783.883" },
+            { unit: "Công an Xã Lệ Thủy", name: "Phan Văn Hợp", phone: "0915.606.711" },
+            { unit: "Công an Xã Cam Hồng", name: "Phạm Minh Thuấn", phone: "0586.369.888" },
+            { unit: "Công an Xã Sen Ngư", name: "Lê Hải Long", phone: "0799.067.155" },
+            { unit: "Công an Xã Tân Mỹ", name: "Hồ Ngọc Vũ", phone: "0843.999.951" },
+            { unit: "Công an Xã Trường Phú", name: "Bùi Bình Minh", phone: "0824.630.150" },
+            { unit: "Công an Xã Lệ Ninh", name: "Lê Tiến Đạt", phone: "0378.571.072" },
+            { unit: "Công an Xã Kim Ngân", name: "Dương Đức Quang", phone: "0913.516.855" },
+            { unit: "Công an Phường Đông Hà", name: "Nguyễn Thị Thanh Phương", phone: "0906.424.177" },
+            { unit: "Công an Phường Nam Đông Hà", name: "Hoàng Hương Quỳnh", phone: "0972.114.555" },
+            { unit: "Công an Phường Quảng Trị", name: "Trương Quang Hiếu", phone: "0971.302.777" },
+            { unit: "Công an Xã Vĩnh Linh", name: "Cao Tất Toàn", phone: "0934.756.368" },
+            { unit: "Công an Xã Cửa Tùng", name: "Nguyễn Thuận Châu", phone: "0942.196.444" },
+            { unit: "Công an Xã Vĩnh Hoàng", name: "Phạm Hữu Tuấn", phone: "0918.847.135" },
+            { unit: "Công an Xã Vĩnh Thủy", name: "Nguyễn Quang Khôi", phone: "0834.352.557" },
+            { unit: "Công an Xã Bến Quan", name: "Nguyễn Xuân Sang", phone: "0979.887.345" },
+            { unit: "Công an Xã Cồn Tiên", name: "Nguyễn Việt Dũng", phone: "0844.069.555" },
+            { unit: "Công an Xã Cửa Việt", name: "Trần Công Thức", phone: "0977.407.287" },
+            { unit: "Công an Xã Gio Linh", name: "Lê Quốc Khánh", phone: "0916.387.678" },
+            { unit: "Công an Xã Bến Hải", name: "Nguyễn Thị Kiều Nhi", phone: "0943.138.174" },
+            { unit: "Công an Xã Hướng Lập", name: "Trần Hữu Đức", phone: "0912.237.456" },
+            { unit: "Công an Xã Hướng Phùng", name: "Trần Lâm Chi", phone: "0935.450.126" },
+            { unit: "Công an Xã Khe Sanh", name: "Bùi Hữu Ta", phone: "0338.480.673" },
+            { unit: "Công an Xã Tân Lập", name: "Trần Bình Dương", phone: "0973.670.611" },
+            { unit: "Công an Xã Lao Bảo", name: "Trần Hoàng Việt", phone: "0348.578.713" },
+            { unit: "Công an Xã Lìa", name: "Hồ Ái Đôn", phone: "0905.371.123" },
+            { unit: "Công an Xã A Dơi", name: "Nguyễn Đình Quyết", phone: "0382.291.164" },
+            { unit: "Công an Xã La Lay", name: "Nguyễn Tất Đạt", phone: "0944.626.234" },
+            { unit: "Công an Xã Tà Rụt", name: "Hoàng Văn Hải", phone: "0975.995.116" },
+            { unit: "Công an Xã Đakrông", name: "Trần Quốc Hoàn", phone: "0985.887.469" },
+            { unit: "Công an Xã Ba Lòng", name: "Hồ Ngọc Hoàn", phone: "0979.194.789" },
+            { unit: "Công an Xã Hướng Hiệp", name: "Hồ Văn Cải", phone: "0356.225.653" },
+            { unit: "Công an Xã Cam Lộ", name: "Hoàng Hà Nguyên", phone: "0944.236.090" },
+            { unit: "Công an Xã Hiếu Giang", name: "Hoàng Trọng Tấn", phone: "0983.730.379" },
+            { unit: "Công an Xã Triệu Phong", name: "Nguyễn Hoàng Dũng", phone: "0903.239.324" },
+            { unit: "Công an Xã Ái Tử", name: "Nguyễn Phước Kỳ", phone: "0961.679.991" },
+            { unit: "Công an Xã Triệu Bình", name: "Nguyễn Đình Phúc", phone: "0898.178.777" },
+            { unit: "Công an Xã Triệu Cơ", name: "Nguyễn Vĩnh Sum", phone: "0901.900.262" },
+            { unit: "Công an Xã Nam Cửa Việt", name: "Nguyễn Nhật Tường", phone: "0799.341.341" },
+            { unit: "Công an Xã Diên Sanh", name: "Trần Lương Hoàng", phone: "0354.404.558" },
+            { unit: "Công an Xã Mỹ Thủy", name: "Trịnh Xuân Ninh", phone: "0394.351.777" },
+            { unit: "Công an Xã Hải Lăng", name: "Vương Văn Nhân", phone: "0941.397.779" },
+            { unit: "Công an Xã Vĩnh Định", name: "Đào Thanh Tùng", phone: "0333.053.669" },
+            { unit: "Công an Xã Nam Hải Lăng", name: "Bùi Xuân Lai", phone: "0849.097.357" },
+            { unit: "Công an Đặc khu Cồn Cỏ", name: "Hồ Sỹ Sơn", phone: "0914.595.359" },
+            { unit: "Phòng Cảnh sát cơ động", name: "Lê Quang Sâm", phone: "0919.733.233" },
+            { unit: "Phòng Cảnh sát PCCC", name: "Thái Thị Hà Phượng", phone: "0905.858.456" },
+            { unit: "Phòng Cảnh sát THAHS&HTTP", name: "Hoàng Minh Tuấn", phone: "0901.942.789" },
+            { unit: "Trại Tạm giam số 1", name: "Văn Thị Hoài Thanh", phone: "0916.909.557" },
+            { unit: "Trại Tạm giam số 2", name: "Phan Thành Đạt", phone: "0369.921.108" }
         ];
 
         // DỮ LIỆU SỨC KHỎE CHI TIẾT (TT62)
@@ -373,14 +343,6 @@
          * 2. KHO TRI THỨC THÔNG MINH (TRẢ LỜI TỰ ĐỘNG)
          ****************************************************************/
         const KNOWLEDGE_BASE = [
-            { 
-                keys: ["tiêu chuẩn sức khỏe", "tieu chuan suc khoe", "sức khỏe tuyển mới CAND", "suc khoe tuyen moi cand", "TT62", "tt62", "Thông tư 62/2023/TT-BCA", "thong tu 62/2023/tt-bca", "tt 62", "tt62/2023", "tieu chuan suc khoe cand", "em hoi tieu chuan suc khoe", "phu huynh hoi suc khoe"],
-                answer: `<b>Tiêu chuẩn sức khỏe tuyển mới vào CAND (TT62/2023)</b><br>Thí sinh phải đạt sức khỏe <b>Loại 1 hoặc Loại 2</b> và đáp ứng các chỉ số đặc thù về hình thể, thị lực, bệnh tật và cận lâm sàng theo quy định.`
-            },
-            {
-                keys: ["TT62 gồm những mục nào", "tt62 gom nhung muc nao", "nội dung TT62", "noi dung tt62", "tài liệu TT62 có gì", "tai lieu tt62 co gi", "mục lục sức khỏe TT62", "muc luc suc khoe tt62"],
-                answer: `<b>Nội dung tiêu chuẩn sức khỏe (TT62/2023) trong tài liệu</b><br>1) Thể lực & BMI; 2) Mắt & thị lực; 3) Chỉ số hình thể đặc thù; 4) Hệ thống tiêu chuẩn bệnh tật; 5) Khám cận lâm sàng; kèm phần đánh giá/lưu ý (phân loại sức khỏe, tạm thời T, phúc tra, thời hạn).`
-            },
             { 
                 keys: ['hồ sơ', 'cần gì', 'giấy tờ'], 
                 answer: "<b>Hồ sơ đăng ký sơ tuyển gồm:</b><br>1. Phiếu đăng ký (nhận tại CA xã).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. Giấy khai sinh.<br>5. 4 ảnh 4x6.<br><i>Chi tiết xem tại Menu > Điều kiện.</i>" 
@@ -406,15 +368,15 @@
                 answer: "<b>Quy định Thẩm mỹ:</b> Cấm tuyệt đối hình xăm, chữ xăm trên da. Phun xăm thẩm mỹ (nữ) phải tự nhiên. Sẹo lồi/xấu ở vị trí lộ diện sẽ bị loại."
             },
             {
-                keys: ['nơi nộp', 'xã', 'phường', 'ở đâu', 'sơ tuyển', 'thông tư 99'], 
-                answer: "<b>Theo Thông tư 99/2025:</b> Thí sinh nộp hồ sơ và sơ tuyển trực tiếp tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú. Không cần lên Công an tỉnh."
+                keys: ['nơi nộp', 'xã', 'huyện', 'ở đâu', 'sơ tuyển', 'thông tư 99'], 
+                answer: "<b>Theo Thông tư 99/2025:</b> Thí sinh nộp hồ sơ và sơ tuyển trực tiếp tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú. Không cần lên Công an huyện."
             },
             {
                 keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025', 'ưu tiên'], 
                 answer: "<b>Điểm mới Tuyển quân 2025:</b> Khuyến khích công dân có trình độ Đại học, Cao đẳng tham gia nghĩa vụ CAND. Đây là nguồn để chuyển chuyên nghiệp sau này."
             },
             {
-                keys: ['tuyển thẳng', 'cộng điểm', 'ưu tiên', 'thạc sĩ', 'tiến sĩ'],
+                keys: ['cộng điểm', 'ưu tiên', 'thạc sĩ', 'tiến sĩ'],
                 answer: "<b>Chính sách ưu tiên:</b><br>- Tuyển thẳng: Con Liệt sĩ, Thương binh >81%.<br>- Cộng điểm VB2: Tiến sĩ (+2.0), Thạc sĩ (+1.5), Bằng Giỏi (+1.0)."
             },
             {
@@ -550,10 +512,6 @@
                 answer: `<b>Thời hạn phiếu khám sức khỏe</b><br>Phiếu khám sức khỏe có giá trị trong <b>06 tháng</b>.`
             },
             {
-                keys: ["nên kiểm tra sức khỏe trước", "nen kiem tra suc khoe truoc", "khuyến nghị", "khuyen nghi", "lưu ý thí sinh phụ huynh", "luu y thi sinh phu huynh", "phu huynh can biet gi", "em can chuan bi gi ve suc khoe"],
-                answer: `Thí sinh và phụ huynh nên chủ động đi kiểm tra sức khỏe trước khi đăng ký dự tuyển, đặc biệt các chỉ số về <b>chiều cao</b>, <b>thị lực</b> và <b>BMI</b>.`
-            },
-            {
                 keys: ["điều kiện tuyển sinh", "dieu kien tuyen sinh", "đối tượng tuyển sinh", "doi tuong tuyen sinh", "nguyên tắc tuyển sinh", "nguyen tac tuyen sinh", "tuyển sinh đào tạo CAND", "tuyen sinh dao tao cand", "thong tu 50/2021", "thong tu 52/2023", "thong tu 99/2025", "tt 99/2025", "tt50", "tt52"],
                 answer: `<b>Tổng quan quy định tuyển sinh - đào tạo CAND</b><br>Tài liệu tổng hợp dựa trên Thông tư <b>50/2021/TT-BCA</b>, <b>52/2023/TT-BCA</b> và nội dung sửa đổi mới nhất tại <b>99/2025/TT-BCA</b>.`
             },
@@ -627,11 +585,11 @@
             },
             {
                 keys: ["tuyển thẳng đại học", "tuyen thang dai hoc", "xét tuyển thẳng", "xet tuyen thang", "olympic quốc tế", "olympic quoc te", "học sinh giỏi quốc gia", "hoc sinh gioi quoc gia", "hsg quoc gia", "khoa hoc ky thuat quoc gia"],
-                answer: `<b>Tuyển thẳng Đại học</b><br>Áp dụng cho thí sinh: đội tuyển Olympic quốc tế; hoặc đạt giải Nhất/Nhì/Ba HSG quốc gia; hoặc cuộc thi khoa học kỹ thuật cấp quốc gia.`
+                answer: `<b>Tuyển thẳng Đại học</b><br>Áp dụng cho thí sinh: đội tuyển Olympic quốc tế; hoặc đạt giải Nhất HSG quốc gia; hoặc cuộc thi khoa học kỹ thuật cấp quốc gia.`
             },
             {
                 keys: ["tuyển thẳng trung cấp", "tuyen thang trung cap", "con liệt sĩ", "con liet si", "thương binh CAND 81%", "thuong binh cand 81%", "thuong binh cand 81", "anh hùng llvt", "anh hung llvt", "anh hùng lao động", "anh hung lao dong cand"],
-                answer: `<b>Tuyển thẳng Trung cấp</b><br>Áp dụng cho: con đẻ Liệt sĩ; Thương binh CAND (tỷ lệ thương tật <b>81%</b> trở lên); Anh hùng Lực lượng vũ trang; Anh hùng Lao động trong CAND.`
+                answer: `<b>Tuyển thẳng Trung cấp</b><br>Áp dụng cho: con đẻ Liệt sĩ; Thương binh CAND (tỷ lệ thương tật <b>81%</b> trở lên); Anh hùng Lực lượng vũ trang; Anh hùng Lao động trong CAND; Đội tuyển Olympic quốc tế; hoặc đạt giải Ba HSG quốc gia trở lên; hoặc cuộc thi khoa học kỹ thuật cấp quốc gia.`
             },
             {
                 keys: ["cộng điểm ưu tiên", "cong diem uu tien", "tiến sĩ cộng 2,0", "tien si cong 2,0", "thạc sĩ cộng 1,5", "thac si cong 1,5", "bằng đại học giỏi xuất sắc", "bang dai hoc gioi xuat sac", "giải khuyến khích quốc gia", "giai khuyen khich quoc gia", "tien si cong 2", "thac si cong 1.5", "dai hoc gioi xuat sac"],
@@ -727,7 +685,7 @@
             }
 
             renderModalData();
-            addMessage("<b>Tôi là Trợ lý ảo tuyển sinh của Công an tỉnh Quảng Trị, kính mời đồng chí, thí sinh, phụ huynh nhập nội dung cần tra cứu.", "bot");
+            addMessage("<b>Tôi là trợ lý ảo công tác tuyển sinh, đào tạo Công an tỉnh Quảng Trị, kính mời đồng chí, thí sinh, phụ huynh nhập nội dung cần tra cứu.", "bot");
         }
 
         function renderModalData() {
