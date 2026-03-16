@@ -194,7 +194,7 @@
             
             <div class="tab-bar">
                 <div class="tab-btn active" onclick="switchTab(this, 'tab-danhba')">DANH BẠ</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">Y TẾ (TT62)</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">Y TẾ (TT62 + TT131)</div>
                 <div class="tab-btn" onclick="switchTab(this, 'tab-dieukien')">QUY CHẾ</div>
             </div>
 
@@ -214,7 +214,7 @@
                     <div id="list-danhba" class="space-y-2"></div>
                 </div>
                 
-                <!-- Tab Sức khỏe (Tích hợp TT62) -->
+                <!-- Tab Sức khỏe (Tích hợp TT62 + TT131) -->
                 <div id="tab-suckhoe" class="tab-content hidden">
                     <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">TIÊU CHUẨN LÂM SÀNG & CẬN LÂM SÀNG</h4>
                     <div id="list-suckhoe" class="space-y-2"></div>
@@ -322,14 +322,132 @@
             { unit: "Trại Tạm giam số 2", name: "Phan Thành Đạt", phone: "0369.921.108" }
         ];
 
-        // DỮ LIỆU SỨC KHỎE CHI TIẾT (TT62)
-        const SUC_KHOE_DATA = [
-            { title: "CHỈ SỐ THỂ LỰC & BMI", content: "• <b>Nam:</b> Cao 1m64-1m95 (UT1: 1m60; Dân tộc: 1m62).<br>• <b>Nữ:</b> Cao 1m58-1m80 (UT1: 1m55; Dân tộc: 1m56).<br>• <b>BMI:</b> 18.5 - 29.9 (Nếu ≥30 là Béo phì - Loại)." },
-            { title: "KHÁM CẬN LÂM SÀNG (BẮT BUỘC)", content: "1. <b>Xét nghiệm Máu:</b> Công thức máu, Đường huyết, Chức năng Gan (AST/ALT), Thận (Ure/Creatinin), HIV, HBsAg (Viêm gan B), HCV.<br>2. <b>Xét nghiệm Nước tiểu:</b> Phân tích 10 thông số và <b>tìm chất MA TÚY</b> (Morphin, Heroin, Methamphetamin, Marijuana...).<br>3. <b>Chẩn đoán hình ảnh:</b> X-quang tim phổi, Siêu âm bụng, Điện tim." },
-            { title: "CHỈ SỐ SINH TỒN", content: "• <b>Huyết áp:</b> 100-130 mmHg (Tâm thu).<br>• <b>Mạch:</b> 60-80 lần/phút." },
-            { title: "PHÂN LOẠI SỨC KHỎE", content: "• <b>Loại 1, Loại 2:</b> Đạt tiêu chuẩn.<br>• <b>Loại 3:</b> Không đạt (nếu có dù chỉ 1 chỉ tiêu điểm 3).<br>• <b>Bệnh 'Tạm thời' (T):</b> Phải điều trị khỏi mới được kết luận (VD: Viêm họng cấp, đau mắt đỏ...)." },
-            { title: "CÁC BỆNH LÝ BỊ LOẠI NGAY", content: "• Trĩ (Búi trĩ to, chảy máu).<br>• Viêm gan B mạn tính hoạt động.<br>• Sẹo lồi/xấu ở vùng cổ, mặt, tay chân.<br>• Hình xăm, chữ xăm (kể cả đã xóa)." }
-        ];
+        // DỮ LIỆU SỨC KHỎE (CẬP NHẬT: TT62/2023 + TT131/2025) – ĐÃ LỌC CHỈ GIỮ PHẦN ĐIỀU KIỆN/ TIÊU CHUẨN SỨC KHỎE
+const SUC_KHOE_DATA = [
+  {
+    title: "KẾT LUẬN NHANH: ĐỦ / KHÔNG ĐỦ ĐIỀU KIỆN SỨC KHỎE",
+    content: `
+      • Nguyên tắc chung: phải đạt <b>SỨC KHỎE LOẠI 1 hoặc LOẠI 2</b> và đáp ứng tiêu chuẩn đặc thù (chiều cao, BMI, thị lực, ngoại hình, xét nghiệm).<br>
+      • Thường <b>KHÔNG ĐẠT</b> khi: BMI <b>&lt; 18,5</b> hoặc <b>&gt; 30</b>; thị lực/tật khúc xạ vượt ngưỡng; mù màu trục xanh-đỏ; có hình xăm/lỗ bấm không đúng; dương tính ma túy/tiền chất.<br>
+      <div class="mt-2 p-2 bg-red-50 border border-red-200 rounded text-[10px] leading-relaxed">
+        <b>Lưu ý:</b> Kết luận cuối cùng do Hội đồng khám/sơ tuyển. Nội dung này giúp thí sinh & phụ huynh tự kiểm tra trước khi đi khám.
+      </div>
+    `
+  },
+  {
+    title: "PHÂN LOẠI SỨC KHỎE (ĐIỂM 1–6) – VÌ SAO DỄ RƠI LOẠI 3",
+    content: `
+      • Mỗi chỉ tiêu sức khỏe chấm điểm chẵn từ <b>1 đến 6</b> (1: rất tốt … 6: rất kém).<br>
+      • Phân loại theo “điểm xấu nhất”:<br>
+      &nbsp;&nbsp;– <b>Loại 1</b>: tất cả điểm 1<br>
+      &nbsp;&nbsp;– <b>Loại 2</b>: có ít nhất 1 chỉ tiêu điểm 2<br>
+      &nbsp;&nbsp;– <b>Loại 3</b>: có ít nhất 1 chỉ tiêu điểm 3 (thường là không đủ điều kiện nếu chỉ tuyển Loại 1–2)<br>
+      • Một số nội dung có quy định “không tính điểm khi phân loại” theo danh mục chấp nhận (Phụ lục X), tuy nhiên vẫn phải đối chiếu điều kiện áp dụng cụ thể.
+    `
+  },
+  {
+    title: "THỂ LỰC: CHIỀU CAO (CHUẨN CHUNG + NHÓM ƯU TIÊN)",
+    content: `
+      <b>Chuẩn chung (thường áp dụng):</b><br>
+      • Nam: <b>1m64–1m95</b> &nbsp;&nbsp;• Nữ: <b>1m58–1m80</b><br><br>
+      <b>Nhóm ưu tiên chiều cao:</b><br>
+      • <b>Dân tộc thiểu số:</b> Nam <b>≥1m62</b>, Nữ <b>≥1m56</b><br>
+      • <b>UT1:</b> Nam <b>≥1m60</b>, Nữ <b>≥1m55</b><br>
+      • <b>Dân tộc thiểu số rất ít người:</b> Nam <b>≥1m58</b>, Nữ <b>≥1m52</b><br>
+      <div class="mt-2 text-[10px] text-gray-600">
+        Gợi ý: Nếu thuộc nhóm ưu tiên, nên chuẩn bị giấy tờ chứng minh đối tượng khi sơ tuyển.
+      </div>
+    `
+  },
+  {
+    title: "BMI (BẮT BUỘC) – CÁCH TÍNH & NGƯỠNG BỊ LOẠI",
+    content: `
+      • Yêu cầu: <b>18,5 ≤ BMI ≤ 30</b>.<br>
+      • <b>Không đạt</b> nếu <b>BMI &lt; 18,5</b> hoặc <b>BMI &gt; 30</b>.<br>
+      • Công thức: <b>BMI = cân nặng (kg) / [chiều cao (m)]²</b>.<br>
+      <div class="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-[10px] leading-relaxed">
+        Tip: Nếu đang gầy/béo, nên điều chỉnh ít nhất 4–12 tuần trước sơ tuyển (ăn ngủ, tập luyện, tăng/giảm cân an toàn).
+      </div>
+    `
+  },
+  {
+    title: "MẮT: THỊ LỰC & TẬT KHÚC XẠ (CẬN/VIỄN/LOẠN)",
+    content: `
+      <b>Thị lực không kính:</b><br>
+      • Mỗi mắt <b>09–10/10</b>, tổng 2 mắt <b>≥18/10</b>.<br><br>
+      <b>Nếu có tật khúc xạ:</b><br>
+      • <b>Cận/viễn:</b> mỗi mắt <b>≤ 03 đi-ốp</b><br>
+      • <b>Loạn:</b> loạn sinh lý hoặc <b>&lt; 01 đi-ốp/mắt</b><br>
+      • <b>Qua kính:</b> 1 mắt <b>≥09/10</b>, tổng 2 mắt <b>≥19/10</b><br>
+      <div class="mt-2 text-[10px] text-gray-600">
+        Khuyến nghị: đi khám mắt trước sơ tuyển để đo đi-ốp chuẩn, tránh “đo lệch” gây rơi loại.
+      </div>
+    `
+  },
+  {
+    title: "MÙ MÀU / RỐI LOẠN SẮC GIÁC (ĐIỂM HAY TRƯỢT)",
+    content: `
+      • Mù màu trục xanh lá–đỏ (dù nhẹ) thường làm giảm loại sức khỏe, <b>rủi ro rất cao không đạt</b> nếu tuyển chỉ nhận Loại 1–2.<br>
+      • Gợi ý: test sớm bằng bảng Ishihara tại cơ sở khám mắt để biết chắc.
+    `
+  },
+  {
+    title: "NGOẠI HÌNH: XĂM – BẤM LỖ – SẸO – DA – TÓC",
+    content: `
+      <b>Hình xăm:</b> không có vết trổ/vết xăm (kể cả phun xăm). Ngoại lệ thường gặp: nữ phun/xăm thẩm mỹ <b>lông mày, môi</b>.<br><br>
+      <b>Bấm lỗ:</b><br>
+      • Nam: không bấm tai/mũi/vị trí khác (lỗ đã liền sẹo có thể được xem xét).<br>
+      • Nữ: không có <b>từ 02 lỗ trở lên</b> trên 01 tai; không bấm mũi/vị trí khác.<br><br>
+      <b>Da – sẹo:</b> không rối loạn sắc tố (trừ nám má); không có sẹo lồi co kéo ở vùng hay lộ (đầu/mặt/cổ/cẳng tay/bàn tay/bàn chân).<br>
+      <b>Tóc:</b> màu & kiểu tóc bình thường theo điều lệnh.
+    `
+  },
+  {
+    title: "MA TÚY / TIỀN CHẤT (BẮT BUỘC ÂM TÍNH)",
+    content: `
+      • Yêu cầu: không nghiện và <b>không dương tính</b> chất ma túy/tiền chất ma túy.<br>
+      • Thường kiểm tra bằng xét nghiệm nước tiểu; trường hợp cần thiết có thể xét nghiệm bổ sung theo chỉ định.
+    `
+  },
+  {
+    title: "CẬN LÂM SÀNG (THƯỜNG LÀM KHI KHÁM TUYỂN)",
+    content: `
+      <b>Xét nghiệm máu:</b> công thức máu; glucose; AST/ALT; ure/creatinin; HIV; HBsAg; anti-HCV...<br>
+      <b>Nước tiểu:</b> tổng phân tích + test ma túy/tiền chất.<br>
+      <b>Chẩn đoán:</b> X-quang tim phổi; siêu âm ổ bụng; điện tim.<br>
+      <div class="mt-2 text-[10px] text-gray-600">
+        Lưu ý: có thể chỉ định thêm xét nghiệm/cận lâm sàng khác để kết luận.
+      </div>
+    `
+  },
+  {
+    title: "PHÚC TRA SAU TRÚNG TUYỂN & THỜI HẠN PHIẾU KHÁM",
+    content: `
+      • Có thể khám <b>phúc tra</b> sau trúng tuyển/nhập học để đối chiếu tiêu chuẩn.<br>
+      • Trường hợp ghi <b>“T”</b>: bệnh tạm thời (cấp tính) – cần điều trị khỏi để đánh giá lại.<br>
+      • Phiếu khám sức khỏe thường có giá trị <b>06 tháng</b> (nên khám gần thời điểm sơ tuyển).
+    `
+  },
+  {
+    title: "PHỤ LỤC X – VÍ DỤ TRƯỜNG HỢP CÓ THỂ ĐƯỢC CHẤP NHẬN (THAM KHẢO)",
+    content: `
+      <details class="mt-1">
+        <summary class="font-bold text-[11px] text-[#ce181e] cursor-pointer">Bấm để xem ví dụ thường gặp</summary>
+        <div class="mt-2 text-[11px] leading-relaxed text-gray-700">
+          • 03–04 răng viêm tủy/hoại tử/viêm quanh cuống <b>đã điều trị ổn định</b>.<br>
+          • Lệch vách ngăn/dị dạng mũi <b>không rối loạn hô hấp & phát âm</b>.<br>
+          • Loét dạ dày–tá tràng <b>đã điều trị lành</b>.<br>
+          • Viêm ruột thừa đã mổ <b>&gt; 04 tuần</b>, kết quả tốt.<br>
+          • Thoát vị bẹn đã mổ tốt <b>&gt; 01 năm</b>.<br>
+          • Trĩ ngoại 01 búi <b>0,5–1 cm</b> (một số trường hợp) hoặc trĩ đã mổ tốt.<br>
+          • Một số nang/sỏi nhỏ ở gan–thận theo kích thước cho phép; viêm da tiếp xúc; viêm nang lông ở vùng không lộ…<br>
+          • Nang buồng trứng sinh lý; mổ lấy thai 1–2 lần không biến chứng (đối với nữ).<br>
+          <i>(Nội dung “chấp nhận” còn phụ thuộc kết luận thực tế và điều kiện áp dụng cụ thể.)</i>
+        </div>
+      </details>
+    `
+  }
+];
 
         // DỮ LIỆU ĐIỀU KIỆN & NGUYÊN TẮC (VĂN BẢN MỚI)
         const DIEU_KIEN_DATA = [
@@ -343,6 +461,38 @@
          * 2. KHO TRI THỨC THÔNG MINH (TRẢ LỜI TỰ ĐỘNG)
          ****************************************************************/
         const KNOWLEDGE_BASE = [
+            {
+  keys: ['sức khỏe', 'suc khoe', 'tiêu chuẩn sức khỏe', 'tieu chuan suc khoe', 'loại 1', 'loai 1', 'loại 2', 'loai 2'],
+  answer: "<b>Nguyên tắc sức khỏe dự tuyển CAND:</b> Thí sinh phải đạt <b>Sức khỏe Loại 1 hoặc Loại 2</b> và đáp ứng các điều kiện đặc thù (chiều cao, BMI, thị lực, ngoại hình, xét nghiệm)."
+},
+{
+  keys: ['chiều cao', 'chieu cao', 'bmi', 'cân nặng', 'can nang', '62/2023', 'tt62'],
+  answer: "<b>Thể lực & BMI (TT62 + TT131):</b><br>• <b>Chiều cao chuẩn:</b> Nam <b>1m64–1m95</b>, Nữ <b>1m58–1m80</b>.<br>• <b>Ưu tiên:</b> DTTS (Nam ≥1m62, Nữ ≥1m56); UT1 (Nam ≥1m60, Nữ ≥1m55); DTTS rất ít người (Nam ≥1m58, Nữ ≥1m52).<br>• <b>BMI:</b> bắt buộc <b>18,5–30</b> (ngoài khoảng này thường không đạt)."
+},
+{
+  keys: ['mắt', 'mat', 'thị lực', 'thi luc', 'cận', 'can', 'loạn', 'loan', 'viễn', 'vien', 'đeo kính', 'deo kinh'],
+  answer: "<b>Tiêu chuẩn mắt (TT62 + TT131):</b><br>• <b>Không kính:</b> mỗi mắt <b>09–10/10</b>, tổng <b>≥18/10</b>.<br>• <b>Cận/viễn:</b> mỗi mắt <b>≤03D</b>.<br>• <b>Loạn:</b> <b>&lt;01D/mắt</b>.<br>• <b>Qua kính:</b> 1 mắt <b>≥09/10</b>, tổng <b>≥19/10</b>."
+},
+{
+  keys: ['mù màu', 'mu mau', 'rối loạn sắc giác', 'roi loan sac giac'],
+  answer: "<b>Mù màu / rối loạn sắc giác:</b> Mù màu trục xanh–đỏ (kể cả nhẹ) thường làm giảm loại sức khỏe và <b>rủi ro rất cao không đạt</b> nếu tuyển chỉ nhận Loại 1–2. Nên test Ishihara trước khi sơ tuyển."
+},
+{
+  keys: ['xăm', 'xam', 'sẹo', 'seo', 'bấm lỗ', 'bam lo', 'piercing', 'phun môi', 'phun moi', 'phun xăm', 'phun xam', 'tóc', 'toc'],
+  answer: "<b>Ngoại hình (TT62 + TT131):</b><br>• <b>Không có hình xăm/vết xăm</b> (kể cả phun xăm); ngoại lệ thường gặp: nữ phun/xăm thẩm mỹ <b>lông mày, môi</b>.<br>• <b>Bấm lỗ:</b> Nam không bấm tai/mũi/vị trí khác; Nữ không có từ <b>02 lỗ trở lên</b> trên 01 tai và không bấm mũi/vị trí khác.<br>• Không có sẹo lồi co kéo ở vùng hay lộ (đầu/mặt/cổ/cẳng tay/bàn tay/bàn chân); tóc màu/kiểu bình thường theo điều lệnh."
+},
+{
+  keys: ['máu', 'xét nghiệm', 'xet nghiem', 'viêm gan', 'viem gan', 'hiv', 'hbsag', 'hcv', 'anti-hcv', 'ma túy', 'ma tuy'],
+  answer: "<b>Khám cận lâm sàng thường có:</b><br>• <b>Máu:</b> công thức máu, glucose, AST/ALT, ure/creatinin, HIV, HBsAg, anti-HCV…<br>• <b>Nước tiểu:</b> tổng phân tích + test <b>ma túy/tiền chất</b>.<br>• <b>Chẩn đoán:</b> X-quang tim phổi, siêu âm bụng, điện tim."
+},
+{
+  keys: ['trĩ', 'tri', 'bệnh trĩ', 'benh tri'],
+  answer: "<b>Bệnh trĩ:</b> Một số trường hợp trĩ có thể được xem xét theo danh mục “được chấp nhận” (ví dụ trĩ ngoại 01 búi nhỏ 0,5–1cm hoặc đã phẫu thuật tốt). Trĩ nhiều búi/búi to/chảy máu thường <b>rủi ro không đạt</b>. Kết luận theo khám thực tế."
+},
+{
+  keys: ['phúc tra', 'phuc tra', '6 tháng', '6 thang', 'phiếu khám', 'phieu kham', 'tạm thời', 'tam thoi', 'ký hiệu t', 'ky hieu t'],
+  answer: "<b>Phúc tra & thời hạn:</b> Có thể khám <b>phúc tra</b> sau trúng tuyển/nhập học. Trường hợp ghi <b>“T”</b> là bệnh tạm thời cần điều trị khỏi để đánh giá lại. Phiếu khám sức khỏe thường có giá trị <b>06 tháng</b>."
+},
             { 
                 keys: ['hồ sơ', 'cần gì', 'giấy tờ'], 
                 answer: "<b>Hồ sơ đăng ký sơ tuyển gồm:</b><br>1. Phiếu đăng ký (nhận tại CA xã).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. Giấy khai sinh.<br>5. 4 ảnh 4x6.<br><i>Chi tiết xem tại Menu > Điều kiện.</i>" 
