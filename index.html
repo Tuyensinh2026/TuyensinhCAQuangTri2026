@@ -193,9 +193,9 @@
             </div>
             
             <div class="tab-bar">
-                <div class="tab-btn active" onclick="switchTab(this, 'tab-danhba')">DANH BẠ</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">Y TẾ (TT62 + TT131)</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-dieukien')">QUY CHẾ</div>
+                <div class="tab-btn active" onclick="switchTab(this, 'tab-danhba')">LIÊN HỆ</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">SỨC KHỎE - THỂ LỰC</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-dieukien')">TUYỂN SINH 2026</div>
             </div>
 
             <div class="flex-1 overflow-y-auto p-4 bg-slate-50 space-y-4 no-scrollbar">
@@ -429,6 +429,58 @@ const SUC_KHOE_DATA = [
     `
   },
   {
+        title: "KHÁM SỨC KHỎE - THỜI GIAN CHUNG",
+        content: `
+            • <b>Đại học / Trung cấp:</b> từ <b>16/4 đến 05/5/2026</b>.<br>
+            • <b>VB2CA:</b> từ <b>29/6 đến 03/7/2026</b>.<br>
+            • Buổi sáng: <b>07h30</b>.<br>
+            • Buổi chiều: <b>13h30</b>.<br>
+            • Nếu vắng do lý do khách quan có thể khám vào lịch bù.
+        `
+    },
+    {
+        title: "ĐỊA ĐIỂM KHÁM SỨC KHỎE",
+        content: `
+            • <b>16/4 - 19/4/2026</b> và <b>29/6 - 30/6/2026</b>: Bệnh xá số 02 Công an tỉnh, số 31 Phan Chu Trinh, phường Đồng Hới.<br>
+            • <b>22/4 - 25/4/2026</b> và <b>01/7 - 02/7/2026</b>: Bệnh xá số 01 Công an tỉnh, đường Điện Biên Phủ, phường Nam Đông Hà.<br>
+            • <b>04/5 - 05/5/2026</b> và <b>03/7/2026</b>: khám bù tại Bệnh xá số 02 Công an tỉnh.
+        `
+    },
+    {
+        title: "KIỂM TRA THỂ LỰC - THỜI GIAN VÀ YÊU CẦU",
+        content: `
+            • Áp dụng với thí sinh đủ điều kiện dự tuyển đại học CAND, trừ trường hợp đang chờ tra cứu tiêu chuẩn chính trị.<br>
+            • Buổi sáng: <b>07h00</b>.<br>
+            • Buổi chiều: <b>15h00</b>.<br>
+            • Thí sinh có mặt trước <b>15 phút</b>, mặc trang phục thể thao, đi giày thể thao.
+        `
+    },
+    {
+        title: "NGƯỠNG ĐẠT KIỂM TRA THỂ LỰC",
+        content: `
+            • <b>Bật xa tại chỗ:</b> Nam <b>≥ 2,2m</b>; Nữ <b>≥ 1,5m</b>.<br>
+            • <b>Chạy 100m:</b> Nam <b>≤ 16 giây</b>; Nữ <b>≤ 20 giây</b>.<br>
+            • <b>Chạy 800m:</b> Nữ <b>≤ 5 phút 30 giây</b>.<br>
+            • <b>Chạy 1500m:</b> Nam <b>≤ 7 phút 30 giây</b>.<br>
+            • <b>Co tay xà đơn:</b> Nam <b>≥ 12 lần</b>.
+        `
+    },
+    {
+        title: "ĐỊA ĐIỂM KIỂM TRA THỂ LỰC",
+        content: `
+            • <b>20/4 - 21/4/2026:</b> Trung tâm Văn hóa và Điện ảnh tỉnh Quảng Trị, đường Trần Phú, phường Đồng Hới.<br>
+            • <b>28/4 - 29/4/2026:</b> Trụ sở phía Nam Công an tỉnh Quảng Trị, đường Điện Biên Phủ, phường Nam Đông Hà.
+        `
+    },
+    {
+        title: "LƯU Ý KHI ĐI KHÁM / PHÚC TRA",
+        content: `
+            • Thí sinh cần đi đúng lịch, mang theo giấy tờ cần thiết theo hướng dẫn của Công an địa phương hoặc đơn vị quản lý.<br>
+            • Trường hợp bệnh cấp tính, tình trạng tạm thời có thể được đánh giá lại theo quy định.<br>
+            • Sau trúng tuyển có thể khám phúc tra; nếu không đạt tiêu chuẩn sức khỏe sẽ xử lý theo quy định của Bộ Công an.
+        `
+    },
+    {
     title: "PHỤ LỤC X – VÍ DỤ TRƯỜNG HỢP CÓ THỂ ĐƯỢC CHẤP NHẬN (THAM KHẢO)",
     content: `
       <details class="mt-1">
@@ -451,11 +503,213 @@ const SUC_KHOE_DATA = [
 
         // DỮ LIỆU ĐIỀU KIỆN & NGUYÊN TẮC (VĂN BẢN MỚI)
         const DIEU_KIEN_DATA = [
-            { title: "NGUYÊN TẮC TUYỂN SINH", content: "• Thực hiện dân chủ, công khai, công bằng, minh bạch.<br>• Đúng quy trình, quy định của Bộ Công an.<br>• Ưu tiên con em gia đình chính sách, vùng sâu vùng xa." },
-            { title: "ĐỐI TƯỢNG & ĐỘ TUỔI", content: "• <b>Học sinh phổ thông:</b> Không quá 22 tuổi.<br>• <b>Người dân tộc thiểu số:</b> Không quá 25 tuổi.<br>• <b>Cán bộ Công an / Văn bằng 2:</b> Không quá 30 tuổi (tính đến năm dự tuyển)." },
-            { title: "TIÊU CHUẨN VĂN HÓA", content: "• Tốt nghiệp THPT hoặc tương đương.<br>• Xếp loại hạnh kiểm Khá trở lên trong các năm THPT.<br>• Học lực: Đạt loại Khá trở lên (Chiến sĩ nghĩa vụ: Trung bình trở lên)." },
-            { title: "ƯU TIÊN & TUYỂN THẲNG", content: "• <b>Tuyển thẳng:</b> Con đẻ Liệt sĩ, Thương binh >81%, Anh hùng LLVT.<br>• <b>Cộng điểm:</b> Tiến sĩ (+2.0), Thạc sĩ (+1.5), Bằng Giỏi/Xuất sắc (+1.0/+0.5)." }
-        ];
+    {
+        title: "TỔNG QUAN TUYỂN SINH CAND 2026",
+        content: `
+            • Hệ tuyển sinh chính: <b>Đại học chính quy tuyển mới</b>, <b>Đại học văn bằng 2 tuyển mới (VB2CA)</b>, <b>Trung cấp chính quy tuyển mới</b>.<br>
+            • Phân vùng tuyển sinh:<br>
+            &nbsp;&nbsp;– <b>Phía Bắc:</b> từ thành phố Huế trở ra.<br>
+            &nbsp;&nbsp;– <b>Phía Nam:</b> từ thành phố Đà Nẵng trở vào.<br>
+            • Lược bỏ các nội dung nội bộ như tổ chức thực hiện, phân công, kinh phí chi tiết; chỉ giữ phần phục vụ hỏi đáp tự động.
+        `
+    },
+    {
+        title: "ĐẠI HỌC CHÍNH QUY - ĐỐI TƯỢNG, PHƯƠNG THỨC, CHỈ TIÊU",
+        content: `
+            • <b>Đối tượng:</b><br>
+            &nbsp;&nbsp;– Chiến sĩ nghĩa vụ Công an tại ngũ.<br>
+            &nbsp;&nbsp;– Công dân hoàn thành nghĩa vụ tham gia CAND có quyết định xuất ngũ trong vòng 12 tháng tính đến tháng dự tuyển.<br>
+            &nbsp;&nbsp;– Công dân thường trú tại địa phương nơi đăng ký sơ tuyển.<br><br>
+            • <b>Phương thức:</b><br>
+            &nbsp;&nbsp;– PT1: Tuyển thẳng.<br>
+            &nbsp;&nbsp;– PT2: Xét tuyển kết hợp chứng chỉ ngoại ngữ quốc tế + bài thi đánh giá Bộ Công an.<br>
+            &nbsp;&nbsp;– PT3: Xét tuyển kết hợp điểm thi tốt nghiệp THPT + bài thi đánh giá Bộ Công an.<br><br>
+            • <b>Tổng chỉ tiêu:</b> <b>1.870</b>.
+        `
+    },
+    {
+        title: "ĐẠI HỌC CHÍNH QUY - ĐIỀU KIỆN CHUNG",
+        content: `
+            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức theo quy định của Bộ Công an.<br>
+            • Chiến sĩ nghĩa vụ phải có thời gian công tác từ <b>15 tháng trở lên</b> tính đến tháng thi tuyển; năm liền trước đạt mức <b>Hoàn thành nhiệm vụ</b> trở lên.<br>
+            • Công dân hoàn thành nghĩa vụ tham gia CAND trong thời gian tại ngũ hằng năm phải đạt mức <b>Hoàn thành nhiệm vụ</b> trở lên, trong đó có ít nhất <b>01 năm Hoàn thành tốt nhiệm vụ</b>.<br>
+            • Về học lực THPT:<br>
+            &nbsp;&nbsp;– Chiến sĩ nghĩa vụ và đối tượng ưu tiên UT1: kết quả học tập từ mức <b>đạt</b> trở lên.<br>
+            &nbsp;&nbsp;– Công dân hoàn thành nghĩa vụ CAND và công dân thường trú: kết quả học tập từ mức <b>khá</b> trở lên.<br>
+            • Điểm từng môn thuộc tổ hợp xét tuyển:<br>
+            &nbsp;&nbsp;– Công dân hoàn thành nghĩa vụ CAND và người dân tộc thiểu số: từ <b>6,5</b> trở lên.<br>
+            &nbsp;&nbsp;– Công dân thường trú tại địa phương: từ <b>7,0</b> trở lên.<br>
+            • Công dân thường trú tại địa phương phải có hạnh kiểm từ mức <b>khá</b> trở lên, <b>chưa kết hôn</b>, <b>chưa có con đẻ hoặc con nuôi</b> theo quy định.<br>
+            • Độ tuổi công dân thường trú: không quá <b>22 tuổi</b>; nếu là người dân tộc thiểu số thì không quá <b>25 tuổi</b>.<br>
+            • Đủ sức khỏe tuyển vào CAND theo quy định hiện hành.<br>
+            • Riêng thí sinh đăng ký ngành <b>Y khoa</b>: kết quả học tập lớp 12 phải từ mức <b>tốt (loại giỏi)</b> trở lên.
+        `
+    },
+    {
+        title: "ĐẠI HỌC CHÍNH QUY - ĐIỀU KIỆN THEO TỪNG PHƯƠNG THỨC",
+        content: `
+            • <b>Phương thức 1 - tuyển thẳng:</b><br>
+            &nbsp;&nbsp;– Áp dụng cho thí sinh đạt giải theo quy định của Bộ GD&ĐT.<br>
+            &nbsp;&nbsp;– Thời gian đoạt giải không quá <b>03 năm</b> tính đến thời điểm xét tuyển thẳng.<br>
+            &nbsp;&nbsp;– Phải tốt nghiệp THPT trước thời điểm xác nhận nhập học.<br><br>
+            • <b>Phương thức 2 - chứng chỉ ngoại ngữ + bài thi đánh giá:</b><br>
+            &nbsp;&nbsp;– Chứng chỉ còn hạn không quá <b>02 năm</b> tính đến ngày <b>01/5/2026</b>.<br>
+            &nbsp;&nbsp;– Mức tối thiểu: IELTS 5.5; TOEFL iBT 46; TOEIC 600 và 242; SAT 1100; HSK 4; DELE B2; DELF/DALF B2; TRKI B2; Goethe/telc B2; JLPT N3; TOPIK 4; CELI 3.<br>
+            &nbsp;&nbsp;– Không sử dụng chứng chỉ Home Edition.<br>
+            &nbsp;&nbsp;– Nếu dự thi chứng chỉ trong thời gian sơ tuyển: ngày thi chính thức phải trước <b>20/5/2026</b>; nộp chứng chỉ trước <b>30/5/2026</b>.<br>
+            &nbsp;&nbsp;– Học lực lớp 10, 11, 12 từ loại khá trở lên; điểm trung bình môn ngoại ngữ các năm THPT từ <b>7,0</b> trở lên.<br><br>
+            • <b>Phương thức 3 - điểm THPT + bài thi đánh giá:</b><br>
+            &nbsp;&nbsp;– Thí sinh học ngoại ngữ khác tiếng Anh hoặc tiếng Trung vẫn có thể dùng điểm môn ngoại ngữ đó để sơ tuyển nếu đăng ký ngành có sử dụng tiếng Anh hoặc tiếng Trung.<br>
+            &nbsp;&nbsp;– Phải tốt nghiệp THPT trước thời điểm xác nhận nhập học.
+        `
+    },
+    {
+        title: "ĐẠI HỌC CHÍNH QUY - BÀI THI, THỜI GIAN, HỒ SƠ, LỆ PHÍ",
+        content: `
+            • <b>Bài thi đánh giá Bộ Công an:</b> thi viết, thời lượng <b>180 phút</b>, ngày thi chính <b>21/6/2026</b>.<br>
+            • <b>Mã bài thi:</b> CA1, CA2, CA3, CA4.<br><br>
+            • <b>Mốc thời gian chính:</b><br>
+            &nbsp;&nbsp;– 15/3 - 15/4/2026: Đăng ký dự tuyển.<br>
+            &nbsp;&nbsp;– 16/4 - 05/5/2026: Khám sức khỏe và kiểm tra thể lực.<br>
+            &nbsp;&nbsp;– 20/5/2026: Nộp hồ sơ dự tuyển về các trường CAND.<br>
+            &nbsp;&nbsp;– 20 - 21/6/2026: Tổ chức kỳ thi đánh giá của Bộ Công an.<br>
+            &nbsp;&nbsp;– 10 - 15/7/2026: Công bố điểm thi và tiếp nhận phúc khảo.<br>
+            &nbsp;&nbsp;– 08 - 10/8/2026: Thông báo kết quả xét tuyển phương thức 2, 3.<br>
+            &nbsp;&nbsp;– 14/8/2026: Thông báo danh sách trúng tuyển.<br>
+            &nbsp;&nbsp;– 15/8 - 01/9/2026: Tiếp nhận bản chính giấy tờ xác nhận nhập học.<br>
+            &nbsp;&nbsp;– 23 - 27/9/2026: Nhập học.<br><br>
+            • <b>Lệ phí sơ tuyển:</b> <b>300.000 đồng</b>.<br>
+            • <b>Phí hồ sơ chung:</b> 20.000 đồng/bộ.<br>
+            • <b>Tờ khai đăng ký dự tuyển đại học CAND:</b> 10.000 đồng/tờ.
+        `
+    },
+    {
+        title: "VB2CA - ĐỐI TƯỢNG, PHƯƠNG THỨC, CHỈ TIÊU",
+        content: `
+            • <b>Đối tượng:</b> Công dân Việt Nam.<br>
+            • <b>Phương thức:</b><br>
+            &nbsp;&nbsp;– PT1: Xét tuyển thẳng.<br>
+            &nbsp;&nbsp;– PT2: Thi tuyển.<br>
+            • <b>Tổng chỉ tiêu:</b> <b>530</b>.
+        `
+    },
+    {
+        title: "VB2CA - ĐIỀU KIỆN, CHỨNG CHỈ, THỜI GIAN, LỆ PHÍ",
+        content: `
+            • Tốt nghiệp đại học hệ chính quy, bằng do cơ sở giáo dục đại học trong nước hoặc nước ngoài cấp; xếp loại từ <b>khá</b> trở lên.<br>
+            • Sinh viên năm cuối được đăng ký, nhưng đến ngày xét tuyển của các trường CAND (<b>20/8/2026</b>) phải có bằng hoặc giấy xác nhận tốt nghiệp; đến thời điểm nhập học phải có bằng tốt nghiệp.<br>
+            • Văn bằng nước ngoài phải được cơ quan có thẩm quyền của Bộ GD&ĐT công nhận.<br>
+            • Một số trường/ngành cho phép tốt nghiệp khối kỹ thuật, khoa học tự nhiên, khoa học máy tính, CNTT với điều kiện kết quả chuyên môn đạt mức khá trở lên.<br>
+            • Chiến sĩ nghĩa vụ Công an tại ngũ phải có thời gian công tác từ <b>15 tháng trở lên</b> tính đến tháng thi tuyển; bằng tốt nghiệp đại học chính quy từ loại trung bình trở lên.<br>
+            • Độ tuổi không quá <b>30</b> tính đến ngày dự thi.<br>
+            • Tiêu chuẩn chính trị và sức khỏe áp dụng tương tự tuyển sinh học sinh phổ thông vào các trường CAND.<br><br>
+            • <b>Điều kiện nổi bật của PT1:</b><br>
+            &nbsp;&nbsp;– Có thể xét tuyển thẳng với thí sinh loại giỏi/xuất sắc theo nhóm ngành phù hợp và điều kiện chứng chỉ ngoại ngữ tương ứng.<br>
+            &nbsp;&nbsp;– Chứng chỉ ngoại ngữ còn hạn không quá <b>02 năm</b> tính đến <b>01/8/2026</b>.<br><br>
+            • <b>Bài thi:</b> thi trên máy tính, thời lượng <b>150 phút</b>, ngày thi <b>20/9/2026</b>.<br><br>
+            • <b>Mốc thời gian:</b><br>
+            &nbsp;&nbsp;– 15/3 - 25/6/2026: Đăng ký dự tuyển.<br>
+            &nbsp;&nbsp;– 29/6 - 03/7/2026: Khám sức khỏe VB2CA.<br>
+            &nbsp;&nbsp;– 20/8/2026: Nộp hồ sơ và danh sách đăng ký dự tuyển.<br>
+            &nbsp;&nbsp;– 19 - 20/9/2026: Tổ chức kỳ thi VB2CA của Bộ Công an.<br>
+            &nbsp;&nbsp;– 01 - 03/10/2026: Thông báo điểm thi và tiếp nhận phúc khảo.<br>
+            &nbsp;&nbsp;– 15 - 20/10/2026: Phê duyệt danh sách trúng tuyển.<br>
+            &nbsp;&nbsp;– 30/10/2026: Thông báo kết quả trúng tuyển.<br>
+            &nbsp;&nbsp;– 10 - 15/11/2026: Nhập học.<br><br>
+            • <b>Lệ phí sơ tuyển:</b> <b>100.000 đồng/thí sinh</b>.<br>
+            • <b>Lệ phí hồ sơ:</b> <b>30.000 đồng/bộ</b>.
+        `
+    },
+    {
+        title: "TRUNG CẤP CHÍNH QUY - ĐỐI TƯỢNG, PHƯƠNG THỨC, CHỈ TIÊU",
+        content: `
+            • <b>Đối tượng:</b><br>
+            &nbsp;&nbsp;– Chiến sĩ nghĩa vụ Công an.<br>
+            &nbsp;&nbsp;– Công dân hoàn thành nghĩa vụ tham gia CAND có quyết định xuất ngũ trong vòng 12 tháng tính đến tháng dự tuyển.<br>
+            &nbsp;&nbsp;– Thí sinh đã tham gia dự tuyển nhưng không trúng tuyển đại học Công an chính quy tuyển mới.<br><br>
+            • <b>Phương thức:</b><br>
+            &nbsp;&nbsp;– PT1: Xét tuyển thẳng.<br>
+            &nbsp;&nbsp;– PT2: Xét tuyển.<br><br>
+            • <b>Tổng chỉ tiêu:</b> <b>300</b>.<br>
+            &nbsp;&nbsp;– T08: 80 chỉ tiêu.<br>
+            &nbsp;&nbsp;– T09: 100 chỉ tiêu.<br>
+            &nbsp;&nbsp;– T10: 100 chỉ tiêu.
+        `
+    },
+    {
+        title: "TRUNG CẤP CHÍNH QUY - ĐIỀU KIỆN, HỒ SƠ, THỜI GIAN",
+        content: `
+            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức theo quy định hiện hành của Bộ Công an.<br>
+            • Chiến sĩ nghĩa vụ phải có thời gian công tác từ <b>15 tháng trở lên</b> tính đến tháng thi tuyển; năm liền trước đạt mức <b>Hoàn thành nhiệm vụ</b> trở lên.<br>
+            • Chiến sĩ nghĩa vụ và công dân hoàn thành nghĩa vụ tham gia CAND phải đủ sức khỏe tuyển vào CAND theo quy định hiện hành.<br>
+            • Đối với thí sinh đã tham gia dự tuyển nhưng không trúng tuyển đại học: phải có hồ sơ tham gia và vẫn đảm bảo điều kiện, tiêu chuẩn dự tuyển trình độ đại học theo quy định.<br><br>
+            • <b>Phương thức 1 - xét tuyển thẳng:</b><br>
+            &nbsp;&nbsp;– Có văn bản đề nghị của Công an đơn vị, địa phương kèm hồ sơ minh chứng.<br>
+            &nbsp;&nbsp;– Phải tốt nghiệp THPT trước thời điểm xác nhận nhập học.<br>
+            &nbsp;&nbsp;– Lệ phí xét tuyển thẳng: <b>30.000 đồng</b>.<br><br>
+            • <b>Phương thức 2 - xét tuyển:</b><br>
+            &nbsp;&nbsp;– Phải tham dự kỳ thi tốt nghiệp THPT và kỳ thi đánh giá của Bộ Công an năm 2026.<br>
+            &nbsp;&nbsp;– Phải đạt ngưỡng đầu vào trình độ trung cấp theo thông báo của X02.<br>
+            &nbsp;&nbsp;– Phải có hồ sơ đăng ký dự tuyển trung cấp do Công an đơn vị, địa phương gửi về X02.<br><br>
+            • <b>Hồ sơ đăng ký:</b><br>
+            &nbsp;&nbsp;– Danh sách đăng ký xét tuyển trung cấp CAND.<br>
+            &nbsp;&nbsp;– File danh sách đăng ký xét tuyển trung cấp trích xuất từ phần mềm tuyển sinh.<br>
+            &nbsp;&nbsp;– Tờ khai đăng ký dự tuyển trung cấp CAND: <b>10.000 đồng/tờ</b>.<br>
+            &nbsp;&nbsp;– CCCD của thí sinh, thống nhất với số CCCD dùng để đăng ký thi tốt nghiệp THPT 2026.<br>
+            &nbsp;&nbsp;– Bản photo giấy báo dự thi tốt nghiệp THPT.<br><br>
+            • <b>Mốc thời gian:</b><br>
+            &nbsp;&nbsp;– 15/3 - 15/4/2026: Đăng ký dự tuyển.<br>
+            &nbsp;&nbsp;– 16/4 - 05/5/2026: Khám sức khỏe và kiểm tra thể lực.<br>
+            &nbsp;&nbsp;– 15 - 20/8/2026: Công bố điểm trúng tuyển.<br>
+            &nbsp;&nbsp;– 10 - 15/10/2026: Nhập học.
+        `
+    },
+    {
+        title: "TRƯỜNG TUYỂN SINH VÀ PHÂN VÙNG",
+        content: `
+            • <b>Đại học chính quy:</b><br>
+            &nbsp;&nbsp;– Toàn quốc: T03, T06, T07, B06; ngành An ninh mạng và CNTT của T01; ngành Y khoa và Kỹ thuật điện tử viễn thông gửi đào tạo.<br>
+            &nbsp;&nbsp;– Phía Bắc: T02; nhóm ngành nghiệp vụ An ninh của T01.<br>
+            &nbsp;&nbsp;– Phía Nam: T04; T05.<br><br>
+            • <b>VB2CA:</b><br>
+            &nbsp;&nbsp;– Toàn quốc: T06; T07; ngành An toàn thông tin của T01.<br>
+            &nbsp;&nbsp;– Phía Bắc: nhóm ngành nghiệp vụ An ninh của T01; nhóm ngành nghiệp vụ Cảnh sát của T02.<br>
+            &nbsp;&nbsp;– Phía Nam: nhóm ngành nghiệp vụ An ninh của T04; nhóm ngành nghiệp vụ Cảnh sát của T05.<br><br>
+            • <b>Trung cấp:</b><br>
+            &nbsp;&nbsp;– Toàn quốc: T08.<br>
+            &nbsp;&nbsp;– Phía Bắc: T09.<br>
+            &nbsp;&nbsp;– Phía Nam: T10.
+        `
+    },
+    {
+        title: "MÃ TỔ HỢP XÉT TUYỂN VÀ MÃ BÀI THI",
+        content: `
+            • <b>Mã tổ hợp:</b><br>
+            &nbsp;&nbsp;– A00: Toán, Vật lí, Hóa học.<br>
+            &nbsp;&nbsp;– A01: Toán, Vật lí, Tiếng Anh.<br>
+            &nbsp;&nbsp;– B00: Toán, Hóa học, Sinh học.<br>
+            &nbsp;&nbsp;– B08: Toán, Sinh học, Tiếng Anh.<br>
+            &nbsp;&nbsp;– C00: Ngữ văn, Lịch sử, Địa lí.<br>
+            &nbsp;&nbsp;– C03: Toán, Ngữ văn, Lịch sử.<br>
+            &nbsp;&nbsp;– D01: Toán, Ngữ văn, Tiếng Anh.<br>
+            &nbsp;&nbsp;– D04: Toán, Ngữ văn, Tiếng Trung Quốc.<br>
+            &nbsp;&nbsp;– D07: Toán, Hóa học, Tiếng Anh.<br>
+            &nbsp;&nbsp;– D09: Toán, Lịch sử, Tiếng Anh.<br>
+            &nbsp;&nbsp;– D10: Toán, Địa lí, Tiếng Anh.<br>
+            &nbsp;&nbsp;– X02: Toán, Ngữ văn, Tin học.<br>
+            &nbsp;&nbsp;– X03: Toán, Ngữ văn, Công nghệ công nghiệp.<br>
+            &nbsp;&nbsp;– X04: Toán, Ngữ văn, Công nghệ nông nghiệp.<br>
+            &nbsp;&nbsp;– X26: Toán, Tiếng Anh, Tin học.<br>
+            &nbsp;&nbsp;– X27: Toán, Tiếng Anh, Công nghệ công nghiệp.<br>
+            &nbsp;&nbsp;– X28: Toán, Tiếng Anh, Công nghệ nông nghiệp.<br><br>
+            • <b>Mã bài thi đánh giá Bộ Công an:</b><br>
+            &nbsp;&nbsp;– CA1: Ngữ văn tự luận; trắc nghiệm Toán, Lịch sử, Tiếng Anh; tự chọn Vật lí.<br>
+            &nbsp;&nbsp;– CA2: Ngữ văn tự luận; trắc nghiệm Toán, Lịch sử, Tiếng Anh; tự chọn Hóa học.<br>
+            &nbsp;&nbsp;– CA3: Ngữ văn tự luận; trắc nghiệm Toán, Lịch sử, Tiếng Anh; tự chọn Sinh học.<br>
+            &nbsp;&nbsp;– CA4: Ngữ văn tự luận; trắc nghiệm Toán, Lịch sử, Tiếng Anh; tự chọn Địa lí.
+        `
+    }
+];
 
         /****************************************************************
          * 2. KHO TRI THỨC THÔNG MINH (TRẢ LỜI TỰ ĐỘNG)
@@ -493,6 +747,241 @@ const SUC_KHOE_DATA = [
   keys: ['phúc tra', 'phuc tra', '6 tháng', '6 thang', 'phiếu khám', 'phieu kham', 'tạm thời', 'tam thoi', 'ký hiệu t', 'ky hieu t'],
   answer: "<b>Phúc tra & thời hạn:</b> Có thể khám <b>phúc tra</b> sau trúng tuyển/nhập học. Trường hợp ghi <b>“T”</b> là bệnh tạm thời cần điều trị khỏi để đánh giá lại. Phiếu khám sức khỏe thường có giá trị <b>06 tháng</b>."
 },
+            {
+        keys: ['đại học chính quy', 'dai hoc chinh quy', 'tuyển đại học', 'tuyen dai hoc'],
+        answer: `
+            <b>Đại học chính quy tuyển mới:</b><br>
+            • Đối tượng: chiến sĩ nghĩa vụ Công an tại ngũ; công dân hoàn thành nghĩa vụ tham gia CAND có quyết định xuất ngũ trong vòng 12 tháng; công dân thường trú tại địa phương nơi đăng ký sơ tuyển.<br>
+            • Phương thức: PT1 tuyển thẳng; PT2 chứng chỉ ngoại ngữ + bài thi đánh giá Bộ Công an; PT3 điểm thi THPT + bài thi đánh giá Bộ Công an.<br>
+            • Tổng chỉ tiêu: <b>1.870</b>.
+        `
+    },
+    {
+        keys: ['điều kiện đại học', 'dieu kien dai hoc', 'tiêu chuẩn đại học', 'tieu chuan dai hoc'],
+        answer: `
+            <b>Điều kiện dự tuyển đại học chính quy:</b><br>
+            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức và sức khỏe theo quy định.<br>
+            • Chiến sĩ nghĩa vụ phải có thời gian công tác từ <b>15 tháng</b> trở lên.<br>
+            • Công dân thường trú phải có học lực từ <b>khá</b>, hạnh kiểm từ <b>khá</b>, <b>chưa kết hôn</b>, <b>chưa có con</b>.<br>
+            • Độ tuổi: không quá <b>22 tuổi</b>; dân tộc thiểu số không quá <b>25 tuổi</b>.<br>
+            • Điểm từng môn tổ hợp: công dân thường trú từ <b>7,0</b>; công dân hoàn thành nghĩa vụ CAND và người dân tộc thiểu số từ <b>6,5</b>.
+        `
+    },
+    {
+        keys: ['phương thức 2', 'phuong thuc 2', 'chứng chỉ ngoại ngữ', 'chung chi ngoai ngu', 'ielts', 'toefl', 'toeic', 'hsk'],
+        answer: `
+            <b>Phương thức 2 đại học:</b><br>
+            • Xét tuyển kết hợp <b>chứng chỉ ngoại ngữ quốc tế</b> + <b>bài thi đánh giá Bộ Công an</b>.<br>
+            • Chứng chỉ còn hạn không quá <b>02 năm</b> tính đến ngày <b>01/5/2026</b>.<br>
+            • Mức tối thiểu: IELTS 5.5; TOEFL iBT 46; TOEIC 600 và 242; SAT 1100; HSK 4; DELE B2; DELF/DALF B2; TRKI B2; Goethe/telc B2; JLPT N3; TOPIK 4; CELI 3.<br>
+            • Nếu đang dự thi chứng chỉ trong thời gian sơ tuyển: ngày thi chính thức phải trước <b>20/5/2026</b>; nộp chứng chỉ trước <b>30/5/2026</b>.
+        `
+    },
+    {
+        keys: ['bài thi đánh giá', 'bai thi danh gia', 'mã bài thi', 'ma bai thi', 'ca1', 'ca2', 'ca3', 'ca4'],
+        answer: `
+            <b>Bài thi đánh giá Bộ Công an:</b><br>
+            • Hình thức: <b>thi viết</b>.<br>
+            • Thời lượng: <b>180 phút</b>.<br>
+            • Thời gian thi chính: <b>21/6/2026</b>.<br>
+            • Mã bài thi gồm: <b>CA1, CA2, CA3, CA4</b>.
+        `
+    },
+    {
+        keys: ['lịch đại học', 'lich dai hoc', 'thời gian đại học', 'thoi gian dai hoc', 'khi nào thi đại học cand'],
+        answer: `
+            <b>Mốc thời gian đại học chính quy:</b><br>
+            • 15/3 - 15/4/2026: Đăng ký dự tuyển.<br>
+            • 16/4 - 05/5/2026: Khám sức khỏe và kiểm tra thể lực.<br>
+            • 20/5/2026: Nộp hồ sơ dự tuyển.<br>
+            • 20 - 21/6/2026: Thi đánh giá Bộ Công an.<br>
+            • 10 - 15/7/2026: Công bố điểm, phúc khảo.<br>
+            • 08 - 10/8/2026: Thông báo kết quả PT2, PT3.<br>
+            • 14/8/2026: Thông báo trúng tuyển.<br>
+            • 23 - 27/9/2026: Nhập học.
+        `
+    },
+    {
+        keys: ['lệ phí đại học', 'le phi dai hoc', 'phí hồ sơ đại học', 'phi ho so dai hoc', 'lệ phí'],
+        answer: `
+            <b>Lệ phí đại học chính quy:</b><br>
+            • Lệ phí sơ tuyển: <b>300.000 đồng</b>.<br>
+            • Phí hồ sơ chung: <b>20.000 đồng/bộ</b>.<br>
+            • Tờ khai đăng ký dự tuyển đại học CAND: <b>10.000 đồng/tờ</b>.
+        `
+    },
+    {
+        keys: ['vb2ca', 'văn bằng 2', 'van bang 2', 'đại học vb2ca'],
+        answer: `
+            <b>Đại học chính quy tuyển mới đối với người đã có bằng đại học (VB2CA):</b><br>
+            • Đối tượng: <b>Công dân Việt Nam</b>.<br>
+            • Phương thức: <b>PT1 xét tuyển thẳng</b>, <b>PT2 thi tuyển</b>.<br>
+            • Tổng chỉ tiêu: <b>530</b>.<br>
+            • Bài thi: thi trên máy tính, <b>150 phút</b>, ngày thi <b>20/9/2026</b>.
+        `
+    },
+    {
+        keys: ['điều kiện vb2ca', 'dieu kien vb2ca', 'tiêu chuẩn vb2ca', 'tieu chuan vb2ca'],
+        answer: `
+            <b>Điều kiện VB2CA:</b><br>
+            • Tốt nghiệp đại học hệ chính quy, xếp loại từ <b>khá</b> trở lên.<br>
+            • Văn bằng nước ngoài phải được công nhận.<br>
+            • Độ tuổi không quá <b>30</b> tính đến ngày dự thi.<br>
+            • Tiêu chuẩn chính trị và sức khỏe áp dụng tương tự tuyển sinh học sinh phổ thông vào các trường CAND.<br>
+            • Sinh viên năm cuối được đăng ký nhưng đến <b>20/8/2026</b> phải có bằng hoặc giấy xác nhận tốt nghiệp.
+        `
+    },
+    {
+        keys: ['lịch vb2ca', 'lich vb2ca', 'thời gian vb2ca', 'thoi gian vb2ca'],
+        answer: `
+            <b>Mốc thời gian VB2CA:</b><br>
+            • 15/3 - 25/6/2026: Đăng ký dự tuyển.<br>
+            • 29/6 - 03/7/2026: Khám sức khỏe.<br>
+            • 20/8/2026: Nộp hồ sơ và danh sách đăng ký dự tuyển.<br>
+            • 19 - 20/9/2026: Tổ chức kỳ thi VB2CA.<br>
+            • 01 - 03/10/2026: Thông báo điểm thi, tiếp nhận phúc khảo.<br>
+            • 30/10/2026: Thông báo trúng tuyển.<br>
+            • 10 - 15/11/2026: Nhập học.
+        `
+    },
+    {
+        keys: ['lệ phí vb2ca', 'le phi vb2ca', 'phí hồ sơ vb2ca', 'phi ho so vb2ca'],
+        answer: `
+            <b>Lệ phí VB2CA:</b><br>
+            • Lệ phí sơ tuyển: <b>100.000 đồng/thí sinh</b>.<br>
+            • Lệ phí hồ sơ: <b>30.000 đồng/bộ</b>.
+        `
+    },
+    {
+        keys: ['trung cấp', 'trung cap', 'cao đẳng an ninh', 'cao dang an ninh', 't08', 't09', 't10'],
+        answer: `
+            <b>Trung cấp chính quy tuyển mới:</b><br>
+            • Đối tượng: chiến sĩ nghĩa vụ Công an; công dân hoàn thành nghĩa vụ tham gia CAND có quyết định xuất ngũ trong vòng 12 tháng; thí sinh đã dự tuyển nhưng không trúng tuyển đại học CAND chính quy.<br>
+            • Phương thức: <b>PT1 xét tuyển thẳng</b>, <b>PT2 xét tuyển</b>.<br>
+            • Tổng chỉ tiêu: <b>300</b>.<br>
+            • Phân bổ: <b>T08: 80</b>; <b>T09: 100</b>; <b>T10: 100</b>.
+        `
+    },
+    {
+        keys: ['điều kiện trung cấp', 'dieu kien trung cap', 'tiêu chuẩn trung cấp', 'tieu chuan trung cap'],
+        answer: `
+            <b>Điều kiện trung cấp:</b><br>
+            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức theo quy định.<br>
+            • Chiến sĩ nghĩa vụ phải có thời gian công tác từ <b>15 tháng</b> trở lên.<br>
+            • Phải đủ sức khỏe tuyển vào CAND theo quy định hiện hành.<br>
+            • Nếu là thí sinh không trúng tuyển đại học thì vẫn phải bảo đảm điều kiện, tiêu chuẩn dự tuyển đại học theo quy định.
+        `
+    },
+    {
+        keys: ['hồ sơ trung cấp', 'ho so trung cap', 'giấy tờ trung cấp', 'giay to trung cap'],
+        answer: `
+            <b>Hồ sơ trung cấp:</b><br>
+            • Danh sách đăng ký xét tuyển trung cấp CAND.<br>
+            • File danh sách đăng ký xét tuyển trung cấp trích xuất từ phần mềm tuyển sinh.<br>
+            • Tờ khai đăng ký dự tuyển trung cấp CAND: <b>10.000 đồng/tờ</b>.<br>
+            • CCCD của thí sinh.<br>
+            • Bản photo giấy báo dự thi tốt nghiệp THPT.
+        `
+    },
+    {
+        keys: ['lịch trung cấp', 'lich trung cap', 'thời gian trung cấp', 'thoi gian trung cap'],
+        answer: `
+            <b>Mốc thời gian trung cấp:</b><br>
+            • 15/3 - 15/4/2026: Đăng ký dự tuyển.<br>
+            • 16/4 - 05/5/2026: Khám sức khỏe và kiểm tra thể lực.<br>
+            • 15 - 20/8/2026: Công bố điểm trúng tuyển.<br>
+            • 10 - 15/10/2026: Nhập học.
+        `
+    },
+    {
+        keys: ['khám sức khỏe', 'kham suc khoe', 'lịch khám', 'lich kham'],
+        answer: `
+            <b>Khám sức khỏe tuyển sinh:</b><br>
+            • Đại học / Trung cấp: từ <b>16/4 đến 05/5/2026</b>.<br>
+            • VB2CA: từ <b>29/6 đến 03/7/2026</b>.<br>
+            • Buổi sáng: <b>07h30</b>; buổi chiều: <b>13h30</b>.<br>
+            • Buổi sáng không ăn sáng để làm xét nghiệm.
+        `
+    },
+    {
+        keys: ['kiểm tra thể lực', 'kiem tra the luc', 'thể lực', 'the luc'],
+        answer: `
+            <b>Kiểm tra thể lực:</b><br>
+            • Áp dụng với thí sinh đủ điều kiện dự tuyển đại học CAND.<br>
+            • Buổi sáng: <b>07h00</b>; buổi chiều: <b>15h00</b>.<br>
+            • Thí sinh có mặt trước <b>15 phút</b>, mặc trang phục thể thao, đi giày thể thao.
+        `
+    },
+    {
+        keys: ['ngưỡng thể lực', 'nguong the luc', 'điều kiện đạt kiểm tra thể lực', 'đạt kiểm tra thể lực', 'chạy 100m', 'chay 100m', 'bật xa', 'bat xa', 'xà đơn', 'xa don'],
+        answer: `
+            <b>Ngưỡng đạt thể lực:</b><br>
+            • Bật xa tại chỗ: Nam <b>≥ 2,2m</b>; Nữ <b>≥ 1,5m</b>.<br>
+            • Chạy 100m: Nam <b>≤ 16 giây</b>; Nữ <b>≤ 20 giây</b>.<br>
+            • Chạy 800m: Nữ <b>≤ 5 phút 30 giây</b>.<br>
+            • Chạy 1500m: Nam <b>≤ 7 phút 30 giây</b>.<br>
+            • Co tay xà đơn: Nam <b>≥ 12 lần</b>.
+        `
+    },
+    {
+        keys: ['mã tổ hợp', 'ma to hop', 'tổ hợp xét tuyển', 'to hop xet tuyen', 'a00', 'a01', 'd01', 'x02'],
+        answer: `
+            <b>Mã tổ hợp xét tuyển đang sử dụng:</b><br>
+            A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
+            Bạn có thể hỏi tiếp theo kiểu: <i>"Tổ hợp X02 gồm môn gì?"</i>
+        `
+    },
+    {
+        keys: ['x02 gồm môn gì', 'x03 gồm môn gì', 'x04 gồm môn gì', 'x26 gồm môn gì', 'x27 gồm môn gì', 'x28 gồm môn gì'],
+        answer: `
+            <b>Các tổ hợp mới:</b><br>
+            • X02: Toán, Ngữ văn, Tin học.<br>
+            • X03: Toán, Ngữ văn, Công nghệ công nghiệp.<br>
+            • X04: Toán, Ngữ văn, Công nghệ nông nghiệp.<br>
+            • X26: Toán, Tiếng Anh, Tin học.<br>
+            • X27: Toán, Tiếng Anh, Công nghệ công nghiệp.<br>
+            • X28: Toán, Tiếng Anh, Công nghệ nông nghiệp.
+        `
+    },
+    {
+        keys: ['đối tượng', 'doi tuong'],
+        answer: `
+            <b>Các nhóm đối tượng chính năm 2026:</b><br>
+            • Đại học chính quy: chiến sĩ nghĩa vụ, công dân hoàn thành nghĩa vụ tham gia CAND, công dân thường trú tại địa phương.<br>
+            • VB2CA: công dân Việt Nam đã có bằng đại học theo điều kiện quy định.<br>
+            • Trung cấp: chiến sĩ nghĩa vụ, công dân hoàn thành nghĩa vụ tham gia CAND, thí sinh không trúng tuyển đại học CAND.
+        `
+    },
+    {
+        keys: ['điều kiện', 'dieu kien', 'tiêu chuẩn', 'tieu chuan'],
+        answer: `
+            <b>Điều kiện chung:</b><br>
+            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức, sức khỏe theo quy định của Bộ Công an.<br>
+            • Mỗi hệ tuyển sinh có thêm điều kiện riêng về học lực, độ tuổi, tình trạng hôn nhân, chứng chỉ hoặc bằng cấp.<br>
+            • Đồng chí có thể hỏi rõ hơn theo từng nhóm: <i>đại học chính quy</i>, <i>VB2CA</i> hoặc <i>trung cấp</i>.
+        `
+    },
+    {
+        keys: ['thời gian', 'thoi gian', 'khi nào', 'bao giờ', 'bao gio'],
+        answer: `
+            <b>Các mốc chính năm 2026:</b><br>
+            • Đại học / Trung cấp đăng ký từ <b>15/3 đến 15/4/2026</b>.<br>
+            • VB2CA đăng ký từ <b>15/3 đến 25/6/2026</b>.<br>
+            • Khám sức khỏe đại học / trung cấp từ <b>16/4 đến 05/5/2026</b>.<br>
+            • Khám sức khỏe VB2CA từ <b>29/6 đến 03/7/2026</b>.<br>
+            • Thi đánh giá đại học vào <b>20 - 21/6/2026</b>.<br>
+            • Thi VB2CA vào <b>19 - 20/9/2026</b>.
+        `
+    },
+    {
+        keys: ['hồ sơ', 'ho so', 'giấy tờ', 'giay to', 'nộp gì', 'nop gi'],
+        answer: `
+            <b>Hồ sơ cơ bản:</b><br>
+            • Đại học chính quy: bìa hồ sơ, lý lịch tự khai, thẩm tra lý lịch, đơn xin dự tuyển, phiếu đăng ký dự tuyển in từ phần mềm tuyển sinh.<br>
+            • VB2CA: CCCD, giấy khai sinh, bằng tốt nghiệp THPT, bằng đại học và bảng điểm, văn bằng sau đại học nếu có, chứng chỉ ngoại ngữ nếu có.<br>
+            • Trung cấp: danh sách đăng ký, file phần mềm, tờ khai dự tuyển trung cấp, CCCD, photo giấy báo dự thi THPT.
+        `
+    },
             { 
                 keys: ['hồ sơ', 'cần gì', 'giấy tờ'], 
                 answer: "<b>Hồ sơ đăng ký sơ tuyển gồm:</b><br>1. Phiếu đăng ký (nhận tại CA xã).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. Giấy khai sinh.<br>5. 4 ảnh 4x6.<br><i>Chi tiết xem tại Menu > Điều kiện.</i>" 
@@ -797,18 +1286,17 @@ const SUC_KHOE_DATA = [
                 keys: ["công an xã phường đặc khu", "cong an xa phuong dac khu", "tuyên truyền thi máy tính", "tuyen truyen thi may tinh", "ứng dụng CNTT tuyên truyền", "ung dung cntt tuyen truyen"],
                 answer: `<b>Công an xã/phường/đặc khu</b><br>Tổ chức tuyên truyền bằng nhiều hình thức, chú ý ứng dụng CNTT để thí sinh nắm, làm quen và ôn tập theo các đề cương phù hợp.`
             },
-            {
-                keys: ["quảng trị", "quang tri", "công an tỉnh quảng trị", "cong an tinh quang tri", "thông báo quảng trị", "thong bao quang tri", "thong bao cong an quang tri"],
-                answer: `<b>Thông báo của Công an tỉnh Quảng Trị</b><br>Thông báo về đổi mới công tác tuyển sinh ĐH chính quy tuyển mới trong CAND kể từ năm 2026, trọng tâm là lộ trình thi trên máy tính và trách nhiệm tuyên truyền/phối hợp của các đơn vị.`
-            },
+           
         ];
 
         const SUGGESTIONS = [
-            { label: "SỨC KHỎE (TT62)", query: "Chiều cao BMI 62/2023" },
-            { label: "XÉT NGHIỆM MÁU", query: "Xét nghiệm viêm gan ma túy" },
-            { label: "ĐIỀU KIỆN TUỔI", query: "Quy định độ tuổi" },
-            { label: "NƠI NỘP HỒ SƠ", query: "Nơi nộp hồ sơ sơ tuyển" }
-        ];
+    { label: "ĐẠI HỌC", query: "Đại học chính quy tuyển mới" },
+    { label: "VB2CA", query: "Điều kiện VB2CA" },
+    { label: "TRUNG CẤP", query: "Điều kiện trung cấp" },
+    { label: "THỜI GIAN", query: "Các mốc thời gian tuyển sinh 2026" },
+    { label: "THỂ LỰC", query: "Ngưỡng đạt thể lực" },
+    { label: "TỔ HỢP", query: "Mã tổ hợp xét tuyển" }
+];
 
         /****************************************************************
          * LOGIC HỆ THỐNG
@@ -835,7 +1323,7 @@ const SUC_KHOE_DATA = [
             }
 
             renderModalData();
-            addMessage("<b>Tôi là trợ lý ảo công tác tuyển sinh, đào tạo Công an tỉnh Quảng Trị, kính mời đồng chí, thí sinh, phụ huynh nhập nội dung cần tra cứu.", "bot");
+            addMessage("<b>Tôi là trợ lý ảo tuyển sinh CAND năm 2026, Công an tỉnh Quảng Trị.</b><br>Đồng chí, thí sinh hoặc phụ huynh có thể tra cứu nhanh về <b>đối tượng</b>, <b>điều kiện</b>, <b>thời gian</b>, <b>hồ sơ</b>, <b>lệ phí</b>, <b>VB2CA</b>, <b>trung cấp</b>, <b>sức khỏe</b> và <b>thể lực</b>.", "bot");
         }
 
         function renderModalData() {
@@ -886,7 +1374,7 @@ const SUC_KHOE_DATA = [
                 if(response) {
                     addMessage(response.answer, 'bot');
                 } else {
-                    addMessage("Thông tin này đang được cập nhật. Đồng chí vui lòng tra cứu trong phần <b>Danh bạ</b> (góc phải) hoặc liên hệ trực tiếp <b>Đ/c Đại úy Lê Hoàng Trung (0977.556.858 - 0823.373.373)</b>.", "bot");
+                    addMessage("Tôi chưa tìm được câu trả lời khớp hoàn toàn. Đồng chí vui lòng hỏi ngắn gọn theo các nhóm như: <b>đối tượng</b>, <b>điều kiện</b>, <b>thời gian</b>, <b>hồ sơ</b>, <b>VB2CA</b>, <b>trung cấp</b>, <b>thể lực</b>, <b>mã tổ hợp</b>; hoặc liên hệ cán bộ phụ trách tuyển sinh để được hướng dẫn thêm.", "bot");
                 }
             }, 500);
         }
