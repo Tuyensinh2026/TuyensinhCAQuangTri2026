@@ -716,15 +716,15 @@ const SUC_KHOE_DATA = [
          ****************************************************************/
         const KNOWLEDGE_BASE = [
             {
-  keys: ['sức khỏe', 'suc khoe', 'tiêu chuẩn sức khỏe', 'tieu chuan suc khoe', 'loại 1', 'loai 1', 'loại 2', 'loai 2'],
+  keys: ['tiêu chuẩn sức khỏe', 'tieu chuan suc khoe'],
   answer: "<b>Nguyên tắc sức khỏe dự tuyển CAND:</b> Thí sinh phải đạt <b>Sức khỏe Loại 1 hoặc Loại 2</b> và đáp ứng các điều kiện đặc thù (chiều cao, BMI, thị lực, ngoại hình, xét nghiệm)."
 },
 {
-  keys: ['chiều cao', 'chieu cao', 'bmi', 'cân nặng', 'can nang', '62/2023', 'tt62'],
+  keys: ['chiều cao nam', 'chieu cao nam', 'chiều cao nữ', 'chieu cao nu', 'quy định về BMI', 'quy định về cân nặng'],
   answer: "<b>Thể lực & BMI (TT62 + TT131):</b><br>• <b>Chiều cao chuẩn:</b> Nam <b>1m64–1m95</b>, Nữ <b>1m58–1m80</b>.<br>• <b>Ưu tiên:</b> DTTS (Nam ≥1m62, Nữ ≥1m56); UT1 (Nam ≥1m60, Nữ ≥1m55); DTTS rất ít người (Nam ≥1m58, Nữ ≥1m52).<br>• <b>BMI:</b> bắt buộc <b>18,5–30</b> (ngoài khoảng này thường không đạt)."
 },
 {
-  keys: ['mắt', 'mat', 'thị lực', 'thi luc', 'cận', 'can', 'loạn', 'loan', 'viễn', 'vien', 'đeo kính', 'deo kinh'],
+  keys: ['điều kiện về mắt', 'mắt cận bao nhiêu độ', 'thị lực quy định như thế nào', 'thi luc quy dinh nhu the nao', 'cận thị có thi được không', 'loạn thị có thi được không', 'viễn thị có thi được không'],
   answer: "<b>Tiêu chuẩn mắt (TT62 + TT131):</b><br>• <b>Không kính:</b> mỗi mắt <b>09–10/10</b>, tổng <b>≥18/10</b>.<br>• <b>Cận/viễn:</b> mỗi mắt <b>≤03D</b>.<br>• <b>Loạn:</b> <b>&lt;01D/mắt</b>.<br>• <b>Qua kính:</b> 1 mắt <b>≥09/10</b>, tổng <b>≥19/10</b>."
 },
 {
@@ -732,19 +732,19 @@ const SUC_KHOE_DATA = [
   answer: "<b>Mù màu / rối loạn sắc giác:</b> Mù màu trục xanh–đỏ (kể cả nhẹ) thường làm giảm loại sức khỏe và <b>rủi ro rất cao không đạt</b> nếu tuyển chỉ nhận Loại 1–2. Nên test Ishihara trước khi sơ tuyển."
 },
 {
-  keys: ['xăm', 'xam', 'sẹo', 'seo', 'bấm lỗ', 'bam lo', 'piercing', 'phun môi', 'phun moi', 'phun xăm', 'phun xam', 'tóc', 'toc'],
+  keys: ['xăm có được thi không', 'quy định về sẹo', 'quy định về bấm lỗ tai', 'nữ phun môi có được không', 'quy định về tóc'],
   answer: "<b>Ngoại hình (TT62 + TT131):</b><br>• <b>Không có hình xăm/vết xăm</b> (kể cả phun xăm); ngoại lệ thường gặp: nữ phun/xăm thẩm mỹ <b>lông mày, môi</b>.<br>• <b>Bấm lỗ:</b> Nam không bấm tai/mũi/vị trí khác; Nữ không có từ <b>02 lỗ trở lên</b> trên 01 tai và không bấm mũi/vị trí khác.<br>• Không có sẹo lồi co kéo ở vùng hay lộ (đầu/mặt/cổ/cẳng tay/bàn tay/bàn chân); tóc màu/kiểu bình thường theo điều lệnh."
 },
 {
-  keys: ['máu', 'xét nghiệm', 'xet nghiem', 'viêm gan', 'viem gan', 'hiv', 'hbsag', 'hcv', 'anti-hcv', 'ma túy', 'ma tuy'],
+  keys: ['quy định về máu', 'các nội dung xét nghiệm'],
   answer: "<b>Khám cận lâm sàng thường có:</b><br>• <b>Máu:</b> công thức máu, glucose, AST/ALT, ure/creatinin, HIV, HBsAg, anti-HCV…<br>• <b>Nước tiểu:</b> tổng phân tích + test <b>ma túy/tiền chất</b>.<br>• <b>Chẩn đoán:</b> X-quang tim phổi, siêu âm bụng, điện tim."
 },
 {
-  keys: ['trĩ', 'tri', 'bệnh trĩ', 'benh tri'],
+  keys: ['quy định về bệnh trĩ'],
   answer: "<b>Bệnh trĩ:</b> Một số trường hợp trĩ có thể được xem xét theo danh mục “được chấp nhận” (ví dụ trĩ ngoại 01 búi nhỏ 0,5–1cm hoặc đã phẫu thuật tốt). Trĩ nhiều búi/búi to/chảy máu thường <b>rủi ro không đạt</b>. Kết luận theo khám thực tế."
 },
 {
-  keys: ['phúc tra', 'phuc tra', '6 tháng', '6 thang', 'phiếu khám', 'phieu kham', 'tạm thời', 'tam thoi', 'ký hiệu t', 'ky hieu t'],
+  keys: ['phúc tra sức khỏe'],
   answer: "<b>Phúc tra & thời hạn:</b> Có thể khám <b>phúc tra</b> sau trúng tuyển/nhập học. Trường hợp ghi <b>“T”</b> là bệnh tạm thời cần điều trị khỏi để đánh giá lại. Phiếu khám sức khỏe thường có giá trị <b>06 tháng</b>."
 },
             {
@@ -768,7 +768,7 @@ const SUC_KHOE_DATA = [
         `
     },
     {
-        keys: ['phương thức 2', 'phuong thuc 2', 'chứng chỉ ngoại ngữ', 'chung chi ngoai ngu', 'ielts', 'toefl', 'toeic', 'hsk'],
+        keys: ['phương thức 2 đại học', 'quy định về chứng chỉ ngoại ngữ', 'quy định về ngoại ngữ', 'ielts', 'toefl', 'toeic', 'hsk'],
         answer: `
             <b>Phương thức 2 đại học:</b><br>
             • Xét tuyển kết hợp <b>chứng chỉ ngoại ngữ quốc tế</b> + <b>bài thi đánh giá Bộ Công an</b>.<br>
@@ -778,7 +778,7 @@ const SUC_KHOE_DATA = [
         `
     },
     {
-        keys: ['bài thi đánh giá', 'bai thi danh gia', 'mã bài thi', 'ma bai thi', 'ca1', 'ca2', 'ca3', 'ca4'],
+        keys: ['bài thi đánh giá', 'bai thi danh gia', 'mã bài thi', 'ma bai thi'],
         answer: `
             <b>Bài thi đánh giá Bộ Công an:</b><br>
             • Hình thức: <b>thi viết</b>.<br>
@@ -788,7 +788,7 @@ const SUC_KHOE_DATA = [
         `
     },
     {
-        keys: ['lịch thi đại học', 'lich thi dai hoc', 'thời gian thi đại học', 'thoi gian thi dai hoc', 'khi nào thi đại học cand'],
+        keys: ['thời gian thi đại học', 'thoi gian thi dai hoc', 'khi nào thi đại học cand'],
         answer: `
             <b>Mốc thời gian đại học chính quy:</b><br>
             • 15/3 - 15/4/2026: Đăng ký dự tuyển.<br>
@@ -802,7 +802,7 @@ const SUC_KHOE_DATA = [
         `
     },
     {
-        keys: ['lệ phí đại học', 'le phi dai hoc', 'phí hồ sơ đại học', 'phi ho so dai hoc', 'lệ phí'],
+        keys: ['lệ phí đại học', 'le phi dai hoc', 'phí hồ sơ đại học', 'phi ho so dai hoc'],
         answer: `
             <b>Lệ phí đại học chính quy:</b><br>
             • Lệ phí sơ tuyển: <b>300.000 đồng</b>.<br>
@@ -853,7 +853,7 @@ const SUC_KHOE_DATA = [
         `
     },
     {
-        keys: ['trung cấp', 'trung cap', 'cao đẳng an ninh', 'cao dang an ninh', 't08', 't09', 't10'],
+        keys: ['đối tượng trung cấp', 'phương thức trung cấp'],
         answer: `
             <b>Trung cấp chính quy tuyển mới:</b><br>
             • Đối tượng: chiến sĩ nghĩa vụ Công an; công dân hoàn thành nghĩa vụ tham gia CAND có quyết định xuất ngũ trong vòng 12 tháng; thí sinh đã dự tuyển nhưng không trúng tuyển đại học CAND chính quy.<br>
@@ -924,7 +924,7 @@ const SUC_KHOE_DATA = [
         `
     },
     {
-        keys: ['mã tổ hợp', 'ma to hop', 'tổ hợp xét tuyển', 'to hop xet tuyen', 'a00', 'a01', 'd01'],
+        keys: ['mã tổ hợp', 'ma to hop', 'tổ hợp xét tuyển', 'to hop xet tuyen'],
         answer: `
             <b>Mã tổ hợp xét tuyển đang sử dụng:</b><br>
             A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
@@ -953,7 +953,7 @@ const SUC_KHOE_DATA = [
         `
     },
     {
-        keys: ['điều kiện', 'dieu kien', 'tiêu chuẩn', 'tieu chuan'],
+        keys: ['điều kiện chung', 'tiêu chuẩn chung'],
         answer: `
             <b>Điều kiện chung:</b><br>
             • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức, sức khỏe theo quy định của Bộ Công an.<br>
@@ -974,7 +974,7 @@ const SUC_KHOE_DATA = [
         `
     },
     {
-        keys: ['hồ sơ', 'ho so', 'giấy tờ', 'giay to', 'nộp gì', 'nop gi'],
+        keys: ['hồ sơ cơ bản gồm những gì'],
         answer: `
             <b>Hồ sơ cơ bản:</b><br>
             • Đại học chính quy: bìa hồ sơ, lý lịch tự khai, thẩm tra lý lịch, đơn xin dự tuyển, phiếu đăng ký dự tuyển in từ phần mềm tuyển sinh.<br>
@@ -983,11 +983,11 @@ const SUC_KHOE_DATA = [
         `
     },
             { 
-                keys: ['hồ sơ', 'cần gì', 'giấy tờ'], 
+                keys: ['hồ sơ đăng ký sơ tuyển'], 
                 answer: "<b>Hồ sơ đăng ký sơ tuyển gồm:</b><br>1. Phiếu đăng ký (nhận tại CA xã).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. Giấy khai sinh.<br>5. 4 ảnh 4x6.<br><i>Chi tiết xem tại Menu > Điều kiện.</i>" 
             },
             { 
-                keys: ['tuổi', 'sinh năm', 'độ tuổi'], 
+                keys: ['quy định về độ tuổi', 'độ tuổi'], 
                 answer: "<b>Quy định độ tuổi mới nhất:</b><br>- Học sinh phổ thông: ≤ 22 tuổi.<br>- Dân tộc thiểu số: ≤ 25 tuổi.<br>- Văn bằng 2 / Cán bộ: ≤ 30 tuổi." 
             },
             { 
@@ -1011,7 +1011,7 @@ const SUC_KHOE_DATA = [
                 answer: "<b>Theo Thông tư 99/2025:</b> Thí sinh nộp hồ sơ và sơ tuyển trực tiếp tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú. Không cần lên Công an huyện."
             },
             {
-                keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025', 'ưu tiên'], 
+                keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025'], 
                 answer: "<b>Điểm mới Tuyển quân 2025:</b> Khuyến khích công dân có trình độ Đại học, Cao đẳng tham gia nghĩa vụ CAND. Đây là nguồn để chuyển chuyên nghiệp sau này."
             },
             {
@@ -1361,23 +1361,45 @@ const SUC_KHOE_DATA = [
         }
 
         function handleSend() {
-            const text = userInput.value.trim();
-            if (!text) return;
+    const text = userInput.value.trim();
+    if (!text) return;
 
-            addMessage(text, 'user');
-            userInput.value = '';
+    addMessage(text, 'user');
+    userInput.value = '';
 
-            setTimeout(() => {
-                const query = text.toLowerCase();
-                const response = KNOWLEDGE_BASE.find(i => i.keys.some(k => query.includes(k)));
-                
-                if(response) {
-                    addMessage(response.answer, 'bot');
-                } else {
-                    addMessage("Tôi chưa tìm được câu trả lời khớp hoàn toàn. Đồng chí vui lòng hỏi ngắn gọn theo các nhóm như: <b>đối tượng</b>, <b>điều kiện</b>, <b>thời gian</b>, <b>hồ sơ</b>, <b>VB2CA</b>, <b>trung cấp</b>, <b>thể lực</b>, <b>mã tổ hợp</b>; hoặc liên hệ cán bộ phụ trách tuyển sinh ở góc phải để được hướng dẫn thêm.", "bot");
-                }
-            }, 500);
+    setTimeout(() => {
+        const query = text.toLowerCase();
+        
+        // 1. Lọc tất cả các mục có chứa ít nhất một từ khóa khớp
+        let matches = KNOWLEDGE_BASE.filter(i => 
+            i.keys.some(k => query.includes(k.toLowerCase()))
+        );
+        
+        if (matches.length > 0) {
+            // 2. Sắp xếp: Mục nào có từ khóa khớp DÀI NHẤT sẽ đứng đầu
+            // Ví dụ: "điều kiện vb2ca" (15 ký tự) > "vb2ca" (5 ký tự)
+            matches.sort((a, b) => {
+                const maxKeyA = Math.max(...a.keys.filter(k => query.includes(k.toLowerCase())).map(k => k.length));
+                const maxKeyB = Math.max(...b.keys.filter(k => query.includes(k.toLowerCase())).map(k => k.length));
+                return maxKeyB - maxKeyA;
+            });
+
+            // 3. Lấy kết quả chính xác nhất
+            let bestMatch = matches[0];
+            addMessage(bestMatch.answer, 'bot');
+
+            // 4. (Tùy chọn) Nếu có kết quả liên quan khác, gợi ý nhẹ bên dưới
+            if (matches.length > 1) {
+                const related = matches[1].answer.split(':')[0].replace(/<[^>]*>/g, '');
+                const hint = `<i style="font-size:10px; color:#666;">Thông tin liên quan: ${related}...</i>`;
+                addMessage(hint, 'bot');
+            }
+        } else {
+            // Trường hợp không tìm thấy
+            addMessage("Tôi chưa tìm được câu trả lời khớp hoàn toàn. Đồng chí vui lòng hỏi ngắn gọn theo các nhóm như: <b>đối tượng</b>, <b>điều kiện</b>, <b>thời gian</b>, <b>hồ sơ</b>, <b>VB2CA</b>, <b>trung cấp</b>, <b>thể lực</b>, <b>mã tổ hợp</b>; hoặc liên hệ cán bộ phụ trách tuyển sinh ở góc phải để được hướng dẫn thêm.", "bot");
         }
+    }, 500);
+}
 
         function ask(q) {
             userInput.value = q;
