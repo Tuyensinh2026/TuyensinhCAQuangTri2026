@@ -1184,7 +1184,7 @@ const SUC_KHOE_DATA = [
   - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2</b>.`
 },
 {
-  keys: ['học viện cảnh sát nhân dân', 'hoc vien canh sat nhan dan', 'chỉ tiêu đại học t02', 't02' 'csh', 'chỉ tiêu đại học học viện cảnh sát nhân dân', 'chi tieu dai hoc hoc vien canh sat nhan dan'],
+  keys: ['học viện cảnh sát nhân dân', 'hoc vien canh sat nhan dan', 'chỉ tiêu đại học t02', 't02', 'csh', 'chỉ tiêu đại học học viện cảnh sát nhân dân', 'chi tieu dai hoc hoc vien canh sat nhan dan'],
   answer: `<b>Học viện Cảnh sát nhân dân (T02 - CSH): 400 chỉ tiêu</b><br><br>
   <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
   - Mã ngành: <b>7860100</b>.<br>
@@ -2254,7 +2254,7 @@ const SUC_KHOE_DATA = [
                         <p class="text-[11px] font-bold text-gray-800">${i.unit}</p>
                         <p class="text-[10px] text-gray-500 uppercase font-bold mt-0.5"><i class="fas fa-user-shield mr-1"></i>${i.name}</p>
                     </div>
-                    <a href="tel:${i.phone.replace(/\./g, '')}" class="text-[11px] font-black text-[#ce181e] bg-red-50 px-2 py-1 rounded border border-red-100 hover:bg-red-600 hover:text-white transition-colors">
+                    <a href="tel:${i.phone.replace(/[^\d+]/g, '')}" class="text-[11px] font-black text-[#ce181e] bg-red-50 px-2 py-1 rounded border border-red-100 hover:bg-red-600 hover:text-white transition-colors">
                         ${i.phone}
                     </a>
                 </div>
