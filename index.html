@@ -1539,7 +1539,7 @@ const SUC_KHOE_DATA = [
         `
     },
     {
-        keys: [' điều kiện đạt kiểm tra thể lực','chạy 100m bao nhiêu giây', 'chay 100m', 'chạy 1500m bao nhiêu giây', 'chay 1500m', 'chạy 800m bao nhiêu giây', 'chay 800m', 'bật xa', 'bat xa', 'xà đơn', 'xa don', 'thể lực', 'điều kiện thể lực'],
+        keys: ['điều kiện đạt kiểm tra thể lực','chạy 100m bao nhiêu giây', 'chay 100m', 'chạy 1500m bao nhiêu giây', 'chay 1500m', 'chạy 800m bao nhiêu giây', 'chay 800m', 'bật xa', 'bat xa', 'xà đơn', 'xa don', 'thể lực', 'điều kiện thể lực'],
         answer: `
             <b>Ngưỡng đạt thể lực:</b><br>
             • Bật xa tại chỗ: Nam <b>≥ 2,2m</b>; Nữ <b>≥ 1,5m</b>.<br>
@@ -1900,10 +1900,6 @@ const SUC_KHOE_DATA = [
                 answer: "<b>Quy định độ tuổi mới nhất:</b><br>- Học sinh phổ thông: ≤ 22 tuổi.<br>- Dân tộc thiểu số: ≤ 25 tuổi.<br>- Văn bằng 2 / Cán bộ: ≤ 30 tuổi." 
             },
             { 
-                keys: ['chiều cao', 'cân nặng', 'bmi', '62/2023'], 
-                answer: "<b>Tiêu chuẩn chiều cao (TT 62):</b><br>- <b>Nam:</b> ≥ 1m64 (Dân tộc ≥ 1m62; UT1 ≥ 1m60).<br>- <b>Nữ:</b> ≥ 1m58 (Dân tộc ≥ 1m56; UT1 ≥ 1m55).<br>- <b>BMI:</b> 18.5 - 29.9." 
-            },
-            { 
                 keys: ['máu', 'xét nghiệm', 'viêm gan', 'hiv', 'ma túy'], 
                 answer: "<b>Khám cận lâm sàng bắt buộc (TT 62):</b><br>- Xét nghiệm máu: HIV, Viêm gan B, C, chức năng gan thận.<br>- Xét nghiệm nước tiểu: Tìm chất ma túy (Morphin, Heroin...).<br>- Chẩn đoán: X-quang phổi, Siêu âm bụng, Điện tim."
             },
@@ -1914,10 +1910,6 @@ const SUC_KHOE_DATA = [
             {
                 keys: ['xăm', 'sẹo', 'phun môi'], 
                 answer: "<b>Quy định Thẩm mỹ:</b> Cấm tuyệt đối hình xăm, chữ xăm trên da. Phun xăm thẩm mỹ (nữ) phải tự nhiên. Sẹo lồi/xấu ở vị trí lộ diện sẽ bị loại."
-            },
-            {
-                keys: ['nơi nộp', 'xã', 'phường', 'ở đâu', 'sơ tuyển', 'thông tư 99'], 
-                answer: "<b>Theo Thông tư 99/2025:</b> Thí sinh nộp hồ sơ và sơ tuyển trực tiếp tại <b>CÔNG AN CẤP XÃ</b> nơi đăng ký thường trú. Không cần lên Công an huyện."
             },
             {
                 keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025'], 
@@ -1946,26 +1938,6 @@ const SUC_KHOE_DATA = [
             {
                 keys: ["ưu tiên chiều cao dân tộc thiểu số", "uu tien chieu cao dan toc thieu so", "dân tộc thiểu số chiều cao", "dan toc thieu so chieu cao", "dtts chiều cao", "dtts chieu cao", "uu tien chieu cao dan toc", "dan toc thieu so cao bao nhieu", "em dan toc cao 1m61 co duoc khong"],
                 answer: `<b>Ưu tiên chiều cao (Người dân tộc thiểu số)</b><br>Nam từ <b>1m62</b>, Nữ từ <b>1m56</b>.`
-            },
-            {
-                keys: ["ưu tiên chiều cao UT1", "uu tien chieu cao ut1", "nhóm UT1 chiều cao", "nhom ut1 chieu cao", "đối tượng chính sách ưu tiên 01", "doi tuong chinh sach uu tien 01", "ut1 chieu cao", "doi tuong chinh sach chieu cao", "em thuoc ut1 cao 1m59 co duoc khong"],
-                answer: `<b>Ưu tiên chiều cao (Đối tượng chính sách ưu tiên 01 - Nhóm UT1)</b><br>Nam từ <b>1m60</b>, Nữ từ <b>1m55</b>.`
-            },
-            {
-                keys: ["tốt nghiệp đại học chiều cao", "tot nghiep dai hoc chieu cao", "khối KHTN kỹ thuật CNTT chiều cao", "khoi khtn ky thuat cntt chieu cao", "cntt chieu cao", "khtn chieu cao", "ky thuat chieu cao"],
-                answer: `<b>Ưu tiên chiều cao (Công dân tốt nghiệp ĐH khối KHTN/Kỹ thuật/CNTT)</b><br>Nam từ <b>1m62</b>, Nữ từ <b>1m56</b>.`
-            },
-            {
-                keys: ["tuyển sinh văn hóa THPT chiều cao", "tuyen sinh van hoa thpt chieu cao", "văn hóa THPT chiều cao", "van hoa thpt chieu cao", "van hoa thpt cao bao nhieu"],
-                answer: `<b>Ưu tiên chiều cao (Tuyển sinh văn hóa bậc THPT)</b><br>Nam từ <b>1m55</b>, Nữ từ <b>1m50</b>.`
-            },
-            {
-                keys: ["BMI", "bmi", "chỉ số BMI", "chi so bmi", "BMI bao nhiêu thì đạt", "bmi bao nhieu thi dat", "bmi tuyển sinh", "bmi tuyen sinh", "bmi cand", "em bmi 17 co duoc khong", "em bmi 31 co duoc khong", "bmi 18.5", "bmi 30"],
-                answer: `<b>Chỉ số BMI yêu cầu</b><br>BMI phải từ <b>18,5</b> đến <b>30</b>.<br>Nếu <b>BMI &gt; 30</b> hoặc <b>BMI &lt; 18,5</b> thì không đạt.`
-            },
-            {
-                keys: ["quy tròn chiều cao cân nặng", "quy tron chieu cao can nang", "cách tính và quy tròn", "cach tinh va quy tron", "le 0.5 tinh sao", "le 0,49 tinh sao"],
-                answer: `<b>Cách quy tròn chiều cao/cân nặng</b><br>Từ <b>0,5</b> trở lên ghi thành <b>1</b> đơn vị; từ <b>0,49</b> trở xuống thì không lấy phần lẻ.`
             },
             {
                 keys: ["thị lực không kính", "thi luc khong kinh", "không đeo kính nhìn được mấy/10", "khong deo kinh nhin duoc may/10", "thi lực không kính", "thi luc khong kinh", "mat 9/10 co dat khong", "em khong deo kinh duoc 8/10 co duoc khong"],
@@ -2044,42 +2016,6 @@ const SUC_KHOE_DATA = [
                 answer: `<b>Tiêu hóa</b><br>Không bị trĩ nhiều búi hoặc búi to; không bị viêm gan B mạn tính giai đoạn hoạt động,.`
             },
             {
-                keys: ["phân loại sức khỏe", "phan loai suc khoe", "điểm 3 là loại mấy", "diem 3 la loai may", "loại 3 có bị loại không", "loai 3 co bi loai khong", "loai 3 co duoc du tuyen khong"],
-                answer: `<b>Phân loại sức khỏe</b><br>Nếu có dù chỉ <b>01 chỉ tiêu</b> bị <b>điểm 3</b> thì tổng quát là <b>Loại 3</b> và <b>không đủ điều kiện</b> dự tuyển.`
-            },
-            {
-                keys: ["tạm thời T", "tam thoi t", "chỉ tiêu tạm thời", "chi tieu tam thoi", "bệnh cấp tính", "benh cap tinh", "viem hong", "dau mat do"],
-                answer: `<b>Chỉ tiêu “Tạm thời (T)”</b><br>Các bệnh cấp tính (như viêm họng, đau mắt đỏ) có thể bị đánh điểm kèm “T”; cần điều trị khỏi để được đánh giá lại điểm chính thức.`
-            },
-            {
-                keys: ["khám phúc tra", "kham phuc tra", "phúc tra sau nhập học", "phuc tra sau nhap hoc", "bệnh viện 19-8", "benh vien 19-8", "bệnh viện 30-4", "benh vien 30-4", "bệnh viện 199", "benh vien 199", "bv 19-8", "bv 30-4", "bv 199"],
-                answer: `<b>Khám phúc tra</b><br>Sau khi nhập học sẽ khám phúc tra; nếu kết quả phúc tra khác biệt dẫn đến không đủ tiêu chuẩn thì có thể bị trả về địa phương.<br>Kết luận của Hội đồng khám phúc tra tại BV <b>19-8</b>, <b>30-4</b> hoặc <b>199</b> là kết quả cuối cùng.`
-            },
-            {
-                keys: ["thời hạn phiếu khám sức khỏe", "thoi han phieu kham suc khoe", "phiếu khám sức khỏe có giá trị bao lâu", "phieu kham suc khoe co gia tri bao lau", "giấy khám sức khỏe 6 tháng", "giay kham suc khoe 6 thang", "kham suc khoe bao lau het han"],
-                answer: `<b>Thời hạn phiếu khám sức khỏe</b><br>Phiếu khám sức khỏe có giá trị trong <b>06 tháng</b>.`
-            },
-            {
-                keys: ["điều kiện tuyển sinh", "dieu kien tuyen sinh", "đối tượng tuyển sinh", "doi tuong tuyen sinh", "nguyên tắc tuyển sinh", "nguyen tac tuyen sinh", "tuyển sinh đào tạo CAND", "tuyen sinh dao tao cand", "thong tu 50/2021", "thong tu 52/2023", "thong tu 99/2025", "tt 99/2025", "tt50", "tt52"],
-                answer: `<b>Tổng quan quy định tuyển sinh - đào tạo CAND</b><br>Tài liệu tổng hợp dựa trên Thông tư <b>50/2021/TT-BCA</b>, <b>52/2023/TT-BCA</b> và nội dung sửa đổi mới nhất tại <b>99/2025/TT-BCA</b>.`
-            },
-            {
-                keys: ["nguyên tắc đúng quy định và quy hoạch", "nguyen tac dung quy dinh va quy hoach", "đúng quy định và quy hoạch", "dung quy dinh va quy hoach", "tuyen sinh can cu vao gi"],
-                answer: `<b>Nguyên tắc: đúng quy định và quy hoạch</b><br>Căn cứ quy định của Đảng, Nhà nước, Bộ Công an; gắn với quy hoạch đào tạo, bồi dưỡng cán bộ phục vụ yêu cầu chiến đấu.`
-            },
-            {
-                keys: ["nguyên tắc công khai minh bạch", "nguyen tac cong khai minh bach", "công khai minh bạch", "cong khai minh bach", "tuyen sinh cong khai minh bach", "co duoc tu y them dieu kien khong"],
-                answer: `<b>Nguyên tắc: công khai, minh bạch</b><br>Bảo đảm dân chủ, khách quan; không tự ý bổ sung quy định trái hướng dẫn của Bộ Công an gây ảnh hưởng quyền lợi người dự tuyển.`
-            },
-            {
-                keys: ["nguyên tắc đúng đối tượng và tiêu chuẩn", "nguyen tac dung doi tuong va tieu chuan", "đúng đối tượng và tiêu chuẩn", "dung doi tuong va tieu chuan"],
-                answer: `<b>Nguyên tắc: đúng đối tượng và tiêu chuẩn</b><br>Cử cán bộ đi đào tạo hoặc tuyển chọn công dân phải đúng tiêu chuẩn về chính trị, phẩm chất đạo đức, trình độ và sức khỏe.`
-            },
-            {
-                keys: ["hạn chế dự tuyển", "han che du tuyen", "không cử dự tuyển khi bị kỷ luật", "khong cu du tuyen khi bi ky luat", "đang thanh tra có được dự tuyển không", "dang thanh tra co duoc du tuyen khong", "dang bi ky luat co duoc du tuyen khong", "dang bi thanh tra co duoc du tuyen khong"],
-                answer: `<b>Hạn chế dự tuyển</b><br>Không cử dự tuyển đối với cán bộ đang trong thời gian bị kỷ luật từ khiển trách trở lên hoặc đang trong quá trình thanh tra, kiểm tra, xác minh khiếu nại tố cáo.`
-            },
-            {
                 keys: ["đào tạo tiến sĩ", "dao tao tien si", "đào tạo thạc sĩ", "dao tao thac si", "tiến sĩ thạc sĩ CAND", "tien si thac si cand", "đối tượng thạc sĩ tiến sĩ", "doi tuong thac si tien si", "hoc thac si cand", "hoc tien si cand"],
                 answer: `<b>Đào tạo Tiến sĩ/Thạc sĩ</b><br>Đối tượng: cán bộ quản lý giáo dục, giảng viên, lãnh đạo cấp phòng trở lên hoặc cán bộ thuộc quy hoạch chức danh tương đương.`
             },
@@ -2090,18 +2026,6 @@ const SUC_KHOE_DATA = [
             {
                 keys: ["tuổi dự tuyển thạc sĩ", "tuoi du tuyen thac si", "thạc sĩ không quá bao nhiêu tuổi", "thac si khong qua bao nhieu tuoi", "tuoi thac si"],
                 answer: `<b>Tuổi dự tuyển Thạc sĩ</b><br>Không quá <b>45 tuổi</b> tính đến năm dự tuyển.`
-            },
-            {
-                keys: ["kinh nghiệm 24 tháng", "kinh nghiem 24 thang", "thời gian công tác 24 tháng", "thoi gian cong tac 24 thang", "lam viec bao lau thi duoc du tuyen"],
-                answer: `<b>Thời gian công tác</b><br>Phải có thời gian công tác thực tế từ <b>24 tháng</b> trở lên (không tính thời gian học các trình độ trước đó và thời gian tạm tuyển).`
-            },
-            {
-                keys: ["hoàn thành tốt nhiệm vụ", "hoan thanh tot nhiem vu", "phân loại cán bộ dự tuyển", "phan loai can bo du tuyen", "phan loai can bo"],
-                answer: `<b>Phân loại cán bộ</b><br>Đạt mức “<b>Hoàn thành tốt nhiệm vụ</b>” trở lên trong năm liền trước năm dự tuyển.`
-            },
-            {
-                keys: ["đại học chính quy tuyển mới", "dai hoc chinh quy tuyen moi", "tuyển mới đại học CAND", "tuyen moi dai hoc cand", "đối tượng tuyển sinh đại học", "doi tuong tuyen sinh dai hoc", "tuyen moi cand", "hoc sinh thpt co duoc du tuyen khong", "chien si nghia vu co duoc du tuyen khong"],
-                answer: `<b>Đại học chính quy (tuyển mới)</b><br>Đối tượng: học sinh THPT, chiến sĩ nghĩa vụ và công dân thường trú tại địa phương.`
             },
             {
                 keys: ["tiêu chuẩn học lực", "tieu chuan hoc luc", "học lực khá", "hoc luc kha", "UT1 học lực", "ut1 hoc luc", "nhóm UT1", "nhom ut1", "nhom ut1 la gi", "em thuoc ut1 can hoc luc gi"],
@@ -2118,82 +2042,6 @@ const SUC_KHOE_DATA = [
             {
                 keys: ["tình trạng hôn nhân", "tinh trang hon nhan", "chưa kết hôn", "chua ket hon", "chưa có con", "chua co con", "co con co duoc du tuyen khong", "da ket hon co duoc du tuyen khong"],
                 answer: `<b>Tình trạng hôn nhân</b><br>Yêu cầu: <b>chưa kết hôn</b>, <b>chưa có con đẻ</b>, <b>chưa có con nuôi</b> theo quy định.`
-            },
-            {
-                keys: ["đào tạo trung cấp", "dao tao trung cap", "trung cấp CAND", "trung cap cand", "xét trung cấp", "xet trung cap", "khong do dai hoc co duoc xet trung cap khong"],
-                answer: `<b>Đào tạo Trung cấp</b><br>Áp dụng cho: chiến sĩ nghĩa vụ, học sinh Trường Văn hóa và thí sinh không trúng tuyển đại học CAND nhưng đạt điều kiện xét tuyển trung cấp.`
-            },
-            {
-                keys: ["giáo dục văn hóa THPT", "giao duc van hoa thpt", "văn hóa THPT", "van hoa thpt", "hộ khẩu 5 năm", "ho khau 5 nam", "vùng đặc biệt khó khăn", "vung dac biet kho khan", "bien gioi hai dao"],
-                answer: `<b>Giáo dục văn hóa THPT</b><br>Đối tượng: người dân tộc thiểu số, có hộ khẩu thường trú từ <b>05 năm</b> trở lên tại vùng đặc biệt khó khăn, biên giới, hải đảo.`
-            },
-            {
-                keys: ["tiêu chuẩn sức khỏe và hình thể", "tieu chuan suc khoe va hinh the", "sức khỏe tổng quát", "suc khoe tong quat", "chiều cao bmi thị lực", "chieu cao bmi thi luc"],
-                answer: `<b>Tiêu chuẩn sức khỏe & hình thể (tóm tắt)</b><br>• Sức khỏe tổng quát: theo <b>TT62/2023/TT-BCA</b>.<br>• Chiều cao: Nam <b>1m64–1m95</b>, Nữ <b>1m58–1m80</b> (có ưu tiên cho một số đối tượng).<br>• BMI: <b>18,5–30</b>.<br>• Thị lực: tật khúc xạ không quá <b>3 đi-ốp</b>; kiểm tra qua kính đạt <b>10/10</b>, tổng 2 mắt <b>19/10</b> trở lên.`
-            },
-            {
-                keys: ["tuyển thẳng đại học", "tuyen thang dai hoc", "xét tuyển thẳng", "xet tuyen thang", "olympic quốc tế", "olympic quoc te", "học sinh giỏi quốc gia", "hoc sinh gioi quoc gia", "hsg quoc gia", "khoa hoc ky thuat quoc gia"],
-                answer: `<b>Tuyển thẳng Đại học</b><br>Áp dụng cho thí sinh: đội tuyển Olympic quốc tế; hoặc đạt giải Nhất HSG quốc gia; hoặc cuộc thi khoa học kỹ thuật cấp quốc gia.`
-            },
-            {
-                keys: ["tuyển thẳng trung cấp", "tuyen thang trung cap", "con liệt sĩ", "con liet si", "thương binh CAND 81%", "thuong binh cand 81%", "thuong binh cand 81", "anh hùng llvt", "anh hung llvt", "anh hùng lao động", "anh hung lao dong cand"],
-                answer: `<b>Tuyển thẳng Trung cấp</b><br>Áp dụng cho: con đẻ Liệt sĩ; Thương binh CAND (tỷ lệ thương tật <b>81%</b> trở lên); Anh hùng Lực lượng vũ trang; Anh hùng Lao động trong CAND; Đội tuyển Olympic quốc tế; hoặc đạt giải Ba HSG quốc gia trở lên; hoặc cuộc thi khoa học kỹ thuật cấp quốc gia.`
-            },
-            {
-                keys: ["cộng điểm ưu tiên", "cong diem uu tien", "tiến sĩ cộng 2,0", "tien si cong 2,0", "thạc sĩ cộng 1,5", "thac si cong 1,5", "bằng đại học giỏi xuất sắc", "bang dai hoc gioi xuat sac", "giải khuyến khích quốc gia", "giai khuyen khich quoc gia", "tien si cong 2", "thac si cong 1.5", "dai hoc gioi xuat sac"],
-                answer: `<b>Cộng điểm ưu tiên</b><br>• Thí sinh đạt giải khuyến khích quốc gia (theo quy định).<br>• Có bằng <b>Tiến sĩ</b> cộng <b>2,0</b> điểm; <b>Thạc sĩ</b> cộng <b>1,5</b> điểm; hoặc bằng ĐH loại <b>Xuất sắc/Giỏi</b> khi dự tuyển.`
-            },
-            {
-                keys: ["xây dựng chỉ tiêu", "xay dung chi tieu", "chỉ tiêu đào tạo", "chi tieu dao tao", "ban hành chỉ tiêu trước 25/01", "ban hanh chi tieu truoc 25/01", "cục tổ chức cán bộ", "cuc to chuc can bo", "truoc ngay 25/01"],
-                answer: `<b>Chỉ tiêu đào tạo</b><br>Cục Tổ chức cán bộ chủ trì tham mưu ban hành chỉ tiêu đào tạo hàng năm trước ngày <b>25/01</b>; ưu tiên phân bổ cho vùng dân tộc thiểu số, biên giới, hải đảo.`
-            },
-            {
-                keys: ["thông tin tuyên truyền", "thong tin tuyen truyen", "thông báo công khai 30 ngày", "thong bao cong khai 30 ngay", "truoc 30 ngay nhan ho so"],
-                answer: `<b>Thông báo công khai</b><br>Các trường và đơn vị phải thông báo công khai về chỉ tiêu, đối tượng, điều kiện, môn thi và thủ tục hồ sơ ít nhất <b>30 ngày</b> trước khi tiếp nhận hồ sơ.`
-            },
-            {
-                keys: ["sơ tuyển", "so tuyen", "phúc tra", "phuc tra", "thẩm tra lý lịch", "tham tra ly lich", "năng khiếu", "nang khieu", "so tuyen gom nhung gi"],
-                answer: `<b>Sơ tuyển & phúc tra</b><br>Sơ tuyển gồm: kiểm tra thông tin cá nhân, sức khỏe, năng khiếu và thẩm tra lý lịch.<br>Sau trúng tuyển, thí sinh sẽ được khám phúc tra sức khỏe; kết luận của Hội đồng y khoa Bộ Công an là kết quả cuối cùng.`
-            },
-            {
-                keys: ["ứng dụng công nghệ", "ung dung cong nghe", "phần mềm tuyển sinh", "phan mem tuyen sinh", "liên thông Bộ Công an Bộ GD&ĐT", "lien thong bo cong an bo gddt", "bo gddt"],
-                answer: `<b>Ứng dụng công nghệ</b><br>Xây dựng phần mềm tuyển sinh liên thông giữa Bộ Công an và Bộ Giáo dục & Đào tạo để quản lý, chia sẻ dữ liệu dùng chung.`
-            },
-            {
-                keys: ["lưu ý cho người dự tuyển", "luu y cho nguoi du tuyen", "cần chủ động kiểm tra", "can chu dong kiem tra", "hoàn thiện hồ sơ đúng thời gian", "hoan thien ho so dung thoi gian", "em can luu y gi", "phu huynh can luu y gi"],
-                answer: `Lưu ý: thí sinh cần chủ động kiểm tra các chỉ số cá nhân và hoàn thiện hồ sơ theo đúng thời gian thông báo của Công an cấp xã/huyện nơi đăng ký thường trú.`
-            },
-            {
-                keys: ["thi trên máy tính", "thi tren may tinh", "đổi mới hình thức thi", "doi moi hinh thuc thi", "thi máy tính CAND", "thi may tinh cand", "thi may tinh cand nam nao"],
-                answer: `<b>Đổi mới tuyển sinh: thi trên máy tính</b><br>Bộ Công an tổ chức kỳ thi tuyển sinh ĐH chính quy tuyển mới trên máy tính theo lộ trình 2026–2028.`
-            },
-            {
-                keys: ["mục tiêu thi trên máy tính", "muc tieu thi tren may tinh", "vì sao thi trên máy tính", "vi sao thi tren may tinh", "ứng dụng CNTT tuyển sinh", "ung dung cntt tuyen sinh", "nâng cao chất lượng tuyển sinh", "nang cao chat luong tuyen sinh", "vi sao thi may tinh", "ung dung cntt trong tuyen sinh"],
-                answer: `<b>Mục tiêu đổi mới hình thức thi</b><br>Ứng dụng triệt để công nghệ thông tin trong tổ chức kỳ thi tuyển sinh của Bộ Công an, góp phần nâng cao hiệu quả và chất lượng tuyển sinh.`
-            },
-            {
-                keys: ["2026 thi máy tính", "2026 thi may tinh", "đại học trở lên thi máy tính từ 2026", "dai hoc tro len thi may tinh tu 2026", "có bằng đại học thi máy tính", "co bang dai hoc thi may tinh", "co bang dai hoc thi may tinh tu nam nao", "thi may tinh tu 2026"],
-                answer: `<b>Từ năm 2026</b><br>Kỳ thi tuyển sinh ĐH chính quy tuyển mới đối với <b>công dân có bằng tốt nghiệp đại học trở lên</b> triển khai thi trên máy tính từ <b>năm 2026</b>.`
-            },
-            {
-                keys: ["2026 thpt", "2026 thpt", "2026 chỉ tuyên truyền", "2026 chi tuyen truyen", "học sinh phổ thông làm quen thi máy tính", "hoc sinh pho thong lam quen thi may tinh", "2026 thpt thi may tinh khong", "2026 tuyen truyen", "lam quen thi may tinh"],
-                answer: `<b>Năm 2026 (đối với học sinh THPT)</b><br>Tổ chức tuyên truyền sâu rộng để thí sinh có định hướng ôn thi và làm quen với hình thức thi trên máy tính cho các năm tiếp theo.`
-            },
-            {
-                keys: ["2027 thí điểm thi máy tính", "2027 thi diem thi may tinh", "2027 B06", "2027 b06", "2027 T06", "2027 t06", "2027 T07", "2027 t07", "thí điểm song song thi giấy", "thi diem song song thi giay", "b06", "t06", "t07", "2027 thi may tinh truong nao"],
-                answer: `<b>Năm 2027 (thí điểm)</b><br>Thí điểm thi trên máy tính tại: Học viện Quốc tế (<b>B06</b>), Trường ĐH Phòng cháy chữa cháy (<b>T06</b>), Học viện Kỹ thuật & Công nghệ an ninh (<b>T07</b>) và song song thi trên giấy đối với các trường còn lại.`
-            },
-            {
-                keys: ["2028 thi máy tính toàn bộ", "2028 thi may tinh toan bo", "2028 áp dụng tất cả trường", "2028 ap dung tat ca truong", "2028 thi máy tính", "2028 thi may tinh", "2028 tat ca truong", "ap dung toan bo"],
-                answer: `<b>Năm 2028</b><br>Áp dụng thi trên máy tính cho <b>tất cả</b> các trường trong CAND.`
-            },
-            {
-                keys: ["đơn vị có chiến sĩ nghĩa vụ", "don vi co chien si nghia vu", "chiến sĩ nghĩa vụ làm quen thi máy tính", "chien si nghia vu lam quen thi may tinh", "don vi chien si nghia vu", "chien si nghia vu can lam gi", "quan triet doi moi hinh thuc thi"],
-                answer: `<b>Đơn vị được bố trí chiến sĩ nghĩa vụ</b><br>Thông báo, quán triệt nội dung đổi mới hình thức thi tuyển đến chiến sĩ nghĩa vụ tại ngũ để chủ động sẵn sàng làm quen phương án tổ chức thi tuyển mới.`
-            },
-            {
-                keys: ["công an xã phường đặc khu", "cong an xa phuong dac khu", "tuyên truyền thi máy tính", "tuyen truyen thi may tinh", "ứng dụng CNTT tuyên truyền", "ung dung cntt tuyen truyen"],
-                answer: `<b>Công an xã/phường/đặc khu</b><br>Tổ chức tuyên truyền bằng nhiều hình thức, chú ý ứng dụng CNTT để thí sinh nắm, làm quen và ôn tập theo các đề cương phù hợp.`
             },
            
         ];
