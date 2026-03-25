@@ -1090,6 +1090,22 @@ const KNOWLEDGE_BASE = [
     keys: ['hướng hóa', 'đakrông', 'vĩnh linh', 'gio linh', 'cam lộ', 'triệu phong', 'hải lăng', 'đông hà', 'quảng trị', 'lệ thủy'],
     answer: `<b>Tra cứu theo địa bàn:</b><br>Đồng chí đang hỏi về lịch trình tại địa phương? Vui lòng gõ cú pháp: <b>'Lịch khám + Tên xã'</b> (Ví dụ: <i>Lịch khám Hướng Hóa</i>) để tôi cung cấp chính xác ngày và địa điểm khám.`
 },
+{
+    // Hệ thống tự động nhận diện khi thí sinh gõ tên xã hoặc huyện
+    keys: ['lịch khám', 'ngày khám', 'địa điểm khám', 'Dân Hoá', 'Kim Điền', 'Kim Phú', 'Minh Hoá', 'Tuyên Lâm', 'Tuyên Sơn', 'Đồng Lê', 'Tuyên Hoá', 'Tuyên Bình', 'Tuyên Phú', 'Tân Thành', 'PC07 (CSNV kv phía Bắc)', 'Tiểu đoàn CSCĐ số 3', 'Tân Gianh', 'Trung Thuần', 'Quảng Trạch', 'Hoà Trạch', 'Phú Trạch', 'Ba Đồn', 'Bắc Gianh', 'Nam Gianh', 'Nam Ba Đồn', 'Thượng Trạch', 'PC10', 'PC11B', 'Phong Nha', 'Bắc Trạch', 'Đông Trạch', 'Hoàn Lão', 'Bố Trạch', 'Nam Trạch', 'Đồng Hới', 'Đồng Thuận', 'Đồng Sơn', 'Quảng Ninh', 'PK02 (CSNC kv phía Bắc)', 'Ninh Châu', 'Trường Ninh', 'Trường Sơn', 'Lệ Thuỷ', 'Cam Hồng', 'Sen Ngư', 'Tân Mỹ', 'Trường Phú', 'Lệ Ninh', 'Kim Ngân', 'Trại giam Đồng Sơn', 'Vĩnh Linh', 'Cửa Tùng', 'Vĩnh Hoàng', 'Vĩnh Thuỷ', 'Bến Quan', 'Cồn Tiên', 'Cửa Việt', 'Gio Linh', 'Bến Hải', 'Cam Lộ', 'PC07 (CSNV kv phía Nam)', 'Hiếu Giang', 'La Lay', 'Tà Rụt', 'ĐăkRông', 'Ba Lòng', 'Hướng Hiệp', 'Hướng Lập', 'Hướng Phùng', 'Khe Sanh', 'Tân Lập', 'PC11A', 'Hải Lăng', 'Nam Hải Lăng', 'Vĩnh Định', 'Đông Hà', 'Nam Đông Hà', 'Quảng Trị', 'Cồn Cỏ', 'Trại giam Nghĩa An', 'Lao Bảo', 'Lìa', 'A Dơi', 'Triệu Phong', 'Ái Tử', 'Triệu Bình', 'Triệu Cơ', 'Nam Cửa Việt', 'Diên Sanh', 'Mỹ Thuỷ', 'PK02 (CSNV kv phía Nam)'],
+    answer: `<b>Tra cứu Lịch khám sức khỏe TS 2026 (Theo Phụ lục 09):</b><br><br>
+    📍 <b>CỤM 1: Khám tại Bệnh xá số 02 (31 Phan Chu Trinh, Đồng Hới)</b><br>
+    • <b>Ngày 16/4:</b> Các xã <b>Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (CSNV kv phía Bắc), Tiểu đoàn CSCĐ số 3.<br>
+    • <b>Ngày 17/4:</b> Các xã <b>Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC11B.<br>
+    • <b>Ngày 18/4:</b> Các xã <b>Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, PK02 (CSNC kv phía Bắc).<br>
+    • <b>Ngày 19/4:</b> Các xã <b>Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, Trại giam Đồng Sơn.<br><br>
+    📍 <b>CỤM 2: Khám tại Bệnh xá số 01 (đường Điện Biên Phủ, phường Nam Đông Hà)</b><br>
+    • <b>Ngày 22/4:</b> Các xã <b>Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (CSNV kv phía Nam).<br>
+    • <b>Ngày 23/4:</b> Các xã <b>Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC11A.<br>
+    • <b>Ngày 24/4:</b> Các xã <b>Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (CSNV kv phía Nam).<br>
+    • <b>Ngày 25/4:</b> Các xã <b>Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ, Trại giam Nghĩa An.<br><br>
+    ⚠️ <b>Lưu ý:</b> Sáng 07h30 (Nhịn ăn sáng), Chiều 13h30. Mang theo CCCD gốc.`
+  }, 
     {
     keys: ['lịch khám sức khỏe', 'địa điểm khám', 'khám ở đâu', 'thời gian khám', 'nhịn ăn', 'bệnh xá'],
     answer: `<b>Lịch khám sức khỏe tuyển sinh 2026 (Theo Phụ lục 09):</b><br>
@@ -1097,13 +1113,6 @@ const KNOWLEDGE_BASE = [
     • <b>Địa điểm 2:</b> Bệnh xá số 01 (Đường Điện Biên Phủ, Nam Đông Hà). Khám các ngày: 22, 23, 24, 25/4 và khám bù 04, 05/5.<br>
     • <b>Thời gian:</b> Sáng từ 07h30, Chiều từ 13h30.<br>
     ⚠️ <b>Lưu ý "Sống còn":</b> Buổi sáng đi khám <b>KHÔNG ĐƯỢC ĂN SÁNG</b> để xét nghiệm máu/nước tiểu. Thí sinh phải mang theo CCCD và các giấy tờ liên quan.`
-},
-{
-    keys: ['lịch kiểm tra thể lực', 'thi thể lực', 'chạy ngắn', 'chạy bền', 'bật xa', 'co tay', 'thể lực ở đâu'],
-    answer: `<b>Lịch kiểm tra thể lực (Theo Phụ lục 05):</b><br>
-    • <b>Thời gian:</b> Từ ngày 20/4 đến 28/4/2026 (Ngay sau khi có kết quả khám sức khỏe đạt).<br>
-    • <b>Nội dung thi:</b> Nam (Chạy 100m, Chạy 1500m, Co tay xà đơn); Nữ (Chạy 100m, Chạy 800m, Bật xa tại chỗ).<br>
-    • <b>Cách thức:</b> Thí sinh chọn 02 trong 03 nội dung để tính điểm. Đạt từ 10 điểm trở lên/2 nội dung và không có nội dung nào dưới 1 điểm là ĐẠT.`
 },
     {
     keys: ['lịch khám chung', 'khám ở đâu', 'bệnh xá', 'giờ khám', 'địa điểm khám'],
@@ -1119,7 +1128,7 @@ const KNOWLEDGE_BASE = [
   },
   {
     keys: ['18/4', '18/04', 'ngày 18'],
-    answer: "<b>Lịch khám ĐH/TC (18/4):</b><br>• <b>Đơn vị:</b> Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, PK02 (Bắc).<br>• <b>Tại:</b> Bệnh xá 02 (31 Phan Chu Trinh, phường Đồng Hới)."
+    answer: "<b>Lịch khám ĐH/TC (18/4):</b><br>• <b>Đơn vị:</b> Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, PK02 (CSNC kv phía Bắc).<br>• <b>Tại:</b> Bệnh xá 02 (31 Phan Chu Trinh, phường Đồng Hới)."
   },
   {
     keys: ['19/4', '19/04', 'ngày 19'],
@@ -1127,7 +1136,7 @@ const KNOWLEDGE_BASE = [
   },
   {
     keys: ['22/4', '22/04', 'ngày 22'],
-    answer: "<b>Lịch khám ĐH/TC (22/4):</b><br>• <b>Đơn vị:</b> Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, phường Nam Đông Hà)."
+    answer: "<b>Lịch khám ĐH/TC (22/4):</b><br>• <b>Đơn vị:</b> Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (CSNV kv phía Nam).<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, phường Nam Đông Hà)."
   },
   {
     keys: ['23/4', '23/04', 'ngày 23'],
@@ -1135,7 +1144,7 @@ const KNOWLEDGE_BASE = [
   },
   {
     keys: ['24/4', '24/04', 'ngày 24'],
-    answer: "<b>Lịch khám ĐH/TC (24/4):</b><br>• <b>Đơn vị:</b> Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, phường Nam Đông Hà)."
+    answer: "<b>Lịch khám ĐH/TC (24/4):</b><br>• <b>Đơn vị:</b> Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (CSNV kv phía Nam).<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, phường Nam Đông Hà)."
   },
   {
     keys: ['25/4', '25/04', 'ngày 25'],
@@ -1165,7 +1174,18 @@ const KNOWLEDGE_BASE = [
   // ==========================================
   // PHẦN 8: KIỂM TRA THỂ LỰC TỪNG NGÀY
   // ==========================================
-  {
+ {
+    keys: ['thể lực', 'thi chạy', 'bật xa', 'xà đơn', 'Dân Hoá thể lực', 'Kim Điền thể lực', 'Kim Phú thể lực', 'Minh Hoá thể lực', 'Tuyên Lâm thể lực', 'Tuyên Sơn thể lực', 'Đồng Lê thể lực', 'Tuyên Hoá thể lực', 'Tuyên Bình thể lực', 'Tuyên Phú thể lực', 'Tân Thành thể lực', 'PC07 (CSNV kv phía Bắc) thể lực', 'Tân Gianh thể lực', 'Trung Thuần thể lực', 'Quảng Trạch thể lực', 'Hoà Trạch thể lực', 'Phú Trạch thể lực', 'Ba Đồn thể lực', 'Bắc Gianh thể lực', 'Nam Gianh thể lực', 'Nam Ba Đồn thể lực', 'Thượng Trạch thể lực', 'PC10 thể lực', 'PC11B thể lực', 'Phong Nha thể lực', 'Bắc Trạch thể lực', 'Đông Trạch thể lực', 'Hoàn Lão thể lực', 'Bố Trạch thể lực', 'Nam Trạch thể lực', 'Đồng Hới thể lực', 'Đồng Thuận thể lực', 'Đồng Sơn thể lực', 'Quảng Ninh thể lực', 'PK02 (CSNC kv phía Bắc) thể lực', 'Ninh Châu thể lực', 'Trường Ninh thể lực', 'Trường Sơn thể lực', 'Lệ Thuỷ thể lực', 'Cam Hồng thể lực', 'Sen Ngư thể lực', 'Tân Mỹ thể lực', 'Trường Phú thể lực', 'Lệ Ninh thể lực', 'Kim Ngân thể lực', 'Trại giam Đồng Sơn thể lực', 'Vĩnh Linh thể lực', 'Cửa Tùng thể lực', 'Vĩnh Hoàng thể lực', 'Vĩnh Thuỷ thể lực', 'Bến Quan thể lực', 'Cồn Tiên thể lực', 'Cửa Việt thể lực', 'Gio Linh thể lực', 'Bến Hải thể lực', 'Cam Lộ thể lực', 'PC07 (CSNV kv phía Nam) thể lực', 'Hiếu Giang thể lực', 'La Lay thể lực', 'Tà Rụt thể lực', 'ĐăkRông thể lực', 'Ba Lòng thể lực', 'Hướng Hiệp thể lực', 'Hướng Lập thể lực', 'Hướng Phùng thể lực', 'Khe Sanh thể lực', 'Tân Lập thể lực', 'PC11A thể lực', 'Hải Lăng thể lực', 'Nam Hải Lăng thể lực', 'Vĩnh Định thể lực', 'Đông Hà thể lực', 'Nam Đông Hà thể lực', 'Quảng Trị thể lực', 'Cồn Cỏ thể lực', 'Trại giam Nghĩa An thể lực', 'Lao Bảo thể lực', 'Lìa thể lực', 'A Dơi thể lực', 'Triệu Phong thể lực', 'Ái Tử thể lực', 'Triệu Bình thể lực', 'Triệu Cơ thể lực', 'Nam Cửa Việt thể lực', 'Diên Sanh thể lực', 'Mỹ Thuỷ thể lực', 'PK02 (CSNV kv phía Nam) thể lực'],
+    answer: `<b>Lịch kiểm tra Thể lực TS 2026 (Theo Phụ lục 05):</b><br><br>
+    🏃 <b>Tại phường Đồng Hới (TT Văn hóa Điện ảnh tỉnh đường Trần Phú, phường Đồng Hới):</b><br>
+    • <b>Ngày 20/4:</b> Sáng (Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (CSNV KV phía Bắc)); Chiều (Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC11B).<br>
+    • <b>Ngày 21/4:</b> Sáng (Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, PK02 (CSNV KV phía Bắc)); Chiều (Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, Trại giam Đồng Sơn).<br><br>
+    🏃 <b>Tại phường Nam Đông Hà (Trụ sở phía Nam Công an tỉnh đường Điện Biên Phủ, phường Nam Đông Hà):</b><br>
+    • <b>Ngày 28/4:</b> Sáng (Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (CSNV kv phía Nam), Trại giam Nghĩa An); Chiều (Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC11A).<br>
+    • <b>Ngày 29/4:</b> Sáng (Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (CSNV kv phía Nam)); Chiều (Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ).<br><br>
+    📍 <i>Mặc trang phục thể thao, có mặt đúng giờ theo thông báo của Công an xã/phường.</i>`
+  },
+    {
     keys: ['thể lực', 'chạy', '100m', '1500m', '800m', 'bật xa', 'xà đơn', 'kiểm tra thể lực', 'địa điểm thể lực', 'thi thể lực ở đâu'],
     answer: "<b>Kiểm tra thể lực (20-21/4 và 28-29/4):</b><br>• Bật xa: Nam ≥ 2,2m; Nữ ≥ 1,5m.<br>• Chạy 100m: Nam ≤ 16s; Nữ ≤ 20s.<br>• Chạy 1500m(Nam) ≤ 7p30s; 800m(Nữ) ≤ 5p30s.<br>• Xà đơn: Nam ≥ 12 lần.<br><b>📍 Địa điểm:</b> Tùy ngày, thi tại <i>TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, phường Đồng Hới)</i> hoặc <i>Trụ sở phía Nam Công an Tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà)</i>.<br><i>Sáng 7h00, Chiều 15h00. Mặc trang phục thể thao.</i>"
   },
