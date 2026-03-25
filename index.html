@@ -1392,6 +1392,47 @@ function removeTypingIndicator(id) {
 }
 
 // 3. Hàm xử lý trung tâm (Bản vá lỗi iOS/Safari & Tối ưu điểm số)
+
+/* ======== MỤC 1: KHO DỮ LIỆU ĐỊA PHƯƠNG ĐẦY ĐỦ (PHỤ LỤC 09) ======== */
+const DATA_TUYEN_SINH = {
+    "nhom1": {
+        xa: ["dân hoá", "kim điền", "kim phú", "minh hoá", "tuyên lâm", "tuyên sơn", "đồng lê", "tuyên hoá", "tuyên bình", "tuyên phú", "tân thành", "pc07 (csnv kv phía bắc)", "tiểu đoàn cscđ số 3"],
+        kham: "Ngày 16/4/2026 tại Bệnh xá số 02 (31 Phan Chu Trinh, Đồng Hới).",
+        theluc: "Sáng ngày 20/4/2026 tại Trung tâm Văn hóa tỉnh Quảng Trị đường Trần Phú, Đồng Hới."
+    },
+    "nhom2": {
+        xa: ["tân gianh", "trung thuần", "quảng trạch", "hoà trạch", "phú trạch", "ba đồn", "bắc gianh", "nam gianh", "nam ba đồn", "thượng trạch", "pc10", "pc11b"],
+        kham: "Ngày 17/4/2026 tại Bệnh xá số 02 (31 Phan Chu Trinh, Đồng Hới).",
+        theluc: "Chiều ngày 20/4/2026 tại Trung tâm Văn hóa tỉnh Quảng Trị đường Trần Phú, Đồng Hới."
+    },
+    "nhom3": {
+        xa: ["phong nha", "bắc trạch", "đông trạch", "hoàn lão", "bố trạch", "nam trạch", "đồng hới", "đồng thuận", "đồng sơn", "quảng ninh", "pk02 (csnc kv phía bắc)"],
+        kham: "Ngày 18/4/2026 tại Bệnh xá số 02 (31 Phan Chu Trinh, Đồng Hới).",
+        theluc: "Sáng ngày 21/4/2026 tại Trung tâm Văn hóa tỉnh Quảng Trị đường Trần Phú, Đồng Hới."
+    },
+    "nhom4": {
+        xa: ["ninh châu", "trường ninh", "trường sơn", "lệ thuỷ", "cam hồng", "sen ngư", "tân mỹ", "trường phú", "lệ ninh", "kim ngân", "trại giam đồng sơn"],
+        kham: "Ngày 19/4/2026 tại Bệnh xá số 02 (31 Phan Chu Trinh, Đồng Hới).",
+        theluc: "Chiều ngày 21/4/2026 tại Trung tâm Văn hóa tỉnh Quảng Trị đường Trần Phú, Đồng Hới."
+    },
+    "nhom5": {
+        xa: ["vĩnh linh", "cửa tùng", "vĩnh hoàng", "vĩnh thuỷ", "bến quan", "cồn tiên", "cửa việt", "gio linh", "bến hải", "cam lộ", "pc07 (csnv kv phía nam)"],
+        kham: "Ngày 22/4/2026 tại Bệnh xá số 01 (Đường Điện Biên Phủ, Nam Đông Hà).",
+        theluc: "Sáng ngày 28/4/2026 tại trụ sở Công an tỉnh Đường Điện Biên Phủ, Nam Đông Hà."
+    },
+    "nhom6": {
+        xa: ["Hiếu Giang", "la lay", "tà rụt", "đăkrông", "ba lòng", "hướng hiệp", "hướng lập", "hướng phùng", "khe sanh", "tân lập", "pc11a", "hải lăng", "nam hải lăng", "vĩnh định"],
+        kham: "Ngày 23/4/2026 tại Bệnh xá số 01 (Đường Điện Biên Phủ, Nam Đông Hà).",
+        theluc: "Chiều ngày 28/4/2026 tại trụ sở Công an tỉnh Đường Điện Biên Phủ, Nam Đông Hà."
+    },
+    "nhom7": {
+        xa: ["đông hà", "nam đông hà", "quảng trị", "cồn cỏ", "trại giam nghĩa an", "lao bảo", "lìa", "a dơi", "triệu phong", "ái tử", "triệu bình", "triệu cơ", "nam cửa việt", "diên sanh", "mỹ thuỷ", "pk02 (csnv kv phía nam)"],
+        kham: "Ngày 24/4/2026 tại Bệnh xá số 01 (Đường Điện Biên Phủ, TP Đông Hà).",
+        theluc: "Sáng ngày 27/4/2026 tại SVĐ tỉnh."
+    }
+};
+/* =========================================================== */
+        
 function handleSend() {
     const text = userInput.value.trim();
     if (!text) return;
