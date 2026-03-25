@@ -903,8 +903,8 @@ const KNOWLEDGE_BASE = [
   // PHẦN 2: ĐIỀU KIỆN CHUNG & ĐẠI HỌC CHÍNH QUY
   // ==========================================
   {
-  keys: ['đối tượng đại học', 'học sinh thpt', 'chiến sĩ nghĩa vụ', 'tuyển sinh chính quy', 'chính quy', 'thpt'],
-  answer: "<b>Đối tượng dự tuyển Đại học CAND:</b><br>1. Chiến sĩ nghĩa vụ tại ngũ.<br>2. Học sinh tốt nghiệp THPT hoặc tương đương.<br>3. Chiến sĩ nghĩa vụ xuất ngũ..."
+  keys: ['đối tượng đại học', 'học sinh thpt', 'nghĩa vụ tại ngũ', 'đối tượng tuyển sinh chính quy'],
+  answer: "<b>Đối tượng dự tuyển Đại học CAND (Chính quy):</b><br>1. Chiến sĩ nghĩa vụ Công an tại ngũ.<br>2. Học sinh tốt nghiệp THPT hoặc tương đương.<br>3. Chiến sĩ nghĩa vụ xuất ngũ.<br>4. Công dân hoàn thành nghĩa vụ tham gia CAND hoặc nghĩa vụ quân sự."
 },
   {
     keys: ['học lực', 'hạnh kiểm', 'khá', 'giỏi', 'điểm học bạ'],
@@ -959,7 +959,7 @@ const KNOWLEDGE_BASE = [
   // PHẦN 3: VĂN BẰNG 2 (VB2CA)
   // ==========================================
   {
-  keys: ['vb2', 'văn bằng 2', 'đối tượng vb2', 'đối tượng văn bằng 2', 'đã tốt nghiệp đại học'],
+  keys: ['vb2', 'văn bằng 2', 'vb2ca', 'đối tượng vb2', 'đối tượng văn bằng 2', 'đã tốt nghiệp đại học'],
   answer: "<b>Đối tượng dự tuyển Văn bằng 2 (VB2CA):</b><br>Công dân tốt nghiệp Đại học hình thức chính quy, loại khá trở lên (trường hợp tốt nghiệp loại trung bình thì phải có chứng chỉ ngoại ngữ đạt chuẩn)..."
 },
   {
@@ -1119,40 +1119,44 @@ const KNOWLEDGE_BASE = [
     answer: "<b>Kiểm tra thể lực (29/4):</b><br>• Sáng: Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (CSNV kv phía Nam).<br>• Chiều: Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ.<br>• <b>Tại:</b> Trụ sở phía Nam Công an Tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà)."
   },
 
-  // ==========================================
-  // PHẦN 9: CHỈ TIÊU TỪNG TRƯỜNG
-  // ==========================================
+  // ============================================================
+  // PHẦN 9: CHỈ TIÊU CHI TIẾT THEO KẾ HOẠCH 1708/KH-CAT-PX01
+  // ============================================================
   {
-    keys: ['học viện an ninh', 't01', 'anh', 'an ninh mạng', 'công nghệ cao', 'cntt'],
-    answer: "<b>T01 - HV An ninh nhân dân:</b><br>• <b>Đại học:</b> 500 CT (Nghiệp vụ AN: 250; AN mạng & CNC: 150; CNTT: 100).<br>• <b>VB2CA:</b> 130 CT (Nghiệp vụ AN: 100; An toàn TT: 30)."
+    keys: ['t01', 'học viện an ninh', 'anh', 'an ninh mạng', 'công nghệ cao', 'cntt', 'chỉ tiêu t01', 'y khoa t01'],
+    answer: "<b>T01 - Học viện An ninh nhân dân:</b><br>• <b>Đại học chính quy:</b> 500 CT (Nghiệp vụ AN: 250; AN mạng & CNC: 150; Y khoa: 50; Gửi đào tạo nước ngoài ngành CNTT: 50).<br>• <b>Văn bằng 2 (VB2CA):</b> 130 CT (Nghiệp vụ AN: 100; An toàn thông tin: 30).<br>• <b>Trung cấp:</b> Xét tuyển vào T08 (80 CT toàn quốc)."
   },
   {
-    keys: ['học viện cảnh sát', 't02', 'csh', 'nghiệp vụ cảnh sát'],
-    answer: "<b>T02 - HV Cảnh sát nhân dân:</b><br>• <b>Đại học:</b> 400 CT (Nghiệp vụ Cảnh sát).<br>• <b>VB2CA:</b> 100 CT."
+    keys: ['t02', 'học viện cảnh sát', 'csh', 'nghiệp vụ cảnh sát', 'chỉ tiêu t02'],
+    answer: "<b>T02 - Học viện Cảnh sát nhân dân:</b><br>• <b>Đại học chính quy:</b> 450 CT (Nhóm ngành Nghiệp vụ Cảnh sát - Phía Bắc).<br>• <b>Văn bằng 2 (VB2CA):</b> 100 CT (Nghiệp vụ Cảnh sát).<br>• <b>Trung cấp:</b> Xét tuyển vào T09 (100 CT)."
   },
   {
-    keys: ['học viện chính trị', 't03', 'hca', 'xây dựng đảng'],
-    answer: "<b>T03 - HV Chính trị CAND:</b><br>• <b>Đại học:</b> 100 CT (Ngành Xây dựng Đảng & Chính quyền nhà nước)."
+    keys: ['t03', 'học viện chính trị', 'hca', 'xây dựng đảng', 'chỉ tiêu t03'],
+    answer: "<b>T03 - Học viện Chính trị CAND:</b><br>• <b>Đại học chính quy:</b> 100 CT (Ngành Xây dựng Đảng & Chính quyền nhà nước).<br>• <b>VB2CA/Trung cấp:</b> Theo phân bổ chung của Bộ."
   },
   {
-    keys: ['đại học an ninh', 't04', 'ans'],
-    answer: "<b>T04 - ĐH An ninh nhân dân (Phía Nam):</b><br>• <b>Đại học:</b> 220 CT.<br>• <b>VB2CA:</b> 100 CT."
+    keys: ['t04', 'đại học an ninh', 'ans', 'chỉ tiêu t04'],
+    answer: "<b>T04 - ĐH An ninh nhân dân (Phía Nam):</b><br>• <b>Đại học chính quy:</b> 220 CT (Nghiệp vụ An ninh).<br>• <b>Văn bằng 2 (VB2CA):</b> 100 CT."
   },
   {
-    keys: ['đại học cảnh sát', 't05', 'css'],
-    answer: "<b>T05 - ĐH Cảnh sát nhân dân (Phía Nam):</b><br>• <b>Đại học:</b> 300 CT.<br>• <b>VB2CA:</b> 100 CT."
+    keys: ['t05', 'đại học cảnh sát', 'css', 'chỉ tiêu t05'],
+    answer: "<b>T05 - ĐH Cảnh sát nhân dân (Phía Nam):</b><br>• <b>Đại học chính quy:</b> 300 CT (Nghiệp vụ Cảnh sát).<br>• <b>Văn bằng 2 (VB2CA):</b> 100 CT.<br>• <b>Trung cấp:</b> Xét tuyển vào T10 (100 CT)."
   },
   {
-    keys: ['phòng cháy chữa cháy', 'pccc', 't06', 'pch', 'cứu nạn'],
-    answer: "<b>T06 - ĐH Phòng cháy chữa cháy:</b><br>• <b>Đại học:</b> 200 CT.<br>• <b>VB2CA:</b> 50 CT."
+    keys: ['t06', 'đại học pccc', 'pccc', 'phòng cháy', 'cứu nạn', 'chỉ tiêu t06'],
+    answer: "<b>T06 - Đại học Phòng cháy chữa cháy:</b><br>• <b>Đại học chính quy:</b> 200 CT (PCCC & CNCH).<br>• <b>Văn bằng 2 (VB2CA):</b> 50 CT.<br>• <b>Hệ Trung cấp:</b> 30 CT."
   },
   {
-    keys: ['kỹ thuật an ninh', 'công nghệ an ninh', 't07', 'kth', 'y khoa', 'bác sĩ', 'mật mã', 'hậu cần'],
-    answer: "<b>T07 - HV Kỹ thuật & CN An ninh:</b><br>• <b>Đại học:</b> 300 CT (Kỹ thuật Hậu cần: 200; Y khoa gửi QĐ/Y Dược: 80; Điện tử viễn thông gửi Cơ yếu: 20).<br>• <b>VB2CA:</b> 50 CT."
+    keys: ['t07', 'kỹ thuật an ninh', 'kth', 'y khoa t07', 'bác sĩ', 'mật mã', 'hậu cần', 'chỉ tiêu t07'],
+    answer: "<b>T07 - HV Kỹ thuật & Công nghệ AN:</b><br>• <b>Đại học chính quy:</b> 300 CT (Kỹ thuật - Hậu cần: 200; Y khoa: 80; Điện tử viễn thông gửi Mật mã: 20).<br>• <b>Văn bằng 2 (VB2CA):</b> 50 CT.<br>• <b>Hệ Trung cấp:</b> 20 CT."
   },
   {
-    keys: ['học viện quốc tế', 'b06', 'ais', 'ngôn ngữ anh', 'ngôn ngữ trung', 'tiếng anh', 'tiếng trung'],
-    answer: "<b>B06 - Học viện Quốc tế:</b><br>• <b>Đại học:</b> 50 CT (Ngôn ngữ Anh: 30; Ngôn ngữ Trung Quốc: 20)."
+    keys: ['b06', 'học viện quốc tế', 'ais', 'ngôn ngữ anh', 'tiếng anh', 'tiếng trung', 'chỉ tiêu b06'],
+    answer: "<b>B06 - Học viện Quốc tế:</b><br>• <b>Đại học chính quy:</b> 50 CT (Ngôn ngữ Anh: 30; Ngôn ngữ Trung Quốc: 20).<br>• <b>Lưu ý:</b> Chỉ xét tuyển Phương thức 1 và Phương thức 2."
+  },
+  {
+    keys: ['trung cấp an ninh', 'trung cấp cảnh sát', 't08', 't09', 't10', 'trung cấp', 'hệ trung cấp', 'chỉ tiêu trung cấp'],
+    answer: "<b>Chỉ tiêu Hệ Trung cấp CAND Tuyển mới (Phụ lục 08):</b><br>• <b>T08 (CĐ ANND I):</b> 80 CT (Toàn quốc).<br>• <b>T09 (CĐ CSND I):</b> 100 CT (Phía Bắc).<br>• <b>T10 (CĐ CSND II):</b> 100 CT (Phía Nam).<br>• <b>Trung cấp PCCC (T06):</b> 30 CT.<br>• <b>Trung cấp KT-CN AN (T07):</b> 20 CT.<br>📍 <i>Lưu ý: Đối tượng xét tuyển gồm chiến sĩ nghĩa vụ tại ngũ và học sinh người DTTS vùng ưu tiên.</i>"
   }
 ];
        /* ======== 1. DỮ LIỆU CÁC NÚT GỢI Ý ======== */
