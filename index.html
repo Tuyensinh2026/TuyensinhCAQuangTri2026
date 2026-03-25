@@ -1421,14 +1421,19 @@ const DATA_TUYEN_SINH = {
         theluc: "Sáng ngày 28/4/2026 tại trụ sở Công an tỉnh Đường Điện Biên Phủ, Nam Đông Hà."
     },
     "nhom6": {
-        xa: ["Hiếu Giang", "la lay", "tà rụt", "đăkrông", "ba lòng", "hướng hiệp", "hướng lập", "hướng phùng", "khe sanh", "tân lập", "pc11a", "hải lăng", "nam hải lăng", "vĩnh định"],
+        xa: ["Hiếu Giang", "la lay", "tà rụt", "đăkrông", "ba lòng", "hướng hiệp", "hướng lập", "hướng phùng", "khe sanh", "tân lập", "pc11a"],
         kham: "Ngày 23/4/2026 tại Bệnh xá số 01 (Đường Điện Biên Phủ, Nam Đông Hà).",
         theluc: "Chiều ngày 28/4/2026 tại trụ sở Công an tỉnh Đường Điện Biên Phủ, Nam Đông Hà."
     },
     "nhom7": {
-        xa: ["đông hà", "nam đông hà", "quảng trị", "cồn cỏ", "trại giam nghĩa an", "lao bảo", "lìa", "a dơi", "triệu phong", "ái tử", "triệu bình", "triệu cơ", "nam cửa việt", "diên sanh", "mỹ thuỷ", "pk02 (csnv kv phía nam)"],
+        xa: ["lao bảo", "lìa", "a dơi", "triệu phong", "ái tử", "triệu bình", "triệu cơ", "nam cửa việt", "diên sanh", "mỹ thuỷ", "pk02 (csnv kv phía nam)"],
         kham: "Ngày 24/4/2026 tại Bệnh xá số 01 (Đường Điện Biên Phủ, TP Đông Hà).",
-        theluc: "Sáng ngày 27/4/2026 tại SVĐ tỉnh."
+        theluc: "Sáng ngày 29/4/2026 tại SVĐ trụ sở Công an tỉnh Đường Điện Biên Phủ, Nam Đông Hà."
+    },
+        "nhom8": {
+        xa: ["hải lăng", "nam hải lăng", "vĩnh định", "đông hà", "nam đông hà", "quảng trị", "cồn cỏ"],
+        kham: "Ngày 25/4/2026 tại Bệnh xá số 01 (Đường Điện Biên Phủ, TP Đông Hà).",
+        theluc: "Chiều ngày 29/4/2026 tại SVĐ trụ sở Công an tỉnh Đường Điện Biên Phủ, Nam Đông Hà."
     }
 };
 /* =========================================================== */
@@ -1436,7 +1441,6 @@ const DATA_TUYEN_SINH = {
 function handleSend() {
     const text = userInput.value.trim();
     if (!text) return;
-    
     addMessage(text, 'user');
     userInput.value = '';
 
@@ -1448,9 +1452,26 @@ function handleSend() {
         removeTypingIndicator(typingId);
         if (sendBtn) sendBtn.disabled = false; 
 
-        const query = text.toLowerCase(); // Thống nhất dùng biến query
+        const query = text.toLowerCase();
         let response = "";
-        let related = "";
+
+        // 1. KIỂM TRA ĐỊA DANH HOẶC VB2
+        let match = null;
+        for (let key in DATA_TUYEN_SINH) {
+            if (DATA_TUYEN_SINH[key].xa.some(x => query.includes(x))) {
+                match = DATA_TUYEN_SINH[key];
+                break;
+            }
+        }
+
+        // 2. TRẢ LỜI LOGIC PHÂN TẦNG
+        if (match) {
+            const prefix = query.includes("vb2") ? "đối tượng Văn bằng 2" : "khu vực của đồng chí";
+            if (query.includes("thể lực") || query.includes("vận động")) {
+                response = `<b>Lịch kiểm tra thể lực:</b> Thí sinh ${prefix} kiểm tra vào <b>${match.theluc}</b>.`;
+            } else {
+                response = `<b>Lịch khám sức khỏe:</b> Thí sinh ${prefix} khám vào <b>${match.kham}</b>. <br>⚠️ Lưu ý: Nhịn ăn sáng để làm xét nghiệm.`;
+            }
 
         // 1. Xử lý câu hỏi về Văn bằng 2 (VB2)
         if (query.includes("vb2") || query.includes("văn bằng 2")) {
