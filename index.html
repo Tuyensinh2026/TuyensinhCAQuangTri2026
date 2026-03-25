@@ -787,7 +787,38 @@ const SUC_KHOE_DATA = [
          * 2. KHO TRI THỨC THÔNG MINH (TRẢ LỜI TỰ ĐỘNG)
          ****************************************************************/
 const KNOWLEDGE_BASE = [
-  // ==========================================
+  // --- MỤC 1: LỊCH KHÁM SỨC KHỎE (Dựa trên Phụ lục 09 & Phụ lục 01) ---
+{
+    keys: ['lịch khám sức khỏe', 'lich kham', 'khám ở đâu', 'khi nào khám', 'bệnh xá số 1', 'bệnh xá số 2', 'địa điểm khám', 'thời gian khám'],
+    answer: `<b>Lịch khám sức khỏe Tuyển mới 2026 (Phụ lục 09):</b><br>
+    • <b>Địa điểm 1:</b> Bệnh xá số 02 (31 Phan Chu Trinh, Đồng Hới). Khám từ 16/4 - 19/4.<br>
+    • <b>Địa điểm 2:</b> Bệnh xá số 01 (Đường Điện Biên Phủ, Nam Đông Hà). Khám từ 22/4 - 25/4.<br>
+    • <b>Khám bù:</b> Ngày 04/5 - 05/5 tại Bệnh xá số 01.<br>
+    ⚠️ <b>Quy định bắt buộc:</b> Buổi sáng bắt đầu lúc 07h30. Thí sinh <b>KHÔNG ĐƯỢC ĂN SÁNG</b> để làm xét nghiệm máu và nước tiểu.`
+},
+
+// --- MỤC 2: CHỈ TIÊU CHI TIẾT (Dựa trên Phụ lục 02, 06, 08) ---
+{
+    keys: ['chỉ tiêu', 'bao nhiêu chỉ tiêu', 'tổng chỉ tiêu', 'số lượng tuyển'],
+    answer: `<b>Tổng chỉ tiêu Tuyển mới năm 2026 (Kế hoạch 1708):</b><br>
+    • <b>Đại học chính quy:</b> 2.120 CT toàn ngành (T01: 500, T02: 450, T04: 220...).<br>
+    • <b>Văn bằng 2 (VB2CA):</b> 530 CT (T01: 130, T02: 100...).<br>
+    • <b>Trung cấp:</b> 330 CT (T08: 80, T09: 100, T10: 100...).<br>
+    📍 <i>Đồng chí muốn xem chi tiết chỉ tiêu của <b>trường nào</b>? Hãy gõ mã trường (ví dụ: T01, T02).</i>`
+},
+
+// --- MỤC 3: QUY ĐỔI NGOẠI NGỮ (Dựa trên Phụ lục 04) ---
+{
+    keys: ['ielts', 'ngoại ngữ', 'quy đổi', 'bao nhiêu điểm', '7.5', '8.0', '6.5', '7.0'],
+    answer: `<b>Bảng quy đổi điểm IELTS (Phương thức 2 - Phụ lục 04):</b><br>
+    • <b>IELTS 9.0:</b> 10 điểm.<br>
+    • <b>IELTS 8.0 - 8.5:</b> 9.75 điểm.<br>
+    • <b>IELTS 7.5:</b> 9.5 điểm.<br>
+    • <b>IELTS 7.0:</b> 9.25 điểm.<br>
+    📍 Chứng chỉ phải còn thời hạn đến ngày 01/04/2026.`
+},
+    
+    // ==========================================
   // PHẦN 1: TIÊU CHUẨN SỨC KHỎE CHI TIẾT
   // ==========================================
   {
@@ -906,6 +937,14 @@ const KNOWLEDGE_BASE = [
   keys: ['đối tượng đại học', 'học sinh thpt', 'nghĩa vụ tại ngũ', 'đối tượng tuyển sinh chính quy'],
   answer: "<b>Đối tượng dự tuyển Đại học CAND (Chính quy):</b><br>1. Chiến sĩ nghĩa vụ Công an tại ngũ.<br>2. Học sinh tốt nghiệp THPT hoặc tương đương.<br>3. Chiến sĩ nghĩa vụ xuất ngũ.<br>4. Công dân hoàn thành nghĩa vụ tham gia CAND hoặc nghĩa vụ quân sự."
 },
+    {
+    keys: ['phương thức xét tuyển', 'pt1', 'pt2', 'pt3', 'cách xét tuyển'],
+    answer: `<b>3 Phương thức xét tuyển chính năm 2026:</b><br>
+    1. <b>PT1:</b> Tuyển thẳng (Giải quốc gia, quốc tế).<br>
+    2. <b>PT2:</b> Xét chứng chỉ ngoại ngữ quốc tế (IELTS ≥ 5.5...) kết hợp bài thi đánh giá của Bộ Công an.<br>
+    3. <b>PT3:</b> Kết quả thi tốt nghiệp THPT kết hợp bài thi đánh giá của Bộ Công an.<br>
+    👉 Đồng chí muốn tư vấn sâu về Phương thức nào?`
+},
   {
     keys: ['học lực', 'hạnh kiểm', 'khá', 'giỏi', 'điểm học bạ'],
     answer: "<b>Tiêu chuẩn học lực (THPT)</b><br>• Nhóm UT1, Chiến sĩ nghĩa vụ: kết quả học tập từ mức “<b>Đạt</b>” trở lên.<br>• Công dân thường trú, Hoàn thành NV: học lực <b>Khá</b> trở lên, hạnh kiểm <b>Khá</b> trở lên."
@@ -998,7 +1037,16 @@ const KNOWLEDGE_BASE = [
   // ==========================================
   // PHẦN 5: CHỨNG CHỈ NGOẠI NGỮ (QUY ĐỔI)
   // ==========================================
-  {
+ {
+    keys: ['ielts', 'ngoại ngữ', 'quy đổi điểm', '7.5 ielts', '6.5 ielts', 'cộng bao nhiêu điểm'],
+    answer: `<b>Quy đổi chứng chỉ ngoại ngữ (Phụ lục 04):</b><br>
+    • <b>IELTS 9.0:</b> Quy đổi 10 điểm.<br>
+    • <b>IELTS 8.0 - 8.5:</b> Quy đổi 9.75 điểm.<br>
+    • <b>IELTS 7.5:</b> Quy đổi 9.5 điểm.<br>
+    • <b>IELTS 7.0:</b> Quy đổi 9.25 điểm.<br>
+    📍 Chứng chỉ phải còn thời hạn đến ngày 01/04/2026.`
+},
+    {
     keys: ['ielts pt2', 'quy đổi pt2', 'điểm ngoại ngữ pt2', 'toefl', 'toeic', 'sat'],
     answer: "<b>Quy đổi Chứng chỉ PT2 ĐH:</b><br>Mức tối thiểu: IELTS 5.5 (Quy đổi 7.5đ); IELTS 6.0 (Quy đổi 8.0đ); IELTS 6.5 (8.5đ); IELTS 7.0 (9.0đ); IELTS 8.0+ (10đ).<br>Tương đương: TOEFL iBT 46; TOEIC 600; SAT 1100."
   },
@@ -1039,6 +1087,25 @@ const KNOWLEDGE_BASE = [
   // PHẦN 7: LỊCH KHÁM SỨC KHỎE TỪNG NGÀY
   // ==========================================
   {
+    keys: ['hướng hóa', 'đakrông', 'vĩnh linh', 'gio linh', 'cam lộ', 'triệu phong', 'hải lăng', 'đông hà', 'quảng trị', 'lệ thủy'],
+    answer: `<b>Tra cứu theo địa bàn:</b><br>Đồng chí đang hỏi về lịch trình tại địa phương? Vui lòng gõ cú pháp: <b>'Lịch khám + Tên xã'</b> (Ví dụ: <i>Lịch khám Hướng Hóa</i>) để tôi cung cấp chính xác ngày và địa điểm khám.`
+},
+    {
+    keys: ['lịch khám sức khỏe', 'địa điểm khám', 'khám ở đâu', 'thời gian khám', 'nhịn ăn', 'bệnh xá'],
+    answer: `<b>Lịch khám sức khỏe tuyển sinh 2026 (Theo Phụ lục 09):</b><br>
+    • <b>Địa điểm 1:</b> Bệnh xá số 02 (Số 31 Phan Chu Trinh, Đồng Hới). Khám các ngày: 16, 17, 18, 19/4.<br>
+    • <b>Địa điểm 2:</b> Bệnh xá số 01 (Đường Điện Biên Phủ, Nam Đông Hà). Khám các ngày: 22, 23, 24, 25/4 và khám bù 04, 05/5.<br>
+    • <b>Thời gian:</b> Sáng từ 07h30, Chiều từ 13h30.<br>
+    ⚠️ <b>Lưu ý "Sống còn":</b> Buổi sáng đi khám <b>KHÔNG ĐƯỢC ĂN SÁNG</b> để xét nghiệm máu/nước tiểu. Thí sinh phải mang theo CCCD và các giấy tờ liên quan.`
+},
+{
+    keys: ['lịch kiểm tra thể lực', 'thi thể lực', 'chạy ngắn', 'chạy bền', 'bật xa', 'co tay', 'thể lực ở đâu'],
+    answer: `<b>Lịch kiểm tra thể lực (Theo Phụ lục 05):</b><br>
+    • <b>Thời gian:</b> Từ ngày 20/4 đến 28/4/2026 (Ngay sau khi có kết quả khám sức khỏe đạt).<br>
+    • <b>Nội dung thi:</b> Nam (Chạy 100m, Chạy 1500m, Co tay xà đơn); Nữ (Chạy 100m, Chạy 800m, Bật xa tại chỗ).<br>
+    • <b>Cách thức:</b> Thí sinh chọn 02 trong 03 nội dung để tính điểm. Đạt từ 10 điểm trở lên/2 nội dung và không có nội dung nào dưới 1 điểm là ĐẠT.`
+},
+    {
     keys: ['lịch khám chung', 'khám ở đâu', 'bệnh xá', 'giờ khám', 'địa điểm khám'],
     answer: "<b>Lịch & Địa điểm Khám sức khỏe:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 29/6 - 02/7/2026 (Khám bù: 03/7).<br>• <b>Giờ giấc:</b> Sáng 07h30 (Nhịn ăn sáng), Chiều 13h30.<br>• <b>Địa điểm:</b> Tùy đơn vị, khám tại Bệnh xá số 01 (đường Điện Biên Phủ, phường Nam Đông Hà) hoặc Bệnh xá số 02 (31 Phan Chu Trinh, phường Đồng Hới)."
   },
@@ -1123,6 +1190,19 @@ const KNOWLEDGE_BASE = [
   // PHẦN 9: CHỈ TIÊU CHI TIẾT THEO KẾ HOẠCH 1708/KH-CAT-PX01
   // ============================================================
   {
+    keys: ['chỉ tiêu đại học', 'bao nhiêu chỉ tiêu', 'tổng chỉ tiêu 2026', 'phương thức 1 2 3'],
+    answer: `<b>Tổng chỉ tiêu Đại học CAND năm 2026 (Phụ lục 02):</b><br>
+    • <b>T01:</b> 500 CT | <b>T02:</b> 450 CT | <b>T03:</b> 100 CT.<br>
+    • <b>T04:</b> 220 CT | <b>T05:</b> 300 CT | <b>T06:</b> 200 CT | <b>T07:</b> 300 CT | <b>B06:</b> 50 CT.<br>
+    📍 Chi tiết chỉ tiêu từng ngành và Phương thức xét tuyển, đồng chí vui lòng gõ tên trường (Ví dụ: <b>T01</b>) để xem cụ thể.`
+},
+{
+    keys: ['chỉ tiêu văn bằng 2', 'vb2 bao nhiêu', 'chỉ tiêu tuyển mới đại học'],
+    answer: `<b>Chỉ tiêu Văn bằng 2 (VB2CA) - Phụ lục 06:</b><br>
+    • <b>T01:</b> 130 CT | <b>T02:</b> 100 CT | <b>T04:</b> 100 CT | <b>T05:</b> 100 CT | <b>T06:</b> 50 CT | <b>T07:</b> 50 CT.<br>
+    📍 Đối tượng: Đã tốt nghiệp Đại học chính quy loại Khá trở lên.`
+},
+    {
     keys: ['t01', 'học viện an ninh', 'anh', 'an ninh mạng', 'công nghệ cao', 'cntt', 'chỉ tiêu t01', 'y khoa t01'],
     answer: "<b>T01 - Học viện An ninh nhân dân:</b><br>• <b>Đại học chính quy:</b> 500 CT (Nghiệp vụ AN: 250; AN mạng & CNC: 150; Y khoa: 50; Gửi đào tạo nước ngoài ngành CNTT: 50).<br>• <b>Văn bằng 2 (VB2CA):</b> 130 CT (Nghiệp vụ AN: 100; An toàn thông tin: 30).<br>• <b>Trung cấp:</b> Xét tuyển vào T08 (80 CT toàn quốc)."
   },
