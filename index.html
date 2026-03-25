@@ -233,7 +233,7 @@
 
     <div class="app-shell">
         <header class="header-official">
-            <div class="data-btn" onclick="toggleModal('infoModal')"><i class="fas fa-database"></i></div>
+            <div class="data-btn" onclick="toggleModal(true)"><i class="fas fa-database"></i></div>
             <h2>TRỢ LÝ ẢO</h2>
             <h1>TUYỂN SINH CAND NĂM 2026</h1>
             <p>CÔNG AN TỈNH QUẢNG TRỊ</p>
@@ -246,7 +246,7 @@
         <div id="suggestionBox" class="suggestion-box no-scrollbar"></div>
 
         <div class="input-container">
-            <input type="text" id="userInput" class="input-field" placeholder="Nhập nội dung cần tra cứu..." autocomplete="off">
+           <textarea id="userInput" class="input-field no-scrollbar" placeholder="Nhập nội dung cần tra cứu..." rows="1" style="resize: none;"></textarea> 
             <button onclick="handleSend()" class="send-btn">
                 <i class="fas fa-paper-plane"></i>
             </button>
@@ -261,7 +261,7 @@
                     <h3 class="font-bold uppercase text-sm tracking-wider text-white">DỮ LIỆU GỐC PX01</h3>
                     <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">Cập nhật: 27/01/2026</p>
                 </div>
-                <button onclick="toggleModal('infoModal')" class="text-2xl text-white hover:text-yellow-300">&times;</button>
+                <button onclick="toggleModal(false)" class="text-2xl text-white hover:text-yellow-300">&times;</button>
             </div>
             
             <div class="tab-bar">
@@ -903,7 +903,7 @@ const KNOWLEDGE_BASE = [
   // PHẦN 2: ĐIỀU KIỆN CHUNG & ĐẠI HỌC CHÍNH QUY
   // ==========================================
   {
-    keys: ['đối tượng', 'tuyển sinh', 'đại học', 'chính quy', 'tổng quan', 'chỉ tiêu', 'thpt', 'chính quy'],
+    keys: ['đại học', 'chính quy', 'đối tượng', 'tuyển sinh', 'chính quy', 'tổng quan', 'chỉ tiêu', 'thpt'],
     answer: "<b>Đại học chính quy tuyển mới:</b><br>• Đối tượng: chiến sĩ nghĩa vụ; công dân hoàn thành nghĩa vụ; công dân thường trú tại địa phương.<br>• Phương thức: PT1 (tuyển thẳng); PT2 (chứng chỉ ngoại ngữ); PT3 (điểm thi THPT).<br>• Tổng chỉ tiêu: <b>1.870</b>."
   },
   {
@@ -1156,214 +1156,98 @@ const KNOWLEDGE_BASE = [
   }
 ];
        /* ======== 1. DỮ LIỆU CÁC NÚT GỢI Ý ======== */
-const SUGGESTIONS = [
-    "Khám sức khỏe khi nào?",
-    "Tiêu chuẩn chiều cao",
-    "Tuyển sinh hệ VB2CA",
-    "Quy đổi điểm IELTS",
-    "Chỉ tiêu Học viện ANND"
-];
+ const SUGGESTIONS = [
+            "Khám sức khỏe khi nào?",
+            "Tiêu chuẩn chiều cao",
+            "Mắt cận mấy độ được thi?",
+            "Tuyển sinh hệ VB2CA",
+            "Quy đổi điểm IELTS",
+            "Chỉ tiêu Học viện ANND"
+        ];
 
-/* ======== 2. HÀM VẼ NÚT GỢI Ý (ĐÃ TỐI ƯU) ======== */
-function loadSuggestions() {
-    // Tìm chính xác khung chứa trong HTML của đồng chí
-    const sugContainer = document.getElementById('suggestionBox'); 
-    if (!sugContainer) return;
-
-    sugContainer.innerHTML = '';
-    sugContainer.className = 'suggestions-container no-scrollbar'; 
-
-    SUGGESTIONS.forEach(text => {
-        const btn = document.createElement('button');
-        btn.className = 'suggest-btn';
-        btn.innerHTML = `<i class="fas fa-bolt text-[#ffda44] drop-shadow-md"></i> ${text}`; 
+        /****************************************************************
+         * 2. LOGIC GIAO DIỆN & TƯƠNG TÁC
+         ****************************************************************/
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
         
-        btn.onclick = () => {
-            userInput.value = text;
-            handleSend();
-        };
-        sugContainer.appendChild(btn);
-    });
-}
+        // Auto resize textarea
+        userInput.addEventListener('input', function() {
+            this.style.height = '44px';
+            this.style.height = (this.scrollHeight) + 'px';
+            if(this.value.trim() === '') this.style.height = '44px';
+        });
 
-/****************************************************************
-* 3. LOGIC HỆ THỐNG & KHỞI TẠO APP
-****************************************************************/
-const chatBox = document.getElementById('chatBox');
-const userInput = document.getElementById('userInput');
+        // Bắt sự kiện phím Enter
+        userInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                // Bổ sung kiểm tra nếu bot đang gõ thì chặn bấm Enter liên tục
+                if (!document.getElementById('sendBtn').disabled) {
+                    handleSend();
+                }
+            }
+        });
 
-function initApp() {
-    const wm = document.getElementById('watermark');
-    for (let i = 0; i < 16; i++) {
-        const d = document.createElement('div');
-        d.className = 'watermark-item';
-        d.innerText = 'PX01 QUẢNG TRỊ';
-        wm.appendChild(d);
-    }
-    
-    renderModalData(); // Nạp dữ liệu danh bạ
-    loadSuggestions(); // Vẽ dàn nút bấm giao diện xịn
-    
-    // Lời chào đầu tiên khi bật bot
-    addMessage("<b>Tôi là trợ lý ảo tuyển sinh CAND năm 2026, Công an tỉnh Quảng Trị.</b><br>Đồng chí, thí sinh hoặc phụ huynh có thể tra cứu nhanh về <b>đối tượng</b>, <b>điều kiện</b>, <b>thời gian</b>, <b>hồ sơ</b>, <b>lệ phí</b>, <b>VB2CA</b>, <b>trung cấp</b>, <b>sức khỏe</b> và <b>thể lực</b>.", "bot");
-}
+        function loadSuggestions() {
+            const sugContainer = document.getElementById('suggestionBox'); 
+            sugContainer.innerHTML = '';
+            SUGGESTIONS.forEach(text => {
+                const btn = document.createElement('button');
+                btn.className = 'suggest-btn';
+                btn.innerHTML = `<i class="fas fa-search text-[#ce181e] opacity-70"></i> ${text}`; 
+                btn.onclick = () => {
+                    userInput.value = text;
+                    userInput.style.height = '44px';
+                    handleSend();
+                };
+                sugContainer.appendChild(btn);
+            });
+        }
 
         function renderModalData() {
-            document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `<div class="p-3 bg-white border border-red-100 rounded-lg shadow-sm"><p class="text-xs font-bold text-[#ce181e] uppercase">⚕️ ${i.title}</p><p class="text-[11px] text-gray-700 mt-1 leading-relaxed">${i.content}</p></div>`).join('');
-            document.getElementById('list-dieukien').innerHTML = DIEU_KIEN_DATA.map(i => `<div class="p-3 bg-white border border-gray-200 rounded-lg shadow-sm"><p class="text-xs font-bold text-gray-800 uppercase text-[#ce181e]">📌 ${i.title}</p><p class="text-[11px] text-gray-600 mt-1 leading-relaxed">${i.content}</p></div>`).join('');
+            document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `
+                <div class="p-3.5 bg-white border border-red-100 rounded-xl shadow-sm hover:shadow-md transition">
+                    <p class="text-xs font-bold text-[#ce181e] uppercase">⚕️ ${i.title}</p>
+                    <p class="text-[12px] text-gray-700 mt-1.5 leading-relaxed">${i.content}</p>
+                </div>`).join('');
+            document.getElementById('list-dieukien').innerHTML = DIEU_KIEN_DATA.map(i => `
+                <div class="p-3.5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition">
+                    <p class="text-xs font-bold text-gray-800 uppercase text-[#ce181e]">📌 ${i.title}</p>
+                    <p class="text-[12px] text-gray-600 mt-1.5 leading-relaxed">${i.content}</p>
+                </div>`).join('');
             filterContact();
         }
 
         function filterContact() {
             const term = document.getElementById('searchContact').value.toLowerCase();
             const filtered = DANH_BA_DATA.filter(i => 
-                i.unit.toLowerCase().includes(term) || 
-                i.name.toLowerCase().includes(term)
+                i.unit.toLowerCase().includes(term) || i.name.toLowerCase().includes(term)
             );
             
             document.getElementById('list-danhba').innerHTML = filtered.map(i => `
-                <div class="p-3 bg-white border border-gray-200 rounded-lg flex justify-between items-center hover:border-red-300 transition-all shadow-sm">
+                <div class="p-3 bg-white border border-gray-100 rounded-xl flex justify-between items-center hover:border-red-200 transition-all shadow-sm">
                     <div>
                         <p class="text-[11px] font-bold text-gray-800">${i.unit}</p>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold mt-0.5"><i class="fas fa-user-shield mr-1"></i>${i.name}</p>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold mt-1"><i class="fas fa-user-shield mr-1.5 text-gray-400"></i>${i.name}</p>
                     </div>
-                    <a href="tel:${i.phone.replace(/[^\d+]/g, '')}" class="text-[11px] font-black text-[#ce181e] bg-red-50 px-2 py-1 rounded border border-red-100 hover:bg-red-600 hover:text-white transition-colors">
-                        ${i.phone}
+                    <a href="tel:${i.phone.replace(/[^\d+]/g, '')}" class="text-[11px] font-black text-[#ce181e] bg-red-50 px-3 py-1.5 rounded-lg border border-red-100 hover:bg-red-600 hover:text-white transition-colors">
+                        <i class="fas fa-phone-alt mr-1"></i> Gọi
                     </a>
                 </div>
             `).join('');
         }
 
-        function addMessage(text, side) {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `msg ${side}`;
-    
-    // Logic tự động thêm icon và màu sắc dựa trên nội dung tin nhắn của Bot
-    let formattedText = text;
-    if (side === 'bot') {
-        if (text.includes("Sức khỏe") || text.includes("BMI") || text.includes("thị lực")) {
-            formattedText = `<div class="border-l-4 border-blue-500 pl-3"><i class="fas fa-heartbeat text-blue-500 mr-2"></i>${text}</div>`;
-        } else if (text.includes("Chỉ tiêu") || text.includes("phương thức")) {
-            formattedText = `<div class="border-l-4 border-yellow-500 pl-3"><i class="fas fa-chart-bar text-yellow-500 mr-2"></i>${text}</div>`;
-        } else if (text.includes("Lịch") || text.includes("thời gian") || text.includes("2026")) {
-            formattedText = `<div class="border-l-4 border-green-500 pl-3"><i class="fas fa-calendar-alt text-green-500 mr-2"></i>${text}</div>`;
-        } else if (text.includes("Hồ sơ") || text.includes("Lệ phí")) {
-            formattedText = `<div class="border-l-4 border-purple-500 pl-3"><i class="fas fa-file-alt text-purple-500 mr-2"></i>${text}</div>`;
-        }
-    }
-
-    msgDiv.innerHTML = `<div class="bubble">${formattedText}</div>`;
-    chatBox.appendChild(msgDiv);
-    chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
-}
-
-        // 1. Khởi tạo Engine Tìm kiếm mờ (Fuzzy Search)
-const fuse = new Fuse(KNOWLEDGE_BASE, {
-    keys: ['keys'],
-    includeScore: true,
-    threshold: 0.4, 
-    ignoreLocation: true,
-    minMatchCharLength: 2 // Tránh việc khớp các từ quá ngắn vô nghĩa
-});
-
-// 2. Các hàm tạo hiệu ứng Typing UI
-function showTypingIndicator() {
-    const id = 'typing-' + Date.now();
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `msg bot`;
-    msgDiv.id = id;
-    msgDiv.innerHTML = `
-        <div class="bubble flex items-center gap-2">
-            <div class="typing-indicator flex"><span></span><span></span><span></span></div>
-            <span class="text-gray-400 text-[10px] italic">Đang tra cứu dữ liệu...</span>
-        </div>`;
-    chatBox.appendChild(msgDiv);
-    chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
-    return id;
-}
-
-function removeTypingIndicator(id) {
-    const el = document.getElementById(id);
-    if (el) el.remove();
-}
-
-// 3. Hàm xử lý trung tâm (Bản vá lỗi iOS/Safari & Tối ưu điểm số)
-function handleSend() {
-    const text = userInput.value.trim();
-    if (!text) return;
-    addMessage(text, 'user');
-    userInput.value = '';
-
-    const typingId = showTypingIndicator();
-    const sendBtn = document.querySelector('.send-btn');
-    if (sendBtn) sendBtn.disabled = true;
-
-    setTimeout(() => {
-        removeTypingIndicator(typingId);
-        if (sendBtn) sendBtn.disabled = false; 
-        
-        const query = text.toLowerCase();
-        const fuseResults = fuse.search(query);
-
-        let finalResults = KNOWLEDGE_BASE.map(item => {
-            let score = 0;
-            let matchedKeys = [];
-
-            // A. Điểm từ Fuse.js
-            const fuseMatch = fuseResults.find(r => r.item === item);
-            if (fuseMatch) {
-                score += (1 - fuseMatch.score) * 5; 
+        function toggleModal(show) {
+            const m = document.getElementById('infoModal');
+            if(show) {
+                m.style.display = 'flex';
+                // Delay chút để CSS transition hoạt động
+                setTimeout(() => m.classList.add('show'), 10);
+            } else {
+                m.classList.remove('show');
+                setTimeout(() => m.style.display = 'none', 300);
             }
-
-            // B. Điểm từ Regex (Đã thay thế lookbehind bằng nhóm chụp để tương thích iPhone)
-            item.keys.forEach(key => {
-                const k = key.toLowerCase();
-                const regex = new RegExp(`(^|[^\\p{L}\\p{N}_])(${k})([^\\p{L}\\p{N}_]|$)`, 'iu');
-                
-                if (regex.test(query)) {
-                    score += k.length * 2.5; 
-                    matchedKeys.push(k);
-                } else if (query.includes(k)) {
-                    score += k.length * 0.5; 
-                    if (!matchedKeys.includes(k)) matchedKeys.push(k);
-                }
-            });
-
-            // C. Thưởng điểm nếu khớp nhiều từ khóa
-            if (matchedKeys.length > 1) {
-                score *= 1.5; 
-            }
-
-            return { item, score, matchedKeys };
-        });
-
-        // Lọc kết quả: Ngưỡng điểm > 3 để tránh bot trả lời bừa
-        let matches = finalResults.filter(r => r.score > 3).sort((a, b) => b.score - a.score);
-
-        if (matches.length > 0) {
-            let bestMatch = matches[0].item;
-            addMessage(bestMatch.answer, 'bot');
-            
-            if (matches.length > 1 && matches[1].score >= matches[0].score * 0.6) {
-                const related = matches[1].item.answer.split('<br>')[0].replace(/<[^>]*>/g, '');
-                const hint = `<i style="font-size:12px; color:#6b7280;"><i class="fas fa-lightbulb text-[#ffda44] mr-1"></i> <b>Có thể bạn quan tâm:</b> ${related}</i>`;
-                addMessage(hint, 'bot');
-            }
-        } else {
-            addMessage("Tôi chưa hiểu rõ ý của đồng chí. Đồng chí vui lòng thử dùng các từ khóa ngắn gọn như: <b>đại học</b>, <b>trung cấp</b>, <b>vb2ca</b>, <b>chiều cao</b>, <b>mắt</b>... hoặc tra cứu trực tiếp tại biểu tượng <b><i class='fas fa-database'></i> Trung tâm dữ liệu</b> ở góc trên bên phải.", "bot");
-        }
-        
-    }, 600); 
-}
-
-        function ask(q) {
-            userInput.value = q;
-            handleSend();
-        }
-
-        function toggleModal(id) {
-            const m = document.getElementById(id);
-            m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
         }
 
         function switchTab(btn, tabId) {
@@ -1373,15 +1257,170 @@ function handleSend() {
             document.getElementById(tabId).classList.remove('hidden');
         }
 
-        window.onload = initApp;
-        /* ======== BƯỚC 2: BẮT SỰ KIỆN PHÍM ENTER ======== */
-document.getElementById('userInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault(); // Ngăn chặn việc nhảy dòng
-        handleSend(); // Tự động kích hoạt nút gửi
-    }
-});
-/* ================================================== */
+        function getCurrentTime() {
+            const now = new Date();
+            return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+        }
+
+        function addMessage(text, side) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `msg ${side}`;
+            
+            let formattedText = text;
+            if (side === 'bot') {
+                if (text.includes("Sức khỏe") || text.includes("BMI") || text.includes("chiều cao")) {
+                    formattedText = `<div class="mb-1 text-blue-600"><i class="fas fa-heartbeat mr-1"></i> <b>Y Tế & Thể Lực</b></div>${text}`;
+                } else if (text.includes("Chỉ tiêu") || text.includes("Phương thức")) {
+                    formattedText = `<div class="mb-1 text-yellow-600"><i class="fas fa-chart-pie mr-1"></i> <b>Chỉ tiêu Tuyển Sinh</b></div>${text}`;
+                } else if (text.includes("Lịch") || text.includes("thời gian") || text.includes("2026")) {
+                    formattedText = `<div class="mb-1 text-green-600"><i class="fas fa-calendar-check mr-1"></i> <b>Lịch Trình</b></div>${text}`;
+                }
+            }
+
+            msgDiv.innerHTML = `
+                <div class="bubble">${formattedText}</div>
+                <div class="timestamp">${getCurrentTime()}</div>
+            `;
+            chatBox.appendChild(msgDiv);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            setTimeout(() => {
+                chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
+            }, 50);
+        }
+
+        /****************************************************************
+         * 3. AI FAKE NLP ENGINE & SEARCH
+         ****************************************************************/
+        // Fuse.js setup
+        const fuse = new Fuse(KNOWLEDGE_BASE, {
+            keys: ['keys'],
+            includeScore: true,
+            threshold: 0.4, 
+            ignoreLocation: true,
+            minMatchCharLength: 2
+        });
+
+        // Xóa "từ khóa nhiễu" giúp thuật toán chấm điểm chính xác hơn
+        function normalizeQuery(text) {
+            let lower = text.toLowerCase();
+            const stopwords = ['dạ', 'ạ', 'cho em hỏi', 'cho mình hỏi', 'ad ơi', 'admin', 'trợ lý ơi', 'làm sao', 'thế nào', 'có được không', 'có bị loại không', 'tư vấn', 'cho biết'];
+            stopwords.forEach(word => {
+                lower = lower.replace(new RegExp(word, 'g'), '');
+            });
+            return lower.trim();
+        }
+
+        function showTypingIndicator() {
+            const id = 'typing-' + Date.now();
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `msg bot`;
+            msgDiv.id = id;
+            msgDiv.innerHTML = `
+                <div class="bubble flex items-center gap-2" style="padding: 10px 16px;">
+                    <div class="typing-indicator flex"><span></span><span></span><span></span></div>
+                </div>`;
+            chatBox.appendChild(msgDiv);
+            scrollToBottom();
+            return id;
+        }
+
+        function handleSend() {
+            const sendBtn = document.getElementById('sendBtn');
+            // Chặn bấm gửi nhiều lần liên tiếp khi bot đang suy nghĩ
+            if (sendBtn.disabled) return;
+
+            const rawText = userInput.value.trim();
+            if (!rawText) return;
+            
+            addMessage(rawText, 'user');
+            userInput.value = '';
+            userInput.style.height = '44px'; // reset height
+            
+            const typingId = showTypingIndicator();
+            sendBtn.disabled = true;
+
+            setTimeout(() => {
+                const el = document.getElementById(typingId);
+                if (el) el.remove();
+                sendBtn.disabled = false; 
+                
+                // 1. Chuẩn hóa câu hỏi
+                const query = normalizeQuery(rawText);
+                if (!query) {
+                    addMessage("Đồng chí cần tra cứu thông tin gì ạ?", "bot");
+                    return;
+                }
+
+                // 2. Tìm kiếm bằng Fuse
+                const fuseResults = fuse.search(query);
+                
+                // 3. Chấm điểm kết hợp Regex
+                let finalResults = KNOWLEDGE_BASE.map(item => {
+                    let score = 0;
+                    let matchCount = 0; // Thêm biến đếm số lượng từ khóa trùng khớp
+                    const fuseMatch = fuseResults.find(r => r.item === item);
+                    if (fuseMatch) score += (1 - fuseMatch.score) * 5; 
+                    
+                    item.keys.forEach(k => {
+                        // Regex dùng capture group thay cho lookbehind để an toàn tuyệt đối trên iOS
+                        const regex = new RegExp(`(^|[^\\p{L}\\p{N}_])(${k})([^\\p{L}\\p{N}_]|$)`, 'iu');
+                        if (regex.test(query)) {
+                            score += k.length * 3; 
+                            matchCount++;
+                        } else if (query.includes(k)) {
+                            score += k.length * 1; 
+                            matchCount++;
+                        }
+                    });
+                    
+                    // Thưởng điểm 1.5x nếu câu hỏi người dùng khớp nhiều từ khóa trong 1 nhóm
+                    if (matchCount > 1) score *= 1.5;
+
+                    return { item, score };
+                });
+
+                // Lọc kết quả tốt nhất
+                let matches = finalResults.filter(r => r.score > 2.5).sort((a, b) => b.score - a.score);
+                
+                if (matches.length > 0) {
+                    let bestMatch = matches[0].item;
+                    addMessage(bestMatch.answer, 'bot');
+                    
+                    // Đưa ra gợi ý thông minh nếu có kết quả liên quan
+                    if (matches.length > 1 && matches[1].score >= matches[0].score * 0.5) {
+                        const related = matches[1].item.answer.split('<br>')[0].replace(/<[^>]*>/g, '');
+                        const hint = `<i style="font-size:12px; color:#6b7280;"><i class="fas fa-lightbulb text-[#ffda44] mr-1"></i> <b>Gợi ý thêm:</b> ${related}</i>`;
+                        addMessage(hint, 'bot');
+                    }
+                } else {
+                    addMessage("Hệ thống chưa tìm thấy dữ liệu khớp hoàn toàn. Đồng chí hãy thử dùng các từ khóa ngắn gọn: <b>đại học, trung cấp, sức khỏe, mắt, chiều cao, vb2...</b> hoặc vào <b><i class='fas fa-layer-group'></i> Trung tâm dữ liệu</b> để xem chi tiết.", "bot");
+                }
+            }, 600); // Fake delay tạo cảm giác "AI đang suy nghĩ"
+        }
+
+        window.onload = () => {
+            initApp();
+        };
+
+        function initApp() {
+            const wm = document.getElementById('watermark');
+            for (let i = 0; i < 16; i++) {
+                const d = document.createElement('div');
+                d.className = 'watermark-item';
+                d.innerText = 'PX01 QUẢNG TRỊ';
+                wm.appendChild(d);
+            }
+            
+            renderModalData(); 
+            loadSuggestions(); 
+            
+            setTimeout(() => {
+                addMessage("<b>Xin chào! Tôi là trợ lý ảo AI - Công an tỉnh Quảng Trị.</b><br>Sẵn sàng hỗ trợ tra cứu tuyển sinh CAND năm 2026. Đồng chí cần tìm thông tin về <b>chỉ tiêu</b>, <b>sức khỏe</b>, <b>thể lực</b> hay <b>điều kiện hồ sơ</b>?", "bot");
+            }, 300);
+        }
     </script>
 </body>
 </html>
