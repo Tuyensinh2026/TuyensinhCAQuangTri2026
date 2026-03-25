@@ -515,7 +515,7 @@ const SUC_KHOE_DATA = [
         content: `
             • <b>16/4 - 19/4/2026</b> và <b>29/6 - 30/6/2026</b>: Bệnh xá số 02 Công an tỉnh, số 31 Phan Chu Trinh, phường Đồng Hới.<br>
             • <b>22/4 - 25/4/2026</b> và <b>01/7 - 02/7/2026</b>: Bệnh xá số 01 Công an tỉnh, đường Điện Biên Phủ, phường Nam Đông Hà.<br>
-            • <b>04/5 - 05/5/2026</b> và <b>03/7/2026</b>: khám bù tại Bệnh xá số 02 Công an tỉnh.
+            • <b>04/5 - 05/5/2026</b> và <b>03/7/2026</b>: khám bù tại Bệnh xá số 01 Công an tỉnh.
         `
     },
     {
@@ -1395,6 +1395,7 @@ function removeTypingIndicator(id) {
 function handleSend() {
     const text = userInput.value.trim();
     if (!text) return;
+    
     addMessage(text, 'user');
     userInput.value = '';
 
@@ -1405,58 +1406,59 @@ function handleSend() {
     setTimeout(() => {
         removeTypingIndicator(typingId);
         if (sendBtn) sendBtn.disabled = false; 
-        
-        const query = text.toLowerCase();
-        const fuseResults = fuse.search(query);
 
-        let finalResults = KNOWLEDGE_BASE.map(item => {
-            let score = 0;
-            let matchedKeys = [];
+        const query = text.toLowerCase(); // Thống nhất dùng biến query
+        let response = "";
+        let related = "";
 
-            // A. Điểm từ Fuse.js
-            const fuseMatch = fuseResults.find(r => r.item === item);
-            if (fuseMatch) {
-                score += (1 - fuseMatch.score) * 5; 
-            }
-
-            // B. Điểm từ Regex (Đã thay thế lookbehind bằng nhóm chụp để tương thích iPhone)
-            item.keys.forEach(key => {
-                const k = key.toLowerCase();
-                const regex = new RegExp(`(^|[^\\p{L}\\p{N}_])(${k})([^\\p{L}\\p{N}_]|$)`, 'iu');
-                
-                if (regex.test(query)) {
-                    score += k.length * 2.5; 
-                    matchedKeys.push(k);
-                } else if (query.includes(k)) {
-                    score += k.length * 0.5; 
-                    if (!matchedKeys.includes(k)) matchedKeys.push(k);
-                }
-            });
-
-            // C. Thưởng điểm nếu khớp nhiều từ khóa
-            if (matchedKeys.length > 1) {
-                score *= 1.5; 
-            }
-
-            return { item, score, matchedKeys };
-        });
-
-        // Lọc kết quả: Ngưỡng điểm > 3 để tránh bot trả lời bừa
-        let matches = finalResults.filter(r => r.score > 3).sort((a, b) => b.score - a.score);
-
-        if (matches.length > 0) {
-            let bestMatch = matches[0].item;
-            addMessage(bestMatch.answer, 'bot');
-            
-            if (matches.length > 1 && matches[1].score >= matches[0].score * 0.6) {
-                const related = matches[1].item.answer.split('<br>')[0].replace(/<[^>]*>/g, '');
-                const hint = `<i style="font-size:12px; color:#6b7280;"><i class="fas fa-lightbulb text-[#ffda44] mr-1"></i> <b>Có thể bạn quan tâm:</b> ${related}</i>`;
-                addMessage(hint, 'bot');
-            }
-        } else {
-            addMessage("Tôi chưa hiểu rõ ý của đồng chí. Đồng chí vui lòng thử dùng các từ khóa ngắn gọn như: <b>đại học</b>, <b>trung cấp</b>, <b>vb2ca</b>, <b>chiều cao</b>, <b>mắt</b>... hoặc tra cứu trực tiếp tại biểu tượng <b><i class='fas fa-database'></i> Trung tâm dữ liệu</b> ở góc trên bên phải.", "bot");
+        // 1. Xử lý câu hỏi về Văn bằng 2 (VB2)
+        if (query.includes("vb2") || query.includes("văn bằng 2")) {
+            response = "<b>Chỉ tiêu Văn bằng 2 năm 2026:</b> Tổng 390 chỉ tiêu. Trong đó: Học viện An ninh (130), Học viện Cảnh sát (100), Đại học ANND (50), Đại học CSND (50), Đại học PCCC (30), Học viện Chính trị CAND (30).";
+            related = "<button class='bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs mt-2 mr-2' onclick=\"ask('Lịch thi VB2') shadow-sm\"><i class='fas fa-calendar-alt'></i> Lịch thi VB2</button>";
         }
         
+        // 2. Xử lý câu hỏi về Lệ Thủy hoặc Lịch khám sức khỏe
+        else if (query.includes("lệ thủy") || (query.includes("khám") && query.includes("sức khỏe"))) {
+            response = "<b>Lịch khám sức khỏe tại Lệ Thủy:</b> Thí sinh tại Lệ Thủy và các xã (Cam Hồng, Sen Thủy, Ngư Thủy...) sẽ khám vào <b>Ngày 19/4/2026</b>. <br>📍 Địa điểm: Bệnh xá số 02 Công an tỉnh (31 Phan Chu Trinh, Đồng Hới). <br>⚠️ Lưu ý: Thí sinh không ăn sáng.";
+            related = "<button class='bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs mt-2 shadow-sm' onclick=\"ask('Khám thể lực Lệ Thủy')\"><i class='fas fa-running'></i> Khám thể lực</button>";
+        }
+
+        // 3. Xử lý câu hỏi về Khám thể lực
+        else if (query.includes("thể lực")) {
+            response = "<b>Lịch kiểm tra thể lực:</b> Thí sinh Lệ Thủy sẽ kiểm tra vào <b>Chiều ngày 21/4/2026</b>. <br>Nội dung gồm: Chạy 100m, Chạy 1500m (nam)/800m (nữ), Co tay xà đơn (nam)/Bật xa (nữ).";
+        }
+
+        // --- PHẦN TÌM KIẾM TRONG KNOWLEDGE_BASE ---
+        if (response) {
+            addMessage(response, 'bot');
+            if (related) addMessage(related, 'bot');
+        } else {
+            const fuseResults = fuse.search(query);
+            let finalResults = KNOWLEDGE_BASE.map(item => {
+                let score = 0;
+                let matchedKeys = [];
+                const fuseMatch = fuseResults.find(r => r.item === item);
+                if (fuseMatch) score += (1 - fuseMatch.score) * 5;
+
+                item.keys.forEach(key => {
+                    const k = key.toLowerCase();
+                    const regex = new RegExp(`(^|[^\\p{L}\\p{N}_])(${k})([^\\p{L}\\p{N}_]|$)`, 'iu');
+                    if (regex.test(query)) {
+                        score += k.length * 2.5;
+                        matchedKeys.push(k);
+                    }
+                });
+                return { item, score };
+            });
+
+            let matches = finalResults.filter(r => r.score > 3).sort((a, b) => b.score - a.score);
+
+            if (matches.length > 0) {
+                addMessage(matches[0].item.answer, 'bot');
+            } else {
+                addMessage("Tôi chưa hiểu rõ ý của đồng chí. Vui lòng dùng từ khóa ngắn: <b>đại học</b>, <b>trung cấp</b>, <b>chiều cao</b>, <b>mắt</b>... hoặc bấm vào <b>Trung tâm dữ liệu</b>.", "bot");
+            }
+        }
     }, 600); 
 }
 
