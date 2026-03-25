@@ -25,7 +25,7 @@
         }
 
         .app-shell {
-            height: 100vh; max-width: 500px; margin: 0 auto;
+            height: 100dvh; max-width: 500px; margin: 0 auto;
             background: #fff; display: flex; flex-direction: column;
             position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(255, 218, 68, 0.15);
         }
@@ -259,7 +259,7 @@
             <div class="modal-header">
                 <div>
                     <h3 class="font-bold uppercase text-sm tracking-wider text-white">DỮ LIỆU GỐC PX01</h3>
-                    <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">Cập nhật: 27/01/2026</p>
+                    <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">Cập nhật: 26/3/2026</p>
                 </div>
                 <button onclick="toggleModal(false)" class="text-2xl text-white hover:text-yellow-300">&times;</button>
             </div>
@@ -576,15 +576,14 @@ const SUC_KHOE_DATA = [
         // DỮ LIỆU ĐIỀU KIỆN & NGUYÊN TẮC (VĂN BẢN MỚI)
         const DIEU_KIEN_DATA = [
     {
-        title: "TỔNG QUAN TUYỂN SINH CAND 2026",
-        content: `
-            • Hệ tuyển sinh chính: <b>Đại học chính quy tuyển mới</b>, <b>Đại học văn bằng 2 tuyển mới (VB2CA)</b>, <b>Trung cấp chính quy tuyển mới</b>.<br>
-            • Phân vùng tuyển sinh:<br>
-            &nbsp;&nbsp;– <b>Phía Bắc:</b> từ thành phố Huế trở ra.<br>
-            &nbsp;&nbsp;– <b>Phía Nam:</b> từ thành phố Đà Nẵng trở vào.<br>
-            • Lược bỏ các nội dung nội bộ như tổ chức thực hiện, phân công, kinh phí chi tiết; chỉ giữ phần phục vụ hỏi đáp tự động.
-        `
-    },
+                title: "TỔNG QUAN TUYỂN SINH CAND 2026",
+                content: `
+                • Hệ tuyển sinh chính: <b>Đại học chính quy tuyển mới</b>, <b>Đại học văn bằng 2 tuyển mới (VB2CA)</b>, <b>Trung cấp chính quy tuyển mới</b>.<br>
+                • Phân vùng tuyển sinh:<br>
+                &nbsp;&nbsp;– <b>Phía Bắc:</b> từ thành phố Huế trở ra.<br>
+                &nbsp;&nbsp;– <b>Phía Nam:</b> từ thành phố Đà Nẵng trở vào.<br>
+                • Lược bỏ các nội dung nội bộ như tổ chức thực hiện, phân công, kinh phí chi tiết; chỉ giữ phần phục vụ hỏi đáp tự động.`
+            },
     {
         title: "ĐẠI HỌC CHÍNH QUY - ĐỐI TƯỢNG, PHƯƠNG THỨC, CHỈ TIÊU",
         content: `
@@ -596,7 +595,7 @@ const SUC_KHOE_DATA = [
             &nbsp;&nbsp;– PT1: Tuyển thẳng.<br>
             &nbsp;&nbsp;– PT2: Xét tuyển kết hợp chứng chỉ ngoại ngữ quốc tế + bài thi đánh giá Bộ Công an.<br>
             &nbsp;&nbsp;– PT3: Xét tuyển kết hợp điểm thi tốt nghiệp THPT + bài thi đánh giá Bộ Công an.<br><br>
-            • <b>Tổng chỉ tiêu:</b> <b>1.870</b>.
+            • <b>Tổng chỉ tiêu 2026:</b> <b>2.070</b>.
         `
     },
     {
@@ -702,7 +701,7 @@ const SUC_KHOE_DATA = [
             • <b>Phương thức:</b><br>
             &nbsp;&nbsp;– PT1: Xét tuyển thẳng.<br>
             &nbsp;&nbsp;– PT2: Xét tuyển.<br><br>
-            • <b>Tổng chỉ tiêu:</b> <b>300</b>.<br>
+            • <b>Tổng chỉ tiêu:</b> <b>280</b>.<br>
             &nbsp;&nbsp;– T08: 80 chỉ tiêu.<br>
             &nbsp;&nbsp;– T09: 100 chỉ tiêu.<br>
             &nbsp;&nbsp;– T10: 100 chỉ tiêu.
@@ -904,7 +903,7 @@ const KNOWLEDGE_BASE = [
   // ==========================================
   {
     keys: ['đại học', 'chính quy', 'đối tượng', 'tuyển sinh', 'chính quy', 'tổng quan', 'chỉ tiêu', 'thpt'],
-    answer: "<b>Đại học chính quy tuyển mới:</b><br>• Đối tượng: chiến sĩ nghĩa vụ; công dân hoàn thành nghĩa vụ; công dân thường trú tại địa phương.<br>• Phương thức: PT1 (tuyển thẳng); PT2 (chứng chỉ ngoại ngữ); PT3 (điểm thi THPT).<br>• Tổng chỉ tiêu: <b>1.870</b>."
+    answer: "<b>Đại học chính quy tuyển mới:</b><br>• Đối tượng: chiến sĩ nghĩa vụ; công dân hoàn thành nghĩa vụ; công dân thường trú tại địa phương.<br>• Phương thức: PT1 (tuyển thẳng); PT2 (chứng chỉ ngoại ngữ); PT3 (điểm thi THPT).<br>• Tổng chỉ tiêu: <b>2.070</b>."
   },
   {
     keys: ['học lực', 'hạnh kiểm', 'khá', 'giỏi', 'điểm học bạ'],
@@ -938,14 +937,8 @@ const KNOWLEDGE_BASE = [
     keys: ['bài thi đánh giá', 'đánh giá năng lực', 'mã bài thi', 'ca1', 'ca2', 'ca3', 'ca4'],
     answer: "<b>Bài thi đánh giá BCA (21/6/2026):</b><br>Thi viết 180 phút.<br>• CA1: Văn tự luận; Toán, Sử, Anh trắc nghiệm; Lý tự chọn.<br>• CA2: Tương tự CA1, thay Lý bằng Hóa.<br>• CA3: Tương tự CA1, thay Lý bằng Sinh.<br>• CA4: Tương tự CA1, thay Lý bằng Địa."
   },
-  {
-    keys: ['tổ hợp', 'môn thi', 'a00', 'a01', 'b00', 'c03', 'd01', 'x02', 'x03'],
-    answer: "<b>Mã tổ hợp xét tuyển đang sử dụng:</b><br>A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br><i>Bạn có thể hỏi 'X02 gồm môn gì?' để biết chi tiết.</i>"
-  },
-  {
-    keys: ['x02', 'x03', 'x04', 'x26', 'x27', 'x28', 'môn gì'],
-    answer: "<b>Các tổ hợp mới:</b><br>• X02: Toán, Ngữ văn, Tin học.<br>• X03: Toán, Văn, Công nghệ CN.<br>• X04: Toán, Văn, Công nghệ NN.<br>• X26: Toán, Anh, Tin học.<br>• X27: Toán, Anh, Công nghệ CN.<br>• X28: Toán, Anh, Công nghệ NN."
-  },
+  { keys: ['tổ hợp', 'môn thi', 'a00', 'a01', 'b00', 'c03', 'd01', 'x02', 'x03'], answer: `<b>Mã tổ hợp xét tuyển đang sử dụng:</b><br>A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br><i>Bạn có thể hỏi 'X02 gồm môn gì?' để biết chi tiết.</i>` },
+            { keys: ['x02', 'x03', 'x04', 'x26', 'x27', 'x28', 'môn gì'], answer: `<b>Các tổ hợp mới:</b><br>• X02: Toán, Ngữ văn, Tin học.<br>• X03: Toán, Văn, Công nghệ CN.<br>• X04: Toán, Văn, Công nghệ NN.<br>• X26: Toán, Anh, Tin học.<br>• X27: Toán, Anh, Công nghệ CN.<br>• X28: Toán, Anh, Công nghệ NN.` },
   {
     keys: ['điểm cộng', 'ưu tiên', 'khu vực', 'điểm thưởng', 'giải thưởng'],
     answer: "<b>Ưu tiên / Điểm cộng ĐH:</b><br>• Cộng điểm giải Quốc gia: Nhất (+1.0), Nhì (+0.75), Ba (+0.5), KK (+0.25).<br>• Ưu tiên khu vực/đối tượng theo quy định BGD&ĐT.<br>• <i>Lưu ý: Nếu tổng điểm quy đổi ≥ 22.5, điểm cộng sẽ bị giảm dần theo công thức.</i>"
@@ -984,7 +977,7 @@ const KNOWLEDGE_BASE = [
   // ==========================================
   {
     keys: ['trung cấp', 'hệ trung cấp', 't08', 't09', 't10'],
-    answer: "<b>Trung cấp CAND chính quy (300 chỉ tiêu):</b><br>• Đối tượng: CSNV, Hoàn thành NVCA, Thí sinh trượt ĐH CAND.<br>• Phương thức: Xét tuyển thẳng hoặc Xét điểm THPT + Bài thi BCA.<br>• Phân bổ: T08 (80), T09 (100), T10 (100)."
+    answer: "<b>Trung cấp CAND chính quy (280 chỉ tiêu):</b><br>• Đối tượng: CSNV, Hoàn thành NVCA, Thí sinh trượt ĐH CAND.<br>• Phương thức: Xét tuyển thẳng hoặc Xét điểm THPT + Bài thi BCA.<br>• Phân bổ: T08 (80), T09 (100), T10 (100)."
   },
   {
     keys: ['ưu tiên trung cấp', 'cộng điểm trung cấp'],
@@ -1040,59 +1033,59 @@ const KNOWLEDGE_BASE = [
   // ==========================================
   {
     keys: ['lịch khám chung', 'khám ở đâu', 'bệnh xá', 'giờ khám', 'địa điểm khám'],
-    answer: "<b>Lịch & Địa điểm Khám sức khỏe:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 29/6 - 02/7/2026 (Khám bù: 03/7).<br>• <b>Giờ giấc:</b> Sáng 07h30 (Nhịn ăn sáng), Chiều 13h30.<br>• <b>Địa điểm:</b> Tùy đơn vị, khám tại Bệnh xá số 01 (Nam Đông Hà) hoặc Bệnh xá số 02 (Đồng Hới)."
+    answer: "<b>Lịch & Địa điểm Khám sức khỏe:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 29/6 - 02/7/2026 (Khám bù: 03/7).<br>• <b>Giờ giấc:</b> Sáng 07h30 (Nhịn ăn sáng), Chiều 13h30.<br>• <b>Địa điểm:</b> Tùy đơn vị, khám tại Bệnh xá số 01 (đường Điện Biên Phủ, Nam Đông Hà) hoặc Bệnh xá số 02 (đường Phan Chu Trinh, Đồng Hới)."
   },
   {
     keys: ['16/4', '16/04', 'ngày 16'],
-    answer: "<b>Lịch khám ĐH/TC (16/4):</b><br>• <b>Đơn vị:</b> Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (Bắc), Tiểu đoàn CSCĐ số 3.<br>• <b>Tại:</b> Bệnh xá 02 (Đồng Hới)."
+    answer: "<b>Lịch khám ĐH/TC (16/4):</b><br>• <b>Đơn vị:</b> Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (Bắc), Tiểu đoàn CSCĐ số 3.<br>• <b>Tại:</b> Bệnh xá 02 (đường Phan Chu Trinh, Đồng Hới)."
   },
   {
     keys: ['17/4', '17/04', 'ngày 17'],
-    answer: "<b>Lịch khám ĐH/TC (17/4):</b><br>• <b>Đơn vị:</b> Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC11B.<br>• <b>Tại:</b> Bệnh xá 02 (Đồng Hới)."
+    answer: "<b>Lịch khám ĐH/TC (17/4):</b><br>• <b>Đơn vị:</b> Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC11B.<br>• <b>Tại:</b> Bệnh xá 02 (đường Phan Chu Trinh, Đồng Hới)."
   },
   {
     keys: ['18/4', '18/04', 'ngày 18'],
-    answer: "<b>Lịch khám ĐH/TC (18/4):</b><br>• <b>Đơn vị:</b> Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, PK02 (Bắc).<br>• <b>Tại:</b> Bệnh xá 02 (Đồng Hới)."
+    answer: "<b>Lịch khám ĐH/TC (18/4):</b><br>• <b>Đơn vị:</b> Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, PK02 (Bắc).<br>• <b>Tại:</b> Bệnh xá 02 (đường Phan Chu Trinh, Đồng Hới)."
   },
   {
     keys: ['19/4', '19/04', 'ngày 19'],
-    answer: "<b>Lịch khám ĐH/TC (19/4):</b><br>• <b>Đơn vị:</b> Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, Trại giam Đồng Sơn.<br>• <b>Tại:</b> Bệnh xá 02 (Đồng Hới)."
+    answer: "<b>Lịch khám ĐH/TC (19/4):</b><br>• <b>Đơn vị:</b> Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, Trại giam Đồng Sơn.<br>• <b>Tại:</b> Bệnh xá 02 (đường Phan Chu Trinh, Đồng Hới)."
   },
   {
     keys: ['22/4', '22/04', 'ngày 22'],
-    answer: "<b>Lịch khám ĐH/TC (22/4):</b><br>• <b>Đơn vị:</b> Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (Nam Đông Hà)."
+    answer: "<b>Lịch khám ĐH/TC (22/4):</b><br>• <b>Đơn vị:</b> Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, Nam Đông Hà)."
   },
   {
     keys: ['23/4', '23/04', 'ngày 23'],
-    answer: "<b>Lịch khám ĐH/TC (23/4):</b><br>• <b>Đơn vị:</b> Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC11A.<br>• <b>Tại:</b> Bệnh xá 01 (Nam Đông Hà)."
+    answer: "<b>Lịch khám ĐH/TC (23/4):</b><br>• <b>Đơn vị:</b> Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC11A.<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, Nam Đông Hà)."
   },
   {
     keys: ['24/4', '24/04', 'ngày 24'],
-    answer: "<b>Lịch khám ĐH/TC (24/4):</b><br>• <b>Đơn vị:</b> Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (Nam Đông Hà)."
+    answer: "<b>Lịch khám ĐH/TC (24/4):</b><br>• <b>Đơn vị:</b> Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, Nam Đông Hà)."
   },
   {
     keys: ['25/4', '25/04', 'ngày 25'],
-    answer: "<b>Lịch khám ĐH/TC (25/4):</b><br>• <b>Đơn vị:</b> Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ, Trại giam Nghĩa An.<br>• <b>Tại:</b> Bệnh xá 01 (Nam Đông Hà)."
+    answer: "<b>Lịch khám ĐH/TC (25/4):</b><br>• <b>Đơn vị:</b> Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ, Trại giam Nghĩa An.<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, Nam Đông Hà)."
   },
   {
     keys: ['khám bù', 'không đi khám', 'trễ lịch'],
-    answer: "<b>Lịch Khám bù:</b><br>• ĐH/TC: Ngày 04/5 - 05/5/2026.<br>• VB2CA: Ngày 03/7/2026.<br><i>Tại Bệnh xá số 01 (Nam Đông Hà). Hội đồng sẽ tập hợp kết quả báo cáo lãnh đạo Công an tỉnh.</i>"
+    answer: "<b>Lịch Khám bù:</b><br>• ĐH/TC: Ngày 04/5 - 05/5/2026.<br>• VB2CA: Ngày 03/7/2026.<br><i>Tại Bệnh xá số 01 (đường Điện Biên Phủ, Nam Đông Hà). Hội đồng sẽ tập hợp kết quả báo cáo lãnh đạo Công an tỉnh.</i>"
   },
   {
     keys: ['29/6', '29/06', 'khám vb2', 'lịch vb2'],
-    answer: "<b>Lịch khám VB2CA (29/6):</b><br>Khám các đơn vị tuyến Bắc (Dân Hoá, Ba Đồn, Quảng Trạch...). Tại Bệnh xá số 02 (Đồng Hới)."
+    answer: "<b>Lịch khám VB2CA (29/6):</b><br>Khám các đơn vị Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC07 (Bắc), PC11B và Tiểu đoàn Cảnh sát cơ động số 3. Tại Bệnh xá số 02 (đường Phan Chu Trinh, Đồng Hới)."
   },
   {
     keys: ['30/6', '30/06'],
-    answer: "<b>Lịch khám VB2CA (30/6):</b><br>Khám các đơn vị Bố Trạch, Đồng Hới, Lệ Thủy, Quảng Ninh... Tại Bệnh xá số 02 (Đồng Hới)."
+    answer: "<b>Lịch khám VB2CA (30/6):</b><br>Khám các đơn vị Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, PK02 (Bắc) và Trại giam Đồng Sơn. Tại Bệnh xá số 02 (đường Phan Chu Trinh, Đồng Hới)."
   },
   {
     keys: ['01/7', '1/7', '01/07'],
-    answer: "<b>Lịch khám VB2CA (01/7):</b><br>Khám các đơn vị Vĩnh Linh, Gio Linh, Cam Lộ, ĐăkRông, Hướng Hóa... Tại Bệnh xá số 01 (Nam Đông Hà)."
+    answer: "<b>Lịch khám VB2CA (01/7):</b><br>Khám các đơn vị Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC07 (Nam) và PC11A. Tại Bệnh xá số 01 (đường Điện Biên Phủ, Nam Đông Hà)."
   },
   {
     keys: ['02/7', '2/7', '02/07'],
-    answer: "<b>Lịch khám VB2CA (02/7):</b><br>Khám các đơn vị Triệu Phong, Hải Lăng, Đông Hà, Thị xã Quảng Trị, Cồn Cỏ... Tại Bệnh xá số 01 (Nam Đông Hà)."
+    answer: "<b>Lịch khám VB2CA (02/7):</b><br>Khám các đơn vị Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ, PK02 (Nam) và Trại giam Nghĩa An. Tại Bệnh xá số 01 (Nam Đông Hà)."
   },
 
   // ==========================================
@@ -1100,60 +1093,294 @@ const KNOWLEDGE_BASE = [
   // ==========================================
   {
     keys: ['thể lực', 'chạy', '100m', '1500m', '800m', 'bật xa', 'xà đơn', 'kiểm tra thể lực', 'địa điểm thể lực', 'thi thể lực ở đâu'],
-    answer: "<b>Kiểm tra thể lực (20-21/4 và 28-29/4):</b><br>• Bật xa: Nam ≥ 2,2m; Nữ ≥ 1,5m.<br>• Chạy 100m: Nam ≤ 16s; Nữ ≤ 20s.<br>• Chạy 1500m(Nam) ≤ 7p30s; 800m(Nữ) ≤ 5p30s.<br>• Xà đơn: Nam ≥ 12 lần.<br><b>📍 Địa điểm:</b> Tùy ngày, thi tại <i>TT Văn hóa Điện ảnh tỉnh (Đồng Hới)</i> hoặc <i>Trụ sở phía Nam Công an Tỉnh (Nam Đông Hà)</i>.<br><i>Sáng 7h00, Chiều 15h00. Mặc trang phục thể thao.</i>"
+    answer: "<b>Kiểm tra thể lực (20-21/4 và 28-29/4):</b><br>• Bật xa: Nam ≥ 2,2m; Nữ ≥ 1,5m.<br>• Chạy 100m: Nam ≤ 16s; Nữ ≤ 20s.<br>• Chạy 1500m(Nam) ≤ 7p30s; 800m(Nữ) ≤ 5p30s.<br>• Xà đơn: Nam ≥ 12 lần.<br><b>📍 Địa điểm:</b> Tùy ngày, thi tại <i>TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, Đồng Hới)</i> hoặc <i>Trụ sở phía Nam Công an Tỉnh (đường Điện Biên Phủ, Nam Đông Hà)</i>.<br><i>Sáng 7h00, Chiều 15h00. Mặc trang phục thể thao.</i>"
   },
   {
     keys: ['20/4', '20/04'],
-    answer: "<b>Kiểm tra thể lực (20/4):</b><br>• Sáng: Tuyên Hóa, Minh Hóa, PC07 (Bắc).<br>• Chiều: Quảng Trạch, Ba Đồn, PC10, PC11B.<br>• <b>Tại:</b> TT Văn hóa Điện ảnh tỉnh (Đồng Hới)."
+    answer: "<b>Kiểm tra thể lực (20/4):</b><br>• Sáng: Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (Bắc).<br>• Chiều: Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10 và PC11B.<br>• <b>Tại:</b> TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, Đồng Hới)."
   },
   {
     keys: ['21/4', '21/04'],
-    answer: "<b>Kiểm tra thể lực (21/4):</b><br>• Sáng: Bố Trạch, Đồng Hới, PK02 (Bắc).<br>• Chiều: Quảng Ninh, Lệ Thủy, Trại giam Đồng Sơn.<br>• <b>Tại:</b> TT Văn hóa Điện ảnh tỉnh (Đồng Hới)."
+    answer: "<b>Kiểm tra thể lực (21/4):</b><br>• Sáng: Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh và PK02 (Bắc).<br>• Chiều:Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân và Trại giam Đồng Sơn.<br>• <b>Tại:</b> TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, Đồng Hới)."
   },
   {
     keys: ['28/4', '28/04'],
-    answer: "<b>Kiểm tra thể lực (28/4):</b><br>• Sáng: Vĩnh Linh, Gio Linh, Cam Lộ, PC07 (Nam).<br>• Chiều: ĐăkRông, Hướng Hóa, PC11A.<br>• <b>Tại:</b> Trụ sở phía Nam Công an Tỉnh (Nam Đông Hà)."
+    answer: "<b>Kiểm tra thể lực (28/4):</b><br>• Sáng: Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (Nam), Trại giam Nghĩa An.<br>• Chiều: Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập và PC11A.<br>• <b>Tại:</b> Trụ sở phía Nam Công an Tỉnh (đường Điện Biên Phủ, Nam Đông Hà)."
   },
   {
     keys: ['29/4', '29/04'],
-    answer: "<b>Kiểm tra thể lực (29/4):</b><br>• Sáng: Triệu Phong, PK02 (Nam).<br>• Chiều: Hải Lăng, Đông Hà, Quảng Trị, Cồn Cỏ.<br>• <b>Tại:</b> Trụ sở phía Nam Công an Tỉnh (Nam Đông Hà)."
+    answer: "<b>Kiểm tra thể lực (29/4):</b><br>• Sáng: Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (Nam).<br>• Chiều: Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ.<br>• <b>Tại:</b> Trụ sở phía Nam Công an Tỉnh (đường Điện Biên Phủ, Nam Đông Hà)."
   },
 
-  // ==========================================
-  // PHẦN 9: CHỈ TIÊU TỪNG TRƯỜNG
-  // ==========================================
-  {
-    keys: ['học viện an ninh', 't01', 'anh', 'an ninh mạng', 'công nghệ cao', 'cntt'],
-    answer: "<b>T01 - HV An ninh nhân dân:</b><br>• <b>Đại học:</b> 500 CT (Nghiệp vụ AN: 250; AN mạng & CNC: 150; CNTT: 100).<br>• <b>VB2CA:</b> 130 CT (Nghiệp vụ AN: 100; An toàn TT: 30)."
-  },
-  {
-    keys: ['học viện cảnh sát', 't02', 'csh', 'nghiệp vụ cảnh sát'],
-    answer: "<b>T02 - HV Cảnh sát nhân dân:</b><br>• <b>Đại học:</b> 400 CT (Nghiệp vụ Cảnh sát).<br>• <b>VB2CA:</b> 100 CT."
-  },
-  {
-    keys: ['học viện chính trị', 't03', 'hca', 'xây dựng đảng'],
-    answer: "<b>T03 - HV Chính trị CAND:</b><br>• <b>Đại học:</b> 100 CT (Ngành Xây dựng Đảng & Chính quyền nhà nước)."
-  },
-  {
-    keys: ['đại học an ninh', 't04', 'ans'],
-    answer: "<b>T04 - ĐH An ninh nhân dân (Phía Nam):</b><br>• <b>Đại học:</b> 220 CT.<br>• <b>VB2CA:</b> 100 CT."
-  },
-  {
-    keys: ['đại học cảnh sát', 't05', 'css'],
-    answer: "<b>T05 - ĐH Cảnh sát nhân dân (Phía Nam):</b><br>• <b>Đại học:</b> 300 CT.<br>• <b>VB2CA:</b> 100 CT."
-  },
-  {
-    keys: ['phòng cháy chữa cháy', 'pccc', 't06', 'pch', 'cứu nạn'],
-    answer: "<b>T06 - ĐH Phòng cháy chữa cháy:</b><br>• <b>Đại học:</b> 200 CT.<br>• <b>VB2CA:</b> 50 CT."
-  },
-  {
-    keys: ['kỹ thuật an ninh', 'công nghệ an ninh', 't07', 'kth', 'y khoa', 'bác sĩ', 'mật mã', 'hậu cần'],
-    answer: "<b>T07 - HV Kỹ thuật & CN An ninh:</b><br>• <b>Đại học:</b> 300 CT (Kỹ thuật Hậu cần: 200; Y khoa gửi QĐ/Y Dược: 80; Điện tử viễn thông gửi Cơ yếu: 20).<br>• <b>VB2CA:</b> 50 CT."
-  },
-  {
-    keys: ['học viện quốc tế', 'b06', 'ais', 'ngôn ngữ anh', 'ngôn ngữ trung', 'tiếng anh', 'tiếng trung'],
-    answer: "<b>B06 - Học viện Quốc tế:</b><br>• <b>Đại học:</b> 50 CT (Ngôn ngữ Anh: 30; Ngôn ngữ Trung Quốc: 20)."
-  }
+// ==========================================
+        // PHẦN 9: CHỈ TIÊU CHI TIẾT TỪNG TRƯỜNG & HỆ ĐÀO TẠO (Theo dữ liệu chi tiết)
+        // ==========================================
+        
+        // --- 1. TỔNG HỢP & CHI TIẾT ĐẠI HỌC CHÍNH QUY ---
+        {
+            keys: ['chỉ tiêu đại học 2026', 'chi tieu dai hoc 2026', 'chỉ tiêu đại học cand', 'chi tieu dai hoc cand', 'chỉ tiêu đại học', 'đại học cand 2026', 'dai hoc cand 2026', 'phụ lục 02', 'phu luc 02'],
+            answer: `<b>PHỤ LỤC 02 - Danh mục chỉ tiêu trình độ đại học CAND chính quy năm 2026</b><br><br>
+            <b>Tổng hợp chỉ tiêu theo trường:</b><br>
+            - <b>Học viện An ninh nhân dân (T01 - ANH):</b> 500 chỉ tiêu.<br>
+            - <b>Học viện Cảnh sát nhân dân (T02 - CSH):</b> 400 chỉ tiêu.<br>
+            - <b>Học viện Chính trị CAND (T03 - HCA):</b> 100 chỉ tiêu.<br>
+            - <b>Trường Đại học An ninh nhân dân (T04 - ANS):</b> 220 chỉ tiêu.<br>
+            - <b>Trường Đại học Cảnh sát nhân dân (T05 - CSS):</b> 300 chỉ tiêu.<br>
+            - <b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH):</b> 200 chỉ tiêu.<br>
+            - <b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH):</b> 300 chỉ tiêu.<br>
+            - <b>Học viện Quốc tế (B06 - AIS):</b> 50 chỉ tiêu.<br><br>
+            <b>Lưu ý:</b> Thí sinh dự tuyển ngành <b>Y khoa</b> theo <b>Phương thức 2</b> vẫn phải bảo đảm ngưỡng chất lượng đầu vào đối với tổ hợp môn THPT năm 2026 theo quy định.<br>
+            <i>(Đồng chí có thể gõ tên từng trường hoặc mã trường như T01, T02... để xem chi tiết Nam/Nữ).</i>`
+        },
+        {
+            keys: ['học viện an ninh nhân dân', 'hoc vien an ninh nhan dan', 'chỉ tiêu đại học t01', 't01', 'anh', 'chỉ tiêu đại học học viện an ninh nhân dân', 'chi tieu dai hoc hoc vien an ninh nhan dan'],
+            answer: `<b>Học viện An ninh nhân dân (T01 - ANH): 500 chỉ tiêu</b><br><br>
+            <b>1. Nhóm ngành nghiệp vụ An ninh</b><br>
+            - Tổng chỉ tiêu: <b>250</b> (Tuyển sinh Phía Bắc).<br>
+            - Phương thức 1: Nam <b>11</b>, Nữ <b>1</b>.<br>
+            - Phương thức 2, 3: Nam <b>214</b>, Nữ <b>24</b>.<br>
+            - Tổ hợp XT (PT3): <b>A00, A01, C03, D01, X02, X03, X04</b> | Bài thi: <b>CA1, CA2, CA3, CA4</b>.<br><br>
+            <b>2. Ngành An ninh mạng và phòng, chống tội phạm công nghệ cao</b><br>
+            - Tổng chỉ tiêu: <b>150</b>.<br>
+            - <b>Phía Bắc (75 CT):</b> PT1 (Nam 3, Nữ 1); PT2,3 (Nam 65, Nữ 6).<br>
+            - <b>Phía Nam (75 CT):</b> PT1 (Nam 3, Nữ 1); PT2,3 (Nam 65, Nữ 6).<br>
+            - Tổ hợp XT (PT3): <b>A00, A01, X26, X27, X28</b> | Bài thi: <b>CA1, CA2</b>.<br><br>
+            <b>3. Ngành Công nghệ thông tin</b><br>
+            - Tổng chỉ tiêu: <b>100</b> (Toàn quốc).<br>
+            - Phương thức 1: Nam <b>5</b>, Nữ <b>0</b>.<br>
+            - Phương thức 2, 3: Nam <b>95</b>, Nữ <b>0</b>.<br>
+            - Tổ hợp XT (PT3): <b>A00, A01, X26, X27, X28</b> | Bài thi: <b>CA1, CA2</b>.`
+        },
+        {
+            keys: ['học viện cảnh sát nhân dân', 'hoc vien canh sat nhan dan', 'chỉ tiêu đại học t02', 't02', 'csh', 'chỉ tiêu đại học học viện cảnh sát nhân dân'],
+            answer: `<b>Học viện Cảnh sát nhân dân (T02 - CSH): 400 chỉ tiêu</b><br><br>
+            <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
+            - Tổng chỉ tiêu: <b>400</b>.<br>
+            - Địa bàn tuyển sinh: <b>Phía Bắc</b>.<br>
+            - Phương thức 1: Nam <b>18</b>, Nữ <b>2</b>.<br>
+            - Phương thức 2, 3: Nam <b>342</b>, Nữ <b>38</b>.<br>
+            - Tổ hợp xét tuyển (PT3): <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
+            - Mã bài thi BCA: <b>CA1, CA2, CA3, CA4</b>.`
+        },
+        {
+            keys: ['chỉ tiêu đại học trường học viện chính trị cand', 'chỉ tiêu đại học t03', 't03', 'hca', 'xây dựng đảng và chính quyền nhà nước'],
+            answer: `<b>Học viện Chính trị Công an nhân dân (T03 - HCA): 100 chỉ tiêu</b><br><br>
+            <b>Ngành Xây dựng Đảng và chính quyền nhà nước</b><br>
+            - Tổng chỉ tiêu: <b>100</b>.<br>
+            - <b>Phía Bắc (50 CT):</b> PT1 (Nam 2, Nữ 1); PT2,3 (Nam 43, Nữ 4).<br>
+            - <b>Phía Nam (50 CT):</b> PT1 (Nam 2, Nữ 1); PT2,3 (Nam 43, Nữ 4).<br>
+            - Tổ hợp xét tuyển (PT3): <b>A01, C00, C03, D01, X02, X03, X04</b>.<br>
+            - Mã bài thi BCA: <b>CA1, CA4</b>.`
+        },
+        {
+            keys: ['đại học an ninh nhân dân', 'dai hoc an ninh nhan dan', 't04', 'ans', 'chỉ tiêu đại học an ninh nhân dân'],
+            answer: `<b>Trường Đại học An ninh nhân dân (T04 - ANS): 220 chỉ tiêu</b><br><br>
+            <b>Nhóm ngành nghiệp vụ An ninh</b><br>
+            - Tổng chỉ tiêu: <b>220</b>.<br>
+            - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
+            - Phương thức 1: Nam <b>10</b>, Nữ <b>1</b>.<br>
+            - Phương thức 2, 3: Nam <b>188</b>, Nữ <b>21</b>.<br>
+            - Tổ hợp xét tuyển (PT3): <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
+            - Mã bài thi BCA: <b>CA1, CA2, CA3, CA4</b>.`
+        },
+        {
+            keys: ['đại học cảnh sát nhân dân', 'dai hoc canh sat nhan dan', 't05', 'css', 'chỉ tiêu đại học cảnh sát nhân dân'],
+            answer: `<b>Trường Đại học Cảnh sát nhân dân (T05 - CSS): 300 chỉ tiêu</b><br><br>
+            <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
+            - Tổng chỉ tiêu: <b>300</b>.<br>
+            - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
+            - Phương thức 1: Nam <b>13</b>, Nữ <b>2</b>.<br>
+            - Phương thức 2, 3: Nam <b>257</b>, Nữ <b>28</b>.<br>
+            - Tổ hợp xét tuyển (PT3): <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
+            - Mã bài thi BCA: <b>CA1, CA2, CA3, CA4</b>.`
+        },
+        {
+            keys: ['chỉ tiêu đại học trường đại học phòng cháy chữa cháy','chỉ tiêu đại học trường t06', 't06', 'pch'],
+            answer: `<b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH): 200 chỉ tiêu</b><br><br>
+            <b>Ngành Phòng cháy chữa cháy và cứu nạn, cứu hộ</b><br>
+            - Tổng chỉ tiêu: <b>200</b>.<br>
+            - <b>Phía Bắc (100 CT):</b> PT1 (Nam 4, Nữ 1); PT2,3 (Nam 86, Nữ 9).<br>
+            - <b>Phía Nam (100 CT):</b> PT1 (Nam 4, Nữ 1); PT2,3 (Nam 86, Nữ 9).<br>
+            - Tổ hợp xét tuyển (PT3): <b>A00, A01, D01, D07</b>.<br>
+            - Mã bài thi BCA: <b>CA1, CA2</b>.`
+        },
+        {
+            keys: ['chỉ tiêu đại học trường t07', 'kth', 'T07', 'chỉ tiêu đại học học viện kỹ thuật và công nghệ an ninh'],
+            answer: `<b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH): 300 chỉ tiêu</b><br><br>
+            <b>1. Nhóm ngành Kỹ thuật - Hậu cần (200 CT):</b><br>
+            - Phía Bắc (100 CT): PT1 (Nam 4, Nữ 1); PT2,3 (Nam 86, Nữ 9).<br>
+            - Phía Nam (100 CT): PT1 (Nam 4, Nữ 1); PT2,3 (Nam 86, Nữ 9).<br>
+            - Tổ hợp XT: <b>A00, A01, D01, X26, X27, X28</b> | Bài thi: <b>CA1, CA2</b>.<br><br>
+            <b>2. Y khoa (gửi đào tạo tại Học viện Quân y) - 50 CT Toàn quốc:</b><br>
+            - PT1 (Nam 2, Nữ 1); PT2,3 (Nam 43, Nữ 4).<br>
+            - Tổ hợp XT: <b>A00, A01, B00, B08, D07</b> | Bài thi: <b>CA1, CA2, CA3</b>.<br><br>
+            <b>3. Y khoa (gửi đào tạo tại Đại học Y dược, ĐHQG HN) - 30 CT Toàn quốc:</b><br>
+            - PT1 (Nam 1, Nữ 0); PT2,3 (Nam 26, Nữ 3).<br>
+            - Tổ hợp XT: <b>B00, B08</b> | Bài thi: <b>CA1, CA2, CA3</b>.<br><br>
+            <b>4. Kỹ thuật điện tử, viễn thông (gửi đào tạo tại HV Kỹ thuật Mật mã) - 20 CT:</b><br>
+            - PT1 (Nam 1, Nữ 0); PT2,3 (Nam 19, Nữ 0).<br>
+            - Tổ hợp XT: <b>A00, A01, D01, X26, X27</b> | Bài thi: <b>CA1, CA2</b>.`
+        },
+        {
+            keys: ['chỉ tiêu đại học ngành y khoa cand', 'ngành y khoa cand', 'y khoa công an', 'chỉ tiêu mã ngành 7720101'],
+            answer: `<b>Các ngành Y khoa trong tuyển sinh đại học CAND năm 2026</b><br><br>
+            <b>1. Y khoa (gửi đào tạo tại Học viện Quân y, Bộ Quốc phòng)</b><br>
+            - Tổng chỉ tiêu: <b>50</b> (Toàn quốc).<br>
+            - Phương thức 1: Nam <b>2</b>, Nữ <b>1</b>.<br>
+            - Phương thức 2, 3: Nam <b>43</b>, Nữ <b>4</b>.<br>
+            - Tổ hợp xét tuyển: <b>A00, A01, B00, B08, D07</b> | Bài thi: <b>CA1, CA2, CA3</b>.<br><br>
+            <b>2. Y khoa (gửi đào tạo tại Trường Đại học Y dược, Đại học Quốc gia Hà Nội)</b><br>
+            - Tổng chỉ tiêu: <b>30</b> (Toàn quốc).<br>
+            - Phương thức 1: Nam <b>1</b>, Nữ <b>0</b>.<br>
+            - Phương thức 2, 3: Nam <b>26</b>, Nữ <b>3</b>.<br>
+            - Tổ hợp xét tuyển: <b>B00, B08</b> | Bài thi: <b>CA1, CA2, CA3</b>.<br><br>
+            <i>Lưu ý: Thí sinh dự tuyển ngành Y khoa theo Phương thức 2 vẫn phải bảo đảm ngưỡng chất lượng đầu vào đối với tổ hợp môn THPT năm 2026.</i>`
+        },
+        {
+            keys: ['chỉ tiêu đại học tại học viện quốc tế', 'chỉ tiêu đại học trường b06', 'ais', 'chỉ tiêu đại học ngôn ngữ anh', 'chỉ tiêu đại học ngôn ngữ trung quốc'],
+            answer: `<b>Học viện Quốc tế (B06 - AIS): 50 chỉ tiêu</b><br><br>
+            <b>1. Ngôn ngữ Anh (30 CT Toàn quốc)</b><br>
+            - Phương thức 1: Nam <b>2</b>, Nữ <b>2</b>.<br>
+            - Phương thức 2, 3: Nam <b>13</b>, Nữ <b>13</b>.<br>
+            - Tổ hợp XT: <b>A01, D01, D04, D09, D10</b> | Bài thi: <b>CA1, CA2, CA3, CA4</b>.<br><br>
+            <b>2. Ngôn ngữ Trung quốc (20 CT Toàn quốc)</b><br>
+            - Phương thức 1: Nam <b>1</b>, Nữ <b>1</b>.<br>
+            - Phương thức 2, 3: Nam <b>9</b>, Nữ <b>9</b>.<br>
+            - Tổ hợp XT: <b>A01, D01, D04, D09, D10</b> | Bài thi: <b>CA1, CA2, CA3, CA4</b>.`
+        },
+
+        // --- 2. TỔNG HỢP & CHI TIẾT TRUNG CẤP ---
+        {
+            keys: ['chỉ tiêu trung cấp cand 2026', 'chi tieu trung cap cand 2026', 'chỉ tiêu trung cấp', 'trung cấp cand', 'phụ lục 08'],
+            answer: `<b>PHỤ LỤC 08 - Chỉ tiêu tuyển sinh trình độ trung cấp CAND chính quy</b><br><br>
+            <b>Tổng hợp chỉ tiêu theo trường:</b><br>
+            - <b>Trường Cao đẳng An ninh nhân dân I (T08 - ANN):</b> 80 chỉ tiêu.<br>
+            - <b>Trường Cao đẳng Cảnh sát nhân dân I (T09 - CS1):</b> 100 chỉ tiêu.<br>
+            - <b>Trường Cao đẳng Cảnh sát nhân dân II (T10 - CS2):</b> 100 chỉ tiêu.<br><br>
+            <b>Tổ hợp xét tuyển chung:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
+            <b>Mã bài thi BCA:</b> CA1, CA2, CA3, CA4.<br>
+            <i>(Gõ mã trường như T08, T09, T10 để xem phân bổ chi tiết Nam/Nữ).</i>`
+        },
+        {
+            keys: ['cao đẳng an ninh nhân dân i', 't08', 'ann', 'trường cao đẳng an ninh nhân dân i'],
+            answer: `<b>Trường Cao đẳng An ninh nhân dân I (T08 - ANN)</b><br><br>
+            - <b>Tổng chỉ tiêu:</b> 80.<br>
+            - <b>Địa bàn tuyển sinh:</b> Toàn quốc.<br>
+            - <b>Chỉ tiêu tuyển thẳng:</b> Nam <b>4</b>, Nữ <b>1</b>.<br>
+            - <b>Chỉ tiêu xét tuyển:</b> Nam <b>66</b>, Nữ <b>9</b>.<br>
+            - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
+            - <b>Mã bài thi BCA:</b> CA1, CA2, CA3, CA4.`
+        },
+        {
+            keys: ['cao đẳng cảnh sát nhân dân i', 't09', 'cs1', 'trường cao đẳng cảnh sát nhân dân i'],
+            answer: `<b>Trường Cao đẳng Cảnh sát nhân dân I (T09 - CS1)</b><br><br>
+            - <b>Tổng chỉ tiêu:</b> 100.<br>
+            - <b>Địa bàn tuyển sinh:</b> Phía Bắc.<br>
+            - <b>Chỉ tiêu tuyển thẳng:</b> Nam <b>5</b>, Nữ <b>1</b>.<br>
+            - <b>Chỉ tiêu xét tuyển:</b> Nam <b>85</b>, Nữ <b>9</b>.<br>
+            - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
+            - <b>Mã bài thi BCA:</b> CA1, CA2, CA3, CA4.`
+        },
+        {
+            keys: ['cao đẳng cảnh sát nhân dân ii', 't10', 'cs2', 'trường cao đẳng cảnh sát nhân dân ii'],
+            answer: `<b>Trường Cao đẳng Cảnh sát nhân dân II (T10 - CS2)</b><br><br>
+            - <b>Tổng chỉ tiêu:</b> 100.<br>
+            - <b>Địa bàn tuyển sinh:</b> Phía Nam.<br>
+            - <b>Chỉ tiêu tuyển thẳng:</b> Nam <b>5</b>, Nữ <b>1</b>.<br>
+            - <b>Chỉ tiêu xét tuyển:</b> Nam <b>85</b>, Nữ <b>9</b>.<br>
+            - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
+            - <b>Mã bài thi BCA:</b> CA1, CA2, CA3, CA4.`
+        },
+        {
+            keys: ['chỉ tiêu tuyển thẳng trung cấp', 'chỉ tiêu xét tuyển trung cấp', 'nam nữ trung cấp cand'],
+            answer: `<b>Phân bổ chỉ tiêu Nam/Nữ trung cấp CAND năm 2026</b><br><br>
+            <b>1. Trường Cao đẳng An ninh nhân dân I (T08)</b><br>
+            - Tuyển thẳng: Nam <b>4</b>, Nữ <b>1</b>.<br>
+            - Xét tuyển: Nam <b>66</b>, Nữ <b>9</b>.<br><br>
+            <b>2. Trường Cao đẳng Cảnh sát nhân dân I (T09)</b><br>
+            - Tuyển thẳng: Nam <b>5</b>, Nữ <b>1</b>.<br>
+            - Xét tuyển: Nam <b>85</b>, Nữ <b>9</b>.<br><br>
+            <b>3. Trường Cao đẳng Cảnh sát nhân dân II (T10)</b><br>
+            - Tuyển thẳng: Nam <b>5</b>, Nữ <b>1</b>.<br>
+            - Xét tuyển: Nam <b>85</b>, Nữ <b>9</b>.`
+        },
+
+        // --- 3. TỔNG HỢP & CHI TIẾT VĂN BẰNG 2 (VB2CA) ---
+        {
+            keys: ['chỉ tiêu vb2', 'chi tieu vb2', 'chỉ tiêu vb2 cand 2026', 'đại học vb2 cand', 'phụ lục 06'],
+            answer: `<b>PHỤ LỤC 06 - Chỉ tiêu tuyển sinh đại học VB2CA đối với công dân đã có bằng đại học</b><br><br>
+            <b>Tổng hợp chỉ tiêu theo trường:</b><br>
+            - <b>Học viện An ninh nhân dân (T01 - ANH):</b> 130 chỉ tiêu.<br>
+            - <b>Học viện Cảnh sát nhân dân (T02 - CSH):</b> 100 chỉ tiêu.<br>
+            - <b>Trường Đại học An ninh nhân dân (T04 - ANS):</b> 100 chỉ tiêu.<br>
+            - <b>Trường Đại học Cảnh sát nhân dân (T05 - CSS):</b> 100 chỉ tiêu.<br>
+            - <b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH):</b> 50 chỉ tiêu.<br>
+            - <b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH):</b> 50 chỉ tiêu.<br><br>
+            <i>(Gõ mã trường kèm chữ "vb2", ví dụ: <b>t01 vb2</b>, <b>t02 vb2</b> để xem chi tiết phân bổ Phương thức 1 và 2).</i>`
+        },
+        {
+            keys: ['chỉ tiêu vb2 học viện an ninh nhân dân', 'chỉ tiêu vb2 t01', 't01 vb2', 'vb2 t01', 'anh vb2'],
+            answer: `<b>Học viện An ninh nhân dân (T01 - ANH): 130 chỉ tiêu (Hệ VB2CA)</b><br><br>
+            <b>1. Nhóm ngành nghiệp vụ An ninh (100 CT - Phía Bắc)</b><br>
+            - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
+            - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.<br><br>
+            <b>2. Ngành An toàn thông tin (30 CT - Toàn quốc)</b><br>
+            - Phương thức 1: Nam <b>13</b>, Nữ <b>1</b>.<br>
+            - Phương thức 2: Nam <b>14</b>, Nữ <b>2</b>.`
+        },
+        {
+            keys: ['chỉ tiêu vb2 an toàn thông tin', 'an toàn thông tin vb2', '7480202', 'ngành an toàn thông tin cand vb2'],
+            answer: `<b>Ngành An toàn thông tin (Hệ VB2CA) - Học viện An ninh nhân dân (T01)</b><br>
+            - Tổng chỉ tiêu: <b>30</b>.<br>
+            - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
+            - Phương thức 1: Nam <b>13</b>, Nữ <b>1</b>.<br>
+            - Phương thức 2: Nam <b>14</b>, Nữ <b>2</b>.`
+        },
+        {
+            keys: ['chỉ tiêu vb2 học viện cảnh sát nhân dân', 'chỉ tiêu vb2 t02', 't02 vb2', 'vb2 t02', 'csh vb2'],
+            answer: `<b>Học viện Cảnh sát nhân dân (T02 - CSH): 100 chỉ tiêu (Hệ VB2CA)</b><br><br>
+            <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
+            - Tổng chỉ tiêu: <b>100</b>.<br>
+            - Địa bàn tuyển sinh: <b>Phía Bắc</b>.<br>
+            - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
+            - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.`
+        },
+        {
+            keys: ['đại học an ninh nhân dân vb2', 'dai hoc an ninh nhan dan vb2', 't04 vb2', 'ans vb2'],
+            answer: `<b>Trường Đại học An ninh nhân dân (T04 - ANS): 100 chỉ tiêu (Hệ VB2CA)</b><br><br>
+            <b>Nhóm ngành nghiệp vụ An ninh</b><br>
+            - Tổng chỉ tiêu: <b>100</b>.<br>
+            - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
+            - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
+            - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.`
+        },
+        {
+            keys: ['đại học cảnh sát nhân dân vb2', 'dai hoc canh sat nhan dan vb2', 't05 vb2', 'css vb2'],
+            answer: `<b>Trường Đại học Cảnh sát nhân dân (T05 - CSS): 100 chỉ tiêu (Hệ VB2CA)</b><br><br>
+            <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
+            - Tổng chỉ tiêu: <b>100</b>.<br>
+            - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
+            - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
+            - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.`
+        },
+        {
+            keys: ['chỉ tiêu vb2 đại học phòng cháy chữa cháy', 'chỉ tiêu vb2 t06', 't06 vb2', 'pch vb2', 'phòng cháy chữa cháy và cứu nạn cứu hộ vb2'],
+            answer: `<b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH): 50 chỉ tiêu (Hệ VB2CA)</b><br><br>
+            <b>Ngành Phòng cháy chữa cháy và cứu nạn, cứu hộ</b><br>
+            - Tổng chỉ tiêu: <b>50</b>.<br>
+            - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
+            - Phương thức 1: Nam <b>22</b>, Nữ <b>2</b>.<br>
+            - Phương thức 2: Nam <b>23</b>, Nữ <b>3</b>.`
+        },
+        {
+            keys: ['chỉ tiêu vb2 học viện kỹ thuật và công nghệ an ninh', 'chỉ tiêu vb2 t07', 't07 vb2', 'vb2 t07', 'kth vb2', 'nhóm ngành kỹ thuật hậu cần vb2'],
+            answer: `<b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH): 50 chỉ tiêu (Hệ VB2CA)</b><br><br>
+            <b>Nhóm ngành Kỹ thuật - Hậu cần</b><br>
+            - Tổng chỉ tiêu: <b>50</b>.<br>
+            - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
+            - Phương thức 1: Nam <b>22</b>, Nữ <b>2</b>.<br>
+            - Phương thức 2: Nam <b>23</b>, Nữ <b>3</b>.`
+        }
 ];
        /* ======== 1. DỮ LIỆU CÁC NÚT GỢI Ý ======== */
  const SUGGESTIONS = [
@@ -1366,7 +1593,7 @@ const KNOWLEDGE_BASE = [
                     
                     item.keys.forEach(k => {
                         // Regex dùng capture group thay cho lookbehind để an toàn tuyệt đối trên iOS
-                        const regex = new RegExp(`(^|[^\\p{L}\\p{N}_])(${k})([^\\p{L}\\p{N}_]|$)`, 'iu');
+                        const regex = new RegExp("(^|[^\\\\p{L}\\\\p{N}_])(" + k + ")([^\\\\p{L}\\\\p{N}_]|$)", "iu");
                         if (regex.test(query)) {
                             score += k.length * 3; 
                             matchCount++;
