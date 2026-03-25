@@ -104,11 +104,21 @@
             padding: 15px; background: white; border-top: 2px solid #f3f4f6;
             display: flex; gap: 10px; align-items: center; z-index: 60;
         }
-        .input-field {
-            flex: 1; background: #f3f4f6; border-radius: 8px;
-            padding: 14px 16px; font-size: 14px; border: 1px solid transparent;
-            transition: all 0.3s; color: #111; outline: none; font-weight: 500;
-        }
+.input-field {
+    flex: 1; 
+    background: #f3f4f6; 
+    border-radius: 8px;
+    padding: 14px 16px; 
+    font-size: 14px; 
+    border: 1px solid transparent;
+    transition: all 0.3s; 
+    color: #111; 
+    outline: none; 
+    font-weight: 500;
+    /* ======== LỆNH MỞ KHÓA BÀN PHÍM CHO IPHONE ======== */
+    user-select: auto; 
+    -webkit-user-select: auto; 
+}
         .input-field:focus { background: white; border-color: var(--police-red); box-shadow: 0 0 0 3px rgba(206, 24, 30, 0.1); }
 
         .send-btn {
@@ -155,7 +165,69 @@
         .tab-btn.active { color: var(--police-red); border-bottom-color: var(--police-red); background: #fef2f2; }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
-    </style>
+
+/* ======== CSS HIỆU ỨNG ĐANG GÕ ======== */
+.typing-indicator span {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background-color: #ce181e;
+    border-radius: 50%; margin: 0 2px;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+/* ============================================== */
+/* ======== LÀM ĐẸP KHU VỰC NÚT GỢI Ý (SUGGESTIONS UI) ======== */
+.suggestions-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-top: 1px solid #f3f4f6;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* Giúp vuốt mượt trên iPhone */
+}
+
+/* Ẩn thanh cuộn ngang để giao diện sạch sẽ */
+.suggestions-container::-webkit-scrollbar {
+    display: none; 
+}
+
+.suggest-btn {
+    flex: 0 0 auto; /* Giữ nguyên kích thước nút, không bị ép nhỏ */
+    background-color: #fef2f2; /* Nền đỏ cực nhạt sang trọng */
+    color: var(--police-red);
+    border: 1px solid #fca5a5;
+    padding: 8px 16px;
+    border-radius: 20px; /* Bo tròn dạng viên thuốc */
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Hiệu ứng khi người dùng chạm (touch) hoặc trỏ chuột vào */
+.suggest-btn:active, .suggest-btn:hover {
+    background-color: var(--police-red);
+    color: #ffffff;
+    border-color: var(--police-red);
+    transform: scale(0.95); /* Hơi lún xuống tạo cảm giác bấm thật */
+}
+/* ============================================================ */
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
 </head>
 <body oncontextmenu="return false">
 
@@ -714,1374 +786,427 @@ const SUC_KHOE_DATA = [
         /****************************************************************
          * 2. KHO TRI THỨC THÔNG MINH (TRẢ LỜI TỰ ĐỘNG)
          ****************************************************************/
-        const KNOWLEDGE_BASE = [
-            {
-  keys: ['tiêu chuẩn sức khỏe', 'tieu chuan suc khoe'],
-  answer: "<b>Nguyên tắc sức khỏe dự tuyển CAND:</b> Thí sinh phải đạt <b>Sức khỏe Loại 1 hoặc Loại 2</b> và đáp ứng các điều kiện đặc thù (chiều cao, BMI, thị lực, ngoại hình, xét nghiệm)."
-},
-{
-  keys: ['chiều cao nam', 'chieu cao nam', 'chiều cao nữ', 'chieu cao nu', 'quy định về BMI', 'quy định về cân nặng', 'quy định về chiều cao'],
-  answer: "<b>Thể lực & BMI (TT62 + TT131):</b><br>• <b>Chiều cao chuẩn:</b> Nam <b>1m64–1m95</b>, Nữ <b>1m58–1m80</b>.<br>• <b>Ưu tiên:</b> DTTS (Nam ≥1m62, Nữ ≥1m56); UT1 (Nam ≥1m60, Nữ ≥1m55); DTTS rất ít người (Nam ≥1m58, Nữ ≥1m52).<br>• <b>BMI:</b> bắt buộc <b>18,5–30</b> (ngoài khoảng này thường không đạt)."
-},
-{
-  keys: ['điều kiện về mắt', 'quy định về mắt', 'mắt cận bao nhiêu độ', 'thị lực quy định như thế nào', 'thi luc quy dinh nhu the nao', 'cận thị có thi được không', 'loạn thị có thi được không', 'viễn thị có thi được không'],
-  answer: "<b>Tiêu chuẩn mắt (TT62 + TT131):</b><br>• <b>Không kính:</b> mỗi mắt <b>09–10/10</b>, tổng <b>≥18/10</b>.<br>• <b>Cận/viễn:</b> mỗi mắt <b>≤03D</b>.<br>• <b>Loạn:</b> <b>&lt;01D/mắt</b>.<br>• <b>Qua kính:</b> 1 mắt <b>≥09/10</b>, tổng <b>≥19/10</b>."
-},
-{
-  keys: ['mù màu', 'mu mau', 'rối loạn sắc giác', 'roi loan sac giac'],
-  answer: "<b>Mù màu / rối loạn sắc giác:</b> Mù màu trục xanh–đỏ (kể cả nhẹ) thường làm giảm loại sức khỏe và <b>rủi ro rất cao không đạt</b> nếu tuyển chỉ nhận Loại 1–2. Nên test Ishihara trước khi sơ tuyển."
-},
-{
-  keys: ['xăm có được thi không', 'quy định về sẹo', 'quy định về bấm lỗ tai', 'nữ phun môi có được không', 'quy định về tóc'],
-  answer: "<b>Ngoại hình (TT62 + TT131):</b><br>• <b>Không có hình xăm/vết xăm</b> (kể cả phun xăm); ngoại lệ thường gặp: nữ phun/xăm thẩm mỹ <b>lông mày, môi</b>.<br>• <b>Bấm lỗ:</b> Nam không bấm tai/mũi/vị trí khác; Nữ không có từ <b>02 lỗ trở lên</b> trên 01 tai và không bấm mũi/vị trí khác.<br>• Không có sẹo lồi co kéo ở vùng hay lộ (đầu/mặt/cổ/cẳng tay/bàn tay/bàn chân); tóc màu/kiểu bình thường theo điều lệnh."
-},
-{
-  keys: ['quy định về máu', 'các nội dung xét nghiệm'],
-  answer: "<b>Khám cận lâm sàng thường có:</b><br>• <b>Máu:</b> công thức máu, glucose, AST/ALT, ure/creatinin, HIV, HBsAg, anti-HCV…<br>• <b>Nước tiểu:</b> tổng phân tích + test <b>ma túy/tiền chất</b>.<br>• <b>Chẩn đoán:</b> X-quang tim phổi, siêu âm bụng, điện tim."
-},
-{
-  keys: ['quy định về bệnh trĩ'],
-  answer: "<b>Bệnh trĩ:</b> Một số trường hợp trĩ có thể được xem xét theo danh mục “được chấp nhận” (ví dụ trĩ ngoại 01 búi nhỏ 0,5–1cm hoặc đã phẫu thuật tốt). Trĩ nhiều búi/búi to/chảy máu thường <b>rủi ro không đạt</b>. Kết luận theo khám thực tế."
-},
-{
-  keys: ['phúc tra sức khỏe', 'trúng tuyển có phúc tra sức khỏe'],
-  answer: "<b>Phúc tra & thời hạn:</b> Có thể khám <b>phúc tra</b> sau trúng tuyển/nhập học. Trường hợp ghi <b>“T”</b> là bệnh tạm thời cần điều trị khỏi để đánh giá lại. Phiếu khám sức khỏe thường có giá trị <b>06 tháng</b>."
-},
-            {
-        keys: ['đại học chính quy', 'dai hoc chinh quy', 'tuyển sinh đại học', 'tuyen sinh dai hoc'],
-        answer: `
-            <b>Đại học chính quy tuyển mới:</b><br>
-            • Đối tượng: chiến sĩ nghĩa vụ Công an tại ngũ; công dân hoàn thành nghĩa vụ tham gia CAND có quyết định xuất ngũ trong vòng 12 tháng; công dân thường trú tại địa phương nơi đăng ký sơ tuyển.<br>
-            • Phương thức: PT1 tuyển thẳng; PT2 chứng chỉ ngoại ngữ + bài thi đánh giá Bộ Công an; PT3 điểm thi THPT + bài thi đánh giá Bộ Công an.<br>
-            • Tổng chỉ tiêu: <b>1.870</b>.
-        `
-    },
-    {
-        keys: ['điều kiện đại học', 'dieu kien dai hoc', 'tiêu chuẩn đại học', 'tieu chuan dai hoc', 'điều kiện dự tuyển đại học', 'điều kiện dự tuyển đại học cand'],
-        answer: `
-            <b>Điều kiện dự tuyển đại học chính quy:</b><br>
-            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức và sức khỏe theo quy định.<br>
-            • Chiến sĩ nghĩa vụ phải có thời gian công tác từ <b>15 tháng</b> trở lên.<br>
-            • Công dân thường trú phải có học lực từ <b>khá</b>, hạnh kiểm từ <b>khá</b>, <b>chưa kết hôn</b>, <b>chưa có con</b>.<br>
-            • Độ tuổi: không quá <b>22 tuổi</b>; dân tộc thiểu số không quá <b>25 tuổi</b>.<br>
-            • Điểm từng môn tổ hợp: công dân thường trú từ <b>7,0</b>; công dân hoàn thành nghĩa vụ CAND và người dân tộc thiểu số từ <b>6,5</b>.
-        `
-    },
-    {
-        keys: ['điều kiện phương thức 2 đại học', 'điều kiện phương thức 2', 'điều kiện dự tuyển phương thức 2 đại học', 'quy định về chứng chỉ ngoại ngữ', 'quy định về ngoại ngữ', 'ielts', 'toefl', 'toeic', 'hsk'],
-        answer: `
-            <b>Phương thức 2 đại học:</b><br>
-            • Xét tuyển kết hợp <b>chứng chỉ ngoại ngữ quốc tế</b> + <b>bài thi đánh giá Bộ Công an</b>.<br>
-            • Chứng chỉ còn hạn không quá <b>02 năm</b> tính đến ngày <b>01/5/2026</b>.<br>
-            • Mức tối thiểu: IELTS 5.5; TOEFL iBT 46; TOEIC 600 và 242; SAT 1100; HSK 4; DELE B2; DELF/DALF B2; TRKI B2; Goethe/telc B2; JLPT N3; TOPIK 4; CELI 3.<br>
-            • Nếu đang dự thi chứng chỉ trong thời gian sơ tuyển: ngày thi chính thức phải trước <b>20/5/2026</b>; nộp chứng chỉ trước <b>30/5/2026</b>.
-        `
-    },
-    {
-        keys: ['bài thi đánh giá', 'bai thi danh gia', 'bài thi đánh giá bca', 'bài thi đánh giá bộ công an', 'mã bài thi', 'ma bai thi'],
-        answer: `
-            <b>Bài thi đánh giá Bộ Công an:</b><br>
-            • Hình thức: <b>thi viết</b>.<br>
-            • Thời lượng: <b>180 phút</b>.<br>
-            • Thời gian thi chính: <b>21/6/2026</b>.<br>
-            • Mã bài thi gồm: <b>CA1, CA2, CA3, CA4</b>.
-        `
-    },
-    {
-        keys: ['thời gian thi đại học', 'thoi gian thi dai hoc', 'khi nào thi đại học cand', 'khi nào thi đại học'],
-        answer: `
-            <b>Mốc thời gian đại học chính quy:</b><br>
-            • 15/3 - 15/4/2026: Đăng ký dự tuyển.<br>
-            • 16/4 - 05/5/2026: Khám sức khỏe và kiểm tra thể lực.<br>
-            • 20/5/2026: Nộp hồ sơ dự tuyển.<br>
-            • 20 - 21/6/2026: Thi đánh giá Bộ Công an.<br>
-            • 10 - 15/7/2026: Công bố điểm, phúc khảo.<br>
-            • 08 - 10/8/2026: Thông báo kết quả PT2, PT3.<br>
-            • 14/8/2026: Thông báo trúng tuyển.<br>
-            • 23 - 27/9/2026: Nhập học.
-        `
-    },
-    {
-        keys: ['lệ phí đại học', 'le phi dai hoc', 'phí hồ sơ đại học', 'phi ho so dai hoc'],
-        answer: `
-            <b>Lệ phí đại học chính quy:</b><br>
-            • Lệ phí sơ tuyển: <b>300.000 đồng</b>.<br>
-            • Phí hồ sơ chung: <b>20.000 đồng/bộ</b>.<br>
-            • Tờ khai đăng ký dự tuyển đại học CAND: <b>10.000 đồng/tờ</b>.
-        `
-    },
-    {
-    keys: ['hồ sơ phương thức 1 đại học', 'ho so phuong thuc 1 dai hoc', 'hồ sơ phương thức 1 đại học gồm những gì'],
-    answer: `
-        <b>Hồ sơ Phương thức 1 (Xét tuyển thẳng) bao gồm:</b><br>
-        • Tờ khai đăng ký dự tuyển đại học CAND (theo mẫu của Bộ Công an).<br>
-        • Phiếu đăng ký xét tuyển thẳng (theo mẫu của Bộ GD&ĐT).<br>
-        • Bản sao chứng thực giấy chứng nhận đoạt giải (với diện ưu tiên xét tuyển thẳng).<br>
-        • Bản sao chứng thực học bạ THPT.<br>
-        • Bản sao chứng thực CCCD của thí sinh.<br>
-        • 04 ảnh chân dung cỡ 3x4.<br>
-        • Bản photo giấy báo dự thi tốt nghiệp THPT (hoặc giấy chứng nhận tốt nghiệp tạm thời).
-    `
-},
-    {
-    keys: ['hồ sơ phương thức 2 đại học', 'ho so phuong thuc 2 dai hoc', 'hồ sơ phương thức 2 đại học gồm những gì', 'xét tuyển chứng chỉ ngoại ngữ'],
-    answer: `
-        <b>Hồ sơ Phương thức 2 (Xét tuyển chứng chỉ ngoại ngữ):</b><br>
-        • Tờ khai đăng ký dự tuyển đại học CAND (theo mẫu).<br>
-        • Bản sao chứng thực chứng chỉ ngoại ngữ quốc tế (IELTS, TOEFL iBT, HSK, ...).<br>
-        • Bản sao chứng thực học bạ THPT.<br>
-        • CCCD của thí sinh (Bản sao chứng thực).<br>
-        • Lệ phí xét tuyển: <b>30.000 đồng</b>.<br>
-        • Bản photo giấy báo dự thi tốt nghiệp THPT.
-    `
-},
-    {
-    keys: ['hồ sơ phương thức 3 đại học', 'ho so phuong thuc 3 dai hoc', 'hồ sơ phương thức 3 đại học gồm những gì', 'xét tuyển điểm thi'],
-    answer: `
-        <b>Hồ sơ Phương thức 3 (Xét tuyển kết hợp):</b><br>
-        • Tờ khai đăng ký dự tuyển đại học CAND (theo mẫu).<br>
-        • Bản sao chứng thực học bạ THPT.<br>
-        • CCCD của thí sinh (Bản sao chứng thực).<br>
-        • Các tài liệu chứng minh đối tượng ưu tiên, khu vực ưu tiên (nếu có).<br>
-        • 04 ảnh chân dung cỡ 3x4.<br>
-        • Bản photo giấy báo dự thi tốt nghiệp THPT.
-    `
-},
-    {
-        keys: ['vb2ca', 'văn bằng 2', 'van bang 2', 'đại học vb2ca'],
-        answer: `
-            <b>Đại học chính quy tuyển mới đối với người đã có bằng đại học (VB2CA):</b><br>
-            • Đối tượng: <b>Công dân Việt Nam</b>.<br>
-            • Phương thức: <b>PT1 xét tuyển thẳng</b>, <b>PT2 thi tuyển</b>.<br>
-            • Tổng chỉ tiêu: <b>530</b>.<br>
-            • Bài thi: thi trên máy tính, <b>150 phút</b>, ngày thi <b>20/9/2026</b>.
-        `
-    },
-    {
-        keys: ['điều kiện vb2ca', 'dieu kien vb2ca', 'điều kiện vb2', 'tiêu chuẩn vb2ca', 'tieu chuan vb2ca'],
-        answer: `
-            <b>Điều kiện VB2CA:</b><br>
-            • Tốt nghiệp đại học hệ chính quy, xếp loại từ <b>khá</b> trở lên.<br>
-            • Văn bằng nước ngoài phải được công nhận.<br>
-            • Độ tuổi không quá <b>30</b> tính đến ngày dự thi.<br>
-            • Tiêu chuẩn chính trị và sức khỏe áp dụng tương tự tuyển sinh học sinh phổ thông vào các trường CAND.<br>
-            • Sinh viên năm cuối được đăng ký nhưng đến <b>20/8/2026</b> phải có bằng hoặc giấy xác nhận tốt nghiệp.
-        `
-    },
-    {
-        keys: ['lịch vb2ca', 'lich vb2ca', 'lịch vb2', 'thời gian vb2ca', 'thoi gian vb2ca', 'lịch thi vb2'],
-        answer: `
-            <b>Mốc thời gian VB2CA:</b><br>
-            • 15/3 - 25/6/2026: Đăng ký dự tuyển.<br>
-            • 29/6 - 03/7/2026: Khám sức khỏe.<br>
-            • 20/8/2026: Nộp hồ sơ và danh sách đăng ký dự tuyển.<br>
-            • 19 - 20/9/2026: Tổ chức kỳ thi VB2CA.<br>
-            • 01 - 03/10/2026: Thông báo điểm thi, tiếp nhận phúc khảo.<br>
-            • 30/10/2026: Thông báo trúng tuyển.<br>
-            • 10 - 15/11/2026: Nhập học.
-        `
-    },
-            {
-  keys: ['lịch khám sức khỏe', 'lịch khám sức khoẻ', 'lich kham suc khoe', 'khám sức khỏe tuyển sinh', 'khám sức khoẻ tuyển sinh', 'kham suc khoe tuyen sinh', 'lịch khám tuyển sinh cand 2026', 'lich kham tuyen sinh cand 2026', 'phụ lục 09', 'phu luc 09'],
-  answer: `<b>PHỤ LỤC 09 - LỊCH KHÁM SỨC KHOẺ TUYỂN SINH TUYỂN MỚI TRONG CAND NĂM 2026</b><br><br>
-  <b>Thời gian chung:</b><br>
-  - Buổi sáng bắt đầu từ <b>07h30</b>.<br>
-  - Buổi chiều bắt đầu từ <b>13h30</b>.<br><br>
+const KNOWLEDGE_BASE = [
+  // ==========================================
+  // PHẦN 1: TIÊU CHUẨN SỨC KHỎE CHI TIẾT
+  // ==========================================
+  {
+    keys: ['tiêu chuẩn sức khỏe', 'loại 1', 'loại 2', 'nguyên tắc', 'điều kiện sức khỏe'],
+    answer: "<b>Nguyên tắc sức khỏe dự tuyển CAND:</b> Thí sinh phải đạt <b>Sức khỏe Loại 1 hoặc Loại 2</b> và đáp ứng các điều kiện đặc thù (chiều cao, BMI, thị lực, ngoại hình, xét nghiệm)."
+  },
+  {
+    keys: ['chiều cao', 'thể lực', 'cao bao nhiêu', 'chuẩn chiều cao', 'tối thiểu', 'tối đa', 'mét'],
+    answer: "<b>Chiều cao tiêu chuẩn</b><br>• Nam: <b>1m64–1m95</b>.<br>• Nữ: <b>1m58–1m80</b>.<br><i>Có ưu tiên chiều cao cho một số đối tượng (DTTS, UT1, tốt nghiệp ĐH khối KHTN/Kỹ thuật/CNTT...).</i>"
+  },
+  {
+    keys: ['nam cao', 'chiều cao nam', 'nam tối thiểu', 'nam 1m'],
+    answer: "<b>Chiều cao (Nam)</b><br>Nam đạt từ <b>1m64</b> đến <b>1m95</b>."
+  },
+  {
+    keys: ['nữ cao', 'chiều cao nữ', 'nữ tối thiểu', 'nữ 1m', 'con gái cao'],
+    answer: "<b>Chiều cao (Nữ)</b><br>Nữ đạt từ <b>1m58</b> đến <b>1m80</b>."
+  },
+  {
+    keys: ['dân tộc', 'thiểu số', 'dtts', 'ưu tiên chiều cao'],
+    answer: "<b>Ưu tiên chiều cao (Người dân tộc thiểu số)</b><br>Nam từ <b>1m62</b>, Nữ từ <b>1m56</b>."
+  },
+  {
+    keys: ['bmi', 'cân nặng', 'mập', 'béo', 'gầy', 'ốm', 'quy định cân nặng'],
+    answer: "<b>Thể lực & BMI (TT62 + TT131):</b><br>• <b>BMI:</b> bắt buộc <b>18,5–30</b> (ngoài khoảng này thường không đạt). Công thức: Cân nặng / (Chiều cao x Chiều cao)."
+  },
+  {
+    keys: ['mắt', 'thị lực', 'không kính', 'nhìn được', '10/10', '9/10'],
+    answer: "<b>Thị lực không kính</b><br>Mỗi mắt đạt <b>9–10/10</b>, tổng 2 mắt đạt <b>18/10</b> trở lên."
+  },
+  {
+    keys: ['cận', 'viễn', 'diop', 'độ', 'khúc xạ'],
+    answer: "<b>Cận thị/viễn thị</b><br>Mỗi mắt không quá <b>03 đi-ốp</b>."
+  },
+  {
+    keys: ['loạn thị', 'loạn sinh lý'],
+    answer: "<b>Loạn thị</b><br>Phải là loạn thị sinh lý hoặc mỗi mắt dưới <b>01 đi-ốp</b>."
+  },
+  {
+    keys: ['sau kính', 'đeo kính', 'chỉnh kính'],
+    answer: "<b>Thị lực sau chỉnh kính</b><br>Một mắt tối thiểu <b>9/10</b>, tổng 2 mắt đạt <b>19/10</b> trở lên.<br>Thí sinh phải cam kết bảo đảm tiêu chuẩn thị lực nếu trúng tuyển."
+  },
+  {
+    keys: ['mù màu', 'sắc giác', 'màu sắc', 'xanh đỏ', 'ishihara', 'rối loạn sắc tố'],
+    answer: "<b>Mù màu / rối loạn sắc giác</b><br>Mù màu trục xanh lá–đỏ mức độ nhẹ (điểm 3) hoặc nặng (điểm 4–5) sẽ làm giảm loại sức khỏe và <b>không đạt điều kiện</b> (chỉ nhận Loại 1–2)."
+  },
+  {
+    keys: ['xăm', 'tattoo', 'vết trổ', 'phun môi', 'chân mày', 'thẩm mỹ'],
+    answer: "<b>Xăm hình / phun xăm</b><br>Không có vết trổ, vết xăm (kể cả phun xăm) trên da.<br>Ngoại lệ: <b>nữ</b> được xăm thẩm mỹ <b>lông mày, môi</b>."
+  },
+  {
+    keys: ['bấm lỗ', 'nam bấm', 'piercing nam', 'xỏ khuyên nam'],
+    answer: "<b>Piercing / bấm lỗ (Nam)</b><br>Nam không có lỗ bấm ở tai, mũi và các vị trí khác (lỗ tai đã liền thành sẹo vẫn được chấp nhận)."
+  },
+  {
+    keys: ['bấm lỗ nữ', 'piercing nữ', 'xỏ khuyên nữ', 'mấy lỗ'],
+    answer: "<b>Piercing / bấm lỗ (Nữ)</b><br>Nữ không có từ <b>02 lỗ bấm trở lên</b> trên <b>01 tai</b>; không có lỗ bấm ở mũi và các vị trí khác."
+  },
+  {
+    keys: ['da', 'nám', 'sắc tố', 'đốm', 'bạch biến'],
+    answer: "<b>Da</b><br>Không bị rối loạn sắc tố da (trừ <b>nám má</b>)."
+  },
+  {
+    keys: ['sẹo', 'lồi', 'co kéo', 'mặt', 'tay chân', 'cổ'],
+    answer: "<b>Sẹo</b><br>Không có sẹo lồi co kéo ở vùng <b>đầu, mặt, cổ, cẳng tay, bàn tay, bàn chân</b>."
+  },
+  {
+    keys: ['tóc', 'nhuộm', 'uốn', 'điều lệnh'],
+    answer: "<b>Tóc</b><br>Màu và dạng tóc bình thường theo Điều lệnh CAND."
+  },
+  {
+    keys: ['ma túy', 'chất kích thích', 'nghiện', 'test', 'nước tiểu'],
+    answer: "<b>Ma túy</b><br>Tuyệt đối không nghiện các chất ma túy và tiền chất. Bắt buộc test âm tính khi khám."
+  },
+  {
+    keys: ['máu', 'xét nghiệm', 'cận lâm sàng', 'hiv', 'viêm gan'],
+    answer: "<b>Khám cận lâm sàng thường có:</b><br>• <b>Máu:</b> công thức máu, glucose, AST/ALT, ure/creatinin, HIV, HBsAg, anti-HCV…<br>• <b>Nước tiểu:</b> tổng phân tích + test ma túy.<br>• <b>Chẩn đoán:</b> X-quang tim phổi, siêu âm bụng, điện tim."
+  },
+  {
+    keys: ['bệnh tật', 'bảng số 2', 'phụ lục i', 'tiêu chuẩn bệnh'],
+    answer: "<b>Hệ thống tiêu chuẩn bệnh tật</b><br>Để đạt sức khỏe <b>Loại 1</b> hoặc <b>Loại 2</b>, thí sinh không được có bất kỳ chỉ tiêu nào bị <b>điểm 3</b> trở lên."
+  },
+  {
+    keys: ['răng', 'sâu răng', 'mất răng', 'nhai', 'hàm mặt'],
+    answer: "<b>Răng – Hàm – Mặt</b><br>Mất tối đa <b>3 răng</b> nhưng sức nhai vẫn đạt <b>85%</b> trở lên; không có răng sâu độ 3 (hoặc chỉ có tối đa 3 răng sâu độ 3 đã xử lý)."
+  },
+  {
+    keys: ['tai', 'mũi', 'họng', 'nghe', 'điếc', 'nói lắp', 'nói ngọng', 'viêm tai'],
+    answer: "<b>Tai – Mũi – Họng</b><br>Sức nghe tiếng nói thường đạt <b>4–5m</b>; không bị viêm tai giữa mạn tính; không nói lắp, nói ngọng."
+  },
+  {
+    keys: ['thần kinh', 'động kinh', 'đau đầu', 'mồ hôi', 'tay chân'],
+    answer: "<b>Thần kinh</b><br>Không bị đau đầu dai dẳng; không có dấu hiệu động kinh; không bị ra mồ hôi tay chân mức độ vừa và nặng."
+  },
+  {
+    keys: ['tâm thần', 'trầm cảm', 'lo âu', 'phân liệt'],
+    answer: "<b>Tâm thần</b><br>Không mắc các rối loạn trầm cảm, lo âu; không có dấu hiệu tâm thần phân liệt."
+  },
+  {
+    keys: ['tim', 'mạch', 'huyết áp', 'nhịp tim'],
+    answer: "<b>Tim mạch</b><br>Huyết áp tối đa <b>100–130 mmHg</b>; huyết áp tối thiểu <b>≤ 85 mmHg</b>; mạch <b>57–85 lần/phút</b>."
+  },
+  {
+    keys: ['tiêu hóa', 'trĩ', 'mổ trĩ', 'dạ dày', 'gan'],
+    answer: "<b>Tiêu hóa & Bệnh Trĩ</b><br>Không bị viêm gan B mạn tính giai đoạn hoạt động. Một số trường hợp trĩ có thể được xem xét (ví dụ trĩ ngoại 01 búi nhỏ 0,5–1cm). Trĩ nhiều búi/búi to/chảy máu thường <b>không đạt</b>."
+  },
+  {
+    keys: ['phúc tra', 'khám lại', 'trúng tuyển khám'],
+    answer: "<b>Phúc tra & thời hạn:</b> Có thể khám <b>phúc tra</b> sau trúng tuyển/nhập học. Trường hợp ghi <b>“T”</b> là bệnh tạm thời cần điều trị khỏi để đánh giá lại. Phiếu khám sức khỏe thường có giá trị <b>06 tháng</b>."
+  },
 
-  <b>Địa điểm kiểm tra sức khoẻ:</b><br>
-  - <b>Ngày 16/4 - 19/4/2026</b> và <b>ngày 29/6 - 30/6/2026</b>: Bệnh xá số 02 Công an tỉnh (số 31 Phan Chu Trinh, phường Đồng Hới, tỉnh Quảng Trị).<br>
-  - <b>Ngày 22/4 - 25/4/2026</b> và <b>ngày 01/7 - 02/7/2026</b>: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - <b>Ngày 04/5 - 05/5/2026</b> và <b>ngày 03/7/2026</b>: Khám bù tại Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br><br>
+  // ==========================================
+  // PHẦN 2: ĐIỀU KIỆN CHUNG & ĐẠI HỌC CHÍNH QUY
+  // ==========================================
+  {
+    keys: ['đối tượng', 'tuyển sinh', 'đại học', 'chính quy', 'tổng quan', 'chỉ tiêu'],
+    answer: "<b>Đại học chính quy tuyển mới:</b><br>• Đối tượng: chiến sĩ nghĩa vụ; công dân hoàn thành nghĩa vụ; công dân thường trú tại địa phương.<br>• Phương thức: PT1 (tuyển thẳng); PT2 (chứng chỉ ngoại ngữ); PT3 (điểm thi THPT).<br>• Tổng chỉ tiêu: <b>1.870</b>."
+  },
+  {
+    keys: ['học lực', 'hạnh kiểm', 'khá', 'giỏi', 'điểm học bạ'],
+    answer: "<b>Tiêu chuẩn học lực (THPT)</b><br>• Nhóm UT1, Chiến sĩ nghĩa vụ: kết quả học tập từ mức “<b>Đạt</b>” trở lên.<br>• Công dân thường trú, Hoàn thành NV: học lực <b>Khá</b> trở lên, hạnh kiểm <b>Khá</b> trở lên."
+  },
+  {
+    keys: ['điểm thi tối thiểu', 'từng môn', '6.5', '7.0', 'điểm liệt'],
+    answer: "<b>Điểm tối thiểu từng môn (tổ hợp xét tuyển)</b><br>• Công dân thường trú: từ <b>7,0</b> trở lên.<br>• Công dân hoàn thành NVCA và người dân tộc thiểu số: từ <b>6,5</b> trở lên."
+  },
+  {
+    keys: ['tuổi', 'độ tuổi', 'sinh năm', '22 tuổi', '25 tuổi'],
+    answer: "<b>Độ tuổi dự tuyển:</b><br>Không quá <b>22 tuổi</b>; riêng người dân tộc thiểu số không quá <b>25 tuổi</b>."
+  },
+  {
+    keys: ['hôn nhân', 'kết hôn', 'có con', 'lập gia đình', 'vợ chồng'],
+    answer: "<b>Tình trạng hôn nhân</b><br>Đối với học sinh phổ thông yêu cầu: <b>chưa kết hôn</b>, <b>chưa có con đẻ</b>, <b>chưa có con nuôi</b> theo quy định."
+  },
+  {
+    keys: ['phương thức 1', 'pt1', 'tuyển thẳng', 'giải quốc gia', 'olympic'],
+    answer: "<b>Phương thức 1 (Xét tuyển thẳng):</b><br>Áp dụng cho thí sinh đạt giải Nhất, Nhì, Ba Quốc gia/Quốc tế hoặc giải Khoa học kỹ thuật. Thời gian đoạt giải không quá <b>03 năm</b> tính đến thời điểm xét tuyển thẳng."
+  },
+  {
+    keys: ['phương thức 2', 'pt2', 'chứng chỉ', 'ngoại ngữ'],
+    answer: "<b>Phương thức 2 (Chứng chỉ ngoại ngữ):</b><br>• Kết hợp chứng chỉ ngoại ngữ quốc tế + bài thi đánh giá BCA.<br>• Chứng chỉ còn hạn không quá 02 năm (tính đến 01/5/2026). Nộp chứng chỉ trước 30/5/2026.<br>• <i>(Xem thêm mức điểm tối thiểu bằng cách gõ: 'điểm ielts toefl')</i>"
+  },
+  {
+    keys: ['phương thức 3', 'pt3', 'điểm thi thpt', 'tốt nghiệp'],
+    answer: "<b>Phương thức 3 (Điểm thi THPT):</b><br>Xét tuyển kết hợp điểm thi tốt nghiệp THPT theo tổ hợp môn và bài thi đánh giá của Bộ Công an."
+  },
+  {
+    keys: ['bài thi đánh giá', 'đánh giá năng lực', 'mã bài thi', 'ca1', 'ca2', 'ca3', 'ca4'],
+    answer: "<b>Bài thi đánh giá BCA (21/6/2026):</b><br>Thi viết 180 phút.<br>• CA1: Văn tự luận; Toán, Sử, Anh trắc nghiệm; Lý tự chọn.<br>• CA2: Tương tự CA1, thay Lý bằng Hóa.<br>• CA3: Tương tự CA1, thay Lý bằng Sinh.<br>• CA4: Tương tự CA1, thay Lý bằng Địa."
+  },
+  {
+    keys: ['tổ hợp', 'môn thi', 'a00', 'a01', 'b00', 'c03', 'd01', 'x02', 'x03'],
+    answer: "<b>Mã tổ hợp xét tuyển đang sử dụng:</b><br>A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br><i>Bạn có thể hỏi 'X02 gồm môn gì?' để biết chi tiết.</i>"
+  },
+  {
+    keys: ['x02', 'x03', 'x04', 'x26', 'x27', 'x28', 'môn gì'],
+    answer: "<b>Các tổ hợp mới:</b><br>• X02: Toán, Ngữ văn, Tin học.<br>• X03: Toán, Văn, Công nghệ CN.<br>• X04: Toán, Văn, Công nghệ NN.<br>• X26: Toán, Anh, Tin học.<br>• X27: Toán, Anh, Công nghệ CN.<br>• X28: Toán, Anh, Công nghệ NN."
+  },
+  {
+    keys: ['điểm cộng', 'ưu tiên', 'khu vực', 'điểm thưởng', 'giải thưởng'],
+    answer: "<b>Ưu tiên / Điểm cộng ĐH:</b><br>• Cộng điểm giải Quốc gia: Nhất (+1.0), Nhì (+0.75), Ba (+0.5), KK (+0.25).<br>• Ưu tiên khu vực/đối tượng theo quy định BGD&ĐT.<br>• <i>Lưu ý: Nếu tổng điểm quy đổi ≥ 22.5, điểm cộng sẽ bị giảm dần theo công thức.</i>"
+  },
+  {
+    keys: ['tính điểm', 'công thức', 'xét tuyển'],
+    answer: "<b>Công thức tính điểm (PT2 & PT3):</b><br>• PT2: ĐXT = (Bài thi BCA * 3/5) + (Chứng chỉ * 2/5) + Điểm cộng.<br>• <i>Bài thi BCA và Chứng chỉ đều được quy về thang điểm 30.</i>"
+  },
 
-  <b>Lưu ý:</b><br>
-  - Buổi sáng trước khi tham gia khám sức khoẻ, thí sinh <b>không ăn sáng</b> để tiến hành các xét nghiệm theo quy định.<br>
-  - Phiếu khám sức khoẻ sử dụng theo biểu mẫu số 1 in từ <b>Thông tư số 131/2025/TT-BCA ngày 25/12/2025</b>.<br>
-  - Công an các đơn vị, Công an cấp xã dán ảnh, đóng dấu giáp lai, yêu cầu thí sinh kê khai thông tin mặt đầu của phiếu, sau đó kiểm tra và ký, đóng dấu.<br>
-  - Trường hợp đến thời hạn khám sức khoẻ nhưng thí sinh không thể tham gia vì lý do khách quan thì có thể đến vào các ngày được nêu trong lịch; Công an các đơn vị, Công an cấp xã báo cáo số lượng cụ thể và lý do về Công an tỉnh.`
-},
-{
-  keys: ['lịch khám sức khỏe đại học', 'lịch khám sức khỏe trung cấp', 'lịch khám sức khỏe văn hóa nhỏ tuổi'],
-  answer: `<b>Lịch khám đối với thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi:</b><br><br>
-  <b>Ngày 16/4/2026:</b> Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (CSNV đóng quân tại khu vực phía Bắc của tỉnh) và Tiểu đoàn Cảnh sát cơ động số 3 - E26 - K02.<br><br>
-  <b>Ngày 17/4/2026:</b> Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10 và PC11B.<br><br>
-  <b>Ngày 18/4/2026:</b> Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh và PK02 (CSNV đóng quân tại khu vực phía Bắc của tỉnh).<br><br>
-  <b>Ngày 19/4/2026:</b> Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân và Trại giam Đồng Sơn - C10.<br><br>
-  <b>Ngày 22/4/2026:</b> Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (CSNV đóng quân tại khu vực phía Nam của tỉnh).<br><br>
-  <b>Ngày 23/4/2026:</b> Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập và PC11A.<br><br>
-  <b>Ngày 24/4/2026:</b> Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ và PK02 (CSNV đóng quân tại khu vực phía Nam của tỉnh).<br><br>
-  <b>Ngày 25/4/2026:</b> Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ và Trại giam Nghĩa An - C10.<br><br>
-  <b>Ngày 04/5 - 05/5/2026:</b> Khám bù cho các thí sinh có lý do chưa tham gia khám sức khoẻ theo lịch.`
-},
-{
-  keys: ['lịch khám sức khỏe vb2ca', 'lịch khám sức khỏe vb2', 'lịch khám vb2'],
-  answer: `<b>Lịch khám đối với thí sinh dự tuyển VB2CA tuyển mới:</b><br><br>
-  <b>Ngày 29/6/2026:</b> Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC07 (CSNV đóng quân tại khu vực phía Bắc của tỉnh), PC11B và Tiểu đoàn Cảnh sát cơ động số 3 - E26 - K02.<br><br>
-  <b>Ngày 30/6/2026:</b> Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, PK02 (CSNV đóng quân tại khu vực phía Bắc của tỉnh) và Trại giam Đồng Sơn - C10.<br><br>
-  <b>Ngày 01/7/2026:</b> Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC07 (CSNV đóng quân tại khu vực phía Nam của tỉnh) và PC11A.<br><br>
-  <b>Ngày 02/7/2026:</b> Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ, PK02 (CSNV đóng quân tại khu vực phía Nam của tỉnh) và Trại giam Nghĩa An - C10.<br><br>
-  <b>Ngày 03/7/2026:</b> Khám bù cho các thí sinh có lý do chưa tham gia khám sức khoẻ theo lịch.`
-},
-{
-  keys: ['địa điểm khám sức khỏe', 'địa điểm khám', 'dia diem kham', 'khám sức khỏe ở đâu', 'khám ở đâu', 'kham o dau', 'bệnh xá số 01', 'benh xa so 01', 'bệnh xá số 02', 'benh xa so 02'],
-  answer: `<b>Địa điểm kiểm tra sức khoẻ:</b><br>
-  - <b>Ngày 16/4 - 19/4/2026</b> và <b>ngày 29/6 - 30/6/2026</b>: Bệnh xá số 02 Công an tỉnh (số 31 Phan Chu Trinh, phường Đồng Hới, tỉnh Quảng Trị).<br>
-  - <b>Ngày 22/4 - 25/4/2026</b> và <b>ngày 01/7 - 02/7/2026</b>: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - <b>Ngày 04/5 - 05/5/2026</b> và <b>ngày 03/7/2026</b>: Khám bù tại Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).`
-},
-{
-  keys: ['giờ khám', 'gio kham', 'buổi sáng mấy giờ', 'buoi sang may gio', 'buổi chiều mấy giờ', 'buoi chieu may gio', '07h30', '13h30'],
-  answer: `<b>Giờ bắt đầu khám sức khoẻ:</b><br>
-  - Buổi sáng: <b>07h30</b>.<br>
-  - Buổi chiều: <b>13h30</b>.`
-},
-{
-  keys: ['lưu ý khám sức khỏe', 'lưu ý khám sức khoẻ', 'luu y kham suc khoe', 'trước khi khám cần lưu ý gì', 'truoc khi kham can luu y gi', 'có được ăn sáng không', 'co duoc an sang khong', 'phiếu khám sức khỏe', 'phieu kham suc khoe'],
-  answer: `<b>Lưu ý trước khi khám sức khoẻ:</b><br>
-  - Buổi sáng trước khi tham gia khám sức khoẻ, thí sinh <b>không ăn sáng</b> để tiến hành các xét nghiệm theo quy định nhằm đảm bảo khách quan về chỉ số y học.<br>
-  - Phiếu khám sức khoẻ sử dụng theo biểu mẫu số 1 in từ <b>Thông tư số 131/2025/TT-BCA ngày 25/12/2025</b>, sửa đổi bổ sung một số điều của <b>Thông tư số 62/2023/TT-BCA ngày 14/11/2023</b>.<br>
-  - Công an các đơn vị, Công an cấp xã dán ảnh, đóng dấu giáp lai, yêu cầu thí sinh kê khai thông tin mặt đầu của phiếu, sau đó kiểm tra và ký, đóng dấu.<br>
-  - Nếu thí sinh không thể tham gia đúng lịch vì lý do khách quan thì có thể đến vào các ngày được nêu trong lịch; Công an các đơn vị, Công an cấp xã báo cáo số lượng cụ thể và lý do về Công an tỉnh.`
-},
-{
-  keys: ['khám bù', 'kham bu', 'ngày khám bù', 'ngay kham bu', 'nếu không đi khám đúng lịch', 'neu khong di kham dung lich'],
-  answer: `<b>Lịch khám bù:</b><br>
-  - Đối với thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi: <b>Ngày 04/5 - 05/5/2026</b>.<br>
-  - Đối với thí sinh dự tuyển VB2CA tuyển mới: <b>Ngày 03/7/2026</b>.<br>
-  - Nội dung: Khám bù cho các thí sinh có lý do chưa tham gia khám sức khoẻ theo lịch. Hội đồng tập hợp kết quả báo cáo lãnh đạo Công an tỉnh.`
-},
-{
-  keys: ['16/4', '16/04', 'ngày 16/4 khám đơn vị nào', '16/4 khám đơn vị nào'],
-  answer: `<b>Lịch khám ngày 16/4/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi.<br>
-  - Đơn vị: Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (CSNV đóng quân tại khu vực phía Bắc của tỉnh) và Tiểu đoàn Cảnh sát cơ động số 3 - E26 - K02.<br>
-  - Địa điểm: Bệnh xá số 02 Công an tỉnh (số 31 Phan Chu Trinh, phường Đồng Hới, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['17/4', '17/04', 'ngày 17/4', 'ngay 17/4', 'ngày 17/4 khám đơn vị nào', '17/4 kham don vi nao'],
-  answer: `<b>Lịch khám ngày 17/4/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi.<br>
-  - Đơn vị: Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10 và PC11B.<br>
-  - Địa điểm: Bệnh xá số 02 Công an tỉnh (số 31 Phan Chu Trinh, phường Đồng Hới, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['18/4', '18/04', 'ngày 18/4', 'ngay 18/4', 'ngày 18/4 khám đơn vị nào', '18/4 kham don vi nao'],
-  answer: `<b>Lịch khám ngày 18/4/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi.<br>
-  - Đơn vị: Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh và PK02 (CSNV đóng quân tại khu vực phía Bắc của tỉnh).<br>
-  - Địa điểm: Bệnh xá số 02 Công an tỉnh (số 31 Phan Chu Trinh, phường Đồng Hới, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['19/4', '19/04', 'ngày 19/4', 'ngay 19/4', 'ngày 19/4 khám đơn vị nào', '19/4 kham don vi nao'],
-  answer: `<b>Lịch khám ngày 19/4/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi.<br>
-  - Đơn vị: Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân và Trại giam Đồng Sơn - C10.<br>
-  - Địa điểm: Bệnh xá số 02 Công an tỉnh (số 31 Phan Chu Trinh, phường Đồng Hới, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['22/4', '22/04', 'ngày 22/4', 'ngay 22/4', 'ngày 22/4 khám đơn vị nào', '22/4 kham don vi nao'],
-  answer: `<b>Lịch khám ngày 22/4/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi.<br>
-  - Đơn vị: Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (CSNV đóng quân tại khu vực phía Nam của tỉnh).<br>
-  - Địa điểm: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['23/4', '23/04', 'ngày 23/4', 'ngay 23/4', 'ngày 23/4 khám đơn vị nào', '23/4 kham don vi nao'],
-  answer: `<b>Lịch khám ngày 23/4/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi.<br>
-  - Đơn vị: Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập và PC11A.<br>
-  - Địa điểm: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['24/4', '24/04', 'ngày 24/4', 'ngay 24/4', 'ngày 24/4 khám đơn vị nào', '24/4 kham don vi nao'],
-  answer: `<b>Lịch khám ngày 24/4/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi.<br>
-  - Đơn vị: Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ và PK02 (CSNV đóng quân tại khu vực phía Nam của tỉnh).<br>
-  - Địa điểm: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['25/4', '25/04', 'ngày 25/4', 'ngay 25/4', 'ngày 25/4 khám đơn vị nào', '25/4 kham don vi nao'],
-  answer: `<b>Lịch khám ngày 25/4/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi.<br>
-  - Đơn vị: Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ và Trại giam Nghĩa An - C10.<br>
-  - Địa điểm: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['04/5', '05/5', '04/5-05/5', 'ngày 04/5', 'ngày 05/5', 'khám bù đại học', 'kham bu dai hoc'],
-  answer: `<b>Lịch khám bù ngày 04/5 - 05/5/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển Đại học, Trung cấp, Văn hoá nhỏ tuổi có lý do chưa tham gia khám sức khoẻ theo lịch.<br>
-  - Địa điểm: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.<br>
-  - Nội dung: Hội đồng tập hợp kết quả báo cáo lãnh đạo Công an tỉnh.`
-},
-{
-  keys: ['29/6', '29/06', 'ngày 29/6', 'ngay 29/6', '29/6 khám vb2ca', '29/6 kham vb2ca'],
-  answer: `<b>Lịch khám ngày 29/6/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển VB2CA tuyển mới.<br>
-  - Đơn vị: Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC07 (CSNV đóng quân tại khu vực phía Bắc của tỉnh), PC11B và Tiểu đoàn Cảnh sát cơ động số 3 - E26 - K02.<br>
-  - Địa điểm: Bệnh xá số 02 Công an tỉnh (số 31 Phan Chu Trinh, phường Đồng Hới, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['30/6', '30/06', 'ngày 30/6', 'ngay 30/6', '30/6 khám vb2ca', '30/6 kham vb2ca'],
-  answer: `<b>Lịch khám ngày 30/6/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển VB2CA tuyển mới.<br>
-  - Đơn vị: Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, PK02 (CSNV đóng quân tại khu vực phía Bắc của tỉnh) và Trại giam Đồng Sơn - C10.<br>
-  - Địa điểm: Bệnh xá số 02 Công an tỉnh (số 31 Phan Chu Trinh, phường Đồng Hới, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['01/7', '1/7', 'ngày 01/7', 'ngay 01/7', '01/7 khám vb2ca', '01/7 kham vb2ca'],
-  answer: `<b>Lịch khám ngày 01/7/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển VB2CA tuyển mới.<br>
-  - Đơn vị: Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC07 (CSNV đóng quân tại khu vực phía Nam của tỉnh) và PC11A.<br>
-  - Địa điểm: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['02/7', '2/7', 'ngày 02/7', 'ngay 02/7', '02/7 khám vb2ca', '02/7 kham vb2ca'],
-  answer: `<b>Lịch khám ngày 02/7/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển VB2CA tuyển mới.<br>
-  - Đơn vị: Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ, PK02 (CSNV đóng quân tại khu vực phía Nam của tỉnh) và Trại giam Nghĩa An - C10.<br>
-  - Địa điểm: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.`
-},
-{
-  keys: ['03/7', '3/7', 'ngày 03/7', 'ngay 03/7', 'khám bù vb2ca', 'kham bu vb2ca'],
-  answer: `<b>Lịch khám bù ngày 03/7/2026:</b><br>
-  - Đối tượng: Thí sinh dự tuyển VB2CA tuyển mới có lý do chưa tham gia khám sức khoẻ theo lịch.<br>
-  - Địa điểm: Bệnh xá số 01 Công an tỉnh (đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị).<br>
-  - Giờ bắt đầu: Buổi sáng 07h30, buổi chiều 13h30.<br>
-  - Nội dung: Hội đồng tập hợp kết quả báo cáo lãnh đạo Công an tỉnh.`
-},
-            {
-  keys: ['kiểm tra thể lực', 'kiem tra the luc', 'lịch kiểm tra thể lực', 'lich kiem tra the luc', 'hướng dẫn kiểm tra thể lực', 'huong dan kiem tra the luc', 'phụ lục 05', 'phu luc 05'],
-  answer: `<b>PHỤ LỤC 05 - Hướng dẫn tổ chức kiểm tra thể lực</b><br><br>
-  <b>Thời gian kiểm tra:</b><br>
-  - <b>Ngày 20/4/2026</b><br>
-  - <b>Ngày 21/4/2026</b><br>
-  - <b>Ngày 28/4/2026</b><br>
-  - <b>Ngày 29/4/2026</b><br><br>
-  <b>Giờ bắt đầu:</b><br>
-  - Buổi sáng bắt đầu từ <b>7h00</b>.<br>
-  - Buổi chiều bắt đầu từ <b>15h00</b> <i>(thí sinh có mặt trước 15 phút để khởi động và chuẩn bị theo yêu cầu)</i>.<br><br>
-  <b>Địa điểm:</b><br>
-  - <b>Ngày 20/4 - 21/4/2026</b>: Trung tâm Văn hóa và Điện ảnh tỉnh Quảng Trị, đường Trần Phú, phường Đồng Hới, tỉnh Quảng Trị (đối diện Siêu thị Coop Mart).<br>
-  - <b>Ngày 28/4 - 29/4/2026</b>: Trụ sở phía Nam thuộc Công an tỉnh Quảng Trị, đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị.<br><br>
-  <b>Trang phục:</b><br>
-  - Thí sinh tham gia kiểm tra thể lực mặc trang phục thể thao, đi giày thể thao.<br><br>
-  <b>Lưu ý:</b><br>
-  - Trường hợp đến thời hạn kiểm tra, thí sinh không thể tham gia vì lý do khách quan thì có thể đến vào các ngày được nêu trong lịch; Công an các đơn vị, Công an cấp xã báo cáo số lượng cụ thể và lý do về Công an tỉnh.`
-},
-{
-  keys: ['địa điểm kiểm tra thể lực', 'dia diem kiem tra the luc', 'kiểm tra thể lực ở đâu', 'kiem tra the luc o dau'],
-  answer: `<b>Địa điểm kiểm tra thể lực:</b><br>
-  - <b>Ngày 20/4 - 21/4/2026</b>: Tổ chức kiểm tra tại <b>Trung tâm Văn hóa và Điện ảnh tỉnh Quảng Trị</b>, đường Trần Phú, phường Đồng Hới, tỉnh Quảng Trị (đối diện Siêu thị Coop Mart).<br>
-  - <b>Ngày 28/4 - 29/4/2026</b>: Tổ chức kiểm tra tại <b>Trụ sở phía Nam thuộc Công an tỉnh Quảng Trị</b>, đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị.`
-},
-{
-  keys: ['giờ kiểm tra thể lực', 'gio kiem tra the luc', 'mấy giờ kiểm tra thể lực', 'may gio kiem tra the luc', '7h00', '15h00'],
-  answer: `<b>Giờ bắt đầu kiểm tra thể lực:</b><br>
-  - Buổi sáng: <b>7h00</b>.<br>
-  - Buổi chiều: <b>15h00</b>.<br>
-  - Thí sinh có mặt trước <b>15 phút</b> để khởi động và chuẩn bị theo yêu cầu.`
-},
-{
-  keys: ['trang phục kiểm tra thể lực', 'trang phuc kiem tra the luc', 'mặc gì khi kiểm tra thể lực', 'mac gi khi kiem tra the luc'],
-  answer: `<b>Trang phục kiểm tra thể lực:</b><br>
-  - Thí sinh tham gia kiểm tra thể lực mặc <b>trang phục thể thao</b>, đi <b>giày thể thao</b>.`
-},
-{
-  keys: ['lưu ý kiểm tra thể lực', 'luu y kiem tra the luc', 'nếu không đi kiểm tra đúng lịch', 'neu khong di kiem tra dung lich'],
-  answer: `<b>Lưu ý kiểm tra thể lực:</b><br>
-  - Trường hợp đến thời hạn kiểm tra, thí sinh không thể tham gia vì lý do khách quan thì có thể đến vào các ngày được nêu trong lịch.<br>
-  - Công an các đơn vị, Công an cấp xã báo cáo số lượng cụ thể và lý do về Công an tỉnh.`
-},
-{
-  keys: ['20/4', '20/04', 'ngày 20/4', 'ngay 20/4', '20/4 kiểm tra thể lực đơn vị nào', '20/4 kiem tra the luc don vi nao'],
-  answer: `<b>Lịch kiểm tra thể lực ngày 20/4/2026:</b><br>
-  - <b>Buổi sáng:</b> Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (CSNV đóng quân tại khu vực phía Bắc của tỉnh).<br>
-  - <b>Buổi chiều:</b> Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10 và PC11B.<br>
-  - <b>Địa điểm:</b> Trung tâm Văn hóa và Điện ảnh tỉnh Quảng Trị, đường Trần Phú, phường Đồng Hới, tỉnh Quảng Trị (đối diện Siêu thị Coop Mart).<br>
-  - <b>Giờ bắt đầu:</b> Buổi sáng 7h00, buổi chiều 15h00; thí sinh có mặt trước 15 phút để khởi động và chuẩn bị theo yêu cầu.`
-},
-{
-  keys: ['21/4', '21/04', 'ngày 21/4', 'ngay 21/4', '21/4 kiểm tra thể lực đơn vị nào', '21/4 kiem tra the luc don vi nao'],
-  answer: `<b>Lịch kiểm tra thể lực ngày 21/4/2026:</b><br>
-  - <b>Buổi sáng:</b> Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh và PK02 (CSNV đóng quân tại khu vực phía Bắc của tỉnh).<br>
-  - <b>Buổi chiều:</b> Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân và Trại giam Đồng Sơn - C10.<br>
-  - <b>Địa điểm:</b> Trung tâm Văn hóa và Điện ảnh tỉnh Quảng Trị, đường Trần Phú, phường Đồng Hới, tỉnh Quảng Trị (đối diện Siêu thị Coop Mart).<br>
-  - <b>Giờ bắt đầu:</b> Buổi sáng 7h00, buổi chiều 15h00; thí sinh có mặt trước 15 phút để khởi động và chuẩn bị theo yêu cầu.`
-},
-{
-  keys: ['28/4', '28/04', 'ngày 28/4', 'ngay 28/4', '28/4 kiểm tra thể lực đơn vị nào', '28/4 kiem tra the luc don vi nao'],
-  answer: `<b>Lịch kiểm tra thể lực ngày 28/4/2026:</b><br>
-  - <b>Buổi sáng:</b> Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (CSNV đóng quân tại khu vực phía Nam của tỉnh) và Trại giam Nghĩa An - C10.<br>
-  - <b>Buổi chiều:</b> Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập và PC11A.<br>
-  - <b>Địa điểm:</b> Trụ sở phía Nam thuộc Công an tỉnh Quảng Trị, đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị.<br>
-  - <b>Giờ bắt đầu:</b> Buổi sáng 7h00, buổi chiều 15h00; thí sinh có mặt trước 15 phút để khởi động và chuẩn bị theo yêu cầu.`
-},
-{
-  keys: ['29/4', '29/04', 'ngày 29/4', 'ngay 29/4', '29/4 kiểm tra thể lực đơn vị nào', '29/4 kiem tra the luc don vi nao'],
-  answer: `<b>Lịch kiểm tra thể lực ngày 29/4/2026:</b><br>
-  - <b>Buổi sáng:</b> Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ và PK02 (CSNV đóng quân tại khu vực phía Nam của tỉnh).<br>
-  - <b>Buổi chiều:</b> Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ.<br>
-  - <b>Địa điểm:</b> Trụ sở phía Nam thuộc Công an tỉnh Quảng Trị, đường Điện Biên Phủ, phường Nam Đông Hà, tỉnh Quảng Trị.<br>
-  - <b>Giờ bắt đầu:</b> Buổi sáng 7h00, buổi chiều 15h00; thí sinh có mặt trước 15 phút để khởi động và chuẩn bị theo yêu cầu.`
-},
-            {
-  keys: ['chỉ tiêu đại học 2026', 'chi tieu dai hoc 2026', 'chỉ tiêu đại học cand', 'chi tieu dai hoc cand', 'chỉ tiêu đại học', 'đại học cand 2026', 'dai hoc cand 2026', 'phụ lục 02', 'phu luc 02'],
-  answer: `<b>PHỤ LỤC 02 - Danh mục tên trường, ký hiệu trường, mã ngành, chỉ tiêu tuyển sinh trình độ đại học CAND chính quy tuyển mới đối với công dân tốt nghiệp THPT</b><br><br>
-  <b>Tổng hợp chỉ tiêu theo trường:</b><br>
-  - <b>Học viện An ninh nhân dân (T01 - ANH):</b> 500 chỉ tiêu.<br>
-  - <b>Học viện Cảnh sát nhân dân (T02 - CSH):</b> 400 chỉ tiêu.<br>
-  - <b>Học viện Chính trị CAND (T03 - HCA):</b> 100 chỉ tiêu.<br>
-  - <b>Trường Đại học An ninh nhân dân (T04 - ANS):</b> 220 chỉ tiêu.<br>
-  - <b>Trường Đại học Cảnh sát nhân dân (T05 - CSS):</b> 300 chỉ tiêu.<br>
-  - <b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH):</b> 200 chỉ tiêu.<br>
-  - <b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH):</b> 300 chỉ tiêu.<br>
-  - <b>Học viện Quốc tế (B06 - AIS):</b> 50 chỉ tiêu.<br><br>
-  <b>Lưu ý:</b><br>
-  - Thí sinh dự tuyển ngành <b>Y khoa</b> theo <b>Phương thức 2</b> vẫn phải bảo đảm ngưỡng chất lượng đầu vào đối với tổ hợp môn THPT năm 2026 theo quy định.<br>
-  - Có thể hỏi chi tiết theo từng trường, từng mã trường, mã ngành, tổ hợp xét tuyển hoặc mã bài thi đánh giá của Bộ Công an.`
-},
-{
-  keys: ['học viện an ninh nhân dân', 'hoc vien an ninh nhan dan', 'chỉ tiêu đại học t01', 't01', 'anh', 'chỉ tiêu đại học học viện an ninh nhân dân', 'chi tieu dai hoc hoc vien an ninh nhan dan'],
-  answer: `<b>Học viện An ninh nhân dân (T01 - ANH): 500 chỉ tiêu</b><br><br>
-  <b>1. Nhóm ngành nghiệp vụ An ninh</b><br>
-  - Mã ngành: <b>7860100</b>.<br>
-  - Tổng chỉ tiêu: <b>250</b>.<br>
-  - Địa bàn tuyển sinh: <b>Phía Bắc</b>.<br>
-  - Phương thức 1: Nam <b>11</b>, Nữ <b>1</b>.<br>
-  - Phương thức 2, 3: Nam <b>214</b>, Nữ <b>24</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3, CA4</b>.<br><br>
+  // ==========================================
+  // PHẦN 3: VĂN BẰNG 2 (VB2CA)
+  // ==========================================
+  {
+    keys: ['vb2ca', 'văn bằng 2', 'đại học vb2', 'cử nhân'],
+    answer: "<b>Đại học VB2CA (530 chỉ tiêu):</b><br>• Đối tượng: Công dân VN có bằng ĐH chính quy loại <b>Khá</b> trở lên.<br>• Tuổi: ≤ 30 tuổi.<br>• Bài thi: Thi trên máy tính (150 phút), ngày <b>20/9/2026</b>."
+  },
+  {
+    keys: ['điều kiện vb2', 'lĩnh vực', 'ngành', 'chuyên ngành'],
+    answer: "<b>Lĩnh vực dự tuyển VB2CA:</b><br>• Nghiệp vụ AN/CS (T01, T02, T04, T05): <b>Không quy định</b> ngành đào tạo trước đó.<br>• Các ngành kỹ thuật (ATTT, PCCC, Kỹ thuật Hậu cần): Phải tốt nghiệp đúng mã lĩnh vực quy định (748, 751, 752...)."
+  },
+  {
+    keys: ['pt1 vb2', 'tuyển thẳng vb2'],
+    answer: "<b>Phương thức 1 VB2CA (Xét tuyển thẳng):</b><br>• Con Công an bằng Xuất sắc.<br>• Bằng Giỏi/Xuất sắc khối Kỹ thuật, CNTT.<br>• Bằng Giỏi/Xuất sắc + IELTS 6.5+ (Con CA IELTS 6.0+).<br>• Bằng Khá + IELTS 7.0+ (Con CA IELTS 6.5+)."
+  },
+  {
+    keys: ['cộng điểm vb2', 'ưu tiên vb2', 'điểm thưởng vb2'],
+    answer: "<b>Ưu tiên VB2CA:</b><br>• Tiến sĩ (+2.0), Thạc sĩ (+1.5), Bằng ĐH loại Giỏi (+1.0).<br>• IELTS 6.5+ (+1.0), IELTS 6.0+ (+0.5).<br>• Con đẻ cán bộ Công an (+1.0).<br><i>(Chỉ hưởng mức điểm cộng cao nhất nếu có nhiều diện).</i>"
+  },
+  {
+    keys: ['thạc sĩ', 'tiến sĩ', 'đào tạo sau đại học'],
+    answer: "<b>Đào tạo Tiến sĩ/Thạc sĩ CAND:</b><br>• Đối tượng: Cán bộ quản lý, giảng viên, lãnh đạo cấp phòng.<br>• Tuổi dự tuyển Tiến sĩ: ≤ 50 tuổi.<br>• Tuổi dự tuyển Thạc sĩ: ≤ 45 tuổi."
+  },
 
-  <b>2. Ngành An ninh mạng và phòng, chống tội phạm công nghệ cao</b><br>
-  - Mã ngành: <b>7860114</b>.<br>
-  - Tổng chỉ tiêu: <b>150</b>.<br>
-  - Dành tối đa <b>50 chỉ tiêu nam</b> gửi đào tạo nước ngoài ngành Công nghệ thông tin.<br>
-  - <b>Phía Bắc:</b> 75 chỉ tiêu; Phương thức 1: Nam <b>3</b>, Nữ <b>1</b>; Phương thức 2, 3: Nam <b>65</b>, Nữ <b>6</b>.<br>
-  - <b>Phía Nam:</b> 75 chỉ tiêu; Phương thức 1: Nam <b>3</b>, Nữ <b>1</b>; Phương thức 2, 3: Nam <b>65</b>, Nữ <b>6</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, X26, X27, X28</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2</b>.<br><br>
+  // ==========================================
+  // PHẦN 4: TRUNG CẤP & VĂN HÓA NHỎ TUỔI
+  // ==========================================
+  {
+    keys: ['trung cấp', 'hệ trung cấp', 't08', 't09', 't10'],
+    answer: "<b>Trung cấp CAND chính quy (300 chỉ tiêu):</b><br>• Đối tượng: CSNV, Hoàn thành NVCA, Thí sinh trượt ĐH CAND.<br>• Phương thức: Xét tuyển thẳng hoặc Xét điểm THPT + Bài thi BCA.<br>• Phân bổ: T08 (80), T09 (100), T10 (100)."
+  },
+  {
+    keys: ['ưu tiên trung cấp', 'cộng điểm trung cấp'],
+    answer: "<b>Điểm cộng Trung cấp CAND:</b><br>• Giải Quốc gia: Nhất (+1.0), Nhì (+0.75), Ba (+0.5), KK (+0.25).<br>• Con đẻ cán bộ CA (+1.0).<br>• Con đẻ Trưởng/Phó CA xã bán chuyên trách >15 năm (+0.5)."
+  },
+  {
+    keys: ['nhỏ tuổi', 'văn hóa nhỏ tuổi', 'thcs', 'lớp 9', 'dân tộc nội trú'],
+    answer: "<b>Tuyển sinh Văn hóa nhỏ tuổi:</b><br>• <b>Tuyển thẳng:</b> Con liệt sĩ, thương binh >81%, AHLĐ.<br>• <b>Xét tuyển:</b> Người DTTS ở vùng đặc biệt khó khăn (học lực Khá, hạnh kiểm Tốt cấp THCS)."
+  },
 
-  <b>3. Ngành Công nghệ thông tin</b><br>
-  - Mã ngành: <b>7480201</b>.<br>
-  - Tổng chỉ tiêu: <b>100</b>.<br>
-  - Hợp tác với Trường Đại học Công nghệ thông tin và Truyền thông, Đại học Bách khoa Hà Nội.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>5</b>, Nữ <b>0</b>.<br>
-  - Phương thức 2, 3: Nam <b>95</b>, Nữ <b>0</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, X26, X27, X28</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2</b>.`
-},
-{
-  keys: ['học viện cảnh sát nhân dân', 'hoc vien canh sat nhan dan', 'chỉ tiêu đại học t02', 't02', 'csh', 'chỉ tiêu đại học học viện cảnh sát nhân dân', 'chi tieu dai hoc hoc vien canh sat nhan dan'],
-  answer: `<b>Học viện Cảnh sát nhân dân (T02 - CSH): 400 chỉ tiêu</b><br><br>
-  <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
-  - Mã ngành: <b>7860100</b>.<br>
-  - Tổng chỉ tiêu: <b>400</b>.<br>
-  - Địa bàn tuyển sinh: <b>Phía Bắc</b>.<br>
-  - Phương thức 1: Nam <b>18</b>, Nữ <b>2</b>.<br>
-  - Phương thức 2, 3: Nam <b>342</b>, Nữ <b>38</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3, CA4</b>.`
-},
-{
-  keys: ['chỉ tiêu đại học trường học viện chính trị cand', 'chỉ tiêu đại học t03', 't03', 'hca', 'xây dựng đảng và chính quyền nhà nước', 'xay dung dang va chinh quyen nha nuoc'],
-  answer: `<b>Học viện Chính trị Công an nhân dân (T03 - HCA): 100 chỉ tiêu</b><br><br>
-  <b>Ngành Xây dựng Đảng và chính quyền nhà nước</b><br>
-  - Mã ngành: <b>7310202</b>.<br>
-  - Tổng chỉ tiêu: <b>100</b>.<br>
-  - <b>Phía Bắc:</b> 50 chỉ tiêu; Phương thức 1: Nam <b>2</b>, Nữ <b>1</b>; Phương thức 2, 3: Nam <b>43</b>, Nữ <b>4</b>.<br>
-  - <b>Phía Nam:</b> 50 chỉ tiêu; Phương thức 1: Nam <b>2</b>, Nữ <b>1</b>; Phương thức 2, 3: Nam <b>43</b>, Nữ <b>4</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A01, C00, C03, D01, X02, X03, X04</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA4</b>.`
-},
-{
-  keys: ['đại học an ninh nhân dân', 'dai hoc an ninh nhan dan', 't04', 'ans', 'chỉ tiêu đại học an ninh nhân dân', 'chi tieu dai hoc an ninh nhan dan'],
-  answer: `<b>Trường Đại học An ninh nhân dân (T04 - ANS): 220 chỉ tiêu</b><br><br>
-  <b>Nhóm ngành nghiệp vụ An ninh</b><br>
-  - Mã ngành: <b>7860100</b>.<br>
-  - Tổng chỉ tiêu: <b>220</b>.<br>
-  - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
-  - Phương thức 1: Nam <b>10</b>, Nữ <b>1</b>.<br>
-  - Phương thức 2, 3: Nam <b>188</b>, Nữ <b>21</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3, CA4</b>.`
-},
-{
-  keys: ['đại học cảnh sát nhân dân', 'dai hoc canh sat nhan dan', 't05', 'css', 'chỉ tiêu đại học cảnh sát nhân dân', 'chi tieu dai hoc canh sat nhan dan'],
-  answer: `<b>Trường Đại học Cảnh sát nhân dân (T05 - CSS): 300 chỉ tiêu</b><br><br>
-  <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
-  - Mã ngành: <b>7860100</b>.<br>
-  - Tổng chỉ tiêu: <b>300</b>.<br>
-  - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
-  - Phương thức 1: Nam <b>13</b>, Nữ <b>2</b>.<br>
-  - Phương thức 2, 3: Nam <b>257</b>, Nữ <b>28</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3, CA4</b>.`
-},
-{
-  keys: ['chỉ tiêu đại học trường đại học phòng cháy chữa cháy','chỉ tiêu đại học trường t06', 't06', 'pch'],
-  answer: `<b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH): 200 chỉ tiêu</b><br><br>
-  <b>Ngành Phòng cháy chữa cháy và cứu nạn, cứu hộ</b><br>
-  - Mã ngành: <b>7860113</b>.<br>
-  - Tổng chỉ tiêu: <b>200</b>.<br>
-  - <b>Phía Bắc:</b> 100 chỉ tiêu; Phương thức 1: Nam <b>4</b>, Nữ <b>1</b>; Phương thức 2, 3: Nam <b>86</b>, Nữ <b>9</b>.<br>
-  - <b>Phía Nam:</b> 100 chỉ tiêu; Phương thức 1: Nam <b>4</b>, Nữ <b>1</b>; Phương thức 2, 3: Nam <b>86</b>, Nữ <b>9</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, D01, D07</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2</b>.`
-},
-{
-  keys: ['chỉ tiêu đại học trường t07', 'chỉ tiêu đại học T07', 'kth', 'T07', 'chỉ tiêu đại học học viện kỹ thuật và công nghệ an ninh'],
-  answer: `<b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH): 300 chỉ tiêu</b><br><br>
-  <b>1. Nhóm ngành Kỹ thuật - Hậu cần</b><br>
-  - Mã ngành: <b>7480200</b>.<br>
-  - Tổng chỉ tiêu: <b>200</b>.<br>
-  - <b>Phía Bắc:</b> 100 chỉ tiêu; Phương thức 1: Nam <b>4</b>, Nữ <b>1</b>; Phương thức 2, 3: Nam <b>86</b>, Nữ <b>9</b>.<br>
-  - <b>Phía Nam:</b> 100 chỉ tiêu; Phương thức 1: Nam <b>4</b>, Nữ <b>1</b>; Phương thức 2, 3: Nam <b>86</b>, Nữ <b>9</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, D01, X26, X27, X28</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2</b>.<br><br>
+  // ==========================================
+  // PHẦN 5: CHỨNG CHỈ NGOẠI NGỮ (QUY ĐỔI)
+  // ==========================================
+  {
+    keys: ['ielts pt2', 'quy đổi pt2', 'điểm ngoại ngữ pt2', 'toefl', 'toeic', 'sat'],
+    answer: "<b>Quy đổi Chứng chỉ PT2 ĐH:</b><br>Mức tối thiểu: IELTS 5.5 (Quy đổi 7.5đ); IELTS 6.0 (Quy đổi 8.0đ); IELTS 6.5 (8.5đ); IELTS 7.0 (9.0đ); IELTS 8.0+ (10đ).<br>Tương đương: TOEFL iBT 46; TOEIC 600; SAT 1100."
+  },
+  {
+    keys: ['ielts pt3', 'quy đổi pt3', 'điểm ngoại ngữ pt3'],
+    answer: "<b>Quy đổi Chứng chỉ PT3 ĐH:</b><br>IELTS 4.0 - 5.0 (Quy đổi 7.0đ); IELTS 5.5 (7.5đ); IELTS 6.0 (8.0đ); IELTS 6.5 (8.5đ); IELTS 7.0 (9.0đ); IELTS 8.0+ (10đ)."
+  },
+  {
+    keys: ['hsk', 'jlpt', 'topik', 'tiếng trung', 'tiếng nhật', 'tiếng hàn'],
+    answer: "<b>Quy đổi tiếng Trung/Nhật/Hàn:</b><br>• Tương đương IELTS 6.5 - 5.5: HSK 4; JLPT N3; TOPIK 4.<br>• Tương đương IELTS 8.0 - 7.0: HSK 5; JLPT N2; TOPIK 5.<br>• Tương đương IELTS 9.0 - 8.5: HSK 6+; JLPT N1; TOPIK 6."
+  },
+  {
+    keys: ['chứng chỉ châu âu', 'dele', 'delf', 'trki', 'goethe', 'celi'],
+    answer: "<b>Quy đổi chứng chỉ khác:</b><br>Hệ thống hỗ trợ chứng chỉ Tây Ban Nha (DELE), Pháp (DELF/DALF), Nga (TRKI), Đức (Goethe), Ý (CELI) từ mức B2 trở lên (tương đương IELTS 5.5)."
+  },
+  {
+    keys: ['home edition', 'thi online', 'tại nhà'],
+    answer: "<b>Lưu ý chứng chỉ ngoại ngữ:</b><br>Tuyệt đối <b>KHÔNG SỬ DỤNG</b> các loại chứng chỉ thi online tại nhà (Home Edition)."
+  },
 
-  <b>2. Y khoa (gửi đào tạo tại Học viện Quân y, Bộ Quốc phòng)</b><br>
-  - Mã ngành: <b>7720101</b>.<br>
-  - Tổng chỉ tiêu: <b>50</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>2</b>, Nữ <b>1</b>.<br>
-  - Phương thức 2, 3: Nam <b>43</b>, Nữ <b>4</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, B00, B08, D07</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3</b>.<br><br>
+  // ==========================================
+  // PHẦN 6: LỊCH TRÌNH, LỆ PHÍ, HỒ SƠ
+  // ==========================================
+  {
+    keys: ['thời gian', 'khi nào', 'bao giờ', 'lịch chung', 'đăng ký'],
+    answer: "<b>Các mốc thời gian chính 2026:</b><br>• Đăng ký ĐH/Trung cấp: 15/3 - 15/4.<br>• Đăng ký VB2CA: 15/3 - 25/6.<br>• Thi đánh giá BCA (ĐH): <b>20 - 21/6</b>.<br>• Thi VB2CA: <b>19 - 20/9</b>."
+  },
+  {
+    keys: ['hồ sơ', 'giấy tờ', 'chuẩn bị gì', 'đăng ký sơ tuyển'],
+    answer: "<b>Hồ sơ cơ bản gồm:</b><br>1. Phiếu đăng ký dự tuyển (Mẫu BCA).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. 04 ảnh 3x4 hoặc 4x6.<br>5. Giấy tờ ưu tiên/Chứng chỉ ngoại ngữ (nếu có)."
+  },
+  {
+    keys: ['lệ phí', 'tiền khám', 'đóng tiền', 'phí hồ sơ'],
+    answer: "<b>Lệ phí tuyển sinh 2026:</b><br>• Lệ phí sơ tuyển ĐH: <b>300.000đ</b>.<br>• Lệ phí sơ tuyển VB2CA: <b>100.000đ</b>.<br>• Phí hồ sơ chung: 20.000đ/bộ.<br>• Phí xét tuyển thẳng/chứng chỉ: 30.000đ."
+  },
 
-  <b>3. Y khoa (gửi đào tạo tại Trường Đại học Y dược, Đại học Quốc gia Hà Nội)</b><br>
-  - Mã ngành: <b>7720101A</b>.<br>
-  - Tổng chỉ tiêu: <b>30</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>1</b>, Nữ <b>0</b>.<br>
-  - Phương thức 2, 3: Nam <b>26</b>, Nữ <b>3</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>B00, B08</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3</b>.<br><br>
+  // ==========================================
+  // PHẦN 7: LỊCH KHÁM SỨC KHỎE TỪNG NGÀY
+  // ==========================================
+  {
+    keys: ['lịch khám chung', 'khám ở đâu', 'bệnh xá', 'giờ khám', 'địa điểm khám'],
+    answer: "<b>Lịch & Địa điểm Khám sức khỏe:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 29/6 - 02/7/2026 (Khám bù: 03/7).<br>• <b>Giờ giấc:</b> Sáng 07h30 (Nhịn ăn sáng), Chiều 13h30.<br>• <b>Địa điểm:</b> Tùy đơn vị, khám tại Bệnh xá số 01 (Nam Đông Hà) hoặc Bệnh xá số 02 (Đồng Hới)."
+  },
+  {
+    keys: ['16/4', '16/04', 'ngày 16'],
+    answer: "<b>Lịch khám ĐH/TC (16/4):</b><br>• <b>Đơn vị:</b> Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (Bắc), Tiểu đoàn CSCĐ số 3.<br>• <b>Tại:</b> Bệnh xá 02 (Đồng Hới)."
+  },
+  {
+    keys: ['17/4', '17/04', 'ngày 17'],
+    answer: "<b>Lịch khám ĐH/TC (17/4):</b><br>• <b>Đơn vị:</b> Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC11B.<br>• <b>Tại:</b> Bệnh xá 02 (Đồng Hới)."
+  },
+  {
+    keys: ['18/4', '18/04', 'ngày 18'],
+    answer: "<b>Lịch khám ĐH/TC (18/4):</b><br>• <b>Đơn vị:</b> Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, PK02 (Bắc).<br>• <b>Tại:</b> Bệnh xá 02 (Đồng Hới)."
+  },
+  {
+    keys: ['19/4', '19/04', 'ngày 19'],
+    answer: "<b>Lịch khám ĐH/TC (19/4):</b><br>• <b>Đơn vị:</b> Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, Trại giam Đồng Sơn.<br>• <b>Tại:</b> Bệnh xá 02 (Đồng Hới)."
+  },
+  {
+    keys: ['22/4', '22/04', 'ngày 22'],
+    answer: "<b>Lịch khám ĐH/TC (22/4):</b><br>• <b>Đơn vị:</b> Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (Nam Đông Hà)."
+  },
+  {
+    keys: ['23/4', '23/04', 'ngày 23'],
+    answer: "<b>Lịch khám ĐH/TC (23/4):</b><br>• <b>Đơn vị:</b> Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC11A.<br>• <b>Tại:</b> Bệnh xá 01 (Nam Đông Hà)."
+  },
+  {
+    keys: ['24/4', '24/04', 'ngày 24'],
+    answer: "<b>Lịch khám ĐH/TC (24/4):</b><br>• <b>Đơn vị:</b> Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (Nam Đông Hà)."
+  },
+  {
+    keys: ['25/4', '25/04', 'ngày 25'],
+    answer: "<b>Lịch khám ĐH/TC (25/4):</b><br>• <b>Đơn vị:</b> Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ, Trại giam Nghĩa An.<br>• <b>Tại:</b> Bệnh xá 01 (Nam Đông Hà)."
+  },
+  {
+    keys: ['khám bù', 'không đi khám', 'trễ lịch'],
+    answer: "<b>Lịch Khám bù:</b><br>• ĐH/TC: Ngày 04/5 - 05/5/2026.<br>• VB2CA: Ngày 03/7/2026.<br><i>Tại Bệnh xá số 01 (Nam Đông Hà). Hội đồng sẽ tập hợp kết quả báo cáo lãnh đạo Công an tỉnh.</i>"
+  },
+  {
+    keys: ['29/6', '29/06', 'khám vb2', 'lịch vb2'],
+    answer: "<b>Lịch khám VB2CA (29/6):</b><br>Khám các đơn vị tuyến Bắc (Dân Hoá, Ba Đồn, Quảng Trạch...). Tại Bệnh xá số 02 (Đồng Hới)."
+  },
+  {
+    keys: ['30/6', '30/06'],
+    answer: "<b>Lịch khám VB2CA (30/6):</b><br>Khám các đơn vị Bố Trạch, Đồng Hới, Lệ Thủy, Quảng Ninh... Tại Bệnh xá số 02 (Đồng Hới)."
+  },
+  {
+    keys: ['01/7', '1/7', '01/07'],
+    answer: "<b>Lịch khám VB2CA (01/7):</b><br>Khám các đơn vị Vĩnh Linh, Gio Linh, Cam Lộ, ĐăkRông, Hướng Hóa... Tại Bệnh xá số 01 (Nam Đông Hà)."
+  },
+  {
+    keys: ['02/7', '2/7', '02/07'],
+    answer: "<b>Lịch khám VB2CA (02/7):</b><br>Khám các đơn vị Triệu Phong, Hải Lăng, Đông Hà, Thị xã Quảng Trị, Cồn Cỏ... Tại Bệnh xá số 01 (Nam Đông Hà)."
+  },
 
-  <b>4. Kỹ thuật điện tử, viễn thông (gửi đào tạo tại Học viện Kỹ thuật Mật mã)</b><br>
-  - Mã ngành: <b>7520207</b>.<br>
-  - Tổng chỉ tiêu: <b>20</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>1</b>, Nữ <b>0</b>.<br>
-  - Phương thức 2, 3: Nam <b>19</b>, Nữ <b>0</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, D01, X26, X27</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2</b>.`
-},
-{
-  keys: ['chỉ tiêu đại học ngành y khoa cand', 'ngành y khoa cand', 'y khoa công an', 'y khoa cong an', 'chỉ tiêu mã ngành 7720101', 'mã ngành 7720101'],
-  answer: `<b>Các ngành Y khoa trong tuyển sinh đại học CAND năm 2026</b><br><br>
-  <b>1. Y khoa (gửi đào tạo tại Học viện Quân y, Bộ Quốc phòng)</b><br>
-  - Mã ngành: <b>7720101</b>.<br>
-  - Tổng chỉ tiêu: <b>50</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>2</b>, Nữ <b>1</b>.<br>
-  - Phương thức 2, 3: Nam <b>43</b>, Nữ <b>4</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A00, A01, B00, B08, D07</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3</b>.<br><br>
+  // ==========================================
+  // PHẦN 8: KIỂM TRA THỂ LỰC TỪNG NGÀY
+  // ==========================================
+  {
+    keys: ['thể lực', 'chạy', '100m', '1500m', '800m', 'bật xa', 'xà đơn', 'kiểm tra thể lực', 'địa điểm thể lực', 'thi thể lực ở đâu'],
+    answer: "<b>Kiểm tra thể lực (20-21/4 và 28-29/4):</b><br>• Bật xa: Nam ≥ 2,2m; Nữ ≥ 1,5m.<br>• Chạy 100m: Nam ≤ 16s; Nữ ≤ 20s.<br>• Chạy 1500m(Nam) ≤ 7p30s; 800m(Nữ) ≤ 5p30s.<br>• Xà đơn: Nam ≥ 12 lần.<br><b>📍 Địa điểm:</b> Tùy ngày, thi tại <i>TT Văn hóa Điện ảnh tỉnh (Đồng Hới)</i> hoặc <i>Trụ sở phía Nam Công an Tỉnh (Nam Đông Hà)</i>.<br><i>Sáng 7h00, Chiều 15h00. Mặc trang phục thể thao.</i>"
+  },
+  {
+    keys: ['20/4', '20/04'],
+    answer: "<b>Kiểm tra thể lực (20/4):</b><br>• Sáng: Tuyên Hóa, Minh Hóa, PC07 (Bắc).<br>• Chiều: Quảng Trạch, Ba Đồn, PC10, PC11B.<br>• <b>Tại:</b> TT Văn hóa Điện ảnh tỉnh (Đồng Hới)."
+  },
+  {
+    keys: ['21/4', '21/04'],
+    answer: "<b>Kiểm tra thể lực (21/4):</b><br>• Sáng: Bố Trạch, Đồng Hới, PK02 (Bắc).<br>• Chiều: Quảng Ninh, Lệ Thủy, Trại giam Đồng Sơn.<br>• <b>Tại:</b> TT Văn hóa Điện ảnh tỉnh (Đồng Hới)."
+  },
+  {
+    keys: ['28/4', '28/04'],
+    answer: "<b>Kiểm tra thể lực (28/4):</b><br>• Sáng: Vĩnh Linh, Gio Linh, Cam Lộ, PC07 (Nam).<br>• Chiều: ĐăkRông, Hướng Hóa, PC11A.<br>• <b>Tại:</b> Trụ sở phía Nam Công an Tỉnh (Nam Đông Hà)."
+  },
+  {
+    keys: ['29/4', '29/04'],
+    answer: "<b>Kiểm tra thể lực (29/4):</b><br>• Sáng: Triệu Phong, PK02 (Nam).<br>• Chiều: Hải Lăng, Đông Hà, Quảng Trị, Cồn Cỏ.<br>• <b>Tại:</b> Trụ sở phía Nam Công an Tỉnh (Nam Đông Hà)."
+  },
 
-  <b>2. Y khoa (gửi đào tạo tại Trường Đại học Y dược, Đại học Quốc gia Hà Nội)</b><br>
-  - Mã ngành: <b>7720101A</b>.<br>
-  - Tổng chỉ tiêu: <b>30</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>1</b>, Nữ <b>0</b>.<br>
-  - Phương thức 2, 3: Nam <b>26</b>, Nữ <b>3</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>B00, B08</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3</b>.<br><br>
-
-  <b>Lưu ý:</b> Thí sinh dự tuyển ngành Y khoa theo <b>Phương thức 2</b> vẫn phải bảo đảm ngưỡng chất lượng đầu vào đối với tổ hợp môn THPT năm 2026 theo quy định.`
-},
-{
-  keys: ['chỉ tiêu đại học tại học viện quốc tế', 'chỉ tiêu đại học trường b06', 'ais', 'chỉ tiêu đại học ngôn ngữ anh', 'chỉ tiêu đại học ngôn ngữ trung quốc'],
-  answer: `<b>Học viện Quốc tế (B06 - AIS): 50 chỉ tiêu</b><br><br>
-  <b>1. Ngôn ngữ Anh</b><br>
-  - Mã ngành: <b>7220201</b>.<br>
-  - Tổng chỉ tiêu: <b>30</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>2</b>, Nữ <b>2</b>.<br>
-  - Phương thức 2, 3: Nam <b>13</b>, Nữ <b>13</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A01, D01, D04, D09, D10</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3, CA4</b>.<br><br>
-
-  <b>2. Ngôn ngữ Trung quốc</b><br>
-  - Mã ngành: <b>7220204</b>.<br>
-  - Tổng chỉ tiêu: <b>20</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>1</b>, Nữ <b>1</b>.<br>
-  - Phương thức 2, 3: Nam <b>9</b>, Nữ <b>9</b>.<br>
-  - Tổ hợp xét tuyển theo Phương thức 3: <b>A01, D01, D04, D09, D10</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an: <b>CA1, CA2, CA3, CA4</b>.`
-},
-            {
-  keys: ['chỉ tiêu trung cấp cand 2026', 'chi tieu trung cap cand 2026', 'chỉ tiêu trung cấp', 'chi tieu trung cap', 'trung cấp cand', 'trung cap cand', 'phụ lục 08', 'phu luc 08'],
-  answer: `<b>PHỤ LỤC 08 - Danh mục tên trường, ký hiệu trường, chỉ tiêu tuyển sinh trình độ trung cấp Công an nhân dân chính quy tuyển mới</b><br><br>
-  <b>Tổng hợp chỉ tiêu theo trường:</b><br>
-  - <b>Trường Cao đẳng An ninh nhân dân I (T08 - ANN):</b> 80 chỉ tiêu.<br>
-  - <b>Trường Cao đẳng Cảnh sát nhân dân I (T09 - CS1):</b> 100 chỉ tiêu.<br>
-  - <b>Trường Cao đẳng Cảnh sát nhân dân II (T10 - CS2):</b> 100 chỉ tiêu.<br><br>
-  <b>Thông tin chung:</b><br>
-  - Bảng chỉ tiêu thể hiện riêng <b>chỉ tiêu tuyển thẳng</b> và <b>chỉ tiêu xét tuyển</b>, tách theo <b>Nam</b> và <b>Nữ</b>.<br>
-  - Tổ hợp xét tuyển áp dụng gồm: <b>A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28</b>.<br>
-  - Mã bài thi đánh giá của Bộ Công an sử dụng để xét tuyển gồm: <b>CA1, CA2, CA3, CA4</b>.<br>
-  - Có thể hỏi theo <b>tên trường</b>, <b>mã trường</b>, <b>địa bàn tuyển sinh</b> hoặc <b>chỉ tiêu nam nữ</b>.`
-},
-{
-  keys: ['cao đẳng an ninh nhân dân i', 'cao dang an ninh nhan dan i', 't08', 'ann', 'trường cao đẳng an ninh nhân dân i', 'truong cao dang an ninh nhan dan i'],
-  answer: `<b>Trường Cao đẳng An ninh nhân dân I (T08 - ANN)</b><br><br>
-  - <b>Tổng chỉ tiêu:</b> 80.<br>
-  - <b>Địa bàn tuyển sinh:</b> Toàn quốc.<br>
-  - <b>Chỉ tiêu tuyển thẳng:</b> Nam <b>4</b>, Nữ <b>1</b>.<br>
-  - <b>Chỉ tiêu xét tuyển:</b> Nam <b>66</b>, Nữ <b>9</b>.<br>
-  - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
-  - <b>Mã bài thi đánh giá của Bộ Công an:</b> CA1, CA2, CA3, CA4.`
-},
-{
-  keys: ['cao đẳng cảnh sát nhân dân i', 'cao dang canh sat nhan dan i', 't09', 'cs1', 'trường cao đẳng cảnh sát nhân dân i', 'truong cao dang canh sat nhan dan i'],
-  answer: `<b>Trường Cao đẳng Cảnh sát nhân dân I (T09 - CS1)</b><br><br>
-  - <b>Tổng chỉ tiêu:</b> 100.<br>
-  - <b>Địa bàn tuyển sinh:</b> Phía Bắc.<br>
-  - <b>Chỉ tiêu tuyển thẳng:</b> Nam <b>5</b>, Nữ <b>1</b>.<br>
-  - <b>Chỉ tiêu xét tuyển:</b> Nam <b>85</b>, Nữ <b>9</b>.<br>
-  - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
-  - <b>Mã bài thi đánh giá của Bộ Công an:</b> CA1, CA2, CA3, CA4.`
-},
-{
-  keys: ['cao đẳng cảnh sát nhân dân ii', 'cao dang canh sat nhan dan ii', 't10', 'cs2', 'trường cao đẳng cảnh sát nhân dân ii', 'truong cao dang canh sat nhan dan ii'],
-  answer: `<b>Trường Cao đẳng Cảnh sát nhân dân II (T10 - CS2)</b><br><br>
-  - <b>Tổng chỉ tiêu:</b> 100.<br>
-  - <b>Địa bàn tuyển sinh:</b> Phía Nam.<br>
-  - <b>Chỉ tiêu tuyển thẳng:</b> Nam <b>5</b>, Nữ <b>1</b>.<br>
-  - <b>Chỉ tiêu xét tuyển:</b> Nam <b>85</b>, Nữ <b>9</b>.<br>
-  - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
-  - <b>Mã bài thi đánh giá của Bộ Công an:</b> CA1, CA2, CA3, CA4.`
-},
-{
-  keys: ['tổ hợp trung cấp cand', 'to hop trung cap cand', 'mã bài thi trung cấp cand', 'ma bai thi trung cap cand', 'ca1 ca2 ca3 ca4 trung cấp', 'ca1 ca2 ca3 ca4 trung cap'],
-  answer: `<b>Tổ hợp xét tuyển và mã bài thi đánh giá dùng cho tuyển sinh trung cấp CAND 2026</b><br><br>
-  - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
-  - <b>Mã bài thi đánh giá của Bộ Công an:</b> CA1, CA2, CA3, CA4.<br>
-  - Các trường trung cấp trong phụ lục này đều sử dụng cùng nhóm tổ hợp và cùng mã bài thi đánh giá nêu trên.`
-},
-{
-  keys: ['chỉ tiêu tuyển thẳng trung cấp', 'chi tieu tuyen thang trung cap', 'chỉ tiêu xét tuyển trung cấp', 'chi tieu xet tuyen trung cap', 'nam nữ trung cấp cand', 'nam nu trung cap cand'],
-  answer: `<b>Phân bổ chỉ tiêu tuyển sinh trung cấp CAND năm 2026</b><br><br>
-  <b>1. Trường Cao đẳng An ninh nhân dân I (T08 - ANN)</b><br>
-  - Tuyển thẳng: Nam <b>4</b>, Nữ <b>1</b>.<br>
-  - Xét tuyển: Nam <b>66</b>, Nữ <b>9</b>.<br><br>
-
-  <b>2. Trường Cao đẳng Cảnh sát nhân dân I (T09 - CS1)</b><br>
-  - Tuyển thẳng: Nam <b>5</b>, Nữ <b>1</b>.<br>
-  - Xét tuyển: Nam <b>85</b>, Nữ <b>9</b>.<br><br>
-
-  <b>3. Trường Cao đẳng Cảnh sát nhân dân II (T10 - CS2)</b><br>
-  - Tuyển thẳng: Nam <b>5</b>, Nữ <b>1</b>.<br>
-  - Xét tuyển: Nam <b>85</b>, Nữ <b>9</b>.`
-},
-            {
-  keys: ['chỉ tiêu vb2', 'chi tieu vb2', 'chỉ tiêu vb2 cand 2026', 'chi tieu vb2 cand 2026', 'đại học vb2 cand', 'dai hoc vb2 cand', 'phụ lục 06', 'phu luc 06'],
-  answer: `<b>PHỤ LỤC 06 - Danh mục tên trường, ký hiệu trường, mã ngành, chỉ tiêu tuyển sinh trình độ đại học chính quy tuyển mới đối với công dân đã có bằng tốt nghiệp trình độ đại học trở lên</b><br><br>
-  <b>Tổng hợp chỉ tiêu theo trường:</b><br>
-  - <b>Học viện An ninh nhân dân (T01 - ANH):</b> 130 chỉ tiêu.<br>
-  - <b>Học viện Cảnh sát nhân dân (T02 - CSH):</b> 100 chỉ tiêu.<br>
-  - <b>Trường Đại học An ninh nhân dân (T04 - ANS):</b> 100 chỉ tiêu.<br>
-  - <b>Trường Đại học Cảnh sát nhân dân (T05 - CSS):</b> 100 chỉ tiêu.<br>
-  - <b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH):</b> 50 chỉ tiêu.<br>
-  - <b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH):</b> 50 chỉ tiêu.<br><br>
-  <b>Đặc điểm của bảng chỉ tiêu VB2:</b><br>
-  - Chỉ tiêu được tách theo <b>Phương thức 1</b> và <b>Phương thức 2</b>.<br>
-  - Mỗi phương thức đều phân riêng chỉ tiêu <b>Nam</b> và <b>Nữ</b>.<br>
-  - Có thể hỏi chi tiết theo <b>tên trường</b>, <b>ký hiệu trường</b>, <b>mã ngành</b>, <b>địa bàn tuyển sinh</b> hoặc <b>chỉ tiêu từng phương thức</b>.`
-},
-{
-  keys: ['chỉ tiêu vb2 học viện an ninh nhân dân', 'chỉ tiêu vb2 t01', 't01 vb2', 'vb2 t01', 'anh vb2', 'chỉ tiêu học viện an ninh nhân dân vb2', 'chi tieu hoc vien an ninh nhan dan vb2'],
-  answer: `<b>Học viện An ninh nhân dân (T01 - ANH): 130 chỉ tiêu</b><br><br>
-  <b>1. Nhóm ngành nghiệp vụ An ninh</b><br>
-  - Mã ngành: <b>7860100</b>.<br>
-  - Tổng chỉ tiêu: <b>100</b>.<br>
-  - Địa bàn tuyển sinh: <b>Phía Bắc</b>.<br>
-  - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
-  - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.<br><br>
-
-  <b>2. Ngành An toàn thông tin</b><br>
-  - Mã ngành: <b>7480202</b>.<br>
-  - Tổng chỉ tiêu: <b>30</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>13</b>, Nữ <b>1</b>.<br>
-  - Phương thức 2: Nam <b>14</b>, Nữ <b>2</b>.`
-},
-{
-  keys: ['chỉ tiêu vb2 an toàn thông tin', 'an toàn thông tin vb2', 'an toan thong tin vb2', '7480202', 'chỉ tiêu vb2 ngành an toàn thông tin', 'nganh an toan thong tin cand vb2'],
-  answer: `<b>Ngành An toàn thông tin - Học viện An ninh nhân dân (T01 - ANH)</b><br>
-  - Mã ngành: <b>7480202</b>.<br>
-  - Tổng chỉ tiêu: <b>30</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>13</b>, Nữ <b>1</b>.<br>
-  - Phương thức 2: Nam <b>14</b>, Nữ <b>2</b>.`
-},
-{
-  keys: ['chỉ tiêu vb2 học viện cảnh sát nhân dân', 'chỉ tiêu vb2 t02', 't02 vb2', 'vb2 t02', 'csh vb2', 'chỉ tiêu học viện cảnh sát nhân dân vb2', 'chi tieu hoc vien canh sat nhan dan vb2'],
-  answer: `<b>Học viện Cảnh sát nhân dân (T02 - CSH): 100 chỉ tiêu</b><br><br>
-  <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
-  - Mã ngành: <b>7860100</b>.<br>
-  - Tổng chỉ tiêu: <b>100</b>.<br>
-  - Địa bàn tuyển sinh: <b>Phía Bắc</b>.<br>
-  - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
-  - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.`
-},
-{
-  keys: ['đại học an ninh nhân dân vb2', 'dai hoc an ninh nhan dan vb2', 't04 vb2', 'ans vb2', 'chỉ tiêu đại học an ninh nhân dân vb2', 'chi tieu dai hoc an ninh nhan dan vb2'],
-  answer: `<b>Trường Đại học An ninh nhân dân (T04 - ANS): 100 chỉ tiêu</b><br><br>
-  <b>Nhóm ngành nghiệp vụ An ninh</b><br>
-  - Mã ngành: <b>7860100</b>.<br>
-  - Tổng chỉ tiêu: <b>100</b>.<br>
-  - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
-  - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
-  - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.`
-},
-{
-  keys: ['đại học cảnh sát nhân dân vb2', 'dai hoc canh sat nhan dan vb2', 't05 vb2', 'css vb2', 'chỉ tiêu đại học cảnh sát nhân dân vb2', 'chi tieu dai hoc canh sat nhan dan vb2'],
-  answer: `<b>Trường Đại học Cảnh sát nhân dân (T05 - CSS): 100 chỉ tiêu</b><br><br>
-  <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
-  - Mã ngành: <b>7860100</b>.<br>
-  - Tổng chỉ tiêu: <b>100</b>.<br>
-  - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
-  - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
-  - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.`
-},
-{
-  keys: ['chỉ tiêu vb2 đại học phòng cháy chữa cháy', 'chỉ tiêu vb2 t06', 't06 vb2', 'pch vb2', 'phòng cháy chữa cháy và cứu nạn cứu hộ vb2', 'phong chay chua chay va cuu nan cuu ho vb2'],
-  answer: `<b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH): 50 chỉ tiêu</b><br><br>
-  <b>Ngành Phòng cháy chữa cháy và cứu nạn, cứu hộ</b><br>
-  - Mã ngành: <b>7860113</b>.<br>
-  - Tổng chỉ tiêu: <b>50</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>22</b>, Nữ <b>2</b>.<br>
-  - Phương thức 2: Nam <b>23</b>, Nữ <b>3</b>.`
-},
-{
-  keys: ['chỉ tiêu vb2 học viện kỹ thuật và công nghệ an ninh', 'chỉ tiêu vb2 t07', 't07 vb2', 'vb2 t07', 'kth vb2', 'nhóm ngành kỹ thuật hậu cần vb2', 'nhom nganh ky thuat hau can vb2'],
-  answer: `<b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH): 50 chỉ tiêu</b><br><br>
-  <b>Nhóm ngành Kỹ thuật - Hậu cần</b><br>
-  - Mã ngành: <b>7480200</b>.<br>
-  - Tổng chỉ tiêu: <b>50</b>.<br>
-  - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-  - Phương thức 1: Nam <b>22</b>, Nữ <b>2</b>.<br>
-  - Phương thức 2: Nam <b>23</b>, Nữ <b>3</b>.`
-},
-    {
-        keys: ['lệ phí vb2ca', 'le phi vb2ca', 'phí hồ sơ vb2ca', 'phi ho so vb2ca'],
-        answer: `
-            <b>Lệ phí VB2CA:</b><br>
-            • Lệ phí sơ tuyển: <b>100.000 đồng/thí sinh</b>.<br>
-            • Lệ phí hồ sơ: <b>30.000 đồng/bộ</b>.
-        `
-    },
-    {
-        keys: ['đối tượng trung cấp', 'phương thức trung cấp'],
-        answer: `
-            <b>Trung cấp chính quy tuyển mới:</b><br>
-            • Đối tượng: chiến sĩ nghĩa vụ Công an; công dân hoàn thành nghĩa vụ tham gia CAND có quyết định xuất ngũ trong vòng 12 tháng; thí sinh đã dự tuyển nhưng không trúng tuyển đại học CAND chính quy.<br>
-            • Phương thức: <b>PT1 xét tuyển thẳng</b>, <b>PT2 xét tuyển</b>.<br>
-            • Tổng chỉ tiêu: <b>300</b>.<br>
-            • Phân bổ: <b>T08: 80</b>; <b>T09: 100</b>; <b>T10: 100</b>.
-        `
-    },
-    {
-        keys: ['điều kiện trung cấp', 'dieu kien trung cap', 'tiêu chuẩn trung cấp', 'tieu chuan trung cap'],
-        answer: `
-            <b>Điều kiện trung cấp:</b><br>
-            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức theo quy định.<br>
-            • Chiến sĩ nghĩa vụ phải có thời gian công tác từ <b>15 tháng</b> trở lên.<br>
-            • Phải đủ sức khỏe tuyển vào CAND theo quy định hiện hành.<br>
-            • Nếu là thí sinh không trúng tuyển đại học thì vẫn phải bảo đảm điều kiện, tiêu chuẩn dự tuyển đại học theo quy định.
-        `
-    },
-    {
-        keys: ['hồ sơ trung cấp', 'ho so trung cap', 'giấy tờ trung cấp', 'giay to trung cap'],
-        answer: `
-            <b>Hồ sơ trung cấp:</b><br>
-            • Danh sách đăng ký xét tuyển trung cấp CAND.<br>
-            • File danh sách đăng ký xét tuyển trung cấp trích xuất từ phần mềm tuyển sinh.<br>
-            • Tờ khai đăng ký dự tuyển trung cấp CAND: <b>10.000 đồng/tờ</b>.<br>
-            • CCCD của thí sinh.<br>
-            • Bản photo giấy báo dự thi tốt nghiệp THPT.
-        `
-    },
-    {
-        keys: ['lịch trung cấp', 'lich trung cap', 'thời gian trung cấp', 'thoi gian trung cap'],
-        answer: `
-            <b>Mốc thời gian trung cấp:</b><br>
-            • 15/3 - 15/4/2026: Đăng ký dự tuyển.<br>
-            • 16/4 - 05/5/2026: Khám sức khỏe và kiểm tra thể lực.<br>
-            • 15 - 20/8/2026: Công bố điểm trúng tuyển.<br>
-            • 10 - 15/10/2026: Nhập học.
-        `
-    },
-    {
-        keys: ['khám sức khỏe', 'kham suc khoe', 'lịch khám', 'lich kham'],
-        answer: `
-            <b>Khám sức khỏe tuyển sinh:</b><br>
-            • Đại học / Trung cấp: từ <b>16/4 đến 05/5/2026</b>.<br>
-            • VB2CA: từ <b>29/6 đến 03/7/2026</b>.<br>
-            • Buổi sáng: <b>07h30</b>; buổi chiều: <b>13h30</b>.<br>
-            • Buổi sáng không ăn sáng để làm xét nghiệm.
-        `
-    },
-    {
-        keys: ['điều kiện đạt kiểm tra thể lực','chạy 100m bao nhiêu giây', 'chay 100m', 'chạy 1500m bao nhiêu giây', 'chay 1500m', 'chạy 800m bao nhiêu giây', 'chay 800m', 'bật xa', 'bat xa', 'xà đơn', 'xa don', 'thể lực', 'điều kiện thể lực'],
-        answer: `
-            <b>Ngưỡng đạt thể lực:</b><br>
-            • Bật xa tại chỗ: Nam <b>≥ 2,2m</b>; Nữ <b>≥ 1,5m</b>.<br>
-            • Chạy 100m: Nam <b>≤ 16 giây</b>; Nữ <b>≤ 20 giây</b>.<br>
-            • Chạy 800m: Nữ <b>≤ 5 phút 30 giây</b>.<br>
-            • Chạy 1500m: Nam <b>≤ 7 phút 30 giây</b>.<br>
-            • Co tay xà đơn: Nam <b>≥ 12 lần</b>.
-        `
-    },
-    {
-        keys: ['mã tổ hợp', 'ma to hop', 'tổ hợp xét tuyển', 'to hop xet tuyen'],
-        answer: `
-            <b>Mã tổ hợp xét tuyển đang sử dụng:</b><br>
-            A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
-            Bạn có thể hỏi tiếp theo kiểu: <i>"Tổ hợp X02 gồm môn gì?"</i>
-        `
-    },
-    {
-        keys: ['x02 gồm môn gì', 'x02', 'x03 gồm môn gì', 'x03', 'x04 gồm môn gì', 'x04', 'x26 gồm môn gì', 'x26', 'x27 gồm môn gì', 'x27', 'x28 gồm môn gì', 'x28'],
-        answer: `
-            <b>Các tổ hợp mới:</b><br>
-            • X02: Toán, Ngữ văn, Tin học.<br>
-            • X03: Toán, Ngữ văn, Công nghệ công nghiệp.<br>
-            • X04: Toán, Ngữ văn, Công nghệ nông nghiệp.<br>
-            • X26: Toán, Tiếng Anh, Tin học.<br>
-            • X27: Toán, Tiếng Anh, Công nghệ công nghiệp.<br>
-            • X28: Toán, Tiếng Anh, Công nghệ nông nghiệp.
-        `
-    },
-    {
-        keys: ['đối tượng tuyển sinh', 'doi tuong tuyen sinh'],
-        answer: `
-            <b>Các nhóm đối tượng chính năm 2026:</b><br>
-            • Đại học chính quy: chiến sĩ nghĩa vụ, công dân hoàn thành nghĩa vụ tham gia CAND, công dân thường trú tại địa phương.<br>
-            • VB2CA: công dân Việt Nam đã có bằng đại học theo điều kiện quy định.<br>
-            • Trung cấp: chiến sĩ nghĩa vụ, công dân hoàn thành nghĩa vụ tham gia CAND, thí sinh không trúng tuyển đại học CAND.
-        `
-    },
-    {
-        keys: ['điều kiện chung', 'tiêu chuẩn chung'],
-        answer: `
-            <b>Điều kiện chung:</b><br>
-            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức, sức khỏe theo quy định của Bộ Công an.<br>
-            • Mỗi hệ tuyển sinh có thêm điều kiện riêng về học lực, độ tuổi, tình trạng hôn nhân, chứng chỉ hoặc bằng cấp.<br>
-            • Đồng chí có thể hỏi rõ hơn theo từng nhóm: <i>đại học chính quy</i>, <i>VB2CA</i> hoặc <i>trung cấp</i>.
-        `
-    },
-    {
-        keys: ['thời gian', 'thoi gian', 'khi nào', 'bao giờ', 'bao gio'],
-        answer: `
-            <b>Các mốc chính năm 2026:</b><br>
-            • Đại học / Trung cấp đăng ký từ <b>15/3 đến 15/4/2026</b>.<br>
-            • VB2CA đăng ký từ <b>15/3 đến 25/6/2026</b>.<br>
-            • Khám sức khỏe đại học / trung cấp từ <b>16/4 đến 05/5/2026</b>.<br>
-            • Khám sức khỏe VB2CA từ <b>29/6 đến 03/7/2026</b>.<br>
-            • Thi đánh giá đại học vào <b>20 - 21/6/2026</b>.<br>
-            • Thi VB2CA vào <b>19 - 20/9/2026</b>.
-        `
-    },
-    {
-        keys: ['hồ sơ cơ bản gồm những gì', 'hồ sơ cơ bản'],
-        answer: `
-            <b>Hồ sơ cơ bản:</b><br>
-            • Đại học chính quy: bìa hồ sơ, lý lịch tự khai, thẩm tra lý lịch, đơn xin dự tuyển, phiếu đăng ký dự tuyển in từ phần mềm tuyển sinh.<br>
-            • VB2CA: CCCD, giấy khai sinh, bằng tốt nghiệp THPT, bằng đại học và bảng điểm, văn bằng sau đại học nếu có, chứng chỉ ngoại ngữ nếu có.<br>
-            • Trung cấp: danh sách đăng ký, file phần mềm, tờ khai dự tuyển trung cấp, CCCD, photo giấy báo dự thi THPT.
-        `
-    },
-{
-  keys: ['quy trình sơ tuyển', 'quy trinh so tuyen', 'sơ tuyển gồm những gì', 'so tuyen gom nhung gi', 'các bước sơ tuyển', 'cac buoc so tuyen'],
-  answer: `<b>Quy trình sơ tuyển tuyển sinh CAND năm 2026</b><br><br>
-  - Kiểm tra học lực tại học bạ (áp dụng đối với tất cả các đối tượng).<br>
-  - Kiểm tra hạnh kiểm tại học bạ (áp dụng với công dân thường trú theo quy định hiện hành tại địa phương nơi đăng ký sơ tuyển).<br>
-  - Xét phẩm chất đạo đức (áp dụng với chiến sĩ nghĩa vụ tại ngũ, xuất ngũ).<br>
-  - Kiểm tra sức khỏe (áp dụng đối với tất cả các đối tượng).<br>
-  - Thẩm tra, xác minh, kết luận tiêu chuẩn về chính trị (áp dụng đối với tất cả đối tượng theo quy định về thẩm tra lý lịch trong CAND).<br>
-  - Kiểm tra khả năng vận động (áp dụng đối với thí sinh đủ điều kiện dự tuyển vào đại học CAND, trừ điều kiện về tiêu chuẩn chính trị do đang trong quá trình tra cứu).`
-},
-{
-  keys: ['đại học cand có mấy phương thức', 'dai hoc cand co may phuong thuc', '3 phương thức đại học cand', 'ba phuong thuc dai hoc cand', 'phương thức tuyển sinh đại học cand', 'phuong thuc tuyen sinh dai hoc cand'],
-  answer: `<b>Tuyển sinh đại học CAND năm 2026 có 03 phương thức</b><br><br>
-  <b>Phương thức 1:</b> Xét tuyển thẳng theo giải thưởng, thành tích theo quy định của Bộ GD&ĐT và Bộ Công an.<br>
-  <b>Phương thức 2:</b> Xét tuyển kết hợp chứng chỉ ngoại ngữ quốc tế với bài thi đánh giá của Bộ Công an.<br>
-  <b>Phương thức 3:</b> Xét tuyển theo điểm thi tốt nghiệp THPT kết hợp bài thi đánh giá của Bộ Công an.<br><br>
-  Có thể hỏi tiếp riêng từng phương thức để tra điều kiện, công thức tính điểm và thứ tự ưu tiên xét tuyển.`
-},
-{
-  keys: ['phương thức 1 đại học cand', 'phuong thuc 1 dai hoc cand', 'xét tuyển thẳng đại học cand', 'xet tuyen thang dai hoc cand', 'điều kiện phương thức 1 đại học'],
-  answer: `<b>Điều kiện dự tuyển theo Phương thức 1 đối với đại học CAND</b><br><br>
-  - Thí sinh đạt giải thưởng theo quy định của Bộ GD&ĐT và thời gian đoạt giải không quá <b>03 năm</b> tính đến thời điểm xét tuyển thẳng.<br>
-  - Thí sinh được triệu tập tham dự kỳ thi chọn đội tuyển quốc gia dự thi Olympic quốc tế, khu vực được xét tuyển thẳng một trong các trường CAND theo nguyện vọng.<br>
-  - Thí sinh đoạt giải nhất, nhì, ba trong kỳ thi chọn học sinh giỏi quốc gia, quốc tế bậc THPT ở các môn phù hợp được xét tuyển thẳng vào các trường tương ứng theo quy định.<br>
-  - Tốt nghiệp THPT đến thời điểm xác nhận nhập học.<br><br>
-  <b>Một số hướng xét tuyển thẳng tiêu biểu:</b><br>
-  - Môn Toán, Vật lí, Hóa học, Ngữ văn, Lịch sử, Tiếng Anh: xét vào T01, T02, T04, T05.<br>
-  - Môn Toán, Vật lí, Ngữ văn, Lịch sử, Địa lí, Tiếng Anh: xét vào T03.<br>
-  - Môn Tiếng Anh: xét vào ngành Ngôn ngữ Anh của B06.<br>
-  - Môn Tiếng Trung Quốc: xét vào ngành Ngôn ngữ Trung Quốc của B06.<br>
-  - Môn Toán, Vật lí, Hóa học: xét vào T06, T07; ngành Kỹ thuật điện tử, viễn thông của T07; ngành Y khoa của T07; ngành Công nghệ thông tin và ngành An ninh mạng, phòng chống tội phạm sử dụng công nghệ cao của T01.`
-},
-{
-  keys: ['phương thức 2 đại học cand', 'phuong thuc 2 dai hoc cand', 'phương thức 2 đại học', 'điều kiện phương thức 2 đại học cand', 'dieu kien phuong thuc 2 dai hoc cand', 'chứng chỉ ngoại ngữ đại học cand', 'chung chi ngoai ngu dai hoc cand'],
-  answer: `<b>Điều kiện dự tuyển theo Phương thức 2 đối với đại học CAND</b><br><br>
-  - Có chứng chỉ ngoại ngữ quốc tế còn hạn <b>không quá 02 năm</b> tính từ ngày cấp đến <b>01/5/2026</b>.<br>
-  - Chứng chỉ do tổ chức được Bộ GD&ĐT cho phép cấp.<br>
-  - Không sử dụng chứng chỉ ngoại ngữ phiên bản <b>Home Edition</b>.<br>
-  - Tiếng Anh: IELTS (Academic) từ <b>5.5</b> trở lên; TOEFL iBT từ <b>46</b> trở lên; TOEIC (LR&SW) từ <b>600</b> và <b>242</b> trở lên; SAT từ <b>1100</b> trở lên.<br>
-  - Tiếng Trung Quốc từ <b>HSK 4</b> trở lên; tiếng Tây Ban Nha từ <b>DELE B2</b> trở lên; tiếng Pháp từ <b>DALF/DELF B2</b> trở lên; tiếng Nga từ <b>TRKI B2</b> trở lên; tiếng Đức từ <b>Goethe-Zertifikat/TEL B2</b> trở lên; tiếng Nhật từ <b>JLPT N3</b> trở lên; tiếng Hàn Quốc từ <b>TOPIK 4</b> trở lên; tiếng Ý từ <b>CELI 3</b> trở lên.<br>
-  - Ngành Ngôn ngữ Anh của B06 chỉ tiếp nhận thí sinh có chứng chỉ <b>tiếng Anh</b>.<br>
-  - Ngành Ngôn ngữ Trung Quốc của B06 chỉ tiếp nhận thí sinh có chứng chỉ <b>tiếng Trung Quốc</b>.<br>
-  - Học lực lớp 10, 11, 12 đạt loại <b>khá trở lên</b>; điểm trung bình chung môn ngoại ngữ các năm THPT đạt từ <b>7,0</b> trở lên.<br>
-  - Tốt nghiệp THPT đến thời điểm xác nhận nhập học.<br><br>
-  <b>Mốc thời gian cần nhớ:</b><br>
-  - Nếu đang dự định thi chứng chỉ ngoại ngữ quốc tế trong thời gian sơ tuyển thì vẫn được đăng ký, nhưng ngày thi chính thức phải trước <b>20/5/2026</b>.<br>
-  - Hoàn thành và nộp chứng chỉ ngoại ngữ tại các trường CAND trước <b>30/5/2026</b>.`
-},
-{
-  keys: ['phương thức 3 đại học cand', 'phuong thuc 3 dai hoc cand', 'phương thức 3 đại học', 'điều kiện phương thức 3 đại học cand', 'dieu kien phuong thuc 3 dai hoc cand'],
-  answer: `<b>Điều kiện dự tuyển theo Phương thức 3 đối với đại học CAND</b><br><br>
-  - Đối với thí sinh học THPT có môn ngoại ngữ là ngôn ngữ khác ngoài <b>Tiếng Anh</b> hoặc <b>Tiếng Trung Quốc</b>, nếu đăng ký ngành có sử dụng các môn này để xét tuyển thì vẫn có thể sử dụng điểm môn ngoại ngữ đang học để sơ tuyển theo quy định.<br>
-  - Thí sinh đang học lớp 12 vẫn được đăng ký sơ tuyển; sau khi có điểm tổng kết lớp 12 sẽ căn cứ quy định để xác định đủ điều kiện hay không.<br>
-  - Tốt nghiệp THPT đến thời điểm xác nhận nhập học.`
-},
-{
-  keys: ['tổ hợp xét tuyển đại học cand', 'to hop xet tuyen dai hoc cand', 'mã bài thi đại học cand', 'ma bai thi dai hoc cand', 'ca1 ca2 ca3 ca4'],
-  answer: `<b>Tổ hợp xét tuyển và mã bài thi đánh giá đối với đại học CAND</b><br><br>
-  - <b>Nhóm ngành nghiệp vụ An ninh, Cảnh sát:</b> A00, A01, C03, D01, X02, X03, X04; bài thi <b>CA1, CA2, CA3, CA4</b>.<br>
-  - <b>Ngành An ninh mạng và phòng chống tội phạm sử dụng công nghệ cao:</b> A00, A01, X26, X27, X28; bài thi <b>CA1, CA2</b>.<br>
-  - <b>Ngành Xây dựng Đảng và chính quyền nhà nước:</b> A01, C00, C03, D01, X02, X03, X04; bài thi <b>CA1, CA4</b>.<br>
-  - <b>Nhóm ngành Kỹ thuật - Hậu cần:</b> A00, A01, D01, X26, X27, X28; bài thi <b>CA1, CA2</b>.<br>
-  - <b>Ngành Kỹ thuật điện tử, viễn thông:</b> A00, A01, D01, X26, X27; bài thi <b>CA1, CA2</b>.<br>
-  - <b>Ngành Phòng cháy chữa cháy và cứu nạn, cứu hộ:</b> A00, A01, D01, D07; bài thi <b>CA1, CA2</b>. Đối với tổ hợp D01, học bạ các năm THPT có điểm tổng kết môn <b>Vật lí hoặc Hóa học từ 7,0</b> trở lên.<br>
-  - <b>Ngành Ngôn ngữ Anh:</b> A01, D01, D04, D09, D10; bài thi <b>CA1, CA2, CA3, CA4</b>.<br>
-  - <b>Ngành Ngôn ngữ Trung Quốc:</b> A01, D01, D04, D09, D10; bài thi <b>CA1, CA2, CA3, CA4</b>.<br>
-  - <b>Ngành Y khoa gửi đào tạo tại Học viện Quân y:</b> A00, A01, B00, B08, D07; bài thi <b>CA1, CA2, CA3</b>.<br>
-  - <b>Ngành Y khoa gửi đào tạo tại Trường Đại học Y dược:</b> B00, B08; bài thi <b>CA1, CA2, CA3</b>.<br>
-  - <b>Ngành Công nghệ thông tin:</b> A00, A01, X26, X27, X28; bài thi <b>CA1, CA2</b>.`
-},
-{
-  keys: ['ưu tiên đại học cand', 'uu tien dai hoc cand', 'điểm cộng đại học cand', 'diem cong dai hoc cand', 'điểm thưởng đại học cand', 'diem thuong dai hoc cand'],
-  answer: `<b>Ưu tiên trong tuyển sinh đại học CAND năm 2026</b><br><br>
-  - Điểm ưu tiên thực hiện theo Thông tư số <b>06/2026/TT-BGDĐT</b>.<br>
-  - Điểm ưu tiên khu vực chỉ áp dụng cho thí sinh tốt nghiệp THPT trong năm <b>2026</b> hoặc <b>2025</b>.<br>
-  - Thí sinh tốt nghiệp THPT từ năm <b>2024 trở về trước</b> không được cộng điểm ưu tiên khu vực.<br>
-  - Điểm thưởng theo quy định của Bộ Công an đối với thí sinh đoạt giải học sinh giỏi, khoa học kỹ thuật quốc gia, quốc tế: giải nhất cộng <b>1,0</b> điểm; giải nhì cộng <b>0,75</b> điểm; giải ba cộng <b>0,5</b> điểm; giải khuyến khích cộng <b>0,25</b> điểm.<br>
-  - Thí sinh đoạt nhiều giải chỉ được cộng điểm thưởng của <b>một giải cao nhất</b>.<br><br>
-  <b>Công thức điểm cộng:</b><br>
-  ĐC = ĐT + KV + Đth`
-},
-{
-  keys: ['công thức tính điểm phương thức 2 đại học cand', 'cong thuc tinh diem phuong thuc 2 dai hoc cand', 'điểm xét tuyển phương thức 2 đại học cand', 'diem xet tuyen phuong thuc 2 dai hoc cand'],
-  answer: `<b>Công thức tính điểm xét tuyển theo Phương thức 2 đối với đại học CAND</b><br><br>
-  <b>Điều kiện xét tuyển:</b><br>
-  - Đã đạt điều kiện sơ tuyển.<br>
-  - Nộp hồ sơ đăng ký dự tuyển về các trường CAND.<br>
-  - Tham gia bài thi đánh giá của Bộ Công an năm 2026.<br>
-  - Đăng ký nguyện vọng xét tuyển chính thức vào trường CAND là <b>nguyện vọng 1</b>.<br>
-  - Đảm bảo phân vùng tuyển sinh và ngưỡng đầu vào theo quy định.<br><br>
-  <b>Công thức tính điểm:</b><br>
-  ĐXT = BTBCA*3/5 + TA*2/5 + ĐC<br><br>
-  Trong đó:<br>
-  - ĐXT: Điểm xét tuyển.<br>
-  - BTBCA: Điểm bài thi đánh giá của Bộ Công an quy về thang điểm 30.<br>
-  - TA: Điểm chứng chỉ ngoại ngữ quốc tế quy về thang điểm 30.<br>
-  - ĐC: Điểm cộng.<br><br>
-  <b>Điểm cộng:</b><br>
-  ĐC = ĐT + KV + Đth<br><br>
-  Nếu tổng điểm quy đổi đạt từ <b>22,5</b> trở lên thì điểm cộng được xác định theo công thức:<br>
-  ĐC = [(30 - tổng điểm đạt được)/7,5] x (ĐT + KV + Đth)`
-},
-{
-  keys: ['xét tuyển phương thức 1 đại học', 'xet tuyen phuong thuc 1 dai hoc', 'thứ tự ưu tiên phương thức 1', 'thu tu uu tien phuong thuc 1'],
-  answer: `<b>Thứ tự ưu tiên xét tuyển theo Phương thức 1 đối với đại học CAND</b><br><br>
-  - Thứ nhất: xét thí sinh được triệu tập tham dự kỳ thi chọn đội tuyển quốc gia dự thi Olympic quốc tế, khu vực; trong đội tuyển quốc gia dự cuộc thi khoa học, kỹ thuật quốc tế.<br>
-  - Thứ hai: xét lần lượt thí sinh đoạt giải nhất, nhì, ba trong kỳ thi chọn học sinh giỏi quốc gia bậc THPT hoặc cuộc thi khoa học, kỹ thuật cấp quốc gia bậc THPT.<br>
-  - Thứ ba: xét thí sinh đoạt giải trong kỳ thi chọn học sinh giỏi quốc gia bậc THPT.<br>
-  - Thứ tư: xét thí sinh đoạt giải trong cuộc thi khoa học, kỹ thuật cấp quốc gia bậc THPT.<br>
-  - Thứ năm: xét thí sinh có điểm tổng kết của môn đoạt giải từ cao xuống thấp.<br><br>
-  <b>Lưu ý:</b><br>
-  - Huy chương vàng tương đương giải nhất, huy chương bạc tương đương giải nhì, huy chương đồng tương đương giải ba.<br>
-  - Nếu Phương thức 1 tuyển không đủ chỉ tiêu thì chỉ tiêu còn lại được chuyển sang Phương thức 2, Phương thức 3.<br>
-  - Thí sinh dự tuyển Phương thức 1 vẫn được tham gia xét tuyển theo Phương thức 2 hoặc Phương thức 3 nếu đủ điều kiện.`
-},
-{
-  keys: ['lĩnh vực dự tuyển vb2ca', 'lĩnh vực dự tuyển vb2', 'điều kiện chuyên ngành tốt nghiệp dự tuyển vb2', 'ngành dự tuyển vb2', 'chuyên ngành dự tuyển vb2'],
-  answer: `<b>Tuyển sinh đại học VB2 CAND năm 2026</b><br><br>
-  <b>Lĩnh vực dự tuyển:</b><br>
-  - Đăng ký nhóm ngành nghiệp vụ An ninh, nghiệp vụ Cảnh sát tại T01, T02, T04, T05: <b>không quy định</b> về lĩnh vực đào tạo, ngành đào tạo trước đó.<br>
-  - Đăng ký ngành An toàn thông tin (7480202) tại T01: thí sinh tốt nghiệp ngành, chuyên ngành thuộc mã lĩnh vực đào tạo <b>748</b>.<br>
-  - Đăng ký ngành Phòng cháy chữa cháy và cứu nạn, cứu hộ tại T06: thí sinh tốt nghiệp thuộc các mã lĩnh vực phù hợp như <b>738, 742, 744, 746, 748, 751, 752, 758, 772, 785, 731, 732, 734</b>.<br>
-  - Đăng ký đào tạo tại T07: thí sinh tốt nghiệp thuộc các mã lĩnh vực <b>748, 751, 752, 738, 742, 734, 758, 772, 776</b>.<br><br>
-  <b>Lưu ý:</b> Thí sinh dự tuyển Phương thức 1 được phép đăng ký dự tuyển Phương thức 2 phù hợp với lĩnh vực, ngành đào tạo.`
-},
-{
-  keys: ['phương thức 1 vb2', 'phuong thuc 1 vb2', 'điều kiện phương thức 1 vb2', 'dieu kien phuong thuc 1 vb2'],
-  answer: `<b>Điều kiện dự tuyển theo Phương thức 1 đối với đại học VB2 CAND</b><br><br>
-  Thí sinh đạt một trong các điều kiện sau:<br>
-  - Là <b>con Công an</b> có bằng tốt nghiệp đại học loại <b>xuất sắc</b>.<br>
-  - Tốt nghiệp đại học loại <b>giỏi, xuất sắc</b> về một số ngành, chuyên ngành thuộc lĩnh vực khoa học kỹ thuật, công nghệ, trí tuệ nhân tạo (mã lĩnh vực <b>748, 751, 752</b>).<br>
-  - Tốt nghiệp đại học loại <b>xuất sắc, giỏi</b> và có chứng chỉ ngoại ngữ quốc tế tương đương IELTS (Academic) đạt từ <b>6.5</b> trở lên; riêng con đẻ của cán bộ Công an từ <b>6.0</b> trở lên.<br>
-  - Tốt nghiệp đại học loại <b>khá</b> và có chứng chỉ ngoại ngữ quốc tế tương đương IELTS (Academic) đạt từ <b>7.0</b> trở lên; riêng con đẻ của cán bộ Công an từ <b>6.5</b> trở lên.<br>
-  - Tốt nghiệp đại học loại <b>khá</b> ngành/nhóm ngành Công nghệ thông tin (nhóm mã <b>74802</b>) và có chứng chỉ ngoại ngữ quốc tế tương đương IELTS (Academic) đạt từ <b>6.5</b> trở lên; riêng con đẻ của cán bộ Công an từ <b>6.0</b> trở lên.<br><br>
-  <b>Thời hạn chứng chỉ ngoại ngữ:</b><br>
-  - Không quá <b>02 năm</b> kể từ ngày cấp đến ngày <b>01/8/2026</b>.<br>
-  - Nếu đang dự định thi chứng chỉ trong thời gian sơ tuyển thì vẫn được đăng ký, nhưng phải hoàn thành và nộp kết quả về Công an địa phương trước thời điểm nộp hồ sơ về các trường CAND.`
-},
-{
-  keys: ['phương thức 2 vb2', 'phuong thuc 2 vb2', 'công thức tính điểm vb2', 'cong thuc tinh diem vb2', 'điểm xét tuyển vb2', 'diem xet tuyen vb2'],
-  answer: `<b>Xét tuyển theo Phương thức 2 đối với đại học VB2 CAND</b><br><br>
-  <b>Công thức tính điểm:</b><br>
-  ĐXT = BTBCA*3/10 + ĐC<br><br>
-  Trong đó:<br>
-  - ĐXT: Điểm xét tuyển.<br>
-  - BTBCA: Điểm bài thi đánh giá của Bộ Công an quy về thang điểm 30.<br>
-  - ĐC: Điểm cộng.<br><br>
-  <b>Điểm cộng:</b><br>
-  ĐC = ĐT + KV + Đth<br><br>
-  Nếu thí sinh đạt điểm bài thi đánh giá của Bộ Công an quy về thang điểm 30 từ <b>22,5</b> điểm trở lên thì điểm cộng được tính theo công thức:<br>
-  ĐC = [(30 - tổng điểm đạt được)/7,5] x (ĐT + KV + Đth)<br><br>
-  <b>Nếu nhiều thí sinh bằng điểm:</b><br>
-  - Thứ nhất: xét điểm bài thi đánh giá của Bộ Công an, không tính điểm cộng.<br>
-  - Thứ hai: xét điểm Phần 1 cao hơn.<br>
-  - Thứ ba: xét kết quả học tập bậc đại học quy về thang điểm 4 từ cao xuống thấp.`
-},
-{
-  keys: ['ưu tiên vb2', 'uu tien vb2', 'điểm thưởng vb2', 'diem thuong vb2', 'con đẻ cán bộ công an vb2', 'con de can bo cong an vb2'],
-  answer: `<b>Ưu tiên trong tuyển sinh đại học VB2 CAND năm 2026</b><br><br>
-  - Thực hiện theo Thông tư số <b>06/2026/TT-BGDĐT ngày 15/2/2026</b> của Bộ GD&ĐT.<br>
-  - Thí sinh có chứng chỉ tương đương IELTS (Academic) đạt từ <b>6.5</b> trở lên: được cộng <b>1,0 điểm</b>.<br>
-  - Thí sinh có chứng chỉ tương đương IELTS (Academic) đạt từ <b>6.0</b> trở lên: được cộng <b>0,5 điểm</b>.<br>
-  - Thí sinh là <b>con đẻ của cán bộ Công an</b>: được cộng <b>1,0 điểm</b>.<br>
-  - Nếu thí sinh có nhiều diện điểm thưởng thì chỉ được hưởng <b>mức cao nhất</b>.`
-},
-{
-  keys: ['trung cấp cand 2026', 'trung cap cand 2026', 'điều kiện trung cấp cand', 'dieu kien trung cap cand'],
-  answer: `<b>Tuyển sinh trung cấp chính quy tuyển mới năm 2026</b><br><br>
-  <b>Phương thức 1 - Xét tuyển thẳng:</b><br>
-  - Thứ nhất: con đẻ của liệt sĩ CAND.<br>
-  - Thứ hai: con đẻ của công dân được công nhận là liệt sĩ hy sinh trong trường hợp trực tiếp tham gia đấu tranh chống lại hoặc ngăn chặn hành vi nguy hiểm cho xã hội, dũng cảm thực hiện công việc cấp bách, nguy hiểm phục vụ an ninh.<br>
-  - Thứ ba: con đẻ của thương binh CAND có tỉ lệ thương tật từ <b>81%</b> trở lên.<br>
-  - Thứ tư: con đẻ của Anh hùng lực lượng vũ trang trong CAND hoặc Anh hùng Lao động trong CAND.<br><br>
-  <b>Phương thức 2 - Xét tuyển:</b><br>
-  - Tham dự tốt nghiệp THPT và tham dự kỳ thi đánh giá của Bộ Công an năm 2026.<br>
-  - Đảm bảo ngưỡng đầu vào trình độ trung cấp theo quy định và được X02 thông báo trước khi xét tuyển.<br>
-  - Có hồ sơ đăng ký dự tuyển trung cấp do Công an đơn vị, địa phương gửi về X02.<br>
-  - Tốt nghiệp THPT đến thời điểm xác nhận nhập học.<br>
-  - Chiến sĩ nghĩa vụ Công an tại ngũ, xuất ngũ, học sinh T11 không đủ điều kiện dự tuyển đại học hoặc chỉ có nguyện vọng trung cấp thì được phép nộp hồ sơ vào một trường CAND đúng phân vùng để dự thi bài thi đánh giá của Bộ Công an năm 2026.`
-},
-{
-  keys: ['ưu tiên trung cấp cand', 'uu tien trung cap cand', 'điểm cộng trung cấp cand', 'diem cong trung cap cand'],
-  answer: `<b>Ưu tiên trong tuyển sinh trung cấp CAND năm 2026</b><br><br>
-  - Điểm ưu tiên đối tượng, khu vực thực hiện theo Thông tư số <b>05/2021/TT-BLĐTBXH</b> ngày 07/7/2021.<br>
-  - Điểm thưởng đối với thí sinh đoạt giải từ giải khuyến khích trở lên trong kỳ thi học sinh giỏi, khoa học kỹ thuật quốc gia, quốc tế:<br>
-  + Giải nhất hoặc huy chương vàng: <b>1,0 điểm</b>.<br>
-  + Giải nhì hoặc huy chương bạc: <b>0,75 điểm</b>.<br>
-  + Giải ba hoặc huy chương đồng: <b>0,5 điểm</b>.<br>
-  + Giải khuyến khích: <b>0,25 điểm</b>.<br>
-  - Thí sinh đoạt nhiều giải chỉ được cộng điểm của <b>giải cao nhất</b>.<br>
-  - Cộng <b>1,0 điểm</b> đối với thí sinh là con đẻ của cán bộ Công an đang công tác hoặc đã nghỉ hưu, nhân viên hợp đồng lao động không xác định thời hạn trong CAND, cán bộ đã nghỉ mất sức hoặc chuyển ngành xuất ngũ hoặc đã từ trần có thời gian công tác liên tục trong lực lượng Công an từ <b>15 năm</b> trở lên.<br>
-  - Cộng <b>0,5 điểm</b> đối với thí sinh là con đẻ của Trưởng Công an xã, Phó trưởng Công an xã bán chuyên trách có thời gian công tác từ đủ <b>15 năm</b> trở lên.<br>
-  - Nếu bố hoặc mẹ đã bị xử lý hình sự, buộc thôi việc hoặc tước danh hiệu CAND thì thí sinh không được hưởng ưu tiên theo người đó.<br>
-  - Nếu thuộc nhiều diện ưu tiên thì được hưởng <b>mức cao nhất</b>.`
-},
-{
-  keys: ['văn hóa nhỏ tuổi', 'van hoa nho tuoi', 'điều kiện văn hóa nhỏ tuổi', 'dieu kien van hoa nho tuoi', 'tuyển sinh văn hóa nhỏ tuổi', 'tuyen sinh van hoa nho tuoi'],
-  answer: `<b>Tuyển sinh đào tạo văn hóa nhỏ tuổi năm 2026</b><br><br>
-  <b>1. Đối tượng tuyển thẳng:</b><br>
-  - Con đẻ của liệt sĩ CAND.<br>
-  - Con đẻ của thương binh CAND có tỉ lệ thương tật từ <b>81%</b> trở lên.<br>
-  - Con đẻ của Anh hùng lực lượng vũ trang trong CAND.<br>
-  - Con đẻ của Anh hùng Lao động trong CAND.<br>
-  - Con đẻ của công dân được công nhận là liệt sĩ hy sinh trong trường hợp trực tiếp tham gia đấu tranh chống lại hoặc ngăn chặn các hành vi nguy hiểm cho xã hội, dũng cảm thực hiện công việc cấp bách, nguy hiểm phục vụ an ninh.<br><br>
-  <b>2. Điều kiện tuyển thẳng:</b><br>
-  - Bảo đảm tiêu chuẩn chính trị, phẩm chất đạo đức theo quy định hiện hành của Bộ Công an.<br>
-  - Tốt nghiệp trung học cơ sở trong năm dự tuyển.<br>
-  - Học lực từ loại <b>khá</b> trở lên, hạnh kiểm đạt loại <b>tốt</b> trong các năm học THCS.<br>
-  - Đủ sức khỏe tuyển vào CAND theo quy định tại Thông tư số <b>62/2023/TT-BCA</b> và <b>131/2025/TT-BCA</b>.`
-},
-{
-  keys: ['xét tuyển văn hóa nhỏ tuổi', 'xet tuyen van hoa nho tuoi', 'dân tộc thiểu số văn hóa nhỏ tuổi', 'dan toc thieu so van hoa nho tuoi'],
-  answer: `<b>Đối tượng, điều kiện xét tuyển đối với đào tạo văn hóa nhỏ tuổi</b><br><br>
-  <b>Đối tượng xét tuyển:</b> Người dân tộc thiểu số.<br><br>
-  <b>Điều kiện xét tuyển:</b><br>
-  - Thuộc thành phần dân tộc cần tuyển theo từng địa phương, nếu có.<br>
-  - Bảo đảm tiêu chuẩn chính trị, phẩm chất đạo đức theo quy định hiện hành của Bộ Công an.<br>
-  - Tốt nghiệp trung học cơ sở trong năm dự tuyển.<br>
-  - Học lực từ loại <b>khá</b> trở lên, hạnh kiểm đạt loại <b>tốt</b> trong các năm học THCS.<br>
-  - Đủ sức khỏe tuyển vào CAND theo quy định tại Thông tư số <b>62/2023/TT-BCA</b> và <b>131/2025/TT-BCA</b>.<br>
-  - Thường trú từ <b>05 năm</b> trở lên tính đến tháng xét tuyển tại các địa bàn đặc biệt khó khăn, xã khu vực III, xã biên giới, xã an toàn khu, vùng bãi ngang ven biển và hải đảo theo quy định còn hiệu lực.<br>
-  - Học THCS liên tục và tốt nghiệp THCS tại trường đóng trên các địa bàn nêu trên hoặc tại trường dân tộc nội trú, trừ trường hợp nơi thường trú không có trường THCS.<br>
-  - Thông thạo tiếng nói của dân tộc mình hoặc dân tộc thiểu số theo từng vùng, miền của địa phương nơi thường trú, có xác nhận của đơn vị sơ tuyển.`
-},
-{
-  keys: ['quy đổi ielts phương thức 2', 'quy doi ielts phuong thuc 2', 'ielts phương thức 2', 'ielts phuong thuc 2', 'điểm quy đổi ngoại ngữ phương thức 2', 'diem quy doi ngoai ngu phuong thuc 2', 'quy đổi điểm ngoại ngữ phương thức 2', 'quy đổi ngoại ngữ phương thức 2'],
-  answer: `<b>Quy đổi chứng chỉ ngoại ngữ quốc tế xét tuyển Phương thức 2</b><br><br>
-  - IELTS <b>5.5</b> → Điểm quy đổi <b>7.5</b><br>
-  - IELTS <b>6.0</b> → Điểm quy đổi <b>8.0</b><br>
-  - IELTS <b>6.5</b> → Điểm quy đổi <b>8.5</b><br>
-  - IELTS <b>7.0</b> → Điểm quy đổi <b>9.0</b><br>
-  - IELTS <b>7.5</b> → Điểm quy đổi <b>9.5</b><br>
-  - IELTS <b>8.0</b> → Điểm quy đổi <b>10</b><br>
-  - IELTS <b>8.5</b> → Điểm quy đổi <b>10</b><br>
-  - IELTS <b>9.0</b> → Điểm quy đổi <b>10</b>.`
-},
-{
-  keys: ['quy đổi ielts phương thức 3', 'quy doi ielts phuong thuc 3', 'ielts phương thức 3', 'ielts phuong thuc 3', 'điểm quy đổi ngoại ngữ phương thức 3', 'diem quy doi ngoai ngu phuong thuc 3', 'quy đổi điểm ngoại ngữ phương thức 3', 'quy đổi ngoại ngữ phương thức 3'],
-  answer: `<b>Quy đổi chứng chỉ ngoại ngữ quốc tế xét tuyển Phương thức 3</b><br><br>
-  - IELTS <b>4.0</b> → Điểm quy đổi <b>7.0</b><br>
-  - IELTS <b>4.5</b> → Điểm quy đổi <b>7.0</b><br>
-  - IELTS <b>5.0</b> → Điểm quy đổi <b>7.0</b><br>
-  - IELTS <b>5.5</b> → Điểm quy đổi <b>7.5</b><br>
-  - IELTS <b>6.0</b> → Điểm quy đổi <b>8.0</b><br>
-  - IELTS <b>6.5</b> → Điểm quy đổi <b>8.5</b><br>
-  - IELTS <b>7.0</b> → Điểm quy đổi <b>9.0</b><br>
-  - IELTS <b>7.5</b> → Điểm quy đổi <b>9.5</b><br>
-  - IELTS <b>8.0</b> → Điểm quy đổi <b>10</b><br>
-  - IELTS <b>8.5</b> → Điểm quy đổi <b>10</b><br>
-  - IELTS <b>9.0</b> → Điểm quy đổi <b>10</b>.`
-},
-{
-  keys: ['toefl toeic sat quy đổi', 'toefl toeic sat quy doi', 'quy đổi toefl toeic sat', 'quy doi toefl toeic sat'],
-  answer: `<b>Quy đổi tương đương TOEFL iBT, TOEIC và SAT</b><br><br>
-  <b>IELTS 9.0:</b> TOEFL iBT <b>118-120</b>; TOEIC <b>945-990 và 376-400</b>; SAT <b>1400-1600</b>.<br>
-  <b>IELTS 8.5:</b> TOEFL iBT <b>115-117</b>; TOEIC <b>945-990 và 351-375</b>; SAT <b>1400-1600</b>.<br>
-  <b>IELTS 8.0:</b> TOEFL iBT <b>110-114</b>; TOEIC <b>900-944 và 325-350</b>; SAT <b>1300-1390</b>.<br>
-  <b>IELTS 7.5:</b> TOEFL iBT <b>102-109</b>; TOEIC <b>850-899 và 300-324</b>; SAT <b>1300-1390</b>.<br>
-  <b>IELTS 7.0:</b> TOEFL iBT <b>94-101</b>; TOEIC <b>785-849 và 286-299</b>; SAT <b>1300-1390</b>.<br>
-  <b>IELTS 6.5:</b> TOEFL iBT <b>79-93</b>; TOEIC <b>730-784 và 271-285</b>; SAT <b>1100-1290</b>.<br>
-  <b>IELTS 6.0:</b> TOEFL iBT <b>60-78</b>; TOEIC <b>680-729 và 257-270</b>; SAT <b>1100-1290</b>.<br>
-  <b>IELTS 5.5:</b> TOEFL iBT <b>46-59</b>; TOEIC <b>600-679 và 242-256</b>; SAT <b>1100-1290</b>.`
-},
-{
-  keys: ['hsk jlpt topik quy đổi', 'hsk jlpt topik quy doi', 'quy đổi tiếng trung nhật hàn', 'quy doi tieng trung nhat han'],
-  answer: `<b>Quy đổi tương đương chứng chỉ tiếng Trung, Nhật, Hàn</b><br><br>
-  <b>IELTS 9.0 - 8.5:</b> HSK <b>6 trở lên</b>; JLPT <b>N1</b>; TOPIK <b>6</b>.<br>
-  <b>IELTS 8.0 - 7.0:</b> HSK <b>5</b>; JLPT <b>N2</b>; TOPIK <b>5</b>.<br>
-  <b>IELTS 6.5 - 5.5:</b> HSK <b>4</b>; JLPT <b>N3</b>; TOPIK <b>4</b>.`
-},
-{
-  keys: ['dele delf dalk trki goethe celi', 'quy đổi chứng chỉ châu âu', 'quy doi chung chi chau au', 'dele delf delf dalk trki goethe celi'],
-  answer: `<b>Quy đổi tương đương các chứng chỉ ngoại ngữ quốc tế khác</b><br><br>
-  <b>IELTS 9.0 - 8.5:</b> DELE <b>C2</b>; DALF <b>C2</b>; TRKI <b>4 (C2)</b>; Goethe-Zertifikat/telc <b>C2</b>; CELI <b>5</b>.<br>
-  <b>IELTS 8.0 - 7.0:</b> DELE <b>C1</b>; DALF <b>C1</b>; TRKI <b>3 (C1)</b>; Goethe-Zertifikat/telc <b>C1</b>; CELI <b>4</b>.<br>
-  <b>IELTS 6.5 - 5.5:</b> DELE <b>B2</b>; DELF <b>B2</b>; TRKI <b>2 (B2)</b>; Goethe-Zertifikat/telc <b>B2</b>; CELI <b>3</b>.`
-},
-{
-  keys: ['lưu ý về chứng chỉ ngoại ngữ', 'home edition', 'chứng chỉ home edition có được không', 'chung chi home edition'],
-  answer: `<b>Lưu ý về chứng chỉ ngoại ngữ quốc tế</b><br><br>
-  - Chứng chỉ phải được cấp bởi <b>các đơn vị, tổ chức được Bộ Giáo dục và Đào tạo cho phép</b>.<br>
-  - <b>Không sử dụng chứng chỉ Home Edition</b>.`
-},
-            { 
-                keys: ['hồ sơ đăng ký sơ tuyển'], 
-                answer: "<b>Hồ sơ đăng ký sơ tuyển gồm:</b><br>1. Phiếu đăng ký (nhận tại CA xã).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. Giấy khai sinh.<br>5. 4 ảnh 4x6.<br><i>Chi tiết xem tại Menu > Điều kiện.</i>" 
-            },
-            { 
-                keys: ['quy định về độ tuổi', 'độ tuổi'], 
-                answer: "<b>Quy định độ tuổi mới nhất:</b><br>- Học sinh phổ thông: ≤ 22 tuổi.<br>- Dân tộc thiểu số: ≤ 25 tuổi.<br>- Văn bằng 2 / Cán bộ: ≤ 30 tuổi." 
-            },
-            { 
-                keys: ['máu', 'xét nghiệm', 'viêm gan', 'hiv', 'ma túy'], 
-                answer: "<b>Khám cận lâm sàng bắt buộc (TT 62):</b><br>- Xét nghiệm máu: HIV, Viêm gan B, C, chức năng gan thận.<br>- Xét nghiệm nước tiểu: Tìm chất ma túy (Morphin, Heroin...).<br>- Chẩn đoán: X-quang phổi, Siêu âm bụng, Điện tim."
-            },
-            { 
-                keys: ['mắt', 'cận', 'thị lực'], 
-                answer: "<b>Tiêu chuẩn Mắt:</b><br>- Cận thị: Không quá 3 diop.<br>- Thị lực qua kính: Đạt 19/10 tổng 2 mắt.<br>- Không tuyển: Loạn thị, Mù màu." 
-            },
-            {
-                keys: ['xăm', 'sẹo', 'phun môi'], 
-                answer: "<b>Quy định Thẩm mỹ:</b> Cấm tuyệt đối hình xăm, chữ xăm trên da. Phun xăm thẩm mỹ (nữ) phải tự nhiên. Sẹo lồi/xấu ở vị trí lộ diện sẽ bị loại."
-            },
-            {
-                keys: ['nghĩa vụ', 'đại học đi nghĩa vụ', '2025'], 
-                answer: "<b>Điểm mới Tuyển quân 2025:</b> Khuyến khích công dân có trình độ Đại học, Cao đẳng tham gia nghĩa vụ CAND. Đây là nguồn để chuyển chuyên nghiệp sau này."
-            },
-            {
-                keys: ['cộng điểm', 'ưu tiên', 'thạc sĩ', 'tiến sĩ'],
-                answer: "<b>Chính sách ưu tiên:</b><br>- Tuyển thẳng: Con Liệt sĩ, Thương binh >81%.<br>- Cộng điểm VB2: Tiến sĩ (+2.0), Thạc sĩ (+1.5), Bằng Giỏi (+1.0)."
-            },
-            {
-                keys: ['trĩ', 'bệnh trĩ'],
-                answer: "<b>Bệnh trĩ:</b> Nếu bị trĩ nhiều búi, búi to hoặc chảy máu sẽ <b>KHÔNG ĐẠT</b> tiêu chuẩn sức khỏe."
-            },
-            {
-                keys: ["chiều cao tiêu chuẩn", "chieu cao tieu chuan", "chiều cao tuyển sinh CAND", "chieu cao tuyen sinh cand", "cao bao nhiêu thì đạt", "cao bao nhieu thi dat", "chiều cao nam nữ", "chieu cao nam nu", "em cao bao nhieu thi duoc", "con toi cao bao nhieu thi duoc", "cao toi thieu", "cao toi da"],
-                answer: `<b>Chiều cao tiêu chuẩn</b><br>• Nam: <b>1m64–1m95</b>.<br>• Nữ: <b>1m58–1m80</b>.<br><i>Có các mức ưu tiên chiều cao cho một số đối tượng (dân tộc thiểu số, UT1, tốt nghiệp ĐH khối KHTN/Kỹ thuật/CNTT, tuyển sinh văn hóa THPT).</i>`
-            },
-            {
-                keys: ["chiều cao nam", "chieu cao nam", "nam cao bao nhiêu", "nam cao bao nhieu", "nam tối thiểu bao nhiêu", "nam toi thieu bao nhieu", "em nam cao 1m63 co duoc khong", "nam cao 1m64 co dat khong", "nam cao 1m60 co duoc khong"],
-                answer: `<b>Chiều cao (Nam)</b><br>Nam đạt từ <b>1m64</b> đến <b>1m95</b>.`
-            },
-            {
-                keys: ["chiều cao nữ", "chieu cao nu", "nữ cao bao nhiêu", "nu cao bao nhieu", "nữ tối thiểu bao nhiêu", "nu toi thieu bao nhieu", "em nu cao 1m57 co duoc khong", "nu cao 1m58 co dat khong", "nu cao 1m55 co duoc khong"],
-                answer: `<b>Chiều cao (Nữ)</b><br>Nữ đạt từ <b>1m58</b> đến <b>1m80</b>.`
-            },
-            {
-                keys: ["ưu tiên chiều cao dân tộc thiểu số", "uu tien chieu cao dan toc thieu so", "dân tộc thiểu số chiều cao", "dan toc thieu so chieu cao", "dtts chiều cao", "dtts chieu cao", "uu tien chieu cao dan toc", "dan toc thieu so cao bao nhieu", "em dan toc cao 1m61 co duoc khong"],
-                answer: `<b>Ưu tiên chiều cao (Người dân tộc thiểu số)</b><br>Nam từ <b>1m62</b>, Nữ từ <b>1m56</b>.`
-            },
-            {
-                keys: ["thị lực không kính", "thi luc khong kinh", "không đeo kính nhìn được mấy/10", "khong deo kinh nhin duoc may/10", "thi lực không kính", "thi luc khong kinh", "mat 9/10 co dat khong", "em khong deo kinh duoc 8/10 co duoc khong"],
-                answer: `<b>Thị lực không kính</b><br>Mỗi mắt đạt <b>9–10/10</b>, tổng 2 mắt đạt <b>18/10</b> trở lên.`
-            },
-            {
-                keys: ["cận thị", "can thi", "viễn thị", "vien thi", "cận mấy độ", "can may do", "viễn mấy độ", "vien may do", "can thi may do", "vien thi may do", "can 3 diop", "em can 3 do co duoc khong", "em can 4 do co duoc khong"],
-                answer: `<b>Cận thị/viễn thị</b><br>Mỗi mắt không quá <b>03 đi-ốp</b>.`
-            },
-            {
-                keys: ["loạn thị", "loan thi", "loạn thị bao nhiêu", "loan thi bao nhieu", "loan thi 1 do", "em loan thi 1 do co duoc khong", "loan thi tren 1 do co bi loai khong"],
-                answer: `<b>Loạn thị</b><br>Phải là loạn thị sinh lý hoặc mỗi mắt dưới <b>01 đi-ốp</b>.`
-            },
-            {
-                keys: ["thị lực sau chỉnh kính", "thi luc sau chinh kinh", "đeo kính thị lực", "deo kinh thi luc", "đeo kính có được không", "deo kinh co duoc khong", "em deo kinh thi duoc khong", "tong 2 mat 19/10"],
-                answer: `<b>Thị lực sau chỉnh kính</b><br>Một mắt tối thiểu <b>9/10</b>, tổng 2 mắt đạt <b>19/10</b> trở lên.<br>Thí sinh phải cam kết bảo đảm tiêu chuẩn thị lực nếu trúng tuyển.`
-            },
-            {
-                keys: ["mù màu", "mu mau", "rối loạn sắc tố", "roi loan sac to", "mù màu có được không", "mu mau co duoc khong", "mu mau xanh do"],
-                answer: `<b>Mù màu / rối loạn sắc tố</b><br>Mù màu (rối loạn sắc tố) trục xanh lá–đỏ mức độ nhẹ (điểm 3) hoặc nặng (điểm 4–5) sẽ làm giảm loại sức khỏe và <b>không đạt điều kiện</b> (chỉ nhận Loại 1–2).`
-            },
-            {
-                keys: ["ma túy", "ma tuy", "nghiện ma túy", "nghien ma tuy", "test ma túy", "test ma tuy", "co test ma tuy khong", "em tung su dung chat kich thich co sao"],
-                answer: `<b>Ma túy</b><br>Tuyệt đối không nghiện các chất ma túy và tiền chất.`
-            },
-            {
-                keys: ["xăm hình", "xam hinh", "tattoo", "vết trổ", "vet tro", "phun xăm", "phun xam", "xam co duoc khong", "xam nho co bi loai khong", "phun moi co duoc khong", "xam long may co duoc khong"],
-                answer: `<b>Xăm hình / phun xăm</b><br>Không có vết trổ, vết xăm (kể cả phun xăm) trên da.<br>Ngoại lệ: <b>nữ</b> được xăm thẩm mỹ <b>lông mày, môi</b>.`
-            },
-            {
-                keys: ["bấm lỗ tai nam", "bam lo tai nam", "piercing nam", "nam bấm lỗ tai", "nam bam lo tai", "nam bam tai co bi loai khong", "nam bam mui co bi loai khong"],
-                answer: `<b>Piercing / bấm lỗ (Nam)</b><br>Nam không có lỗ bấm ở tai, mũi và các vị trí khác (lỗ tai đã liền thành sẹo vẫn được chấp nhận).`
-            },
-            {
-                keys: ["bấm lỗ tai nữ", "bam lo tai nu", "piercing nữ", "piercing nu", "nữ bấm lỗ tai", "nu bam lo tai", "nu duoc bam may lo", "nu bam 2 lo 1 tai co duoc khong", "nu bam mui co duoc khong"],
-                answer: `<b>Piercing / bấm lỗ (Nữ)</b><br>Nữ không có từ <b>02 lỗ bấm trở lên</b> trên <b>01 tai</b>; không có lỗ bấm ở mũi và các vị trí khác.`
-            },
-            {
-                keys: ["rối loạn sắc tố da", "roi loan sac to da", "da có bị nám", "da co bi nam", "nám má", "nam ma", "da bi dom mau co sao"],
-                answer: `<b>Da</b><br>Không bị rối loạn sắc tố da (trừ <b>nám má</b>).`
-            },
-            {
-                keys: ["sẹo lồi", "seo loi", "sẹo co kéo", "seo co keo", "sẹo vùng mặt tay chân", "seo vung mat tay chan", "seo co bi loai khong", "seo vung mat co bi loai khong", "seo canh tay co bi loai khong"],
-                answer: `<b>Sẹo</b><br>Không có sẹo lồi co kéo ở vùng <b>đầu, mặt, cổ, cẳng tay, bàn tay, bàn chân</b>.`
-            },
-            {
-                keys: ["tóc theo điều lệnh", "toc theo dieu lenh", "tóc nhuộm", "toc nhuom", "tóc bình thường", "toc binh thuong", "toc nhuom co bi loai khong", "toc uon co sao"],
-                answer: `<b>Tóc</b><br>Màu và dạng tóc bình thường theo Điều lệnh CAND.`
-            },
-            {
-                keys: ["bệnh tật", "benh tat", "tiêu chuẩn bệnh", "tieu chuan benh", "bảng số 2", "bang so 2", "phụ lục I", "phu luc i", "tieu chuan benh tat", "bang benh", "co benh nay co thi duoc khong"],
-                answer: `<b>Hệ thống tiêu chuẩn bệnh tật</b><br>Để đạt sức khỏe <b>Loại 1</b> hoặc <b>Loại 2</b>, thí sinh không được có bất kỳ chỉ tiêu nào bị <b>điểm 3</b> trở lên.`
-            },
-            {
-                keys: ["răng hàm mặt", "rang ham mat", "mất răng", "mat rang", "sâu răng", "sau rang", "mat 1 rang co duoc khong", "mat 3 rang co duoc khong", "sau rang do 3"],
-                answer: `<b>Răng – Hàm – Mặt</b><br>Mất tối đa <b>3 răng</b> nhưng sức nhai vẫn đạt <b>85%</b> trở lên; không ... răng sâu độ 3 (hoặc chỉ có tối đa 3 răng sâu độ 3 đã xử lý).`
-            },
-            {
-                keys: ["tai mũi họng", "tai mui hong", "viêm tai giữa", "viem tai giua", "nói lắp", "noi lap", "nói ngọng", "noi ngong"],
-                answer: `<b>Tai – Mũi – Họng</b><br>Sức nghe tiếng nói thường đạt <b>4–5m</b>; không bị viêm tai giữa mạn tính; không nói lắp, nói ngọng.`
-            },
-            {
-                keys: ["thần kinh", "than kinh", "động kinh", "dong kinh", "ra mồ hôi tay chân", "ra mo hoi tay chan"],
-                answer: `<b>Thần kinh</b><br>Không bị đau đầu dai dẳng; không có dấu hiệu động kinh; không bị ra mồ hôi tay chân mức độ vừa và nặng.`
-            },
-            {
-                keys: ["tâm thần", "tam than", "trầm cảm", "tram cam", "lo âu", "lo au", "tâm thần phân liệt", "tam than phan liet"],
-                answer: `<b>Tâm thần</b><br>Không mắc các rối loạn trầm cảm, lo âu; không có dấu hiệu tâm thần phân liệt.`
-            },
-            {
-                keys: ["tim mạch", "tim mach", "huyết áp", "huyet ap", "mạch", "mach", "huyet ap bao nhieu thi dat", "mach bao nhieu thi dat"],
-                answer: `<b>Tim mạch</b><br>Huyết áp tối đa <b>100–130 mmHg</b>; huyết áp tối thiểu <b>≤ 85 mmHg</b>; mạch <b>57–85 lần/phút</b>.`
-            },
-            {
-                keys: ["tiêu hóa", "tieu hoa", "trĩ", "tri", "viêm gan B", "viem gan b"],
-                answer: `<b>Tiêu hóa</b><br>Không bị trĩ nhiều búi hoặc búi to; không bị viêm gan B mạn tính giai đoạn hoạt động,.`
-            },
-            {
-                keys: ["đào tạo tiến sĩ", "dao tao tien si", "đào tạo thạc sĩ", "dao tao thac si", "tiến sĩ thạc sĩ CAND", "tien si thac si cand", "đối tượng thạc sĩ tiến sĩ", "doi tuong thac si tien si", "hoc thac si cand", "hoc tien si cand"],
-                answer: `<b>Đào tạo Tiến sĩ/Thạc sĩ</b><br>Đối tượng: cán bộ quản lý giáo dục, giảng viên, lãnh đạo cấp phòng trở lên hoặc cán bộ thuộc quy hoạch chức danh tương đương.`
-            },
-            {
-                keys: ["tuổi dự tuyển tiến sĩ", "tuoi du tuyen tien si", "tiến sĩ không quá bao nhiêu tuổi", "tien si khong qua bao nhieu tuoi", "tuoi tien si"],
-                answer: `<b>Tuổi dự tuyển Tiến sĩ</b><br>Không quá <b>50 tuổi</b> tính đến năm dự tuyển.`
-            },
-            {
-                keys: ["tuổi dự tuyển thạc sĩ", "tuoi du tuyen thac si", "thạc sĩ không quá bao nhiêu tuổi", "thac si khong qua bao nhieu tuoi", "tuoi thac si"],
-                answer: `<b>Tuổi dự tuyển Thạc sĩ</b><br>Không quá <b>45 tuổi</b> tính đến năm dự tuyển.`
-            },
-            {
-                keys: ["tiêu chuẩn học lực", "tieu chuan hoc luc", "học lực khá", "hoc luc kha", "UT1 học lực", "ut1 hoc luc", "nhóm UT1", "nhom ut1", "nhom ut1 la gi", "em thuoc ut1 can hoc luc gi"],
-                answer: `<b>Tiêu chuẩn học lực (THPT)</b><br>• Nhóm UT1: kết quả học tập từ mức “<b>Đạt</b>” trở lên.<br>• Các đối tượng khác: học lực <b>Khá</b> trở lên trong các năm THPT.`
-            },
-            {
-                keys: ["điều kiện điểm thi tối thiểu từng môn tổ hợp dự tuyển", "dieu kien diem thi toi thieu tung mon to hop du tuyen", "từng môn 6,5", "tung mon 6,5", "dân tộc 6,0", "dan toc 6,0", "6.5", "6,5", "6.0", "6,0", "em dan toc can diem may"],
-                answer: `<b>Điểm tối thiểu từng môn (tổ hợp xét tuyển)</b><br>Từng môn đạt từ <b>6,5</b> trở lên; riêng người dân tộc thiểu số là <b>6,0</b> trở lên.`
-            },
-            {
-                keys: ["độ tuổi", "do tuoi", "độ tuổi dự tuyển", "do tuoi du tuyen", "không quá 22 tuổi", "khong qua 22 tuoi", "dân tộc không quá 25 tuổi", "dan toc khong qua 25 tuoi", "22 tuoi", "25 tuoi", "em 23 tuoi co duoc du tuyen khong", "em dan toc 26 tuoi co duoc khong"],
-                answer: `<b>Độ tuổi</b><br>Không quá <b>22 tuổi</b>; riêng người dân tộc thiểu số không quá <b>25 tuổi</b>.`
-            },
-            {
-                keys: ["tình trạng hôn nhân", "tinh trang hon nhan", "chưa kết hôn", "chua ket hon", "chưa có con", "chua co con", "co con co duoc du tuyen khong", "da ket hon co duoc du tuyen khong"],
-                answer: `<b>Tình trạng hôn nhân</b><br>Yêu cầu: <b>chưa kết hôn</b>, <b>chưa có con đẻ</b>, <b>chưa có con nuôi</b> theo quy định.`
-            },
-           
-        ];
-
-        const SUGGESTIONS = [
-    { label: "ĐẠI HỌC", query: "Đại học chính quy tuyển mới" },
-    { label: "VB2CA", query: "Điều kiện VB2CA" },
-    { label: "TRUNG CẤP", query: "Điều kiện trung cấp" },
-    { label: "THỜI GIAN", query: "Các mốc thời gian tuyển sinh 2026" },
-    { label: "THỂ LỰC", query: "Ngưỡng đạt thể lực" },
-    { label: "TỔ HỢP", query: "Mã tổ hợp xét tuyển" }
+  // ==========================================
+  // PHẦN 9: CHỈ TIÊU TỪNG TRƯỜNG
+  // ==========================================
+  {
+    keys: ['học viện an ninh', 't01', 'anh', 'an ninh mạng', 'công nghệ cao', 'cntt'],
+    answer: "<b>T01 - HV An ninh nhân dân:</b><br>• <b>Đại học:</b> 500 CT (Nghiệp vụ AN: 250; AN mạng & CNC: 150; CNTT: 100).<br>• <b>VB2CA:</b> 130 CT (Nghiệp vụ AN: 100; An toàn TT: 30)."
+  },
+  {
+    keys: ['học viện cảnh sát', 't02', 'csh', 'nghiệp vụ cảnh sát'],
+    answer: "<b>T02 - HV Cảnh sát nhân dân:</b><br>• <b>Đại học:</b> 400 CT (Nghiệp vụ Cảnh sát).<br>• <b>VB2CA:</b> 100 CT."
+  },
+  {
+    keys: ['học viện chính trị', 't03', 'hca', 'xây dựng đảng'],
+    answer: "<b>T03 - HV Chính trị CAND:</b><br>• <b>Đại học:</b> 100 CT (Ngành Xây dựng Đảng & Chính quyền nhà nước)."
+  },
+  {
+    keys: ['đại học an ninh', 't04', 'ans'],
+    answer: "<b>T04 - ĐH An ninh nhân dân (Phía Nam):</b><br>• <b>Đại học:</b> 220 CT.<br>• <b>VB2CA:</b> 100 CT."
+  },
+  {
+    keys: ['đại học cảnh sát', 't05', 'css'],
+    answer: "<b>T05 - ĐH Cảnh sát nhân dân (Phía Nam):</b><br>• <b>Đại học:</b> 300 CT.<br>• <b>VB2CA:</b> 100 CT."
+  },
+  {
+    keys: ['phòng cháy chữa cháy', 'pccc', 't06', 'pch', 'cứu nạn'],
+    answer: "<b>T06 - ĐH Phòng cháy chữa cháy:</b><br>• <b>Đại học:</b> 200 CT.<br>• <b>VB2CA:</b> 50 CT."
+  },
+  {
+    keys: ['kỹ thuật an ninh', 'công nghệ an ninh', 't07', 'kth', 'y khoa', 'bác sĩ', 'mật mã', 'hậu cần'],
+    answer: "<b>T07 - HV Kỹ thuật & CN An ninh:</b><br>• <b>Đại học:</b> 300 CT (Kỹ thuật Hậu cần: 200; Y khoa gửi QĐ/Y Dược: 80; Điện tử viễn thông gửi Cơ yếu: 20).<br>• <b>VB2CA:</b> 50 CT."
+  },
+  {
+    keys: ['học viện quốc tế', 'b06', 'ais', 'ngôn ngữ anh', 'ngôn ngữ trung', 'tiếng anh', 'tiếng trung'],
+    answer: "<b>B06 - Học viện Quốc tế:</b><br>• <b>Đại học:</b> 50 CT (Ngôn ngữ Anh: 30; Ngôn ngữ Trung Quốc: 20)."
+  }
+];
+       /* ======== 1. DỮ LIỆU CÁC NÚT GỢI Ý ======== */
+const SUGGESTIONS = [
+    "Khám sức khỏe khi nào?",
+    "Tiêu chuẩn chiều cao",
+    "Tuyển sinh hệ VB2CA",
+    "Quy đổi điểm IELTS",
+    "Chỉ tiêu Học viện ANND"
 ];
 
-        /****************************************************************
-         * LOGIC HỆ THỐNG
-         ****************************************************************/
-        const chatBox = document.getElementById('chatBox');
-        const userInput = document.getElementById('userInput');
+/* ======== 2. HÀM VẼ NÚT GỢI Ý (ĐÃ TỐI ƯU) ======== */
+function loadSuggestions() {
+    // Tìm chính xác khung chứa trong HTML của đồng chí
+    const sugContainer = document.getElementById('suggestionBox'); 
+    if (!sugContainer) return;
 
-        function initApp() {
-            const sBox = document.getElementById('suggestionBox');
-            SUGGESTIONS.forEach(s => {
-                const chip = document.createElement('div');
-                chip.className = 'suggestion-chip';
-                chip.innerText = s.label;
-                chip.onclick = () => ask(s.query);
-                sBox.appendChild(chip);
-            });
+    sugContainer.innerHTML = '';
+    sugContainer.className = 'suggestions-container no-scrollbar'; 
 
-            const wm = document.getElementById('watermark');
-            for (let i = 0; i < 16; i++) {
-                const d = document.createElement('div');
-                d.className = 'watermark-item';
-                d.innerText = 'PX01 QUẢNG TRỊ';
-                wm.appendChild(d);
-            }
+    SUGGESTIONS.forEach(text => {
+        const btn = document.createElement('button');
+        btn.className = 'suggest-btn';
+        btn.innerHTML = `<i class="fas fa-bolt text-[#ffda44] drop-shadow-md"></i> ${text}`; 
+        
+        btn.onclick = () => {
+            userInput.value = text;
+            handleSend();
+        };
+        sugContainer.appendChild(btn);
+    });
+}
 
-            renderModalData();
-            addMessage("<b>Tôi là trợ lý ảo tuyển sinh CAND năm 2026, Công an tỉnh Quảng Trị.</b><br>Đồng chí, thí sinh hoặc phụ huynh có thể tra cứu nhanh về <b>đối tượng</b>, <b>điều kiện</b>, <b>thời gian</b>, <b>hồ sơ</b>, <b>lệ phí</b>, <b>VB2CA</b>, <b>trung cấp</b>, <b>sức khỏe</b> và <b>thể lực</b>.", "bot");
-        }
+/****************************************************************
+* 3. LOGIC HỆ THỐNG & KHỞI TẠO APP
+****************************************************************/
+const chatBox = document.getElementById('chatBox');
+const userInput = document.getElementById('userInput');
+
+function initApp() {
+    const wm = document.getElementById('watermark');
+    for (let i = 0; i < 16; i++) {
+        const d = document.createElement('div');
+        d.className = 'watermark-item';
+        d.innerText = 'PX01 QUẢNG TRỊ';
+        wm.appendChild(d);
+    }
+    
+    renderModalData(); // Nạp dữ liệu danh bạ
+    loadSuggestions(); // Vẽ dàn nút bấm giao diện xịn
+    
+    // Lời chào đầu tiên khi bật bot
+    addMessage("<b>Tôi là trợ lý ảo tuyển sinh CAND năm 2026, Công an tỉnh Quảng Trị.</b><br>Đồng chí, thí sinh hoặc phụ huynh có thể tra cứu nhanh về <b>đối tượng</b>, <b>điều kiện</b>, <b>thời gian</b>, <b>hồ sơ</b>, <b>lệ phí</b>, <b>VB2CA</b>, <b>trung cấp</b>, <b>sức khỏe</b> và <b>thể lực</b>.", "bot");
+}
 
         function renderModalData() {
             document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `<div class="p-3 bg-white border border-red-100 rounded-lg shadow-sm"><p class="text-xs font-bold text-[#ce181e] uppercase">⚕️ ${i.title}</p><p class="text-[11px] text-gray-700 mt-1 leading-relaxed">${i.content}</p></div>`).join('');
@@ -2132,45 +1257,103 @@ const SUC_KHOE_DATA = [
     chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
 }
 
-        function handleSend() {
+        // 1. Khởi tạo Engine Tìm kiếm mờ (Fuzzy Search)
+const fuse = new Fuse(KNOWLEDGE_BASE, {
+    keys: ['keys'],
+    includeScore: true,
+    threshold: 0.4, 
+    ignoreLocation: true,
+    minMatchCharLength: 2 // Tránh việc khớp các từ quá ngắn vô nghĩa
+});
+
+// 2. Các hàm tạo hiệu ứng Typing UI
+function showTypingIndicator() {
+    const id = 'typing-' + Date.now();
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `msg bot`;
+    msgDiv.id = id;
+    msgDiv.innerHTML = `
+        <div class="bubble flex items-center gap-2">
+            <div class="typing-indicator flex"><span></span><span></span><span></span></div>
+            <span class="text-gray-400 text-[10px] italic">Đang tra cứu dữ liệu...</span>
+        </div>`;
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
+    return id;
+}
+
+function removeTypingIndicator(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+}
+
+// 3. Hàm xử lý trung tâm (Bản vá lỗi iOS/Safari & Tối ưu điểm số)
+function handleSend() {
     const text = userInput.value.trim();
     if (!text) return;
-
     addMessage(text, 'user');
     userInput.value = '';
 
+    const typingId = showTypingIndicator();
+    const sendBtn = document.querySelector('.send-btn');
+    if (sendBtn) sendBtn.disabled = true;
+
     setTimeout(() => {
+        removeTypingIndicator(typingId);
+        if (sendBtn) sendBtn.disabled = false; 
+        
         const query = text.toLowerCase();
-        
-        // 1. Lọc tất cả các mục có chứa ít nhất một từ khóa khớp
-        let matches = KNOWLEDGE_BASE.filter(i => 
-            i.keys.some(k => query.includes(k.toLowerCase()))
-        );
-        
-        if (matches.length > 0) {
-            // 2. Sắp xếp: Mục nào có từ khóa khớp DÀI NHẤT sẽ đứng đầu
-            // Ví dụ: "điều kiện vb2ca" (15 ký tự) > "vb2ca" (5 ký tự)
-            matches.sort((a, b) => {
-                const maxKeyA = Math.max(...a.keys.filter(k => query.includes(k.toLowerCase())).map(k => k.length));
-                const maxKeyB = Math.max(...b.keys.filter(k => query.includes(k.toLowerCase())).map(k => k.length));
-                return maxKeyB - maxKeyA;
+        const fuseResults = fuse.search(query);
+
+        let finalResults = KNOWLEDGE_BASE.map(item => {
+            let score = 0;
+            let matchedKeys = [];
+
+            // A. Điểm từ Fuse.js
+            const fuseMatch = fuseResults.find(r => r.item === item);
+            if (fuseMatch) {
+                score += (1 - fuseMatch.score) * 5; 
+            }
+
+            // B. Điểm từ Regex (Đã thay thế lookbehind bằng nhóm chụp để tương thích iPhone)
+            item.keys.forEach(key => {
+                const k = key.toLowerCase();
+                const regex = new RegExp(`(^|[^\\p{L}\\p{N}_])(${k})([^\\p{L}\\p{N}_]|$)`, 'iu');
+                
+                if (regex.test(query)) {
+                    score += k.length * 2.5; 
+                    matchedKeys.push(k);
+                } else if (query.includes(k)) {
+                    score += k.length * 0.5; 
+                    if (!matchedKeys.includes(k)) matchedKeys.push(k);
+                }
             });
 
-            // 3. Lấy kết quả chính xác nhất
-            let bestMatch = matches[0];
-            addMessage(bestMatch.answer, 'bot');
+            // C. Thưởng điểm nếu khớp nhiều từ khóa
+            if (matchedKeys.length > 1) {
+                score *= 1.5; 
+            }
 
-            // 4. (Tùy chọn) Nếu có kết quả liên quan khác, gợi ý nhẹ bên dưới
-            if (matches.length > 1) {
-                const related = matches[1].answer.split(':')[0].replace(/<[^>]*>/g, '');
-                const hint = `<i style="font-size:10px; color:#666;">Thông tin liên quan: ${related}...</i>`;
+            return { item, score, matchedKeys };
+        });
+
+        // Lọc kết quả: Ngưỡng điểm > 3 để tránh bot trả lời bừa
+        let matches = finalResults.filter(r => r.score > 3).sort((a, b) => b.score - a.score);
+
+        if (matches.length > 0) {
+            let bestMatch = matches[0].item;
+            addMessage(bestMatch.answer, 'bot');
+            
+            if (matches.length > 1 && matches[1].score >= matches[0].score * 0.6) {
+                const related = matches[1].item.answer.split('<br>')[0].replace(/<[^>]*>/g, '');
+                const hint = `<i style="font-size:12px; color:#6b7280;"><i class="fas fa-lightbulb text-[#ffda44] mr-1"></i> <b>Có thể bạn quan tâm:</b> ${related}</i>`;
                 addMessage(hint, 'bot');
             }
         } else {
-            // Trường hợp không tìm thấy
-            addMessage("Tôi chưa tìm được câu trả lời khớp hoàn toàn. Đồng chí vui lòng hỏi ngắn gọn theo các nhóm như: <b>đối tượng</b>, <b>điều kiện</b>, <b>thời gian</b>, <b>hồ sơ</b>, <b>VB2CA</b>, <b>trung cấp</b>, <b>thể lực</b>, <b>mã tổ hợp</b>; hoặc liên hệ cán bộ phụ trách tuyển sinh ở góc phải để được hướng dẫn thêm.", "bot");
+            addMessage("Tôi chưa hiểu rõ ý của đồng chí. Đồng chí vui lòng thử dùng các từ khóa ngắn gọn như: <b>đại học</b>, <b>trung cấp</b>, <b>vb2ca</b>, <b>chiều cao</b>, <b>mắt</b>... hoặc tra cứu trực tiếp tại biểu tượng <b><i class='fas fa-database'></i> Trung tâm dữ liệu</b> ở góc trên bên phải.", "bot");
         }
-    }, 500);
+        
+    }, 600); 
 }
 
         function ask(q) {
@@ -2190,9 +1373,15 @@ const SUC_KHOE_DATA = [
             document.getElementById(tabId).classList.remove('hidden');
         }
 
-        userInput.onkeydown = (e) => { if(e.key === "Enter") handleSend(); };
         window.onload = initApp;
+        /* ======== BƯỚC 2: BẮT SỰ KIỆN PHÍM ENTER ======== */
+document.getElementById('userInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Ngăn chặn việc nhảy dòng
+        handleSend(); // Tự động kích hoạt nút gửi
+    }
+});
+/* ================================================== */
     </script>
 </body>
 </html>
-
