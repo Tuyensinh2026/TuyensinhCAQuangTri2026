@@ -2131,142 +2131,46 @@ const SUC_KHOE_DATA = [
     chatBox.appendChild(msgDiv);
     chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
 }
-/* ================= AI MULTI-LAYER REASONING ================= */
 
-function normalizeText(text) {
-    return text
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/đ/g, "d")
-        .replace(/[^\w\s]/g, "")
-        .trim();
-}
-
-/* ===== PHÂN TÍCH Ý ĐỊNH ===== */
-
-function detectIntent(query) {
-
-    const q = normalizeText(query);
-
-    if (q.includes("dieu kien")) return "dieukien";
-    if (q.includes("suc khoe") || q.includes("can") || q.includes("mat")) return "suckhoe";
-    if (q.includes("ho so")) return "hoso";
-    if (q.includes("lich kham")) return "lichkham";
-    if (q.includes("chieu cao") || q.includes("the luc")) return "theluc";
-    if (q.includes("le phi")) return "lephi";
-
-    return "general";
-}
-
-/* ===== CHẤM ĐIỂM THÔNG MINH ===== */
-
-function calculateAdvancedScore(query, key, intent) {
-
-    let score = 0;
-
-    const q = normalizeText(query);
-    const k = normalizeText(key);
-
-    /* Lớp 1: khớp hoàn toàn */
-    if (q.includes(k)) score += 50;
-
-    /* Lớp 2: khớp từ */
-    const qWords = q.split(" ");
-    const kWords = k.split(" ");
-
-    qWords.forEach(word => {
-        if (kWords.includes(word)) score += 5;
-    });
-
-    /* Lớp 3: câu hỏi dài được ưu tiên */
-    if (q.length > k.length) score += 5;
-
-    /* Lớp 4: nếu đúng ý định thì cộng mạnh */
-    if (intent === "suckhoe" && k.includes("suc khoe")) score += 25;
-    if (intent === "dieukien" && k.includes("dieu kien")) score += 25;
-    if (intent === "hoso" && k.includes("ho so")) score += 25;
-    if (intent === "lichkham" && k.includes("lich")) score += 25;
-
-    return score;
-}
-
-/* ===== CHỌN CÂU TRẢ LỜI CHÍNH XÁC NHẤT ===== */
-
-function findBestAnswer(userText) {
-
-    const intent = detectIntent(userText);
-
-    let bestMatch = null;
-    let bestScore = 0;
-
-    KNOWLEDGE_BASE.forEach(item => {
-
-        item.keys.forEach(key => {
-
-            const score = calculateAdvancedScore(userText, key, intent);
-
-            if (score > bestScore) {
-                bestScore = score;
-                bestMatch = item;
-            }
-
-        });
-
-    });
-
-    if (bestScore > 35) return bestMatch;
-    return null;
-}
-
-/* ===== TRẢ LỜI GIỐNG NGƯỜI THẬT ===== */
-
-function humanReply(answer) {
-
-    const intro = [
-        "Theo quy định hiện hành,",
-        "Căn cứ hướng dẫn tuyển sinh năm 2026,",
-        "Theo thông tin chính thức,",
-        "Đồng chí có thể hiểu như sau:"
-    ];
-
-    const randomIntro = intro[Math.floor(Math.random() * intro.length)];
-
-    return randomIntro + " " + answer.replace(/\n/g, "<br>");
-}
-        
         function handleSend() {
+    const text = userInput.value.trim();
+    if (!text) return;
 
-    const userText = userInput.value.trim();
-    if (!userText) return;
-
-    addMessage(userText, 'user');
+    addMessage(text, 'user');
     userInput.value = '';
 
-    const typingId = showTypingIndicator();
-
     setTimeout(() => {
+        const query = text.toLowerCase();
+        
+        // 1. Lọc tất cả các mục có chứa ít nhất một từ khóa khớp
+        let matches = KNOWLEDGE_BASE.filter(i => 
+            i.keys.some(k => query.includes(k.toLowerCase()))
+        );
+        
+        if (matches.length > 0) {
+            // 2. Sắp xếp: Mục nào có từ khóa khớp DÀI NHẤT sẽ đứng đầu
+            // Ví dụ: "điều kiện vb2ca" (15 ký tự) > "vb2ca" (5 ký tự)
+            matches.sort((a, b) => {
+                const maxKeyA = Math.max(...a.keys.filter(k => query.includes(k.toLowerCase())).map(k => k.length));
+                const maxKeyB = Math.max(...b.keys.filter(k => query.includes(k.toLowerCase())).map(k => k.length));
+                return maxKeyB - maxKeyA;
+            });
 
-        removeTypingIndicator(typingId);
+            // 3. Lấy kết quả chính xác nhất
+            let bestMatch = matches[0];
+            addMessage(bestMatch.answer, 'bot');
 
-        const result = findBestAnswer(userText);
-
-        if (result) {
-
-            const reply = humanReply(result.answer);
-
-            addMessage(reply, 'bot', { allowHTML: true });
-
+            // 4. (Tùy chọn) Nếu có kết quả liên quan khác, gợi ý nhẹ bên dưới
+            if (matches.length > 1) {
+                const related = matches[1].answer.split(':')[0].replace(/<[^>]*>/g, '');
+                const hint = `<i style="font-size:10px; color:#666;">Thông tin liên quan: ${related}...</i>`;
+                addMessage(hint, 'bot');
+            }
         } else {
-
-            addMessage(
-                "Tôi chưa hiểu rõ câu hỏi của đồng chí. Đồng chí có thể hỏi theo các nhóm như: điều kiện dự tuyển, tiêu chuẩn sức khỏe, hồ sơ, lệ phí, lịch khám sức khỏe hoặc VB2CA.",
-                'bot'
-            );
-
+            // Trường hợp không tìm thấy
+            addMessage("Tôi chưa tìm được câu trả lời khớp hoàn toàn. Đồng chí vui lòng hỏi ngắn gọn theo các nhóm như: <b>đối tượng</b>, <b>điều kiện</b>, <b>thời gian</b>, <b>hồ sơ</b>, <b>VB2CA</b>, <b>trung cấp</b>, <b>thể lực</b>, <b>mã tổ hợp</b>; hoặc liên hệ cán bộ phụ trách tuyển sinh ở góc phải để được hướng dẫn thêm.", "bot");
         }
-
-    }, 400);
+    }, 500);
 }
 
         function ask(q) {
