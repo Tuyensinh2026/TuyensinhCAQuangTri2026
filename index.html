@@ -15,7 +15,6 @@
             --police-dark: #111827;
             --bg-tech: #f0f2f5;
         }
-
         body { 
             font-family: 'Lexend', sans-serif; 
             background: #000; 
@@ -23,13 +22,11 @@
             -webkit-user-select: none; user-select: none;
             overflow: hidden; touch-action: manipulation;
         }
-
         .app-shell {
             height: 100dvh; max-width: 500px; margin: 0 auto;
             background: #fff; display: flex; flex-direction: column;
             position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(255, 218, 68, 0.15);
         }
-
         /* --- HEADER --- */
         .header-official {
             background: linear-gradient(180deg, #ce181e 0%, #b01419 100%);
@@ -39,20 +36,9 @@
             box-shadow: 0 10px 30px rgba(206, 24, 30, 0.4);
             position: relative; z-index: 50;
         }
-        .header-official h2 {
-            color: var(--police-gold); font-size: 10px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;
-            opacity: 0.95;
-        }
-        .header-official h1 {
-            color: white; font-size: 20px; font-weight: 900;
-            text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        .header-official p {
-            color: var(--police-gold); font-size: 11px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 1px; margin-top: 8px;
-        }
+        .header-official h2 { color: var(--police-gold); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; opacity: 0.95; }
+        .header-official h1 { color: white; font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .header-official p { color: var(--police-gold); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; }
         
         .data-btn {
             position: absolute; top: 20px; right: 20px;
@@ -62,194 +48,73 @@
             transition: all 0.2s; animation: pulse-gold 2s infinite;
         }
         @keyframes pulse-gold { 0% { box-shadow: 0 0 0 0 rgba(255, 218, 68, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 218, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 218, 68, 0); } }
-
         /* --- CHAT AREA --- */
         .chat-area { 
             background: #f9fafb; flex: 1; overflow-y: auto; padding: 20px; 
-            position: relative;
+            position: relative; scroll-behavior: smooth;
             background-image: radial-gradient(#ce181e 0.5px, transparent 0.5px);
             background-size: 20px 20px; opacity: 0.98;
         }
-
-        .watermark {
-            position: absolute; inset: 0; display: grid;
-            grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(8, 1fr);
-            pointer-events: none; z-index: 0; opacity: 0.04;
-        }
-        .watermark-item {
-            transform: rotate(-30deg); font-size: 11px; font-weight: 900;
-            display: flex; align-items: center; justify-content: center; 
-            color: var(--police-red);
-        }
+        .watermark { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(8, 1fr); pointer-events: none; z-index: 0; opacity: 0.04; }
+        .watermark-item { transform: rotate(-30deg); font-size: 11px; font-weight: 900; display: flex; align-items: center; justify-content: center; color: var(--police-red); }
         
         .msg { margin-bottom: 20px; display: flex; flex-direction: column; max-width: 88%; position: relative; z-index: 10; animation: fadeUp 0.3s ease-out; }
+        .msg.bot { align-items: flex-start; }
+        .msg.user { align-items: flex-end; margin-left: auto; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .bubble {
-            padding: 14px 18px; font-size: 13.5px; line-height: 1.6;
-            border-radius: 12px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            word-wrap: break-word;
-        }
-        .bot .bubble { 
-            background: white; color: #1f2937; border: 1px solid #e5e7eb;
-            border-left: 4px solid var(--police-red);
-        }
-        .user .bubble { 
-            background: var(--police-red); color: white; font-weight: 500;
-            border-bottom-right-radius: 2px;
-        }
-
+        
+        .bubble { padding: 14px 18px; font-size: 13.5px; line-height: 1.6; border-radius: 12px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05); word-wrap: break-word; }
+        .bot .bubble { background: white; color: #1f2937; border: 1px solid #e5e7eb; border-left: 4px solid var(--police-red); border-bottom-left-radius: 2px; }
+        .user .bubble { background: var(--police-red); color: white; font-weight: 500; border-bottom-right-radius: 2px; }
+        .timestamp { font-size: 10px; color: #9ca3af; margin-top: 4px; padding: 0 4px; }
+        
         /* --- INPUT --- */
-        .input-container {
-            padding: 15px; background: white; border-top: 2px solid #f3f4f6;
-            display: flex; gap: 10px; align-items: center; z-index: 60;
-        }
-.input-field {
-    flex: 1; 
-    background: #f3f4f6; 
-    border-radius: 8px;
-    padding: 14px 16px; 
-    font-size: 14px; 
-    border: 1px solid transparent;
-    transition: all 0.3s; 
-    color: #111; 
-    outline: none; 
-    font-weight: 500;
-    /* ======== LỆNH MỞ KHÓA BÀN PHÍM CHO IPHONE ======== */
-    user-select: auto; 
-    -webkit-user-select: auto; 
-}
+        .input-container { padding: 15px; background: white; border-top: 2px solid #f3f4f6; display: flex; gap: 10px; align-items: center; z-index: 60; }
+        .input-field { flex: 1; background: #f3f4f6; border-radius: 8px; padding: 14px 16px; font-size: 14px; border: 1px solid transparent; transition: all 0.3s; color: #111; outline: none; font-weight: 500; user-select: auto; -webkit-user-select: auto; }
         .input-field:focus { background: white; border-color: var(--police-red); box-shadow: 0 0 0 3px rgba(206, 24, 30, 0.1); }
-
-        .send-btn {
-            width: 48px; height: 48px; background: var(--police-red); color: var(--police-gold);
-            display: flex; align-items: center; justify-content: center; font-size: 18px;
-            border-radius: 8px; transition: all 0.2s; cursor: pointer; border: none;
-        }
+        .send-btn { width: 48px; height: 48px; background: var(--police-red); color: var(--police-gold); display: flex; align-items: center; justify-content: center; font-size: 18px; border-radius: 8px; transition: all 0.2s; cursor: pointer; border: none; }
         .send-btn:active { transform: scale(0.95); background: #b91c1c; }
-
+        
         /* --- SUGGESTIONS --- */
-        .suggestion-box {
-            padding: 12px 20px; background: white; display: flex; gap: 8px; overflow-x: auto;
-            border-top: 1px solid #f0f0f0;
-        }
-        .suggestion-chip {
-            border: 1px solid #e5e7eb; color: var(--police-red); background: white;
-            padding: 8px 14px; font-size: 11px; font-weight: 700; white-space: nowrap;
-            border-radius: 6px; transition: all 0.2s; text-transform: uppercase; cursor: pointer;
-        }
-        .suggestion-chip:active { background: var(--police-red); color: white; border-color: var(--police-red); }
-
+        .suggestions-container { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 10px; padding: 12px 16px; background: #ffffff; border-top: 1px solid #f3f4f6; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        .suggestions-container::-webkit-scrollbar { display: none; }
+        .suggest-btn { flex: 0 0 auto; background-color: #fef2f2; color: var(--police-red); border: 1px solid #fca5a5; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 6px; }
+        .suggest-btn:active, .suggest-btn:hover { background-color: var(--police-red); color: #ffffff; border-color: var(--police-red); transform: scale(0.95); }
+        
         /* --- MODAL --- */
-        .modal-overlay {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(5px); z-index: 100; display: none;
-            align-items: center; justify-content: center; padding: 15px;
-        }
-        .modal-content {
-            background: white; width: 100%; height: 90%; border-radius: 12px;
-            overflow: hidden; display: flex; flex-direction: column;
-            box-shadow: 0 20px 50px rgba(255,218,68,0.2); border: 1px solid var(--police-gold);
-        }
-        .modal-header {
-            background: var(--police-red); padding: 15px 20px; color: white;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 4px solid var(--police-gold);
-        }
+        .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 15px; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.show { opacity: 1; }
+        .modal-content { background: white; width: 100%; height: 90%; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(255,218,68,0.2); border: 1px solid var(--police-gold); }
+        .modal-header { background: var(--police-red); padding: 15px 20px; color: white; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--police-gold); }
         .tab-bar { display: flex; background: #fff; border-bottom: 1px solid #e5e7eb; }
-        .tab-btn {
-            flex: 1; text-align: center; padding: 12px 5px; font-size: 10px;
-            font-weight: 800; color: #9ca3af; text-transform: uppercase; cursor: pointer;
-            border-bottom: 3px solid transparent; transition: all 0.3s;
-        }
+        .tab-btn { flex: 1; text-align: center; padding: 12px 5px; font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s; }
         .tab-btn.active { color: var(--police-red); border-bottom-color: var(--police-red); background: #fef2f2; }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
-
-/* ======== CSS HIỆU ỨNG ĐANG GÕ ======== */
-.typing-indicator span {
-    display: inline-block;
-    width: 6px; height: 6px;
-    background-color: #ce181e;
-    border-radius: 50%; margin: 0 2px;
-    animation: bounce 1.4s infinite ease-in-out both;
-}
-.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-@keyframes bounce {
-    0%, 80%, 100% { transform: scale(0); }
-    40% { transform: scale(1); }
-}
-/* ============================================== */
-/* ======== LÀM ĐẸP KHU VỰC NÚT GỢI Ý (SUGGESTIONS UI) ======== */
-.suggestions-container {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 10px;
-    padding: 12px 16px;
-    background: #ffffff;
-    border-top: 1px solid #f3f4f6;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* Giúp vuốt mượt trên iPhone */
-}
-
-/* Ẩn thanh cuộn ngang để giao diện sạch sẽ */
-.suggestions-container::-webkit-scrollbar {
-    display: none; 
-}
-
-.suggest-btn {
-    flex: 0 0 auto; /* Giữ nguyên kích thước nút, không bị ép nhỏ */
-    background-color: #fef2f2; /* Nền đỏ cực nhạt sang trọng */
-    color: var(--police-red);
-    border: 1px solid #fca5a5;
-    padding: 8px 16px;
-    border-radius: 20px; /* Bo tròn dạng viên thuốc */
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* Hiệu ứng khi người dùng chạm (touch) hoặc trỏ chuột vào */
-.suggest-btn:active, .suggest-btn:hover {
-    background-color: var(--police-red);
-    color: #ffffff;
-    border-color: var(--police-red);
-    transform: scale(0.95); /* Hơi lún xuống tạo cảm giác bấm thật */
-}
-/* ============================================================ */
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
-
+        .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #ce181e; border-radius: 50%; margin: 0 2px; animation: bounce 1.4s infinite ease-in-out both; }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
 </head>
-<body oncontextmenu="return false">
-
+<body oncontextmenu="return false" onselectstart="return false">
     <div class="app-shell">
         <header class="header-official">
             <div class="data-btn" onclick="toggleModal(true)"><i class="fas fa-database"></i></div>
-            <h2>TRỢ LÝ ẢO</h2>
+            <h2>HỖ TRỢ TƯ VẤN</h2>
             <h1>TUYỂN SINH CAND NĂM 2026</h1>
             <p>CÔNG AN TỈNH QUẢNG TRỊ</p>
         </header>
-
         <div id="chatBox" class="chat-area no-scrollbar">
             <div class="watermark" id="watermark"></div>
         </div>
-
-        <div id="suggestionBox" class="suggestion-box no-scrollbar"></div>
-
+        <div id="suggestionBox" class="suggestions-container no-scrollbar"></div>
         <div class="input-container">
-           <textarea id="userInput" class="input-field no-scrollbar" placeholder="Nhập nội dung cần tra cứu..." rows="1" style="resize: none;"></textarea> 
+           <textarea id="userInput" class="input-field no-scrollbar" placeholder="Nhập câu hỏi (VD: Xã Lìa khám khi nào?)..." rows="1" style="resize: none;"></textarea> 
             <button id="sendBtn" onclick="handleSend()" class="send-btn">
-    <i class="fas fa-paper-plane"></i>
-</button>
+                <i class="fas fa-paper-plane"></i>
+            </button>
         </div>
     </div>
 
@@ -259,40 +124,36 @@
             <div class="modal-header">
                 <div>
                     <h3 class="font-bold uppercase text-sm tracking-wider text-white">DỮ LIỆU GỐC PX01</h3>
-                    <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">Cập nhật: 26/3/2026</p>
+                    <p class="text-[10px] text-yellow-300 font-bold uppercase mt-1">Cập nhật: 27/3/2026</p>
                 </div>
                 <button onclick="toggleModal(false)" class="text-2xl text-white hover:text-yellow-300">&times;</button>
             </div>
             
             <div class="tab-bar">
                 <div class="tab-btn active" onclick="switchTab(this, 'tab-danhba')">LIÊN HỆ</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">SỨC KHỎE - THỂ LỰC</div>
-                <div class="tab-btn" onclick="switchTab(this, 'tab-dieukien')">TUYỂN SINH 2026</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-suckhoe')">SỨC KHỎE</div>
+                <div class="tab-btn" onclick="switchTab(this, 'tab-dieukien')">TUYỂN SINH</div>
             </div>
-
             <div class="flex-1 overflow-y-auto p-4 bg-slate-50 space-y-4 no-scrollbar">
                 
-                <!-- Tab Danh Bạ (Tích hợp Full Excel) -->
                 <div id="tab-danhba" class="tab-content">
                     <div class="p-3 bg-white border border-red-200 rounded-lg mb-3 text-center shadow-sm">
                         <p class="text-[9px] font-bold text-red-500 uppercase tracking-widest">Cán bộ chủ trì PX01</p>
                         <p class="font-black text-gray-900 text-base mt-1">Đại úy LÊ HOÀNG TRUNG</p>
-                        <p class="text-red-600 font-black text-lg mt-1 select-all">0977.556.858 - 0823.373.373</p>
+                        <p class="text-red-600 font-black text-lg mt-1 select-all" style="user-select: auto;">0977.556.858 - 0823.373.373</p>
                     </div>
                     <div class="relative mb-3">
-                        <input type="text" id="searchContact" oninput="filterContact()" placeholder="Tìm xã/phường/đặc khu (VD: Gio Linh, Ba Đồn, Triệu Phong)..." class="w-full p-2 pl-9 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 font-semibold text-gray-700">
+                        <input type="text" id="searchContact" oninput="filterContact()" placeholder="Tìm xã/phường/đặc khu..." class="w-full p-2 pl-9 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 font-semibold text-gray-700" style="user-select: auto;">
                         <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-xs"></i>
                     </div>
                     <div id="list-danhba" class="space-y-2"></div>
                 </div>
                 
-                <!-- Tab Sức khỏe (Tích hợp TT62 + TT131) -->
                 <div id="tab-suckhoe" class="tab-content hidden">
                     <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">TIÊU CHUẨN LÂM SÀNG & CẬN LÂM SÀNG</h4>
                     <div id="list-suckhoe" class="space-y-2"></div>
                 </div>
-
-                <!-- Tab Điều kiện (Tích hợp Văn bản mới) -->
+                
                 <div id="tab-dieukien" class="tab-content hidden">
                     <h4 class="text-[10px] font-black text-red-700 mb-2 uppercase border-l-4 border-red-700 pl-2">ĐỐI TƯỢNG & NGUYÊN TẮC XÉT TUYỂN</h4>
                     <div id="list-dieukien" class="space-y-2"></div>
@@ -305,8 +166,7 @@
         /****************************************************************
          * 1. CƠ SỞ DỮ LIỆU ĐẦY ĐỦ 
          ****************************************************************/
-        
-        // DANH BẠ 100% (Từ file can_bo_tuyen_sinh_raw.js & DANH SÁCH CÁN BỘ TUYỂN SINH CÁC ĐƠN VỊ.xlsx)
+        // DANH BẠ FULL 100%
         const DANH_BA_DATA = [
             { unit: "Phòng Tổ chức cán bộ", name: "Lê Hoàng Trung", phone: "0977.556.858 - 0823.373.373" },
             { unit: "Công an Phường Đồng Hới", name: "Lâm Hải Đăng", phone: "0395.995.636" },
@@ -394,1082 +254,365 @@
             { unit: "Trại Tạm giam số 2", name: "Phan Thành Đạt", phone: "0369.921.108" }
         ];
 
-        // DỮ LIỆU SỨC KHỎE (CẬP NHẬT: TT62/2023 + TT131/2025) – ĐÃ LỌC CHỈ GIỮ PHẦN ĐIỀU KIỆN/ TIÊU CHUẨN SỨC KHỎE
-const SUC_KHOE_DATA = [
-  {
-    title: "KẾT LUẬN NHANH: ĐỦ / KHÔNG ĐỦ ĐIỀU KIỆN SỨC KHỎE",
-    content: `
-      • Nguyên tắc chung: phải đạt <b>SỨC KHỎE LOẠI 1 hoặc LOẠI 2</b> và đáp ứng tiêu chuẩn đặc thù (chiều cao, BMI, thị lực, ngoại hình, xét nghiệm).<br>
-      • Thường <b>KHÔNG ĐẠT</b> khi: BMI <b>&lt; 18,5</b> hoặc <b>&gt; 30</b>; thị lực/tật khúc xạ vượt ngưỡng; mù màu trục xanh-đỏ; có hình xăm/lỗ bấm không đúng; dương tính ma túy/tiền chất.<br>
-      <div class="mt-2 p-2 bg-red-50 border border-red-200 rounded text-[10px] leading-relaxed">
-        <b>Lưu ý:</b> Kết luận cuối cùng do Hội đồng khám/sơ tuyển. Nội dung này giúp thí sinh & phụ huynh tự kiểm tra trước khi đi khám.
-      </div>
-    `
-  },
-  {
-    title: "PHÂN LOẠI SỨC KHỎE (ĐIỂM 1–6) – VÌ SAO DỄ RƠI LOẠI 3",
-    content: `
-      • Mỗi chỉ tiêu sức khỏe chấm điểm chẵn từ <b>1 đến 6</b> (1: rất tốt … 6: rất kém).<br>
-      • Phân loại theo “điểm xấu nhất”:<br>
-      &nbsp;&nbsp;– <b>Loại 1</b>: tất cả điểm 1<br>
-      &nbsp;&nbsp;– <b>Loại 2</b>: có ít nhất 1 chỉ tiêu điểm 2<br>
-      &nbsp;&nbsp;– <b>Loại 3</b>: có ít nhất 1 chỉ tiêu điểm 3 (thường là không đủ điều kiện nếu chỉ tuyển Loại 1–2)<br>
-      • Một số nội dung có quy định “không tính điểm khi phân loại” theo danh mục chấp nhận (Phụ lục X), tuy nhiên vẫn phải đối chiếu điều kiện áp dụng cụ thể.
-    `
-  },
-  {
-    title: "THỂ LỰC: CHIỀU CAO (CHUẨN CHUNG + NHÓM ƯU TIÊN)",
-    content: `
-      <b>Chuẩn chung (thường áp dụng):</b><br>
-      • Nam: <b>1m64–1m95</b> &nbsp;&nbsp;• Nữ: <b>1m58–1m80</b><br><br>
-      <b>Nhóm ưu tiên chiều cao:</b><br>
-      • <b>Dân tộc thiểu số:</b> Nam <b>≥1m62</b>, Nữ <b>≥1m56</b><br>
-      • <b>UT1:</b> Nam <b>≥1m60</b>, Nữ <b>≥1m55</b><br>
-      • <b>Dân tộc thiểu số rất ít người:</b> Nam <b>≥1m58</b>, Nữ <b>≥1m52</b><br>
-      <div class="mt-2 text-[10px] text-gray-600">
-        Gợi ý: Nếu thuộc nhóm ưu tiên, nên chuẩn bị giấy tờ chứng minh đối tượng khi sơ tuyển.
-      </div>
-    `
-  },
-  {
-    title: "BMI (BẮT BUỘC) – CÁCH TÍNH & NGƯỠNG BỊ LOẠI",
-    content: `
-      • Yêu cầu: <b>18,5 ≤ BMI ≤ 30</b>.<br>
-      • <b>Không đạt</b> nếu <b>BMI &lt; 18,5</b> hoặc <b>BMI &gt; 30</b>.<br>
-      • Công thức: <b>BMI = cân nặng (kg) / [chiều cao (m)]²</b>.<br>
-      <div class="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-[10px] leading-relaxed">
-        Tip: Nếu đang gầy/béo, nên điều chỉnh ít nhất 4–12 tuần trước sơ tuyển (ăn ngủ, tập luyện, tăng/giảm cân an toàn).
-      </div>
-    `
-  },
-  {
-    title: "MẮT: THỊ LỰC & TẬT KHÚC XẠ (CẬN/VIỄN/LOẠN)",
-    content: `
-      <b>Thị lực không kính:</b><br>
-      • Mỗi mắt <b>09–10/10</b>, tổng 2 mắt <b>≥18/10</b>.<br><br>
-      <b>Nếu có tật khúc xạ:</b><br>
-      • <b>Cận/viễn:</b> mỗi mắt <b>≤ 03 đi-ốp</b><br>
-      • <b>Loạn:</b> loạn sinh lý hoặc <b>&lt; 01 đi-ốp/mắt</b><br>
-      • <b>Qua kính:</b> 1 mắt <b>≥09/10</b>, tổng 2 mắt <b>≥19/10</b><br>
-      <div class="mt-2 text-[10px] text-gray-600">
-        Khuyến nghị: đi khám mắt trước sơ tuyển để đo đi-ốp chuẩn, tránh “đo lệch” gây rơi loại.
-      </div>
-    `
-  },
-  {
-    title: "MÙ MÀU / RỐI LOẠN SẮC GIÁC (ĐIỂM HAY TRƯỢT)",
-    content: `
-      • Mù màu trục xanh lá–đỏ (dù nhẹ) thường làm giảm loại sức khỏe, <b>rủi ro rất cao không đạt</b> nếu tuyển chỉ nhận Loại 1–2.<br>
-      • Gợi ý: test sớm bằng bảng Ishihara tại cơ sở khám mắt để biết chắc.
-    `
-  },
-  {
-    title: "NGOẠI HÌNH: XĂM – BẤM LỖ – SẸO – DA – TÓC",
-    content: `
-      <b>Hình xăm:</b> không có vết trổ/vết xăm (kể cả phun xăm). Ngoại lệ thường gặp: nữ phun/xăm thẩm mỹ <b>lông mày, môi</b>.<br><br>
-      <b>Bấm lỗ:</b><br>
-      • Nam: không bấm tai/mũi/vị trí khác (lỗ đã liền sẹo có thể được xem xét).<br>
-      • Nữ: không có <b>từ 02 lỗ trở lên</b> trên 01 tai; không bấm mũi/vị trí khác.<br><br>
-      <b>Da – sẹo:</b> không rối loạn sắc tố (trừ nám má); không có sẹo lồi co kéo ở vùng hay lộ (đầu/mặt/cổ/cẳng tay/bàn tay/bàn chân).<br>
-      <b>Tóc:</b> màu & kiểu tóc bình thường theo điều lệnh.
-    `
-  },
-  {
-    title: "MA TÚY / TIỀN CHẤT (BẮT BUỘC ÂM TÍNH)",
-    content: `
-      • Yêu cầu: không nghiện và <b>không dương tính</b> chất ma túy/tiền chất ma túy.<br>
-      • Thường kiểm tra bằng xét nghiệm nước tiểu; trường hợp cần thiết có thể xét nghiệm bổ sung theo chỉ định.
-    `
-  },
-  {
-    title: "CẬN LÂM SÀNG (THƯỜNG LÀM KHI KHÁM TUYỂN)",
-    content: `
-      <b>Xét nghiệm máu:</b> công thức máu; glucose; AST/ALT; ure/creatinin; HIV; HBsAg; anti-HCV...<br>
-      <b>Nước tiểu:</b> tổng phân tích + test ma túy/tiền chất.<br>
-      <b>Chẩn đoán:</b> X-quang tim phổi; siêu âm ổ bụng; điện tim.<br>
-      <div class="mt-2 text-[10px] text-gray-600">
-        Lưu ý: có thể chỉ định thêm xét nghiệm/cận lâm sàng khác để kết luận.
-      </div>
-    `
-  },
-  {
-    title: "PHÚC TRA SAU TRÚNG TUYỂN & THỜI HẠN PHIẾU KHÁM",
-    content: `
-      • Có thể khám <b>phúc tra</b> sau trúng tuyển/nhập học để đối chiếu tiêu chuẩn.<br>
-      • Trường hợp ghi <b>“T”</b>: bệnh tạm thời (cấp tính) – cần điều trị khỏi để đánh giá lại.<br>
-      • Phiếu khám sức khỏe thường có giá trị <b>06 tháng</b> (nên khám gần thời điểm sơ tuyển).
-    `
-  },
-  {
-        title: "KHÁM SỨC KHỎE - THỜI GIAN CHUNG",
-        content: `
-            • <b>Đại học / Trung cấp:</b> từ <b>16/4 đến 05/5/2026</b>.<br>
-            • <b>VB2CA:</b> từ <b>29/6 đến 03/7/2026</b>.<br>
-            • Buổi sáng: <b>07h30</b>.<br>
-            • Buổi chiều: <b>13h30</b>.<br>
-            • Nếu vắng do lý do khách quan có thể khám vào lịch bù.
-        `
-    },
-    {
-        title: "ĐỊA ĐIỂM KHÁM SỨC KHỎE",
-        content: `
-            • <b>16/4 - 19/4/2026</b> và <b>29/6 - 30/6/2026</b>: Bệnh xá số 02 Công an tỉnh, số 31 Phan Chu Trinh, phường Đồng Hới.<br>
-            • <b>22/4 - 25/4/2026</b> và <b>01/7 - 02/7/2026</b>: Bệnh xá số 01 Công an tỉnh, đường Điện Biên Phủ, phường Nam Đông Hà.<br>
-            • <b>04/5 - 05/5/2026</b> và <b>03/7/2026</b>: khám bù tại Bệnh xá số 01 Công an tỉnh.
-        `
-    },
-    {
-        title: "KIỂM TRA THỂ LỰC - THỜI GIAN VÀ YÊU CẦU",
-        content: `
-            • Áp dụng với thí sinh đủ điều kiện dự tuyển đại học CAND, trừ trường hợp đang chờ tra cứu tiêu chuẩn chính trị.<br>
-            • Buổi sáng: <b>07h00</b>.<br>
-            • Buổi chiều: <b>15h00</b>.<br>
-            • Thí sinh có mặt trước <b>15 phút</b>, mặc trang phục thể thao, đi giày thể thao.
-        `
-    },
-    {
-        title: "NGƯỠNG ĐẠT KIỂM TRA THỂ LỰC",
-        content: `
-            • <b>Bật xa tại chỗ:</b> Nam <b>≥ 2,2m</b>; Nữ <b>≥ 1,5m</b>.<br>
-            • <b>Chạy 100m:</b> Nam <b>≤ 16 giây</b>; Nữ <b>≤ 20 giây</b>.<br>
-            • <b>Chạy 800m:</b> Nữ <b>≤ 5 phút 30 giây</b>.<br>
-            • <b>Chạy 1500m:</b> Nam <b>≤ 7 phút 30 giây</b>.<br>
-            • <b>Co tay xà đơn:</b> Nam <b>≥ 12 lần</b>.
-        `
-    },
-    {
-        title: "ĐỊA ĐIỂM KIỂM TRA THỂ LỰC",
-        content: `
-            • <b>20/4 - 21/4/2026:</b> Trung tâm Văn hóa và Điện ảnh tỉnh Quảng Trị, đường Trần Phú, phường Đồng Hới.<br>
-            • <b>28/4 - 29/4/2026:</b> Trụ sở phía Nam Công an tỉnh Quảng Trị, đường Điện Biên Phủ, phường Nam Đông Hà.
-        `
-    },
-    {
-        title: "LƯU Ý KHI ĐI KHÁM / PHÚC TRA",
-        content: `
-            • Thí sinh cần đi đúng lịch, mang theo giấy tờ cần thiết theo hướng dẫn của Công an địa phương hoặc đơn vị quản lý.<br>
-            • Trường hợp bệnh cấp tính, tình trạng tạm thời có thể được đánh giá lại theo quy định.<br>
-            • Sau trúng tuyển có thể khám phúc tra; nếu không đạt tiêu chuẩn sức khỏe sẽ xử lý theo quy định của Bộ Công an.
-        `
-    },
-    {
-    title: "PHỤ LỤC X – VÍ DỤ TRƯỜNG HỢP CÓ THỂ ĐƯỢC CHẤP NHẬN (THAM KHẢO)",
-    content: `
-      <details class="mt-1">
-        <summary class="font-bold text-[11px] text-[#ce181e] cursor-pointer">Bấm để xem ví dụ thường gặp</summary>
-        <div class="mt-2 text-[11px] leading-relaxed text-gray-700">
-          • 03–04 răng viêm tủy/hoại tử/viêm quanh cuống <b>đã điều trị ổn định</b>.<br>
-          • Lệch vách ngăn/dị dạng mũi <b>không rối loạn hô hấp & phát âm</b>.<br>
-          • Loét dạ dày–tá tràng <b>đã điều trị lành</b>.<br>
-          • Viêm ruột thừa đã mổ <b>&gt; 04 tuần</b>, kết quả tốt.<br>
-          • Thoát vị bẹn đã mổ tốt <b>&gt; 01 năm</b>.<br>
-          • Trĩ ngoại 01 búi <b>0,5–1 cm</b> (một số trường hợp) hoặc trĩ đã mổ tốt.<br>
-          • Một số nang/sỏi nhỏ ở gan–thận theo kích thước cho phép; viêm da tiếp xúc; viêm nang lông ở vùng không lộ…<br>
-          • Nang buồng trứng sinh lý; mổ lấy thai 1–2 lần không biến chứng (đối với nữ).<br>
-          <i>(Nội dung “chấp nhận” còn phụ thuộc kết luận thực tế và điều kiện áp dụng cụ thể.)</i>
-        </div>
-      </details>
-    `
-  }
-];
-
-        // DỮ LIỆU ĐIỀU KIỆN & NGUYÊN TẮC (VĂN BẢN MỚI)
-        const DIEU_KIEN_DATA = [
-    {
-                title: "TỔNG QUAN TUYỂN SINH CAND 2026",
-                content: `
-                • Hệ tuyển sinh chính: <b>Đại học chính quy tuyển mới</b>, <b>Đại học văn bằng 2 tuyển mới (VB2CA)</b>, <b>Trung cấp chính quy tuyển mới</b>.<br>
-                • Phân vùng tuyển sinh:<br>
-                &nbsp;&nbsp;– <b>Phía Bắc:</b> từ thành phố Huế trở ra.<br>
-                &nbsp;&nbsp;– <b>Phía Nam:</b> từ thành phố Đà Nẵng trở vào.<br>
-                • Lược bỏ các nội dung nội bộ như tổ chức thực hiện, phân công, kinh phí chi tiết; chỉ giữ phần phục vụ hỏi đáp tự động.`
-            },
-    {
-        title: "ĐẠI HỌC CHÍNH QUY - ĐỐI TƯỢNG, PHƯƠNG THỨC, CHỈ TIÊU",
-        content: `
-            • <b>Đối tượng:</b><br>
-            &nbsp;&nbsp;– Chiến sĩ nghĩa vụ Công an tại ngũ.<br>
-            &nbsp;&nbsp;– Công dân hoàn thành nghĩa vụ tham gia CAND có quyết định xuất ngũ trong vòng 12 tháng tính đến tháng dự tuyển.<br>
-            &nbsp;&nbsp;– Công dân thường trú tại địa phương nơi đăng ký sơ tuyển.<br><br>
-            • <b>Phương thức:</b><br>
-            &nbsp;&nbsp;– PT1: Tuyển thẳng.<br>
-            &nbsp;&nbsp;– PT2: Xét tuyển kết hợp chứng chỉ ngoại ngữ quốc tế + bài thi đánh giá Bộ Công an.<br>
-            &nbsp;&nbsp;– PT3: Xét tuyển kết hợp điểm thi tốt nghiệp THPT + bài thi đánh giá Bộ Công an.<br><br>
-            • <b>Tổng chỉ tiêu 2026:</b> <b>2.070</b>.
-        `
-    },
-    {
-        title: "ĐẠI HỌC CHÍNH QUY - ĐIỀU KIỆN CHUNG",
-        content: `
-            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức theo quy định của Bộ Công an.<br>
-            • Chiến sĩ nghĩa vụ phải có thời gian công tác từ <b>15 tháng trở lên</b> tính đến tháng thi tuyển; năm liền trước đạt mức <b>Hoàn thành nhiệm vụ</b> trở lên.<br>
-            • Công dân hoàn thành nghĩa vụ tham gia CAND trong thời gian tại ngũ hằng năm phải đạt mức <b>Hoàn thành nhiệm vụ</b> trở lên, trong đó có ít nhất <b>01 năm Hoàn thành tốt nhiệm vụ</b>.<br>
-            • Về học lực THPT:<br>
-            &nbsp;&nbsp;– Chiến sĩ nghĩa vụ và đối tượng ưu tiên UT1: kết quả học tập từ mức <b>đạt</b> trở lên.<br>
-            &nbsp;&nbsp;– Công dân hoàn thành nghĩa vụ CAND và công dân thường trú: kết quả học tập từ mức <b>khá</b> trở lên.<br>
-            • Điểm từng môn thuộc tổ hợp xét tuyển:<br>
-            &nbsp;&nbsp;– Công dân hoàn thành nghĩa vụ CAND và người dân tộc thiểu số: từ <b>6,5</b> trở lên.<br>
-            &nbsp;&nbsp;– Công dân thường trú tại địa phương: từ <b>7,0</b> trở lên.<br>
-            • Công dân thường trú tại địa phương phải có hạnh kiểm từ mức <b>khá</b> trở lên, <b>chưa kết hôn</b>, <b>chưa có con đẻ hoặc con nuôi</b> theo quy định.<br>
-            • Độ tuổi công dân thường trú: không quá <b>22 tuổi</b>; nếu là người dân tộc thiểu số thì không quá <b>25 tuổi</b>.<br>
-            • Đủ sức khỏe tuyển vào CAND theo quy định hiện hành.<br>
-            • Riêng thí sinh đăng ký ngành <b>Y khoa</b>: kết quả học tập lớp 12 phải từ mức <b>tốt (loại giỏi)</b> trở lên.
-        `
-    },
-    {
-        title: "ĐẠI HỌC CHÍNH QUY - ĐIỀU KIỆN THEO TỪNG PHƯƠNG THỨC",
-        content: `
-            • <b>Phương thức 1 - tuyển thẳng:</b><br>
-            &nbsp;&nbsp;– Áp dụng cho thí sinh đạt giải theo quy định của Bộ GD&ĐT.<br>
-            &nbsp;&nbsp;– Thời gian đoạt giải không quá <b>03 năm</b> tính đến thời điểm xét tuyển thẳng.<br>
-            &nbsp;&nbsp;– Phải tốt nghiệp THPT trước thời điểm xác nhận nhập học.<br><br>
-            • <b>Phương thức 2 - chứng chỉ ngoại ngữ + bài thi đánh giá:</b><br>
-            &nbsp;&nbsp;– Chứng chỉ còn hạn không quá <b>02 năm</b> tính đến ngày <b>01/5/2026</b>.<br>
-            &nbsp;&nbsp;– Mức tối thiểu: IELTS 5.5; TOEFL iBT 46; TOEIC 600 và 242; SAT 1100; HSK 4; DELE B2; DELF/DALF B2; TRKI B2; Goethe/telc B2; JLPT N3; TOPIK 4; CELI 3.<br>
-            &nbsp;&nbsp;– Không sử dụng chứng chỉ Home Edition.<br>
-            &nbsp;&nbsp;– Nếu dự thi chứng chỉ trong thời gian sơ tuyển: ngày thi chính thức phải trước <b>20/5/2026</b>; nộp chứng chỉ trước <b>30/5/2026</b>.<br>
-            &nbsp;&nbsp;– Học lực lớp 10, 11, 12 từ loại khá trở lên; điểm trung bình môn ngoại ngữ các năm THPT từ <b>7,0</b> trở lên.<br><br>
-            • <b>Phương thức 3 - điểm THPT + bài thi đánh giá:</b><br>
-            &nbsp;&nbsp;– Thí sinh học ngoại ngữ khác tiếng Anh hoặc tiếng Trung vẫn có thể dùng điểm môn ngoại ngữ đó để sơ tuyển nếu đăng ký ngành có sử dụng tiếng Anh hoặc tiếng Trung.<br>
-            &nbsp;&nbsp;– Phải tốt nghiệp THPT trước thời điểm xác nhận nhập học.
-        `
-    },
-    {
-        title: "ĐẠI HỌC CHÍNH QUY - BÀI THI, THỜI GIAN, HỒ SƠ, LỆ PHÍ",
-        content: `
-            • <b>Bài thi đánh giá Bộ Công an:</b> thi viết, thời lượng <b>180 phút</b>, ngày thi chính <b>21/6/2026</b>.<br>
-            • <b>Mã bài thi:</b> CA1, CA2, CA3, CA4.<br><br>
-            • <b>Mốc thời gian chính:</b><br>
-            &nbsp;&nbsp;– 15/3 - 15/4/2026: Đăng ký dự tuyển.<br>
-            &nbsp;&nbsp;– 16/4 - 05/5/2026: Khám sức khỏe và kiểm tra thể lực.<br>
-            &nbsp;&nbsp;– 20/5/2026: Nộp hồ sơ dự tuyển về các trường CAND.<br>
-            &nbsp;&nbsp;– 20 - 21/6/2026: Tổ chức kỳ thi đánh giá của Bộ Công an.<br>
-            &nbsp;&nbsp;– 10 - 15/7/2026: Công bố điểm thi và tiếp nhận phúc khảo.<br>
-            &nbsp;&nbsp;– 08 - 10/8/2026: Thông báo kết quả xét tuyển phương thức 2, 3.<br>
-            &nbsp;&nbsp;– 14/8/2026: Thông báo danh sách trúng tuyển.<br>
-            &nbsp;&nbsp;– 15/8 - 01/9/2026: Tiếp nhận bản chính giấy tờ xác nhận nhập học.<br>
-            &nbsp;&nbsp;– 23 - 27/9/2026: Nhập học.<br><br>
-            • <b>Lệ phí sơ tuyển:</b> <b>300.000 đồng</b>.<br>
-            • <b>Phí hồ sơ chung:</b> 20.000 đồng/bộ.<br>
-            • <b>Tờ khai đăng ký dự tuyển đại học CAND:</b> 10.000 đồng/tờ.
-        `
-    },
-    {
-        title: "VB2CA - ĐỐI TƯỢNG, PHƯƠNG THỨC, CHỈ TIÊU",
-        content: `
-            • <b>Đối tượng:</b> Công dân Việt Nam.<br>
-            • <b>Phương thức:</b><br>
-            &nbsp;&nbsp;– PT1: Xét tuyển thẳng.<br>
-            &nbsp;&nbsp;– PT2: Thi tuyển.<br>
-            • <b>Tổng chỉ tiêu:</b> <b>530</b>.
-        `
-    },
-    {
-        title: "VB2CA - ĐIỀU KIỆN, CHỨNG CHỈ, THỜI GIAN, LỆ PHÍ",
-        content: `
-            • Tốt nghiệp đại học hệ chính quy, bằng do cơ sở giáo dục đại học trong nước hoặc nước ngoài cấp; xếp loại từ <b>khá</b> trở lên.<br>
-            • Sinh viên năm cuối được đăng ký, nhưng đến ngày xét tuyển của các trường CAND (<b>20/8/2026</b>) phải có bằng hoặc giấy xác nhận tốt nghiệp; đến thời điểm nhập học phải có bằng tốt nghiệp.<br>
-            • Văn bằng nước ngoài phải được cơ quan có thẩm quyền của Bộ GD&ĐT công nhận.<br>
-            • Một số trường/ngành cho phép tốt nghiệp khối kỹ thuật, khoa học tự nhiên, khoa học máy tính, CNTT với điều kiện kết quả chuyên môn đạt mức khá trở lên.<br>
-            • Chiến sĩ nghĩa vụ Công an tại ngũ phải có thời gian công tác từ <b>15 tháng trở lên</b> tính đến tháng thi tuyển; bằng tốt nghiệp đại học chính quy từ loại trung bình trở lên.<br>
-            • Độ tuổi không quá <b>30</b> tính đến ngày dự thi.<br>
-            • Tiêu chuẩn chính trị và sức khỏe áp dụng tương tự tuyển sinh học sinh phổ thông vào các trường CAND.<br><br>
-            • <b>Điều kiện nổi bật của PT1:</b><br>
-            &nbsp;&nbsp;– Có thể xét tuyển thẳng với thí sinh loại giỏi/xuất sắc theo nhóm ngành phù hợp và điều kiện chứng chỉ ngoại ngữ tương ứng.<br>
-            &nbsp;&nbsp;– Chứng chỉ ngoại ngữ còn hạn không quá <b>02 năm</b> tính đến <b>01/8/2026</b>.<br><br>
-            • <b>Bài thi:</b> thi trên máy tính, thời lượng <b>150 phút</b>, ngày thi <b>20/9/2026</b>.<br><br>
-            • <b>Mốc thời gian:</b><br>
-            &nbsp;&nbsp;– 15/3 - 25/6/2026: Đăng ký dự tuyển.<br>
-            &nbsp;&nbsp;– 29/6 - 03/7/2026: Khám sức khỏe VB2CA.<br>
-            &nbsp;&nbsp;– 20/8/2026: Nộp hồ sơ và danh sách đăng ký dự tuyển.<br>
-            &nbsp;&nbsp;– 19 - 20/9/2026: Tổ chức kỳ thi VB2CA của Bộ Công an.<br>
-            &nbsp;&nbsp;– 01 - 03/10/2026: Thông báo điểm thi và tiếp nhận phúc khảo.<br>
-            &nbsp;&nbsp;– 15 - 20/10/2026: Phê duyệt danh sách trúng tuyển.<br>
-            &nbsp;&nbsp;– 30/10/2026: Thông báo kết quả trúng tuyển.<br>
-            &nbsp;&nbsp;– 10 - 15/11/2026: Nhập học.<br><br>
-            • <b>Lệ phí sơ tuyển:</b> <b>100.000 đồng/thí sinh</b>.<br>
-            • <b>Lệ phí hồ sơ:</b> <b>30.000 đồng/bộ</b>.
-        `
-    },
-    {
-        title: "TRUNG CẤP CHÍNH QUY - ĐỐI TƯỢNG, PHƯƠNG THỨC, CHỈ TIÊU",
-        content: `
-            • <b>Đối tượng:</b><br>
-            &nbsp;&nbsp;– Chiến sĩ nghĩa vụ Công an.<br>
-            &nbsp;&nbsp;– Công dân hoàn thành nghĩa vụ tham gia CAND có quyết định xuất ngũ trong vòng 12 tháng tính đến tháng dự tuyển.<br>
-            &nbsp;&nbsp;– Thí sinh đã tham gia dự tuyển nhưng không trúng tuyển đại học Công an chính quy tuyển mới.<br><br>
-            • <b>Phương thức:</b><br>
-            &nbsp;&nbsp;– PT1: Xét tuyển thẳng.<br>
-            &nbsp;&nbsp;– PT2: Xét tuyển.<br><br>
-            • <b>Tổng chỉ tiêu:</b> <b>280</b>.<br>
-            &nbsp;&nbsp;– T08: 80 chỉ tiêu.<br>
-            &nbsp;&nbsp;– T09: 100 chỉ tiêu.<br>
-            &nbsp;&nbsp;– T10: 100 chỉ tiêu.
-        `
-    },
-    {
-        title: "TRUNG CẤP CHÍNH QUY - ĐIỀU KIỆN, HỒ SƠ, THỜI GIAN",
-        content: `
-            • Đủ tiêu chuẩn chính trị, phẩm chất đạo đức theo quy định hiện hành của Bộ Công an.<br>
-            • Chiến sĩ nghĩa vụ phải có thời gian công tác từ <b>15 tháng trở lên</b> tính đến tháng thi tuyển; năm liền trước đạt mức <b>Hoàn thành nhiệm vụ</b> trở lên.<br>
-            • Chiến sĩ nghĩa vụ và công dân hoàn thành nghĩa vụ tham gia CAND phải đủ sức khỏe tuyển vào CAND theo quy định hiện hành.<br>
-            • Đối với thí sinh đã tham gia dự tuyển nhưng không trúng tuyển đại học: phải có hồ sơ tham gia và vẫn đảm bảo điều kiện, tiêu chuẩn dự tuyển trình độ đại học theo quy định.<br><br>
-            • <b>Phương thức 1 - xét tuyển thẳng:</b><br>
-            &nbsp;&nbsp;– Có văn bản đề nghị của Công an đơn vị, địa phương kèm hồ sơ minh chứng.<br>
-            &nbsp;&nbsp;– Phải tốt nghiệp THPT trước thời điểm xác nhận nhập học.<br>
-            &nbsp;&nbsp;– Lệ phí xét tuyển thẳng: <b>30.000 đồng</b>.<br><br>
-            • <b>Phương thức 2 - xét tuyển:</b><br>
-            &nbsp;&nbsp;– Phải tham dự kỳ thi tốt nghiệp THPT và kỳ thi đánh giá của Bộ Công an năm 2026.<br>
-            &nbsp;&nbsp;– Phải đạt ngưỡng đầu vào trình độ trung cấp theo thông báo của X02.<br>
-            &nbsp;&nbsp;– Phải có hồ sơ đăng ký dự tuyển trung cấp do Công an đơn vị, địa phương gửi về X02.<br><br>
-            • <b>Hồ sơ đăng ký:</b><br>
-            &nbsp;&nbsp;– Danh sách đăng ký xét tuyển trung cấp CAND.<br>
-            &nbsp;&nbsp;– File danh sách đăng ký xét tuyển trung cấp trích xuất từ phần mềm tuyển sinh.<br>
-            &nbsp;&nbsp;– Tờ khai đăng ký dự tuyển trung cấp CAND: <b>10.000 đồng/tờ</b>.<br>
-            &nbsp;&nbsp;– CCCD của thí sinh, thống nhất với số CCCD dùng để đăng ký thi tốt nghiệp THPT 2026.<br>
-            &nbsp;&nbsp;– Bản photo giấy báo dự thi tốt nghiệp THPT.<br><br>
-            • <b>Mốc thời gian:</b><br>
-            &nbsp;&nbsp;– 15/3 - 15/4/2026: Đăng ký dự tuyển.<br>
-            &nbsp;&nbsp;– 16/4 - 05/5/2026: Khám sức khỏe và kiểm tra thể lực.<br>
-            &nbsp;&nbsp;– 15 - 20/8/2026: Công bố điểm trúng tuyển.<br>
-            &nbsp;&nbsp;– 10 - 15/10/2026: Nhập học.
-        `
-    },
-    {
-        title: "TRƯỜNG TUYỂN SINH VÀ PHÂN VÙNG",
-        content: `
-            • <b>Đại học chính quy:</b><br>
-            &nbsp;&nbsp;– Toàn quốc: T03, T06, T07, B06; ngành An ninh mạng và CNTT của T01; ngành Y khoa và Kỹ thuật điện tử viễn thông gửi đào tạo.<br>
-            &nbsp;&nbsp;– Phía Bắc: T02; nhóm ngành nghiệp vụ An ninh của T01.<br>
-            &nbsp;&nbsp;– Phía Nam: T04; T05.<br><br>
-            • <b>VB2CA:</b><br>
-            &nbsp;&nbsp;– Toàn quốc: T06; T07; ngành An toàn thông tin của T01.<br>
-            &nbsp;&nbsp;– Phía Bắc: nhóm ngành nghiệp vụ An ninh của T01; nhóm ngành nghiệp vụ Cảnh sát của T02.<br>
-            &nbsp;&nbsp;– Phía Nam: nhóm ngành nghiệp vụ An ninh của T04; nhóm ngành nghiệp vụ Cảnh sát của T05.<br><br>
-            • <b>Trung cấp:</b><br>
-            &nbsp;&nbsp;– Toàn quốc: T08.<br>
-            &nbsp;&nbsp;– Phía Bắc: T09.<br>
-            &nbsp;&nbsp;– Phía Nam: T10.
-        `
-    },
-    {
-        title: "MÃ TỔ HỢP XÉT TUYỂN VÀ MÃ BÀI THI",
-        content: `
-            • <b>Mã tổ hợp:</b><br>
-            &nbsp;&nbsp;– A00: Toán, Vật lí, Hóa học.<br>
-            &nbsp;&nbsp;– A01: Toán, Vật lí, Tiếng Anh.<br>
-            &nbsp;&nbsp;– B00: Toán, Hóa học, Sinh học.<br>
-            &nbsp;&nbsp;– B08: Toán, Sinh học, Tiếng Anh.<br>
-            &nbsp;&nbsp;– C00: Ngữ văn, Lịch sử, Địa lí.<br>
-            &nbsp;&nbsp;– C03: Toán, Ngữ văn, Lịch sử.<br>
-            &nbsp;&nbsp;– D01: Toán, Ngữ văn, Tiếng Anh.<br>
-            &nbsp;&nbsp;– D04: Toán, Ngữ văn, Tiếng Trung Quốc.<br>
-            &nbsp;&nbsp;– D07: Toán, Hóa học, Tiếng Anh.<br>
-            &nbsp;&nbsp;– D09: Toán, Lịch sử, Tiếng Anh.<br>
-            &nbsp;&nbsp;– D10: Toán, Địa lí, Tiếng Anh.<br>
-            &nbsp;&nbsp;– X02: Toán, Ngữ văn, Tin học.<br>
-            &nbsp;&nbsp;– X03: Toán, Ngữ văn, Công nghệ công nghiệp.<br>
-            &nbsp;&nbsp;– X04: Toán, Ngữ văn, Công nghệ nông nghiệp.<br>
-            &nbsp;&nbsp;– X26: Toán, Tiếng Anh, Tin học.<br>
-            &nbsp;&nbsp;– X27: Toán, Tiếng Anh, Công nghệ công nghiệp.<br>
-            &nbsp;&nbsp;– X28: Toán, Tiếng Anh, Công nghệ nông nghiệp.<br><br>
-            • <b>Mã bài thi đánh giá Bộ Công an:</b><br>
-            &nbsp;&nbsp;– CA1: Ngữ văn tự luận; trắc nghiệm Toán, Lịch sử, Tiếng Anh; tự chọn Vật lí.<br>
-            &nbsp;&nbsp;– CA2: Ngữ văn tự luận; trắc nghiệm Toán, Lịch sử, Tiếng Anh; tự chọn Hóa học.<br>
-            &nbsp;&nbsp;– CA3: Ngữ văn tự luận; trắc nghiệm Toán, Lịch sử, Tiếng Anh; tự chọn Sinh học.<br>
-            &nbsp;&nbsp;– CA4: Ngữ văn tự luận; trắc nghiệm Toán, Lịch sử, Tiếng Anh; tự chọn Địa lí.
-        `
-    }
-];
-
-        /****************************************************************
-         * 2. KHO TRI THỨC THÔNG MINH (TRẢ LỜI TỰ ĐỘNG)
-         ****************************************************************/
-const KNOWLEDGE_BASE = [
-  // ==========================================
-  // PHẦN 1: TIÊU CHUẨN SỨC KHỎE CHI TIẾT
-  // ==========================================
-  {
-    keys: ['tiêu chuẩn sức khỏe', 'loại 1', 'loại 2', 'nguyên tắc', 'điều kiện sức khỏe'],
-    answer: "<b>Nguyên tắc sức khỏe dự tuyển CAND:</b> Thí sinh phải đạt <b>Sức khỏe Loại 1 hoặc Loại 2</b> và đáp ứng các điều kiện đặc thù (chiều cao, BMI, thị lực, ngoại hình, xét nghiệm)."
-  },
-  {
-    keys: ['chiều cao', 'thể lực', 'cao bao nhiêu', 'chuẩn chiều cao', 'tối thiểu', 'tối đa', 'mét'],
-    answer: "<b>Chiều cao tiêu chuẩn</b><br>• Nam: <b>1m64–1m95</b>.<br>• Nữ: <b>1m58–1m80</b>.<br><i>Có ưu tiên chiều cao cho một số đối tượng (DTTS, UT1, tốt nghiệp ĐH khối KHTN/Kỹ thuật/CNTT...).</i>"
-  },
-  {
-    keys: ['nam cao', 'chiều cao nam', 'nam tối thiểu', 'nam 1m'],
-    answer: "<b>Chiều cao (Nam)</b><br>Nam đạt từ <b>1m64</b> đến <b>1m95</b>."
-  },
-  {
-    keys: ['nữ cao', 'chiều cao nữ', 'nữ tối thiểu', 'nữ 1m', 'con gái cao'],
-    answer: "<b>Chiều cao (Nữ)</b><br>Nữ đạt từ <b>1m58</b> đến <b>1m80</b>."
-  },
-  {
-    keys: ['dân tộc', 'thiểu số', 'dtts', 'ưu tiên chiều cao'],
-    answer: "<b>Ưu tiên chiều cao (Người dân tộc thiểu số)</b><br>Nam từ <b>1m62</b>, Nữ từ <b>1m56</b>."
-  },
-  {
-    keys: ['bmi', 'cân nặng', 'mập', 'béo', 'gầy', 'ốm', 'quy định cân nặng'],
-    answer: "<b>Thể lực & BMI (TT62 + TT131):</b><br>• <b>BMI:</b> bắt buộc <b>18,5–30</b> (ngoài khoảng này thường không đạt). Công thức: Cân nặng / (Chiều cao x Chiều cao)."
-  },
-  {
-    keys: ['mắt', 'thị lực', 'không kính', 'nhìn được', '10/10', '9/10'],
-    answer: "<b>Thị lực không kính</b><br>Mỗi mắt đạt <b>9–10/10</b>, tổng 2 mắt đạt <b>18/10</b> trở lên."
-  },
-  {
-    keys: ['cận', 'viễn', 'diop', 'độ', 'khúc xạ'],
-    answer: "<b>Cận thị/viễn thị</b><br>Mỗi mắt không quá <b>03 đi-ốp</b>."
-  },
-  {
-    keys: ['loạn thị', 'loạn sinh lý'],
-    answer: "<b>Loạn thị</b><br>Phải là loạn thị sinh lý hoặc mỗi mắt dưới <b>01 đi-ốp</b>."
-  },
-  {
-    keys: ['sau kính', 'đeo kính', 'chỉnh kính'],
-    answer: "<b>Thị lực sau chỉnh kính</b><br>Một mắt tối thiểu <b>9/10</b>, tổng 2 mắt đạt <b>19/10</b> trở lên.<br>Thí sinh phải cam kết bảo đảm tiêu chuẩn thị lực nếu trúng tuyển."
-  },
-  {
-    keys: ['mù màu', 'sắc giác', 'màu sắc', 'xanh đỏ', 'ishihara', 'rối loạn sắc tố'],
-    answer: "<b>Mù màu / rối loạn sắc giác</b><br>Mù màu trục xanh lá–đỏ mức độ nhẹ (điểm 3) hoặc nặng (điểm 4–5) sẽ làm giảm loại sức khỏe và <b>không đạt điều kiện</b> (chỉ nhận Loại 1–2)."
-  },
-  {
-    keys: ['xăm', 'tattoo', 'vết trổ', 'phun môi', 'chân mày', 'thẩm mỹ'],
-    answer: "<b>Xăm hình / phun xăm</b><br>Không có vết trổ, vết xăm (kể cả phun xăm) trên da.<br>Ngoại lệ: <b>nữ</b> được xăm thẩm mỹ <b>lông mày, môi</b>."
-  },
-  {
-    keys: ['bấm lỗ', 'nam bấm', 'piercing nam', 'xỏ khuyên nam'],
-    answer: "<b>Piercing / bấm lỗ (Nam)</b><br>Nam không có lỗ bấm ở tai, mũi và các vị trí khác (lỗ tai đã liền thành sẹo vẫn được chấp nhận)."
-  },
-  {
-    keys: ['bấm lỗ nữ', 'piercing nữ', 'xỏ khuyên nữ', 'mấy lỗ'],
-    answer: "<b>Piercing / bấm lỗ (Nữ)</b><br>Nữ không có từ <b>02 lỗ bấm trở lên</b> trên <b>01 tai</b>; không có lỗ bấm ở mũi và các vị trí khác."
-  },
-  {
-    keys: ['da', 'nám', 'sắc tố', 'đốm', 'bạch biến'],
-    answer: "<b>Da</b><br>Không bị rối loạn sắc tố da (trừ <b>nám má</b>)."
-  },
-  {
-    keys: ['sẹo', 'lồi', 'co kéo', 'mặt', 'tay chân', 'cổ'],
-    answer: "<b>Sẹo</b><br>Không có sẹo lồi co kéo ở vùng <b>đầu, mặt, cổ, cẳng tay, bàn tay, bàn chân</b>."
-  },
-  {
-    keys: ['tóc', 'nhuộm', 'uốn', 'điều lệnh'],
-    answer: "<b>Tóc</b><br>Màu và dạng tóc bình thường theo Điều lệnh CAND."
-  },
-  {
-    keys: ['ma túy', 'chất kích thích', 'nghiện', 'test', 'nước tiểu'],
-    answer: "<b>Ma túy</b><br>Tuyệt đối không nghiện các chất ma túy và tiền chất. Bắt buộc test âm tính khi khám."
-  },
-  {
-    keys: ['máu', 'xét nghiệm', 'cận lâm sàng', 'hiv', 'viêm gan'],
-    answer: "<b>Khám cận lâm sàng thường có:</b><br>• <b>Máu:</b> công thức máu, glucose, AST/ALT, ure/creatinin, HIV, HBsAg, anti-HCV…<br>• <b>Nước tiểu:</b> tổng phân tích + test ma túy.<br>• <b>Chẩn đoán:</b> X-quang tim phổi, siêu âm bụng, điện tim."
-  },
-  {
-    keys: ['bệnh tật', 'bảng số 2', 'phụ lục i', 'tiêu chuẩn bệnh'],
-    answer: "<b>Hệ thống tiêu chuẩn bệnh tật</b><br>Để đạt sức khỏe <b>Loại 1</b> hoặc <b>Loại 2</b>, thí sinh không được có bất kỳ chỉ tiêu nào bị <b>điểm 3</b> trở lên."
-  },
-  {
-    keys: ['răng', 'sâu răng', 'mất răng', 'nhai', 'hàm mặt'],
-    answer: "<b>Răng – Hàm – Mặt</b><br>Mất tối đa <b>3 răng</b> nhưng sức nhai vẫn đạt <b>85%</b> trở lên; không có răng sâu độ 3 (hoặc chỉ có tối đa 3 răng sâu độ 3 đã xử lý)."
-  },
-  {
-    keys: ['tai', 'mũi', 'họng', 'nghe', 'điếc', 'nói lắp', 'nói ngọng', 'viêm tai'],
-    answer: "<b>Tai – Mũi – Họng</b><br>Sức nghe tiếng nói thường đạt <b>4–5m</b>; không bị viêm tai giữa mạn tính; không nói lắp, nói ngọng."
-  },
-  {
-    keys: ['thần kinh', 'động kinh', 'đau đầu', 'mồ hôi', 'tay chân'],
-    answer: "<b>Thần kinh</b><br>Không bị đau đầu dai dẳng; không có dấu hiệu động kinh; không bị ra mồ hôi tay chân mức độ vừa và nặng."
-  },
-  {
-    keys: ['tâm thần', 'trầm cảm', 'lo âu', 'phân liệt'],
-    answer: "<b>Tâm thần</b><br>Không mắc các rối loạn trầm cảm, lo âu; không có dấu hiệu tâm thần phân liệt."
-  },
-  {
-    keys: ['tim', 'mạch', 'huyết áp', 'nhịp tim'],
-    answer: "<b>Tim mạch</b><br>Huyết áp tối đa <b>100–130 mmHg</b>; huyết áp tối thiểu <b>≤ 85 mmHg</b>; mạch <b>57–85 lần/phút</b>."
-  },
-  {
-    keys: ['tiêu hóa', 'trĩ', 'mổ trĩ', 'dạ dày', 'gan'],
-    answer: "<b>Tiêu hóa & Bệnh Trĩ</b><br>Không bị viêm gan B mạn tính giai đoạn hoạt động. Một số trường hợp trĩ có thể được xem xét (ví dụ trĩ ngoại 01 búi nhỏ 0,5–1cm). Trĩ nhiều búi/búi to/chảy máu thường <b>không đạt</b>."
-  },
-  {
-    keys: ['phúc tra', 'khám lại', 'trúng tuyển khám'],
-    answer: "<b>Phúc tra & thời hạn:</b> Có thể khám <b>phúc tra</b> sau trúng tuyển/nhập học. Trường hợp ghi <b>“T”</b> là bệnh tạm thời cần điều trị khỏi để đánh giá lại. Phiếu khám sức khỏe thường có giá trị <b>06 tháng</b>."
-  },
-
-  // ==========================================
-  // PHẦN 2: ĐIỀU KIỆN CHUNG & ĐẠI HỌC CHÍNH QUY
-  // ==========================================
-  {
-    keys: ['đại học', 'chính quy', 'đối tượng', 'tuyển sinh', 'chính quy', 'tổng quan', 'chỉ tiêu', 'thpt'],
-    answer: "<b>Đại học chính quy tuyển mới:</b><br>• Đối tượng: chiến sĩ nghĩa vụ; công dân hoàn thành nghĩa vụ; công dân thường trú tại địa phương.<br>• Phương thức: PT1 (tuyển thẳng); PT2 (chứng chỉ ngoại ngữ); PT3 (điểm thi THPT).<br>• Tổng chỉ tiêu: <b>2.070</b>."
-  },
-  {
-    keys: ['học lực', 'hạnh kiểm', 'khá', 'giỏi', 'điểm học bạ'],
-    answer: "<b>Tiêu chuẩn học lực (THPT)</b><br>• Nhóm UT1, Chiến sĩ nghĩa vụ: kết quả học tập từ mức “<b>Đạt</b>” trở lên.<br>• Công dân thường trú, Hoàn thành NV: học lực <b>Khá</b> trở lên, hạnh kiểm <b>Khá</b> trở lên."
-  },
-  {
-    keys: ['điểm thi tối thiểu', 'từng môn', '6.5', '7.0', 'điểm liệt'],
-    answer: "<b>Điểm tối thiểu từng môn (tổ hợp xét tuyển)</b><br>• Công dân thường trú: từ <b>7,0</b> trở lên.<br>• Công dân hoàn thành NVCA và người dân tộc thiểu số: từ <b>6,5</b> trở lên."
-  },
-  {
-    keys: ['tuổi', 'độ tuổi', 'sinh năm', '22 tuổi', '25 tuổi'],
-    answer: "<b>Độ tuổi dự tuyển:</b><br>Không quá <b>22 tuổi</b>; riêng người dân tộc thiểu số không quá <b>25 tuổi</b>."
-  },
-  {
-    keys: ['hôn nhân', 'kết hôn', 'có con', 'lập gia đình', 'vợ chồng'],
-    answer: "<b>Tình trạng hôn nhân</b><br>Đối với học sinh phổ thông yêu cầu: <b>chưa kết hôn</b>, <b>chưa có con đẻ</b>, <b>chưa có con nuôi</b> theo quy định."
-  },
-  {
-    keys: ['phương thức 1', 'pt1', 'tuyển thẳng', 'giải quốc gia', 'olympic'],
-    answer: "<b>Phương thức 1 (Xét tuyển thẳng):</b><br>Áp dụng cho thí sinh đạt giải Nhất, Nhì, Ba Quốc gia/Quốc tế hoặc giải Khoa học kỹ thuật. Thời gian đoạt giải không quá <b>03 năm</b> tính đến thời điểm xét tuyển thẳng."
-  },
-  {
-    keys: ['phương thức 2', 'pt2', 'chứng chỉ', 'ngoại ngữ'],
-    answer: "<b>Phương thức 2 (Chứng chỉ ngoại ngữ):</b><br>• Kết hợp chứng chỉ ngoại ngữ quốc tế + bài thi đánh giá BCA.<br>• Chứng chỉ còn hạn không quá 02 năm (tính đến 01/5/2026). Nộp chứng chỉ trước 30/5/2026.<br>• <i>(Xem thêm mức điểm tối thiểu bằng cách gõ: 'điểm ielts toefl')</i>"
-  },
-  {
-    keys: ['phương thức 3', 'pt3', 'điểm thi thpt', 'tốt nghiệp'],
-    answer: "<b>Phương thức 3 (Điểm thi THPT):</b><br>Xét tuyển kết hợp điểm thi tốt nghiệp THPT theo tổ hợp môn và bài thi đánh giá của Bộ Công an."
-  },
-  {
-    keys: ['bài thi đánh giá', 'đánh giá năng lực', 'mã bài thi', 'ca1', 'ca2', 'ca3', 'ca4'],
-    answer: "<b>Bài thi đánh giá BCA (21/6/2026):</b><br>Thi viết 180 phút.<br>• CA1: Văn tự luận; Toán, Sử, Anh trắc nghiệm; Lý tự chọn.<br>• CA2: Tương tự CA1, thay Lý bằng Hóa.<br>• CA3: Tương tự CA1, thay Lý bằng Sinh.<br>• CA4: Tương tự CA1, thay Lý bằng Địa."
-  },
-  { keys: ['tổ hợp', 'môn thi', 'a00', 'a01', 'b00', 'c03', 'd01', 'x02', 'x03'], answer: `<b>Mã tổ hợp xét tuyển đang sử dụng:</b><br>A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br><i>Bạn có thể hỏi 'X02 gồm môn gì?' để biết chi tiết.</i>` },
-            { keys: ['x02', 'x03', 'x04', 'x26', 'x27', 'x28', 'môn gì'], answer: `<b>Các tổ hợp mới:</b><br>• X02: Toán, Ngữ văn, Tin học.<br>• X03: Toán, Văn, Công nghệ CN.<br>• X04: Toán, Văn, Công nghệ NN.<br>• X26: Toán, Anh, Tin học.<br>• X27: Toán, Anh, Công nghệ CN.<br>• X28: Toán, Anh, Công nghệ NN.` },
-  {
-    keys: ['điểm cộng', 'ưu tiên', 'khu vực', 'điểm thưởng', 'giải thưởng'],
-    answer: "<b>Ưu tiên / Điểm cộng ĐH:</b><br>• Cộng điểm giải Quốc gia: Nhất (+1.0), Nhì (+0.75), Ba (+0.5), KK (+0.25).<br>• Ưu tiên khu vực/đối tượng theo quy định BGD&ĐT.<br>• <i>Lưu ý: Nếu tổng điểm quy đổi ≥ 22.5, điểm cộng sẽ bị giảm dần theo công thức.</i>"
-  },
-  {
-    keys: ['tính điểm', 'công thức', 'xét tuyển'],
-    answer: "<b>Công thức tính điểm (PT2 & PT3):</b><br>• PT2: ĐXT = (Bài thi BCA * 3/5) + (Chứng chỉ * 2/5) + Điểm cộng.<br>• <i>Bài thi BCA và Chứng chỉ đều được quy về thang điểm 30.</i>"
-  },
-
-  // ==========================================
-  // PHẦN 3: VĂN BẰNG 2 (VB2CA)
-  // ==========================================
-  {
-    keys: ['vb2', 'vb2ca', 'văn bằng 2', 'đại học vb2', 'cử nhân'],
-    answer: "<b>Đại học VB2CA (530 chỉ tiêu):</b><br>• Đối tượng: Công dân VN có bằng ĐH chính quy loại <b>Khá</b> trở lên.<br>• Tuổi: ≤ 30 tuổi.<br>• Bài thi: Thi trên máy tính (150 phút), ngày <b>20/9/2026</b>."
-  },
-  {
-    keys: ['điều kiện vb2', 'lĩnh vực', 'ngành', 'chuyên ngành'],
-    answer: "<b>Lĩnh vực dự tuyển VB2CA:</b><br>• Nghiệp vụ AN/CS (T01, T02, T04, T05): <b>Không quy định</b> ngành đào tạo trước đó.<br>• Các ngành kỹ thuật (ATTT, PCCC, Kỹ thuật Hậu cần): Phải tốt nghiệp đúng mã lĩnh vực quy định (748, 751, 752...)."
-  },
-  {
-    keys: ['pt1 vb2', 'tuyển thẳng vb2'],
-    answer: "<b>Phương thức 1 VB2CA (Xét tuyển thẳng):</b><br>• Con Công an bằng Xuất sắc.<br>• Bằng Giỏi/Xuất sắc khối Kỹ thuật, CNTT.<br>• Bằng Giỏi/Xuất sắc + IELTS 6.5+ (Con CA IELTS 6.0+).<br>• Bằng Khá + IELTS 7.0+ (Con CA IELTS 6.5+)."
-  },
-  {
-    keys: ['cộng điểm vb2', 'ưu tiên vb2', 'điểm thưởng vb2'],
-    answer: "<b>Ưu tiên VB2CA:</b><br>• Tiến sĩ (+2.0), Thạc sĩ (+1.5), Bằng ĐH loại Giỏi (+1.0).<br>• IELTS 6.5+ (+1.0), IELTS 6.0+ (+0.5).<br>• Con đẻ cán bộ Công an (+1.0).<br><i>(Chỉ hưởng mức điểm cộng cao nhất nếu có nhiều diện).</i>"
-  },
-  {
-    keys: ['thạc sĩ', 'tiến sĩ', 'đào tạo sau đại học'],
-    answer: "<b>Đào tạo Tiến sĩ/Thạc sĩ CAND:</b><br>• Đối tượng: Cán bộ quản lý, giảng viên, lãnh đạo cấp phòng.<br>• Tuổi dự tuyển Tiến sĩ: ≤ 50 tuổi.<br>• Tuổi dự tuyển Thạc sĩ: ≤ 45 tuổi."
-  },
-
-  // ==========================================
-  // PHẦN 4: TRUNG CẤP & VĂN HÓA NHỎ TUỔI
-  // ==========================================
-  {
-    keys: ['trung cấp', 'hệ trung cấp', 't08', 't09', 't10'],
-    answer: "<b>Trung cấp CAND chính quy (280 chỉ tiêu):</b><br>• Đối tượng: CSNV, Hoàn thành NVCA, Thí sinh trượt ĐH CAND.<br>• Phương thức: Xét tuyển thẳng hoặc Xét điểm THPT + Bài thi BCA.<br>• Phân bổ: T08 (80), T09 (100), T10 (100)."
-  },
-  {
-    keys: ['ưu tiên trung cấp', 'cộng điểm trung cấp'],
-    answer: "<b>Điểm cộng Trung cấp CAND:</b><br>• Giải Quốc gia: Nhất (+1.0), Nhì (+0.75), Ba (+0.5), KK (+0.25).<br>• Con đẻ cán bộ CA (+1.0).<br>• Con đẻ Trưởng/Phó CA xã bán chuyên trách >15 năm (+0.5)."
-  },
-  {
-    keys: ['nhỏ tuổi', 'văn hóa nhỏ tuổi', 'thcs', 'lớp 9', 'dân tộc nội trú'],
-    answer: "<b>Tuyển sinh Văn hóa nhỏ tuổi:</b><br>• <b>Tuyển thẳng:</b> Con liệt sĩ, thương binh >81%, AHLĐ.<br>• <b>Xét tuyển:</b> Người DTTS ở vùng đặc biệt khó khăn (học lực Khá, hạnh kiểm Tốt cấp THCS)."
-  },
-
-  // ==========================================
-  // PHẦN 5: CHỨNG CHỈ NGOẠI NGỮ (QUY ĐỔI)
-  // ==========================================
-  {
-    keys: ['quy đổi điểm ielts', 'ielts pt2', 'quy đổi pt2', 'điểm ngoại ngữ pt2', 'toefl', 'toeic', 'sat'],
-    answer: "<b>Quy đổi Chứng chỉ PT2 ĐH:</b><br>Mức tối thiểu: IELTS 5.5 (Quy đổi 7.5đ); IELTS 6.0 (Quy đổi 8.0đ); IELTS 6.5 (8.5đ); IELTS 7.0 (9.0đ); IELTS 8.0+ (10đ).<br>Tương đương: TOEFL iBT 46; TOEIC 600; SAT 1100."
-  },
-  {
-    keys: ['ielts pt3', 'quy đổi pt3', 'điểm ngoại ngữ pt3'],
-    answer: "<b>Quy đổi Chứng chỉ PT3 ĐH:</b><br>IELTS 4.0 - 5.0 (Quy đổi 7.0đ); IELTS 5.5 (7.5đ); IELTS 6.0 (8.0đ); IELTS 6.5 (8.5đ); IELTS 7.0 (9.0đ); IELTS 8.0+ (10đ)."
-  },
-  {
-    keys: ['hsk', 'jlpt', 'topik', 'tiếng trung', 'tiếng nhật', 'tiếng hàn'],
-    answer: "<b>Quy đổi tiếng Trung/Nhật/Hàn:</b><br>• Tương đương IELTS 6.5 - 5.5: HSK 4; JLPT N3; TOPIK 4.<br>• Tương đương IELTS 8.0 - 7.0: HSK 5; JLPT N2; TOPIK 5.<br>• Tương đương IELTS 9.0 - 8.5: HSK 6+; JLPT N1; TOPIK 6."
-  },
-  {
-    keys: ['chứng chỉ châu âu', 'dele', 'delf', 'trki', 'goethe', 'celi'],
-    answer: "<b>Quy đổi chứng chỉ khác:</b><br>Hệ thống hỗ trợ chứng chỉ Tây Ban Nha (DELE), Pháp (DELF/DALF), Nga (TRKI), Đức (Goethe), Ý (CELI) từ mức B2 trở lên (tương đương IELTS 5.5)."
-  },
-  {
-    keys: ['home edition', 'thi online', 'tại nhà'],
-    answer: "<b>Lưu ý chứng chỉ ngoại ngữ:</b><br>Tuyệt đối <b>KHÔNG SỬ DỤNG</b> các loại chứng chỉ thi online tại nhà (Home Edition)."
-  },
-
-  // ==========================================
-  // PHẦN 6: LỊCH TRÌNH, LỆ PHÍ, HỒ SƠ
-  // ==========================================
-  {
-    keys: ['thời gian', 'khi nào', 'bao giờ', 'lịch chung', 'đăng ký'],
-    answer: "<b>Các mốc thời gian chính 2026:</b><br>• Đăng ký ĐH/Trung cấp: 15/3 - 15/4.<br>• Đăng ký VB2CA: 15/3 - 25/6.<br>• Thi đánh giá BCA (ĐH): <b>20 - 21/6</b>.<br>• Thi VB2CA: <b>19 - 20/9</b>."
-  },
-  {
-    keys: ['hồ sơ', 'giấy tờ', 'chuẩn bị gì', 'đăng ký sơ tuyển'],
-    answer: "<b>Hồ sơ cơ bản gồm:</b><br>1. Phiếu đăng ký dự tuyển (Mẫu BCA).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. 04 ảnh 3x4 hoặc 4x6.<br>5. Giấy tờ ưu tiên/Chứng chỉ ngoại ngữ (nếu có)."
-  },
-  {
-    keys: ['lệ phí', 'tiền khám', 'đóng tiền', 'phí hồ sơ'],
-    answer: "<b>Lệ phí tuyển sinh 2026:</b><br>• Lệ phí sơ tuyển ĐH: <b>300.000đ</b>.<br>• Lệ phí sơ tuyển VB2CA: <b>100.000đ</b>.<br>• Phí hồ sơ chung: 20.000đ/bộ.<br>• Tờ khai ĐH/TC/VB2: 10.000đ/tờ.<br>• Phí xét tuyển PT2ĐH/PT2TC: 30.000đ."
-  },
-
-  // ==========================================
-  // PHẦN 7: LỊCH KHÁM SỨC KHỎE TỪNG NGÀY
-  // ==========================================
-  {
-    keys: ['khám sức khỏe khi nào', 'lịch khám chung', 'lịch khám sức khỏe', 'khám sức khỏe ở đâu', 'khám ở đâu', 'bệnh xá', 'giờ khám', 'địa điểm khám'],
-    answer: "<b>Lịch & Địa điểm Khám sức khỏe:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 29/6 - 02/7/2026 (Khám bù: 03/7).<br>• <b>Giờ giấc:</b> Sáng 07h30 (Nhịn ăn sáng), Chiều 13h30.<br>• <b>Địa điểm:</b> Tùy đơn vị, khám tại Bệnh xá số 01 (đường Điện Biên Phủ, Nam Đông Hà) hoặc Bệnh xá số 02 (đường Phan Chu Trinh, Đồng Hới)."
-  },
-  {
-    keys: ['16/4', '16/04', 'ngày 16'],
-    answer: "<b>Lịch khám ĐH/TC (16/4):</b><br>• <b>Đơn vị:</b> Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (Bắc), Tiểu đoàn CSCĐ số 3.<br>• <b>Tại:</b> Bệnh xá 02 (đường Phan Chu Trinh, Đồng Hới)."
-  },
-  {
-    keys: ['17/4', '17/04', 'ngày 17'],
-    answer: "<b>Lịch khám ĐH/TC (17/4):</b><br>• <b>Đơn vị:</b> Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC11B.<br>• <b>Tại:</b> Bệnh xá 02 (đường Phan Chu Trinh, Đồng Hới)."
-  },
-  {
-    keys: ['18/4', '18/04', 'ngày 18'],
-    answer: "<b>Lịch khám ĐH/TC (18/4):</b><br>• <b>Đơn vị:</b> Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, PK02 (Bắc).<br>• <b>Tại:</b> Bệnh xá 02 (đường Phan Chu Trinh, Đồng Hới)."
-  },
-  {
-    keys: ['19/4', '19/04', 'ngày 19'],
-    answer: "<b>Lịch khám ĐH/TC (19/4):</b><br>• <b>Đơn vị:</b> Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, Trại giam Đồng Sơn.<br>• <b>Tại:</b> Bệnh xá 02 (đường Phan Chu Trinh, Đồng Hới)."
-  },
-  {
-    keys: ['22/4', '22/04', 'ngày 22'],
-    answer: "<b>Lịch khám ĐH/TC (22/4):</b><br>• <b>Đơn vị:</b> Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, Nam Đông Hà)."
-  },
-  {
-    keys: ['23/4', '23/04', 'ngày 23'],
-    answer: "<b>Lịch khám ĐH/TC (23/4):</b><br>• <b>Đơn vị:</b> Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC11A.<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, Nam Đông Hà)."
-  },
-  {
-    keys: ['24/4', '24/04', 'ngày 24'],
-    answer: "<b>Lịch khám ĐH/TC (24/4):</b><br>• <b>Đơn vị:</b> Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (Nam).<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, Nam Đông Hà)."
-  },
-  {
-    keys: ['25/4', '25/04', 'ngày 25'],
-    answer: "<b>Lịch khám ĐH/TC (25/4):</b><br>• <b>Đơn vị:</b> Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ, Trại giam Nghĩa An.<br>• <b>Tại:</b> Bệnh xá 01 (đường Điện Biên Phủ, Nam Đông Hà)."
-  },
-  {
-    keys: ['khám bù', 'không đi khám', 'trễ lịch'],
-    answer: "<b>Lịch Khám bù:</b><br>• ĐH/TC: Ngày 04/5 - 05/5/2026.<br>• VB2CA: Ngày 03/7/2026.<br><i>Tại Bệnh xá số 01 (đường Điện Biên Phủ, Nam Đông Hà). Hội đồng sẽ tập hợp kết quả báo cáo lãnh đạo Công an tỉnh.</i>"
-  },
-  {
-    keys: ['29/6', '29/06', 'khám vb2', 'lịch vb2'],
-    answer: "<b>Lịch khám VB2CA (29/6):</b><br>Khám các đơn vị Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10, PC07 (Bắc), PC11B và Tiểu đoàn Cảnh sát cơ động số 3. Tại Bệnh xá số 02 (đường Phan Chu Trinh, Đồng Hới)."
-  },
-  {
-    keys: ['30/6', '30/06'],
-    answer: "<b>Lịch khám VB2CA (30/6):</b><br>Khám các đơn vị Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh, Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân, PK02 (Bắc) và Trại giam Đồng Sơn. Tại Bệnh xá số 02 (đường Phan Chu Trinh, Đồng Hới)."
-  },
-  {
-    keys: ['01/7', '1/7', '01/07'],
-    answer: "<b>Lịch khám VB2CA (01/7):</b><br>Khám các đơn vị Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập, PC07 (Nam) và PC11A. Tại Bệnh xá số 01 (đường Điện Biên Phủ, Nam Đông Hà)."
-  },
-  {
-    keys: ['02/7', '2/7', '02/07'],
-    answer: "<b>Lịch khám VB2CA (02/7):</b><br>Khám các đơn vị Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ, PK02 (Nam) và Trại giam Nghĩa An. Tại Bệnh xá số 01 (Nam Đông Hà)."
-  },
-
-  // ==========================================
-  // PHẦN 8: KIỂM TRA THỂ LỰC TỪNG NGÀY
-  // ==========================================
-  {
-    keys: ['thể lực', 'chạy', '100m', '1500m', '800m', 'bật xa', 'xà đơn', 'kiểm tra thể lực', 'địa điểm thể lực', 'thi thể lực ở đâu'],
-    answer: "<b>Kiểm tra thể lực (20-21/4 và 28-29/4):</b><br>• Bật xa: Nam ≥ 2,2m; Nữ ≥ 1,5m.<br>• Chạy 100m: Nam ≤ 16s; Nữ ≤ 20s.<br>• Chạy 1500m(Nam) ≤ 7p30s; 800m(Nữ) ≤ 5p30s.<br>• Xà đơn: Nam ≥ 12 lần.<br><b>📍 Địa điểm:</b> Tùy ngày, thi tại <i>TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, Đồng Hới)</i> hoặc <i>Trụ sở phía Nam Công an Tỉnh (đường Điện Biên Phủ, Nam Đông Hà)</i>.<br><i>Sáng 7h00, Chiều 15h00. Mặc trang phục thể thao.</i>"
-  },
-  {
-    keys: ['20/4', '20/04'],
-    answer: "<b>Kiểm tra thể lực (20/4):</b><br>• Sáng: Dân Hoá, Kim Điền, Kim Phú, Minh Hoá, Tuyên Lâm, Tuyên Sơn, Đồng Lê, Tuyên Hoá, Tuyên Bình, Tuyên Phú, Tân Thành, PC07 (Bắc).<br>• Chiều: Tân Gianh, Trung Thuần, Quảng Trạch, Hoà Trạch, Phú Trạch, Ba Đồn, Bắc Gianh, Nam Gianh, Nam Ba Đồn, Thượng Trạch, PC10 và PC11B.<br>• <b>Tại:</b> TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, Đồng Hới)."
-  },
-  {
-    keys: ['21/4', '21/04'],
-    answer: "<b>Kiểm tra thể lực (21/4):</b><br>• Sáng: Phong Nha, Bắc Trạch, Đông Trạch, Hoàn Lão, Bố Trạch, Nam Trạch, Đồng Hới, Đồng Thuận, Đồng Sơn, Quảng Ninh và PK02 (Bắc).<br>• Chiều:Ninh Châu, Trường Ninh, Trường Sơn, Lệ Thuỷ, Cam Hồng, Sen Ngư, Tân Mỹ, Trường Phú, Lệ Ninh, Kim Ngân và Trại giam Đồng Sơn.<br>• <b>Tại:</b> TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, Đồng Hới)."
-  },
-  {
-    keys: ['28/4', '28/04'],
-    answer: "<b>Kiểm tra thể lực (28/4):</b><br>• Sáng: Vĩnh Linh, Cửa Tùng, Vĩnh Hoàng, Vĩnh Thuỷ, Bến Quan, Cồn Tiên, Cửa Việt, Gio Linh, Bến Hải, Cam Lộ, PC07 (Nam), Trại giam Nghĩa An.<br>• Chiều: Hiếu Giang, La Lay, Tà Rụt, ĐăkRông, Ba Lòng, Hướng Hiệp, Hướng Lập, Hướng Phùng, Khe Sanh, Tân Lập và PC11A.<br>• <b>Tại:</b> Trụ sở phía Nam Công an Tỉnh (đường Điện Biên Phủ, Nam Đông Hà)."
-  },
-  {
-    keys: ['29/4', '29/04'],
-    answer: "<b>Kiểm tra thể lực (29/4):</b><br>• Sáng: Lao Bảo, Lìa, A Dơi, Triệu Phong, Ái Tử, Triệu Bình, Triệu Cơ, Nam Cửa Việt, Diên Sanh, Mỹ Thuỷ, PK02 (Nam).<br>• Chiều: Hải Lăng, Nam Hải Lăng, Vĩnh Định, Đông Hà, Nam Đông Hà, Quảng Trị, Cồn Cỏ.<br>• <b>Tại:</b> Trụ sở phía Nam Công an Tỉnh (đường Điện Biên Phủ, Nam Đông Hà)."
-  },
-
-// ==========================================
-        // PHẦN 9: CHỈ TIÊU CHI TIẾT TỪNG TRƯỜNG & HỆ ĐÀO TẠO (Theo dữ liệu chi tiết)
-        // ==========================================
-        
-        // --- 1. TỔNG HỢP & CHI TIẾT ĐẠI HỌC CHÍNH QUY ---
-        {
-            keys: ['chỉ tiêu đại học 2026', 'chi tieu dai hoc 2026', 'chỉ tiêu đại học cand', 'chi tieu dai hoc cand', 'chỉ tiêu đại học', 'đại học cand 2026', 'dai hoc cand 2026', 'phụ lục 02', 'phu luc 02'],
-            answer: `<b>PHỤ LỤC 02 - Danh mục chỉ tiêu trình độ đại học CAND chính quy năm 2026</b><br><br>
-            <b>Tổng hợp chỉ tiêu theo trường:</b><br>
-            - <b>Học viện An ninh nhân dân (T01 - ANH):</b> 500 chỉ tiêu.<br>
-            - <b>Học viện Cảnh sát nhân dân (T02 - CSH):</b> 400 chỉ tiêu.<br>
-            - <b>Học viện Chính trị CAND (T03 - HCA):</b> 100 chỉ tiêu.<br>
-            - <b>Trường Đại học An ninh nhân dân (T04 - ANS):</b> 220 chỉ tiêu.<br>
-            - <b>Trường Đại học Cảnh sát nhân dân (T05 - CSS):</b> 300 chỉ tiêu.<br>
-            - <b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH):</b> 200 chỉ tiêu.<br>
-            - <b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH):</b> 300 chỉ tiêu.<br>
-            - <b>Học viện Quốc tế (B06 - AIS):</b> 50 chỉ tiêu.<br><br>
-            <b>Lưu ý:</b> Thí sinh dự tuyển ngành <b>Y khoa</b> theo <b>Phương thức 2</b> vẫn phải bảo đảm ngưỡng chất lượng đầu vào đối với tổ hợp môn THPT năm 2026 theo quy định.<br>
-            <i>(Đồng chí có thể gõ tên từng trường hoặc mã trường như T01, T02... để xem chi tiết Nam/Nữ).</i>`
-        },
-        {
-            keys: ['chỉ tiêu đại học t01', 'học viện an ninh nhân dân', 'hoc vien an ninh nhan dan', 't01', 'anh', 'chỉ tiêu đại học học viện an ninh nhân dân', 'chi tieu dai hoc hoc vien an ninh nhan dan'],
-            answer: `<b>Học viện An ninh nhân dân (T01 - ANH): 500 chỉ tiêu</b><br><br>
-            <b>1. Nhóm ngành nghiệp vụ An ninh</b><br>
-            - Tổng chỉ tiêu: <b>250</b> (Tuyển sinh Phía Bắc).<br>
-            - Phương thức 1: Nam <b>11</b>, Nữ <b>1</b>.<br>
-            - Phương thức 2, 3: Nam <b>214</b>, Nữ <b>24</b>.<br>
-            - Tổ hợp XT (PT3): <b>A00, A01, C03, D01, X02, X03, X04</b> | Bài thi: <b>CA1, CA2, CA3, CA4</b>.<br><br>
-            <b>2. Ngành An ninh mạng và phòng, chống tội phạm công nghệ cao</b><br>
-            - Tổng chỉ tiêu: <b>150</b>.<br>
-            - <b>Phía Bắc (75 CT):</b> PT1 (Nam 3, Nữ 1); PT2,3 (Nam 65, Nữ 6).<br>
-            - <b>Phía Nam (75 CT):</b> PT1 (Nam 3, Nữ 1); PT2,3 (Nam 65, Nữ 6).<br>
-            - Tổ hợp XT (PT3): <b>A00, A01, X26, X27, X28</b> | Bài thi: <b>CA1, CA2</b>.<br><br>
-            <b>3. Ngành Công nghệ thông tin</b><br>
-            - Tổng chỉ tiêu: <b>100</b> (Toàn quốc).<br>
-            - Phương thức 1: Nam <b>5</b>, Nữ <b>0</b>.<br>
-            - Phương thức 2, 3: Nam <b>95</b>, Nữ <b>0</b>.<br>
-            - Tổ hợp XT (PT3): <b>A00, A01, X26, X27, X28</b> | Bài thi: <b>CA1, CA2</b>.`
-        },
-        {
-            keys: ['chỉ tiêu đại học t02', 'học viện cảnh sát nhân dân', 'hoc vien canh sat nhan dan', 't02', 'csh', 'chỉ tiêu đại học học viện cảnh sát nhân dân'],
-            answer: `<b>Học viện Cảnh sát nhân dân (T02 - CSH): 400 chỉ tiêu</b><br><br>
-            <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
-            - Tổng chỉ tiêu: <b>400</b>.<br>
-            - Địa bàn tuyển sinh: <b>Phía Bắc</b>.<br>
-            - Phương thức 1: Nam <b>18</b>, Nữ <b>2</b>.<br>
-            - Phương thức 2, 3: Nam <b>342</b>, Nữ <b>38</b>.<br>
-            - Tổ hợp xét tuyển (PT3): <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
-            - Mã bài thi BCA: <b>CA1, CA2, CA3, CA4</b>.`
-        },
-        {
-            keys: ['chỉ tiêu đại học t03', 'chỉ tiêu đại học trường học viện chính trị cand', 't03', 'hca', 'xây dựng đảng và chính quyền nhà nước'],
-            answer: `<b>Học viện Chính trị Công an nhân dân (T03 - HCA): 100 chỉ tiêu</b><br><br>
-            <b>Ngành Xây dựng Đảng và chính quyền nhà nước</b><br>
-            - Tổng chỉ tiêu: <b>100</b>.<br>
-            - <b>Phía Bắc (50 CT):</b> PT1 (Nam 2, Nữ 1); PT2,3 (Nam 43, Nữ 4).<br>
-            - <b>Phía Nam (50 CT):</b> PT1 (Nam 2, Nữ 1); PT2,3 (Nam 43, Nữ 4).<br>
-            - Tổ hợp xét tuyển (PT3): <b>A01, C00, C03, D01, X02, X03, X04</b>.<br>
-            - Mã bài thi BCA: <b>CA1, CA4</b>.`
-        },
-        {
-            keys: ['đại học an ninh nhân dân', 'dai hoc an ninh nhan dan', 't04', 'ans', 'chỉ tiêu đại học an ninh nhân dân'],
-            answer: `<b>Trường Đại học An ninh nhân dân (T04 - ANS): 220 chỉ tiêu</b><br><br>
-            <b>Nhóm ngành nghiệp vụ An ninh</b><br>
-            - Tổng chỉ tiêu: <b>220</b>.<br>
-            - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
-            - Phương thức 1: Nam <b>10</b>, Nữ <b>1</b>.<br>
-            - Phương thức 2, 3: Nam <b>188</b>, Nữ <b>21</b>.<br>
-            - Tổ hợp xét tuyển (PT3): <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
-            - Mã bài thi BCA: <b>CA1, CA2, CA3, CA4</b>.`
-        },
-        {
-            keys: ['đại học cảnh sát nhân dân', 'dai hoc canh sat nhan dan', 't05', 'css', 'chỉ tiêu đại học cảnh sát nhân dân'],
-            answer: `<b>Trường Đại học Cảnh sát nhân dân (T05 - CSS): 300 chỉ tiêu</b><br><br>
-            <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
-            - Tổng chỉ tiêu: <b>300</b>.<br>
-            - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
-            - Phương thức 1: Nam <b>13</b>, Nữ <b>2</b>.<br>
-            - Phương thức 2, 3: Nam <b>257</b>, Nữ <b>28</b>.<br>
-            - Tổ hợp xét tuyển (PT3): <b>A00, A01, C03, D01, X02, X03, X04</b>.<br>
-            - Mã bài thi BCA: <b>CA1, CA2, CA3, CA4</b>.`
-        },
-        {
-            keys: ['chỉ tiêu đại học trường t06', 'chỉ tiêu đại học trường đại học phòng cháy chữa cháy', 't06', 'pch'],
-            answer: `<b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH): 200 chỉ tiêu</b><br><br>
-            <b>Ngành Phòng cháy chữa cháy và cứu nạn, cứu hộ</b><br>
-            - Tổng chỉ tiêu: <b>200</b>.<br>
-            - <b>Phía Bắc (100 CT):</b> PT1 (Nam 4, Nữ 1); PT2,3 (Nam 86, Nữ 9).<br>
-            - <b>Phía Nam (100 CT):</b> PT1 (Nam 4, Nữ 1); PT2,3 (Nam 86, Nữ 9).<br>
-            - Tổ hợp xét tuyển (PT3): <b>A00, A01, D01, D07</b>.<br>
-            - Mã bài thi BCA: <b>CA1, CA2</b>.`
-        },
-        {
-            keys: ['chỉ tiêu đại học trường t07', 'kth', 'T07', 'chỉ tiêu đại học học viện kỹ thuật và công nghệ an ninh'],
-            answer: `<b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH): 300 chỉ tiêu</b><br><br>
-            <b>1. Nhóm ngành Kỹ thuật - Hậu cần (200 CT):</b><br>
-            - Phía Bắc (100 CT): PT1 (Nam 4, Nữ 1); PT2,3 (Nam 86, Nữ 9).<br>
-            - Phía Nam (100 CT): PT1 (Nam 4, Nữ 1); PT2,3 (Nam 86, Nữ 9).<br>
-            - Tổ hợp XT: <b>A00, A01, D01, X26, X27, X28</b> | Bài thi: <b>CA1, CA2</b>.<br><br>
-            <b>2. Y khoa (gửi đào tạo tại Học viện Quân y) - 50 CT Toàn quốc:</b><br>
-            - PT1 (Nam 2, Nữ 1); PT2,3 (Nam 43, Nữ 4).<br>
-            - Tổ hợp XT: <b>A00, A01, B00, B08, D07</b> | Bài thi: <b>CA1, CA2, CA3</b>.<br><br>
-            <b>3. Y khoa (gửi đào tạo tại Đại học Y dược, ĐHQG HN) - 30 CT Toàn quốc:</b><br>
-            - PT1 (Nam 1, Nữ 0); PT2,3 (Nam 26, Nữ 3).<br>
-            - Tổ hợp XT: <b>B00, B08</b> | Bài thi: <b>CA1, CA2, CA3</b>.<br><br>
-            <b>4. Kỹ thuật điện tử, viễn thông (gửi đào tạo tại HV Kỹ thuật Mật mã) - 20 CT:</b><br>
-            - PT1 (Nam 1, Nữ 0); PT2,3 (Nam 19, Nữ 0).<br>
-            - Tổ hợp XT: <b>A00, A01, D01, X26, X27</b> | Bài thi: <b>CA1, CA2</b>.`
-        },
-        {
-            keys: ['chỉ tiêu đại học ngành y khoa cand', 'ngành y khoa cand', 'y khoa công an', 'chỉ tiêu mã ngành 7720101'],
-            answer: `<b>Các ngành Y khoa trong tuyển sinh đại học CAND năm 2026</b><br><br>
-            <b>1. Y khoa (gửi đào tạo tại Học viện Quân y, Bộ Quốc phòng)</b><br>
-            - Tổng chỉ tiêu: <b>50</b> (Toàn quốc).<br>
-            - Phương thức 1: Nam <b>2</b>, Nữ <b>1</b>.<br>
-            - Phương thức 2, 3: Nam <b>43</b>, Nữ <b>4</b>.<br>
-            - Tổ hợp xét tuyển: <b>A00, A01, B00, B08, D07</b> | Bài thi: <b>CA1, CA2, CA3</b>.<br><br>
-            <b>2. Y khoa (gửi đào tạo tại Trường Đại học Y dược, Đại học Quốc gia Hà Nội)</b><br>
-            - Tổng chỉ tiêu: <b>30</b> (Toàn quốc).<br>
-            - Phương thức 1: Nam <b>1</b>, Nữ <b>0</b>.<br>
-            - Phương thức 2, 3: Nam <b>26</b>, Nữ <b>3</b>.<br>
-            - Tổ hợp xét tuyển: <b>B00, B08</b> | Bài thi: <b>CA1, CA2, CA3</b>.<br><br>
-            <i>Lưu ý: Thí sinh dự tuyển ngành Y khoa theo Phương thức 2 vẫn phải bảo đảm ngưỡng chất lượng đầu vào đối với tổ hợp môn THPT năm 2026.</i>`
-        },
-        {
-            keys: ['chỉ tiêu đại học tại học viện quốc tế', 'chỉ tiêu đại học trường b06', 'ais', 'chỉ tiêu đại học ngôn ngữ anh', 'chỉ tiêu đại học ngôn ngữ trung quốc'],
-            answer: `<b>Học viện Quốc tế (B06 - AIS): 50 chỉ tiêu</b><br><br>
-            <b>1. Ngôn ngữ Anh (30 CT Toàn quốc)</b><br>
-            - Phương thức 1: Nam <b>2</b>, Nữ <b>2</b>.<br>
-            - Phương thức 2, 3: Nam <b>13</b>, Nữ <b>13</b>.<br>
-            - Tổ hợp XT: <b>A01, D01, D04, D09, D10</b> | Bài thi: <b>CA1, CA2, CA3, CA4</b>.<br><br>
-            <b>2. Ngôn ngữ Trung quốc (20 CT Toàn quốc)</b><br>
-            - Phương thức 1: Nam <b>1</b>, Nữ <b>1</b>.<br>
-            - Phương thức 2, 3: Nam <b>9</b>, Nữ <b>9</b>.<br>
-            - Tổ hợp XT: <b>A01, D01, D04, D09, D10</b> | Bài thi: <b>CA1, CA2, CA3, CA4</b>.`
-        },
-
-        // --- 2. TỔNG HỢP & CHI TIẾT TRUNG CẤP ---
-        {
-            keys: ['chỉ tiêu trung cấp cand 2026', 'chi tieu trung cap cand 2026', 'chỉ tiêu trung cấp', 'trung cấp cand', 'phụ lục 08'],
-            answer: `<b>PHỤ LỤC 08 - Chỉ tiêu tuyển sinh trình độ trung cấp CAND chính quy</b><br><br>
-            <b>Tổng hợp chỉ tiêu theo trường:</b><br>
-            - <b>Trường Cao đẳng An ninh nhân dân I (T08 - ANN):</b> 80 chỉ tiêu.<br>
-            - <b>Trường Cao đẳng Cảnh sát nhân dân I (T09 - CS1):</b> 100 chỉ tiêu.<br>
-            - <b>Trường Cao đẳng Cảnh sát nhân dân II (T10 - CS2):</b> 100 chỉ tiêu.<br><br>
-            <b>Tổ hợp xét tuyển chung:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
-            <b>Mã bài thi BCA:</b> CA1, CA2, CA3, CA4.<br>
-            <i>(Gõ mã trường như T08, T09, T10 để xem phân bổ chi tiết Nam/Nữ).</i>`
-        },
-        {
-            keys: ['cao đẳng an ninh nhân dân i', 't08', 'ann', 'trường cao đẳng an ninh nhân dân i'],
-            answer: `<b>Trường Cao đẳng An ninh nhân dân I (T08 - ANN)</b><br><br>
-            - <b>Tổng chỉ tiêu:</b> 80.<br>
-            - <b>Địa bàn tuyển sinh:</b> Toàn quốc.<br>
-            - <b>Chỉ tiêu tuyển thẳng:</b> Nam <b>4</b>, Nữ <b>1</b>.<br>
-            - <b>Chỉ tiêu xét tuyển:</b> Nam <b>66</b>, Nữ <b>9</b>.<br>
-            - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
-            - <b>Mã bài thi BCA:</b> CA1, CA2, CA3, CA4.`
-        },
-        {
-            keys: ['cao đẳng cảnh sát nhân dân i', 't09', 'cs1', 'trường cao đẳng cảnh sát nhân dân i'],
-            answer: `<b>Trường Cao đẳng Cảnh sát nhân dân I (T09 - CS1)</b><br><br>
-            - <b>Tổng chỉ tiêu:</b> 100.<br>
-            - <b>Địa bàn tuyển sinh:</b> Phía Bắc.<br>
-            - <b>Chỉ tiêu tuyển thẳng:</b> Nam <b>5</b>, Nữ <b>1</b>.<br>
-            - <b>Chỉ tiêu xét tuyển:</b> Nam <b>85</b>, Nữ <b>9</b>.<br>
-            - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
-            - <b>Mã bài thi BCA:</b> CA1, CA2, CA3, CA4.`
-        },
-        {
-            keys: ['cao đẳng cảnh sát nhân dân ii', 't10', 'cs2', 'trường cao đẳng cảnh sát nhân dân ii'],
-            answer: `<b>Trường Cao đẳng Cảnh sát nhân dân II (T10 - CS2)</b><br><br>
-            - <b>Tổng chỉ tiêu:</b> 100.<br>
-            - <b>Địa bàn tuyển sinh:</b> Phía Nam.<br>
-            - <b>Chỉ tiêu tuyển thẳng:</b> Nam <b>5</b>, Nữ <b>1</b>.<br>
-            - <b>Chỉ tiêu xét tuyển:</b> Nam <b>85</b>, Nữ <b>9</b>.<br>
-            - <b>Tổ hợp xét tuyển:</b> A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br>
-            - <b>Mã bài thi BCA:</b> CA1, CA2, CA3, CA4.`
-        },
-        {
-            keys: ['chỉ tiêu tuyển thẳng trung cấp', 'chỉ tiêu xét tuyển trung cấp', 'nam nữ trung cấp cand'],
-            answer: `<b>Phân bổ chỉ tiêu Nam/Nữ trung cấp CAND năm 2026</b><br><br>
-            <b>1. Trường Cao đẳng An ninh nhân dân I (T08)</b><br>
-            - Tuyển thẳng: Nam <b>4</b>, Nữ <b>1</b>.<br>
-            - Xét tuyển: Nam <b>66</b>, Nữ <b>9</b>.<br><br>
-            <b>2. Trường Cao đẳng Cảnh sát nhân dân I (T09)</b><br>
-            - Tuyển thẳng: Nam <b>5</b>, Nữ <b>1</b>.<br>
-            - Xét tuyển: Nam <b>85</b>, Nữ <b>9</b>.<br><br>
-            <b>3. Trường Cao đẳng Cảnh sát nhân dân II (T10)</b><br>
-            - Tuyển thẳng: Nam <b>5</b>, Nữ <b>1</b>.<br>
-            - Xét tuyển: Nam <b>85</b>, Nữ <b>9</b>.`
-        },
-
-        // --- 3. TỔNG HỢP & CHI TIẾT VĂN BẰNG 2 (VB2CA) ---
-        {
-            keys: ['chỉ tiêu vb2', 'chi tieu vb2', 'chỉ tiêu vb2 cand 2026', 'đại học vb2 cand', 'phụ lục 06'],
-            answer: `<b>PHỤ LỤC 06 - Chỉ tiêu tuyển sinh đại học VB2CA đối với công dân đã có bằng đại học</b><br><br>
-            <b>Tổng hợp chỉ tiêu theo trường:</b><br>
-            - <b>Học viện An ninh nhân dân (T01 - ANH):</b> 130 chỉ tiêu.<br>
-            - <b>Học viện Cảnh sát nhân dân (T02 - CSH):</b> 100 chỉ tiêu.<br>
-            - <b>Trường Đại học An ninh nhân dân (T04 - ANS):</b> 100 chỉ tiêu.<br>
-            - <b>Trường Đại học Cảnh sát nhân dân (T05 - CSS):</b> 100 chỉ tiêu.<br>
-            - <b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH):</b> 50 chỉ tiêu.<br>
-            - <b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH):</b> 50 chỉ tiêu.<br><br>
-            <i>(Gõ mã trường kèm chữ "vb2", ví dụ: <b>t01 vb2</b>, <b>t02 vb2</b> để xem chi tiết phân bổ Phương thức 1 và 2).</i>`
-        },
-        {
-            keys: ['chỉ tiêu vb2 học viện an ninh nhân dân', 'chỉ tiêu vb2 t01', 't01 vb2', 'vb2 t01', 'anh vb2'],
-            answer: `<b>Học viện An ninh nhân dân (T01 - ANH): 130 chỉ tiêu (Hệ VB2CA)</b><br><br>
-            <b>1. Nhóm ngành nghiệp vụ An ninh (100 CT - Phía Bắc)</b><br>
-            - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
-            - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.<br><br>
-            <b>2. Ngành An toàn thông tin (30 CT - Toàn quốc)</b><br>
-            - Phương thức 1: Nam <b>13</b>, Nữ <b>1</b>.<br>
-            - Phương thức 2: Nam <b>14</b>, Nữ <b>2</b>.`
-        },
-        {
-            keys: ['chỉ tiêu vb2 an toàn thông tin', 'an toàn thông tin vb2', '7480202', 'ngành an toàn thông tin cand vb2'],
-            answer: `<b>Ngành An toàn thông tin (Hệ VB2CA) - Học viện An ninh nhân dân (T01)</b><br>
-            - Tổng chỉ tiêu: <b>30</b>.<br>
-            - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-            - Phương thức 1: Nam <b>13</b>, Nữ <b>1</b>.<br>
-            - Phương thức 2: Nam <b>14</b>, Nữ <b>2</b>.`
-        },
-        {
-            keys: ['chỉ tiêu vb2 học viện cảnh sát nhân dân', 'chỉ tiêu vb2 t02', 't02 vb2', 'vb2 t02', 'csh vb2'],
-            answer: `<b>Học viện Cảnh sát nhân dân (T02 - CSH): 100 chỉ tiêu (Hệ VB2CA)</b><br><br>
-            <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
-            - Tổng chỉ tiêu: <b>100</b>.<br>
-            - Địa bàn tuyển sinh: <b>Phía Bắc</b>.<br>
-            - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
-            - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.`
-        },
-        {
-            keys: ['đại học an ninh nhân dân vb2', 'dai hoc an ninh nhan dan vb2', 't04 vb2', 'ans vb2'],
-            answer: `<b>Trường Đại học An ninh nhân dân (T04 - ANS): 100 chỉ tiêu (Hệ VB2CA)</b><br><br>
-            <b>Nhóm ngành nghiệp vụ An ninh</b><br>
-            - Tổng chỉ tiêu: <b>100</b>.<br>
-            - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
-            - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
-            - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.`
-        },
-        {
-            keys: ['đại học cảnh sát nhân dân vb2', 'dai hoc canh sat nhan dan vb2', 't05 vb2', 'css vb2'],
-            answer: `<b>Trường Đại học Cảnh sát nhân dân (T05 - CSS): 100 chỉ tiêu (Hệ VB2CA)</b><br><br>
-            <b>Nhóm ngành nghiệp vụ Cảnh sát</b><br>
-            - Tổng chỉ tiêu: <b>100</b>.<br>
-            - Địa bàn tuyển sinh: <b>Phía Nam</b>.<br>
-            - Phương thức 1: Nam <b>45</b>, Nữ <b>5</b>.<br>
-            - Phương thức 2: Nam <b>45</b>, Nữ <b>5</b>.`
-        },
-        {
-            keys: ['chỉ tiêu vb2 đại học phòng cháy chữa cháy', 'chỉ tiêu vb2 t06', 't06 vb2', 'pch vb2', 'phòng cháy chữa cháy và cứu nạn cứu hộ vb2'],
-            answer: `<b>Trường Đại học Phòng cháy chữa cháy (T06 - PCH): 50 chỉ tiêu (Hệ VB2CA)</b><br><br>
-            <b>Ngành Phòng cháy chữa cháy và cứu nạn, cứu hộ</b><br>
-            - Tổng chỉ tiêu: <b>50</b>.<br>
-            - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-            - Phương thức 1: Nam <b>22</b>, Nữ <b>2</b>.<br>
-            - Phương thức 2: Nam <b>23</b>, Nữ <b>3</b>.`
-        },
-        {
-            keys: ['chỉ tiêu vb2 học viện kỹ thuật và công nghệ an ninh', 'chỉ tiêu vb2 t07', 't07 vb2', 'vb2 t07', 'kth vb2', 'nhóm ngành kỹ thuật hậu cần vb2'],
-            answer: `<b>Học viện Kỹ thuật và Công nghệ an ninh (T07 - KTH): 50 chỉ tiêu (Hệ VB2CA)</b><br><br>
-            <b>Nhóm ngành Kỹ thuật - Hậu cần</b><br>
-            - Tổng chỉ tiêu: <b>50</b>.<br>
-            - Địa bàn tuyển sinh: <b>Toàn quốc</b>.<br>
-            - Phương thức 1: Nam <b>22</b>, Nữ <b>2</b>.<br>
-            - Phương thức 2: Nam <b>23</b>, Nữ <b>3</b>.`
-        }
-];
-       /* ======== 1. DỮ LIỆU CÁC NÚT GỢI Ý ======== */
- const SUGGESTIONS = [
-            "Khám sức khỏe khi nào?",
-            "Tiêu chuẩn chiều cao",
-            "Mắt cận mấy độ được thi?",
-            "Tuyển sinh hệ VB2CA",
-            "Quy đổi điểm IELTS",
-            "Chỉ tiêu Học viện ANND"
+        // Tự động trích xuất danh sách địa danh từ DANH_BA_DATA để AI tự nhận diện
+        const LOCATION_KEYWORDS = [
+            "Lìa", "Đồng Hới", "Đồng Thuận", "Đồng Sơn", "Nam Gianh", "Nam Ba Đồn", "Ba Đồn", "Bắc Gianh", "Dân Hóa", 
+            "Kim Điền", "Kim Phú", "Minh Hóa", "Tân Thành", "Tuyên Lâm", "Tuyên Sơn", "Đồng Lê", "Tuyên Phú", "Tuyên Bình", 
+            "Tuyên Hóa", "Tân Gianh", "Trung Thuần", "Quảng Trạch", "Hòa Trạch", "Phú Trạch", "Thượng Trạch", "Phong Nha", 
+            "Bắc Trạch", "Đông Trạch", "Hoàn Lão", "Bố Trạch", "Nam Trạch", "Quảng Ninh", "Ninh Châu", "Trường Ninh", 
+            "Trường Sơn", "Lệ Thủy", "Cam Hồng", "Sen Ngư", "Tân Mỹ", "Trường Phú", "Lệ Ninh", "Kim Ngân", "Đông Hà", 
+            "Nam Đông Hà", "Quảng Trị", "Vĩnh Linh", "Cửa Tùng", "Vĩnh Hoàng", "Vĩnh Thủy", "Bến Quan", "Cồn Tiên", 
+            "Cửa Việt", "Gio Linh", "Bến Hải", "Hướng Lập", "Hướng Phùng", "Khe Sanh", "Tân Lập", "Lao Bảo", "A Dơi", 
+            "La Lay", "Tà Rụt", "Đakrông", "Ba Lòng", "Hướng Hiệp", "Cam Lộ", "Hiếu Giang", "Triệu Phong", "Ái Tử", 
+            "Triệu Bình", "Triệu Cơ", "Nam Cửa Việt", "Diên Sanh", "Mỹ Thủy", "Hải Lăng", "Vĩnh Định", "Nam Hải Lăng", "Cồn Cỏ"
         ];
 
-        /****************************************************************
-         * 2. LOGIC GIAO DIỆN & TƯƠNG TÁC
-         ****************************************************************/
+        // DỮ LIỆU SỨC KHỎE FULL
+        const SUC_KHOE_DATA = [
+            {
+                title: "KẾT LUẬN NHANH: ĐỦ / KHÔNG ĐỦ ĐIỀU KIỆN SỨC KHỎE",
+                content: "• Nguyên tắc chung: phải đạt <b>SỨC KHỎE LOẠI 1 hoặc LOẠI 2</b> và đáp ứng tiêu chuẩn đặc thù (chiều cao, BMI, thị lực, ngoại hình, xét nghiệm).<br>• Thường <b>KHÔNG ĐẠT</b> khi: BMI <b>&lt; 18,5</b> hoặc <b>&gt; 30</b>; thị lực/tật khúc xạ vượt ngưỡng; mù màu trục xanh-đỏ; có hình xăm/lỗ bấm không đúng; dương tính ma túy/tiền chất."
+            },
+            {
+                title: "PHÂN LOẠI SỨC KHỎE (ĐIỂM 1–6) – VÌ SAO DỄ RƠI LOẠI 3",
+                content: "• Mỗi chỉ tiêu sức khỏe chấm điểm chẵn từ <b>1 đến 6</b> (1: rất tốt … 6: rất kém).<br>• Phân loại theo “điểm xấu nhất”:<br>&nbsp;&nbsp;– <b>Loại 1</b>: tất cả điểm 1<br>&nbsp;&nbsp;– <b>Loại 2</b>: có ít nhất 1 chỉ tiêu điểm 2<br>&nbsp;&nbsp;– <b>Loại 3</b>: có ít nhất 1 chỉ tiêu điểm 3 (thường là không đủ điều kiện nếu chỉ tuyển Loại 1–2)."
+            },
+            {
+                title: "THỂ LỰC: CHIỀU CAO (CHUẨN CHUNG + NHÓM ƯU TIÊN)",
+                content: "<b>Chuẩn chung:</b><br>• Nam: <b>1m64–1m95</b> &nbsp;&nbsp;• Nữ: <b>1m58–1m80</b><br><b>Nhóm ưu tiên:</b><br>• <b>Dân tộc thiểu số:</b> Nam <b>≥1m62</b>, Nữ <b>≥1m56</b><br>• <b>UT1:</b> Nam <b>≥1m60</b>, Nữ <b>≥1m55</b>"
+            },
+            {
+                title: "BMI (BẮT BUỘC) – CÁCH TÍNH & NGƯỠNG BỊ LOẠI",
+                content: "• Yêu cầu: <b>18,5 ≤ BMI ≤ 30</b>.<br>• <b>Không đạt</b> nếu <b>BMI &lt; 18,5</b> hoặc <b>BMI &gt; 30</b>.<br>• Công thức: <b>BMI = cân nặng (kg) / [chiều cao (m)]²</b>."
+            },
+            {
+                title: "MẮT: THỊ LỰC & TẬT KHÚC XẠ (CẬN/VIỄN/LOẠN)",
+                content: "<b>Không kính:</b> Mỗi mắt <b>09–10/10</b>, tổng 2 mắt <b>≥18/10</b>.<br><b>Có khúc xạ:</b><br>• <b>Cận/viễn:</b> mỗi mắt <b>≤ 03 đi-ốp</b><br>• <b>Loạn:</b> loạn sinh lý hoặc <b>&lt; 01 đi-ốp/mắt</b><br>• <b>Qua kính:</b> 1 mắt <b>≥09/10</b>, tổng 2 mắt <b>≥19/10</b>"
+            },
+            {
+                title: "NGOẠI HÌNH: XĂM – BẤM LỖ – SẸO – DA – TÓC",
+                content: "<b>Hình xăm:</b> không có (ngoại lệ: nữ phun lông mày, môi).<br><b>Bấm lỗ:</b><br>• Nam: không bấm.<br>• Nữ: không quá <b>1 lỗ/tai</b>.<br><b>Da – sẹo:</b> không sẹo lồi co kéo ở vùng hở."
+            },
+            {
+                title: "MA TÚY / TIỀN CHẤT (BẮT BUỘC ÂM TÍNH)",
+                content: "• Tuyệt đối không nghiện và <b>không dương tính</b> chất ma túy/tiền chất ma túy. Kiểm tra bằng xét nghiệm nước tiểu."
+            },
+            {
+                title: "CẬN LÂM SÀNG (THƯỜNG LÀM KHI KHÁM TUYỂN)",
+                content: "<b>Xét nghiệm máu:</b> công thức máu; glucose; AST/ALT; ure/creatinin; HIV; HBsAg; anti-HCV...<br><b>Nước tiểu:</b> tổng phân tích + test ma túy.<br><b>Chẩn đoán:</b> X-quang tim phổi; siêu âm ổ bụng; điện tim."
+            },
+            {
+                title: "KHÁM SỨC KHỎE - THỜI GIAN VÀ ĐỊA ĐIỂM CHUNG",
+                content: "• <b>Đại học / TC:</b> 16/4 đến 05/5/2026.<br>• <b>VB2CA:</b> 29/6 đến 03/7/2026.<br>• Buổi sáng: <b>07h30</b> (Nhịn ăn sáng). Chiều: <b>13h30</b>.<br>• Khám tại Bệnh xá số 01 (đường Điện Biên Phủ, phường Nam Đông Hà) hoặc Bệnh xá số 02 (31 Phan Chu Trinh, phường Đồng Hới) tùy lịch đơn vị."
+            },
+            {
+                title: "NGƯỠNG ĐẠT KIỂM TRA THỂ LỰC",
+                content: "• <b>Bật xa tại chỗ:</b> Nam <b>≥ 2,2m</b>; Nữ <b>≥ 1,5m</b>.<br>• <b>Chạy 100m:</b> Nam <b>≤ 16 giây</b>; Nữ <b>≤ 20 giây</b>.<br>• <b>Chạy 800m:</b> Nữ <b>≤ 5 phút 30 giây</b>.<br>• <b>Chạy 1500m:</b> Nam <b>≤ 7 phút 30 giây</b>.<br>• <b>Co tay xà đơn:</b> Nam <b>≥ 12 lần</b>."
+            }
+        ];
+
+        // DỮ LIỆU ĐIỀU KIỆN FULL
+        const DIEU_KIEN_DATA = [
+            {
+                title: "TỔNG QUAN TUYỂN SINH CAND 2026",
+                content: "• Hệ chính: <b>Đại học chính quy</b>, <b>VB2CA</b>, <b>Trung cấp chính quy</b>.<br>• Phân vùng: Phía Bắc (từ Huế trở ra), Phía Nam (từ Đà Nẵng trở vào)."
+            },
+            {
+                title: "ĐẠI HỌC CHÍNH QUY - ĐIỀU KIỆN CHUNG",
+                content: "• <b>Chiến sĩ NV / Hoàn thành NVCA:</b> Thời gian công tác ≥ 15 tháng; Học lực từ Đạt/Khá trở lên.<br>• <b>Học sinh THPT:</b> Tuổi ≤ 22 (DTTS ≤ 25); Chưa kết hôn, chưa có con; Học lực Khá, hạnh kiểm Khá trở lên. Điểm từng môn tổ hợp ≥ 7.0 (DTTS ≥ 6.5)."
+            },
+            {
+                title: "ĐẠI HỌC CHÍNH QUY - CÁC PHƯƠNG THỨC XÉT TUYỂN",
+                content: "• <b>PT1:</b> Tuyển thẳng (Giải Nhất, Nhì, Ba Quốc gia/Quốc tế).<br>• <b>PT2:</b> Chứng chỉ ngoại ngữ (IELTS 5.5+) kết hợp bài thi BCA.<br>• <b>PT3:</b> Điểm thi THPT kết hợp bài thi đánh giá BCA."
+            },
+            {
+                title: "VB2CA - ĐỐI TƯỢNG VÀ ĐIỀU KIỆN",
+                content: "• Công dân VN tốt nghiệp ĐH hệ chính quy loại <b>Khá</b> trở lên.<br>• Tuổi không quá <b>30</b>.<br>• Sinh viên năm cuối được đăng ký nhưng phải có bằng trước khi nhập học.<br>• Tổng chỉ tiêu: <b>530</b>. Thi ngày <b>20/9/2026</b>."
+            },
+            {
+                title: "TRUNG CẤP CHÍNH QUY",
+                content: "• <b>Đối tượng:</b> Chiến sĩ nghĩa vụ; Công dân hoàn thành nghĩa vụ CAND; Thí sinh không trúng tuyển đại học CAND chính quy.<br>• Tổng chỉ tiêu: <b>280</b> (T08, T09, T10)."
+            },
+            {
+                title: "MÃ TỔ HỢP VÀ BÀI THI BCA",
+                content: "• <b>Mã tổ hợp mới:</b> X02 (Toán, Văn, Tin), X03, X04, X26, X27, X28...<br>• <b>Bài thi BCA:</b> CA1 (Văn tự luận + Toán, Sử, Anh, Lý trắc nghiệm); CA2 (thay Lý bằng Hóa); CA3 (thay Lý bằng Sinh); CA4 (thay Lý bằng Địa)."
+            }
+        ];
+
+        // KNOWLEDGE BASE MỞ RỘNG - Thêm trường "follows" để gợi ý câu hỏi tiếp theo
+        const KNOWLEDGE_BASE = [
+            // --- SỨC KHỎE ---
+            {
+                keys: ['tiêu chuẩn sức khỏe', 'loại 1', 'loại 2', 'nguyên tắc', 'điều kiện sức khỏe'],
+                answer: "<b>Nguyên tắc sức khỏe dự tuyển CAND:</b> Thí sinh phải đạt <b>Sức khỏe Loại 1 hoặc Loại 2</b> và đáp ứng các điều kiện đặc thù (chiều cao, BMI, thị lực, ngoại hình, xét nghiệm).",
+                follows: ["Chiều cao tiêu chuẩn?", "Cân nặng BMI tính thế nào?", "Mắt cận được thi không?"]
+            },
+            {
+                keys: ['chiều cao', 'thể lực', 'cao bao nhiêu', 'chuẩn chiều cao', 'mét', 'nam cao', 'nữ cao'],
+                answer: "<b>Tiêu chuẩn chiều cao:</b><br>• Nam: <b>1m64–1m95</b>.<br>• Nữ: <b>1m58–1m80</b>.<br><i>*Ưu tiên (DTTS, UT1): Nam từ 1m62, Nữ từ 1m56.</i>",
+                follows: ["Cân nặng BMI tính thế nào?", "Mắt cận được thi không?", "Chỉ tiêu Đại học"]
+            },
+            {
+                keys: ['bmi', 'cân nặng', 'mập', 'béo', 'gầy', 'ốm', 'kg'],
+                answer: "<b>Tiêu chuẩn BMI (Cân nặng):</b><br>Chỉ số BMI phải từ <b>18,5 đến 30</b>. Công thức: Cân nặng(kg) chia cho bình phương Chiều cao(m).",
+                follows: ["Khám sức khỏe ở đâu?", "Tiêu chuẩn chiều cao"]
+            },
+            {
+                keys: ['mắt', 'thị lực', 'cận', 'viễn', 'loạn', 'diop', 'độ'],
+                answer: "<b>Tiêu chuẩn về Mắt:</b><br>• Không kính: mỗi mắt 9-10/10.<br>• Có tật khúc xạ (cận/viễn): không quá <b>03 đi-ốp</b> mỗi mắt.<br>• Loạn thị: loạn sinh lý hoặc < 01 đi-ốp.<br>• Sau chỉnh kính: tổng 2 mắt ≥ 19/10.",
+                follows: ["Bị mù màu có sao không?", "Lịch khám sức khỏe"]
+            },
+            {
+                keys: ['mù màu', 'sắc giác', 'màu sắc', 'xanh đỏ', 'ishihara', 'rối loạn sắc tố'],
+                answer: "<b>Mù màu / rối loạn sắc giác</b><br>Mù màu trục xanh lá–đỏ mức độ nhẹ (điểm 3) hoặc nặng (điểm 4–5) sẽ làm giảm loại sức khỏe và <b>không đạt điều kiện</b> (chỉ nhận Loại 1–2).",
+                follows: ["Tiêu chuẩn Mắt", "Lịch khám sức khỏe"]
+            },
+            {
+                keys: ['xăm', 'tattoo', 'vết trổ', 'phun môi', 'chân mày', 'bấm lỗ', 'khuyên tai', 'piercing'],
+                answer: "<b>Ngoại hình (Xăm/Bấm lỗ):</b><br>• Không xăm trổ. Nữ được phép phun xăm thẩm mỹ lông mày, môi.<br>• Nam không bấm lỗ tai/mũi. Nữ không được bấm quá 1 lỗ/tai.",
+                follows: ["Quy định về Sẹo", "Lịch khám sức khỏe"]
+            },
+            {
+                keys: ['da', 'nám', 'sắc tố', 'đốm', 'bạch biến', 'sẹo', 'lồi', 'co kéo'],
+                answer: "<b>Da và Sẹo</b><br>Không có sẹo lồi co kéo ở vùng <b>đầu, mặt, cổ, cẳng tay, bàn tay, bàn chân</b>. Không bị rối loạn sắc tố da (trừ nám má).",
+                follows: ["Quy định Hình xăm", "Lịch khám sức khỏe"]
+            },
+            {
+                keys: ['ma túy', 'chất kích thích', 'nghiện', 'test', 'nước tiểu'],
+                answer: "<b>Ma túy</b><br>Tuyệt đối không nghiện các chất ma túy và tiền chất. Bắt buộc test âm tính khi khám.",
+                follows: ["Lịch khám sức khỏe", "Khám sức khỏe ở đâu?"]
+            },
+            {
+                keys: ['răng', 'sâu răng', 'mất răng', 'nhai', 'hàm mặt'],
+                answer: "<b>Răng – Hàm – Mặt</b><br>Mất tối đa <b>3 răng</b> nhưng sức nhai vẫn đạt <b>85%</b> trở lên; không có răng sâu độ 3 (hoặc chỉ có tối đa 3 răng sâu độ 3 đã xử lý).",
+                follows: ["Tiêu chuẩn Mắt", "Lịch khám sức khỏe"]
+            },
+            {
+                keys: ['khám sức khỏe khi nào', 'lịch khám chung', 'khám ở đâu', 'lịch khám sức khỏe', 'bệnh xá'],
+                answer: "<b>Lịch Khám sức khỏe Chung:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 29/6 - 02/7/2026.<br>• Giờ: Sáng 07h30 (nhịn ăn sáng), Chiều 13h30.<br><i>💡 Tip: Đồng chí hãy gõ tên Xã/Phường của mình (VD: 'Xã Lìa') để tôi tra lịch chính xác nhất!</i>",
+                follows: ["Kiểm tra thể lực gồm những gì?", "Khám bù vào ngày nào?"]
+            },
+            {
+                keys: ['thể lực', 'chạy', '100m', '1500m', '800m', 'bật xa', 'xà đơn', 'kiểm tra thể lực'],
+                answer: "<b>Bài kiểm tra Thể lực:</b><br>• Bật xa: Nam ≥ 2,2m; Nữ ≥ 1,5m.<br>• Chạy 100m: Nam ≤ 16s; Nữ ≤ 20s.<br>• Chạy bền: Nam(1500m) ≤ 7p30s; Nữ(800m) ≤ 5p30s.<br>• Xà đơn: Nam ≥ 12 lần.<br>• Chỉ đăng ký 02/04 nội dung với Nam và 02/03 nội dung với Nữ",
+                follows: ["Lịch kiểm tra thể lực", "Trượt thể lực có sao không?"]
+            },
+            {
+                keys: ['trượt kiểm tra thể lực có sao không', 'trượt thể lực có sao không', 'không đạt kiểm tra thể lực'],
+                answer: "<b>Bạn đã không qua vòng sơ tuyển và bị loại.</b>",
+                follows: ["Kiểm tra thể lực gồm những gì?", "Khám bù vào ngày nào?"]
+            },
+
+            // --- ĐIỀU KIỆN ---
+            {
+                keys: ['học lực', 'hạnh kiểm', 'khá', 'giỏi', 'điểm học bạ'],
+                answer: "<b>Tiêu chuẩn học lực (THPT)</b><br>• Nhóm UT1, Chiến sĩ nghĩa vụ: kết quả học tập từ mức “<b>Đạt</b>” trở lên.<br>• Công dân thường trú, Hoàn thành NV: học lực <b>Khá</b> trở lên, hạnh kiểm <b>Khá</b> trở lên.",
+                follows: ["Điểm thi tối thiểu bao nhiêu?", "Chỉ tiêu Đại học"]
+            },
+            {
+                keys: ['tuổi', 'độ tuổi', 'sinh năm', '22 tuổi', '25 tuổi'],
+                answer: "<b>Độ tuổi dự tuyển:</b><br>Không quá <b>22 tuổi</b>; riêng người dân tộc thiểu số không quá <b>25 tuổi</b>.",
+                follows: ["Quy định lập gia đình", "Hồ sơ gồm những gì?"]
+            },
+            {
+                keys: ['hôn nhân', 'kết hôn', 'có con', 'lập gia đình', 'vợ chồng'],
+                answer: "<b>Tình trạng hôn nhân</b><br>Đối với học sinh phổ thông yêu cầu: <b>chưa kết hôn</b>, <b>chưa có con đẻ</b>, <b>chưa có con nuôi</b> theo quy định.",
+                follows: ["Độ tuổi dự tuyển", "Chỉ tiêu Đại học"]
+            },
+
+            // --- CHỈ TIÊU & PHƯƠNG THỨC ---
+            {
+                keys: ['điều kiện dự tuyển đại học', 'dieu kien dai hoc', 'tiêu chuẩn đại học', 'tuổi', 'kết hôn', 'chính quy', 'đại học', 'thế nào', 'dự tuyển'],
+                answer: "<b>Điều kiện dự tuyển Đại học:</b><br>• Học lực/Hạnh kiểm: Khá trở lên (Công dân).<br>• Tuổi: ≤ 22 (DTTS ≤ 25). Chưa kết hôn, chưa có con.<br>• Điểm môn tổ hợp: Công dân ≥ 7.0 (DTTS/NVCA ≥ 6.5).",
+                follows: ["Quy đổi điểm IELTS", "Mã bài thi BCA là gì?", "Chỉ tiêu học viện ANND"]
+            },
+            {
+                keys: ['phương thức 1', 'phương thức 1 đại học', 'pt1', 'pt1 đại học', 'tuyển thẳng', 'giải quốc gia', 'olympic'],
+                answer: "<b>Phương thức 1 (Xét tuyển thẳng):</b><br>Áp dụng cho thí sinh đạt giải Nhất, Nhì, Ba Quốc gia/Quốc tế hoặc giải Khoa học kỹ thuật. Thời gian đoạt giải không quá <b>03 năm</b> tính đến thời điểm xét tuyển thẳng.",
+                follows: ["Phương thức 2 xét tuyển thế nào?", "Chỉ tiêu Đại học"]
+            },
+            {
+                keys: ['phương thức 2', 'phương thức 2 đại học', 'pt2', 'pt2 đại học', 'chứng chỉ', 'ngoại ngữ', 'quy đổi điểm ielts', 'ielts', 'toefl', 'toeic'],
+                answer: "<b>Phương thức 2 (Chứng chỉ ngoại ngữ):</b><br>Kết hợp chứng chỉ quốc tế + bài thi BCA. Mức tối thiểu IELTS 5.5 (đổi 7.5đ); 6.0 (8.0đ); 6.5 (8.5đ); 7.0 (9.0đ); 8.0+ (10đ). Không chấp nhận thi tại nhà (Home Edition).",
+                follows: ["Phương thức 3 xét tuyển thế nào?", "Mã bài thi BCA"]
+            },
+            {
+                keys: ['quy đổi ielts phương thức 3', 'ielts phương thức 3', 'phương thức 3', 'đại học', 'xét tuyển', 'thế nào'],
+                answer: "<b>Quy đổi IELTS (Phương thức 3):</b><br>• IELTS 4.0 - 5.0 → 7.0đ<br>• IELTS 5.5 → 7.5đ<br>• IELTS 6.0 → 8.0đ<br>• IELTS 7.0 → 9.0đ<br>• IELTS 8.0+ → 10đ.",
+                follows: ["Mã tổ hợp xét tuyển đại học cand"]
+            },
+            {
+                keys: ['công thức tính điểm phương thức 2 đại học cand', 'điểm xét tuyển phương thức 2'],
+                answer: "<b>Công thức tính điểm PT2 Đại học:</b><br>ĐXT = (Bài thi BCA * 3/5) + (Điểm Ngoại ngữ quy đổi * 2/5) + Điểm cộng (ĐT, KV, Đth).<br><i>Nếu tổng quy đổi ≥ 22.5, điểm cộng giảm dần theo công thức.</i>",
+                follows: ["Ưu tiên đại học cand"]
+            },
+            {
+                keys: ['ưu tiên đại học cand', 'điểm cộng đại học cand', 'điểm thưởng'],
+                answer: "<b>Ưu tiên/Điểm cộng ĐH CAND:</b><br>• Cộng ưu tiên khu vực/đối tượng.<br>• Giải quốc gia: Nhất (+1.0), Nhì (+0.75), Ba (+0.5), KK (+0.25).",
+                follows: ["Công thức tính điểm phương thức 2 đại học cand"]
+            },
+            {
+                keys: ['bài thi đánh giá', 'bài thi đánh giá bca', 'đánh giá năng lực', 'quy định về bài thi đánh giá bca', 'mã bài thi', 'ca1', 'ca2', 'ca3', 'ca4', 'thời gian'],
+                answer: "<b>Bài thi đánh giá BCA (21/6/2026):</b><br>Thi viết 180 phút.<br>• CA1: Văn tự luận; Toán, Sử, Anh trắc nghiệm; Lý tự chọn.<br>• CA2: Tương tự CA1, thay Lý bằng Hóa.<br>• CA3: Tương tự CA1, thay Lý bằng Sinh.<br>• CA4: Tương tự CA1, thay Lý bằng Địa.",
+                follows: ["Chỉ tiêu Học viện ANND", "Thời gian thi BCA"]
+            },
+            {
+                keys: ['tổ hợp xét tuyển đại học cand', 'mã tổ hợp', 'a00'],
+                answer: "<b>Mã tổ hợp xét tuyển ĐH CAND:</b><br>A00, A01, B00, B08, C00, C03, D01, D04, D07, D09, D10, X02, X03, X04, X26, X27, X28.<br><i>(Gõ 'X02 gồm môn gì' để xem chi tiết tổ hợp mới)</i>",
+                follows: ["x02 gồm môn gì", "Mã bài thi BCA"]
+            },
+            {
+                keys: ['x02 gồm môn gì', 'x02', 'x03', 'x04', 'x26', 'x27', 'x28'],
+                answer: "<b>Các tổ hợp mới:</b><br>• X02: Toán, Văn, Tin học.<br>• X03: Toán, Văn, Công nghệ CN.<br>• X04: Toán, Văn, Công nghệ NN.<br>• X26: Toán, Anh, Tin học.<br>• X27: Toán, Anh, Công nghệ CN.<br>• X28: Toán, Anh, Công nghệ NN.",
+                follows: ["Tổ hợp xét tuyển đại học cand"]
+            },
+
+            // --- CÁC TRƯỜNG ĐẠI HỌC ---
+            {
+                keys: ['chỉ tiêu đại học t01', 'chỉ tiêu đại học học viện annd', 'chỉ tiêu học viện annd', 'học viện an ninh nhân dân', 't01', 'anh', 'tôi muốn hỏi', '2026'],
+                answer: "<b>Học viện An ninh nhân dân (T01): 500 chỉ tiêu</b><br>• Nghiệp vụ AN (Phía Bắc): 250.<br>• An ninh mạng (Toàn quốc): 150.<br>• CNTT (Toàn quốc): 100.",
+                follows: ["Chỉ tiêu T02", "Chỉ tiêu VB2 T01", "Mã tổ hợp T01"]
+            },
+            {
+                keys: ['chỉ tiêu đại học t02', 'học viện cảnh sát nhân dân', 'chỉ tiêu học viện cảnh sát nhân dân', 'chỉ tiêu học viện csnd', 'tôi muốn hỏi', 't02', 'csh', '2026'],
+                answer: "<b>Học viện Cảnh sát nhân dân (T02): 400 chỉ tiêu</b><br>• Nhóm ngành nghiệp vụ Cảnh sát.<br>• Địa bàn tuyển sinh: <b>Phía Bắc</b>.<br>• Tổ hợp xét tuyển: A00, A01, C03, D01, X02, X03, X04.",
+                follows: ["Chỉ tiêu T01", "Chỉ tiêu VB2 T02"]
+            },
+            {
+                keys: ['t03', 'học viện chính trị cand', 'chỉ tiêu học viện chính trị cand', 'hca', 'xây dựng đảng', 'tôi muốn hỏi', '2026'],
+                answer: "<b>Học viện Chính trị CAND (T03): 100 chỉ tiêu</b><br>Ngành Xây dựng Đảng và chính quyền nhà nước. Phân bổ 50 chỉ tiêu phía Bắc, 50 chỉ tiêu phía Nam.",
+                follows: ["Chỉ tiêu T04", "Tổ hợp xét tuyển T03"]
+            },
+            {
+                keys: ['t04', 'đại học an ninh nhân dân', 'ans'],
+                answer: "<b>Trường Đại học An ninh nhân dân (T04): 220 chỉ tiêu</b><br>Nhóm ngành nghiệp vụ An ninh, tuyển sinh khu vực phía Nam.",
+                follows: ["Chỉ tiêu T05", "Chỉ tiêu VB2 T04"]
+            },
+            {
+                keys: ['t05', 'đại học cảnh sát nhân dân', 'css'],
+                answer: "<b>Trường Đại học Cảnh sát nhân dân (T05): 300 chỉ tiêu</b><br>Nhóm ngành nghiệp vụ Cảnh sát, tuyển sinh khu vực phía Nam.",
+                follows: ["Chỉ tiêu T04", "Chỉ tiêu VB2 T05"]
+            },
+            {
+                keys: ['t06', 'đại học phòng cháy', 'chỉ tiêu trường đại học phòng cháy chữa cháy', 'pccc', 'tôi muốn hỏi', 'pch', '2026'],
+                answer: "<b>Trường Đại học PCCC (T06): 200 chỉ tiêu</b><br>Tuyển sinh Toàn quốc (100 Bắc, 100 Nam). Tổ hợp XT: A00, A01, D01, D07.",
+                follows: ["Chỉ tiêu T07", "Bài thi CA1"]
+            },
+            {
+                keys: ['t07', 'học viện kỹ thuật và công nghệ an ninh', 'chỉ tiêu', 'kth', 'tôi muốn hỏi', '2026'],
+                answer: "<b>Học viện Kỹ thuật & Công nghệ AN (T07): 300 chỉ tiêu</b><br>• Kỹ thuật Hậu cần: 200.<br>• Y khoa (Gửi đào tạo QY & ĐHQGHN): 80.<br>• KT Điện tử viễn thông: 20.",
+                follows: ["Ngành Y khoa công an", "Chỉ tiêu T01"]
+            },
+
+            // --- VB2 & TRUNG CẤP ---
+            {
+                keys: ['vb2', 'vb2ca', 'văn bằng 2', 'đại học vb2', 'điều kiện'],
+                answer: "<b>Đại học VB2CA 2026:</b><br>Tổng <b>530 chỉ tiêu</b>. Yêu cầu bằng ĐH loại Khá trở lên, tuổi không quá 30. Ngày thi: <b>20/9/2026</b> trên máy tính.",
+                follows: ["Chỉ tiêu VB2 T01", "Hồ sơ VB2 gồm những gì?"]
+            },
+            {
+                keys: ['chỉ tiêu vb2 học viện an ninh nhân dân', 't01 vb2', 'vb2 t01', 'anh vb2', 'chỉ tiêu', 'vb2 học viện annd', 'tôi muốn hỏi', '2026'],
+                answer: "<b>T01 - Hệ VB2CA: 130 chỉ tiêu</b><br>• Nghiệp vụ AN (Phía Bắc): 100.<br>• An toàn thông tin (Toàn quốc): 30.",
+                follows: ["Chỉ tiêu VB2 T02", "Điều kiện VB2CA"]
+            },
+            {
+                keys: ['chỉ tiêu vb2 học viện cảnh sát nhân dân', 't02 vb2', 'vb2 t02', 'csh vb2','chỉ tiêu', 'vb2 học viện csnd', 'tôi muốn hỏi', '2026'],
+                answer: "<b>T02 - Hệ VB2CA: 100 chỉ tiêu</b><br>Nhóm ngành nghiệp vụ Cảnh sát, tuyển sinh khu vực Phía Bắc.",
+                follows: ["Chỉ tiêu VB2 T04", "Điều kiện VB2CA"]
+            },
+            {
+                keys: ['trung cấp', 'hệ trung cấp', 't08', 't09', 't10', 'chỉ tiêu', '2026', 'tôi muốn hỏi'],
+                answer: "<b>Trung cấp CAND chính quy (280 chỉ tiêu):</b><br>• Đối tượng: CSNV, Hoàn thành NVCA, Thí sinh trượt ĐH CAND.<br>• Phân bổ: T08 (80), T09 (100), T10 (100).",
+                follows: ["Chỉ tiêu T09", "Điểm cộng Trung cấp"]
+            },
+            {
+                keys: ['hồ sơ đăng ký sơ tuyển', 'hồ sơ cơ bản gồm những gì'],
+                answer: "<b>Hồ sơ đăng ký sơ tuyển gồm:</b><br>1. Phiếu đăng ký (nhận tại CA xã).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. Giấy khai sinh.<br>5. 4 ảnh 4x6.<br><i>Nộp kèm lệ phí sơ tuyển 300.000đ (đối với ĐH).</i>",
+                follows: ["Khám sức khỏe khi nào", "Điều kiện đại học"]
+            },
+            {
+                keys: ['lệ phí', 'lệ phí đại học', 'phí hồ sơ đại học'],
+                answer: "<b>Lệ phí xét tuyển ĐH:</b><br>• Sơ tuyển: 300.000đ.<br>• Phí hồ sơ chung: 20.000đ/bộ.<br>• Tờ khai dự tuyển: 10.000đ/tờ.<br>• Phương thức 2 ĐH/Phương thức 1, 2 TC: 30.000đ.",
+                follows: ["Hồ sơ đăng ký sơ tuyển"]
+            },
+            {
+                keys: ['điều kiện vb2ca', 'tiêu chuẩn vb2ca', 'lĩnh vực dự tuyển vb2ca', 'tôi tốt nghiệp đại học', 'dự thi', 'dự tuyển', 'điều kiện'],
+                answer: "<b>Điều kiện dự tuyển VB2CA:</b><br>• Bằng ĐH chính quy loại Khá trở lên.<br>• Tuổi không quá 30.<br>• Ngành NV An ninh/Cảnh sát: Không quy định ngành học đại học trước đó.<br>• Các ngành Kỹ thuật/ATTT: Phải đúng mã lĩnh vực.",
+                follows: ["Phương thức 1 vb2", "Phương thức 2 vb2"]
+            },
+            {
+                keys: ['phương thức 1 vb2', 'tuyển thẳng vb2', 'quy định', 'như thế nào'],
+                answer: "<b>PT1 VB2CA (Xét tuyển thẳng):</b><br>• Con CA bằng Xuất sắc.<br>• Bằng Giỏi/Xuất sắc khối Kỹ thuật, CNTT.<br>• Bằng Giỏi/Xuất sắc + IELTS 6.5+.<br>• Bằng Khá + IELTS 7.0+.<br><i>(Chứng chỉ không quá 2 năm tính đến 01/8)</i>.",
+                follows: ["Ưu tiên vb2", "Phương thức 2 vb2"]
+            },
+            {
+                keys: ['phương thức 2 vb2', 'thi vb2', 'quy định', 'như thế nào'],
+                answer: "<b>PT2 VB2CA (Thi tuyển):</b><br>Công thức điểm: ĐXT = Điểm Bài thi BCA * 3/10 + Điểm Cộng. Bài thi làm trên máy tính 150 phút.",
+                follows: ["Ưu tiên vb2", "Chỉ tiêu vb2 t01"]
+            },
+            {
+                keys: ['ưu tiên vb2', 'điểm thưởng vb2', 'con đẻ cán bộ công an vb2', 'tôi con công an', 'tôi muốn hỏi'],
+                answer: "<b>Ưu tiên VB2CA:</b><br>• IELTS 6.5+ được cộng 1.0đ; IELTS 6.0+ được cộng 0.5đ.<br>• Con đẻ cán bộ Công an: cộng 1.0đ.<br><i>Lưu ý: Nếu có nhiều diện điểm thưởng thì chỉ hưởng mức cao nhất.</i>",
+                follows: ["Phương thức 2 vb2"]
+            },
+
+            // --- DATABASE TRA CỨU NGÀY KHÁM THEO ĐỊA ĐIỂM DÀNH CHO AI NHẬN DIỆN (ẨN) ---
+            { keys: ['dân hoá', 'kim điền', 'kim phú', 'minh hoá', 'tuyên lâm', 'tuyên sơn', 'đồng lê', 'tuyên hoá', 'tuyên bình', 'tuyên phú', 'tân thành'], answer: "SK: 16/4 tại BX02. TL: Sáng 20/4 tại TTCĐ. VB2: 29/6 tại BX02.", follows: [], hidden: true },
+            { keys: ['tân gianh', 'trung thuần', 'quảng trạch', 'hoà trạch', 'phú trạch', 'ba đồn', 'bắc gianh', 'nam gianh', 'nam ba đồn', 'thượng trạch'], answer: "SK: 17/4 tại BX02. TL: Chiều 20/4 tại TTCĐ. VB2: 29/6 tại BX02.", follows: [], hidden: true },
+            { keys: ['phong nha', 'bắc trạch', 'đông trạch', 'hoàn lão', 'bố trạch', 'nam trạch', 'đồng hới', 'đồng thuận', 'đồng sơn', 'quảng ninh'], answer: "SK: 18/4 tại BX02. TL: Sáng 21/4 tại TTCĐ. VB2: 30/6 tại BX02.", follows: [], hidden: true },
+            { keys: ['ninh châu', 'trường ninh', 'trường sơn', 'lệ thuỷ', 'cam hồng', 'sen ngư', 'tân mỹ', 'trường phú', 'lệ ninh', 'kim ngân'], answer: "SK: 19/4 tại BX02. TL: Chiều 21/4 tại TTCĐ. VB2: 30/6 tại BX02.", follows: [], hidden: true },
+            { keys: ['vĩnh linh', 'cửa tùng', 'vĩnh hoàng', 'vĩnh thuỷ', 'bến quan', 'cồn tiên', 'cửa việt', 'gio linh', 'bến hải', 'cam lộ'], answer: "SK: 22/4 tại BX01. TL: Sáng 28/4 tại BX01. VB2: 01/7 tại BX01.", follows: [], hidden: true },
+            { keys: ['hiếu giang', 'la lay', 'tà rụt', 'đakrông', 'ba lòng', 'hướng hiệp', 'hướng lập', 'hướng phùng', 'khe sanh', 'tân lập'], answer: "SK: 23/4 tại BX01. TL: Chiều 28/4 tại BX01. VB2: 01/7 tại BX01.", follows: [], hidden: true },
+            { keys: ['lao bảo', 'lìa', 'a dơi', 'triệu phong', 'ái tử', 'triệu bình', 'triệu cơ', 'nam cửa việt', 'diên sanh', 'mỹ thuỷ'], answer: "SK: 24/4 tại BX01. TL: Sáng 29/4 tại BX01. VB2: 02/7 tại BX01.", follows: [], hidden: true },
+            { keys: ['hải lăng', 'nam hải lăng', 'vĩnh định', 'đông hà', 'nam đông hà', 'quảng trị', 'cồn cỏ'], answer: "SK: 25/4 tại BX01. TL: Chiều 29/4 tại BX01. VB2: 02/7 tại BX01.", follows: [], hidden: true }
+        ];
+
+        // Mặc định lúc mở App
+        const INITIAL_SUGGESTIONS = ["Khám sức khỏe khi nào?", "Xã Lìa khám ngày nào?", "Mắt cận 3 độ được thi?", "Quy đổi điểm IELTS", "Chỉ tiêu Học viện ANND"];
+
+        // ==========================================
+        // 2. GIAO DIỆN & TƯƠNG TÁC
+        // ==========================================
         const chatBox = document.getElementById('chatBox');
         const userInput = document.getElementById('userInput');
-        
-        // Auto resize textarea
+        const suggestionBox = document.getElementById('suggestionBox');
+
         userInput.addEventListener('input', function() {
             this.style.height = '44px';
             this.style.height = (this.scrollHeight) + 'px';
             if(this.value.trim() === '') this.style.height = '44px';
         });
 
-        // Bắt sự kiện phím Enter
         userInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                // Bổ sung kiểm tra nếu bot đang gõ thì chặn bấm Enter liên tục
-                if (!document.getElementById('sendBtn').disabled) {
-                    handleSend();
-                }
+                if (!document.getElementById('sendBtn').disabled) handleSend();
             }
         });
 
-        function loadSuggestions() {
-            const sugContainer = document.getElementById('suggestionBox'); 
-            sugContainer.innerHTML = '';
-            SUGGESTIONS.forEach(text => {
+        function updateSuggestions(suggestionsArray) {
+            suggestionBox.innerHTML = '';
+            if (!suggestionsArray || suggestionsArray.length === 0) suggestionsArray = INITIAL_SUGGESTIONS;
+            
+            suggestionsArray.forEach(text => {
                 const btn = document.createElement('button');
                 btn.className = 'suggest-btn';
-                btn.innerHTML = `<i class="fas fa-search text-[#ce181e] opacity-70"></i> ${text}`; 
+                btn.innerHTML = `<i class="fas fa-sparkles text-[#ce181e] opacity-70"></i> ${text}`; 
                 btn.onclick = () => {
                     userInput.value = text;
                     userInput.style.height = '44px';
                     handleSend();
                 };
-                sugContainer.appendChild(btn);
+                suggestionBox.appendChild(btn);
             });
-        }
-
-        function renderModalData() {
-            document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `
-                <div class="p-3.5 bg-white border border-red-100 rounded-xl shadow-sm hover:shadow-md transition">
-                    <p class="text-xs font-bold text-[#ce181e] uppercase">⚕️ ${i.title}</p>
-                    <p class="text-[12px] text-gray-700 mt-1.5 leading-relaxed">${i.content}</p>
-                </div>`).join('');
-            document.getElementById('list-dieukien').innerHTML = DIEU_KIEN_DATA.map(i => `
-                <div class="p-3.5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition">
-                    <p class="text-xs font-bold text-gray-800 uppercase text-[#ce181e]">📌 ${i.title}</p>
-                    <p class="text-[12px] text-gray-600 mt-1.5 leading-relaxed">${i.content}</p>
-                </div>`).join('');
-            filterContact();
-        }
-
-        function filterContact() {
-            const term = document.getElementById('searchContact').value.toLowerCase();
-            const filtered = DANH_BA_DATA.filter(i => 
-                i.unit.toLowerCase().includes(term) || i.name.toLowerCase().includes(term)
-            );
-            
-            document.getElementById('list-danhba').innerHTML = filtered.map(i => `
-                <div class="p-3 bg-white border border-gray-100 rounded-xl flex justify-between items-center hover:border-red-200 transition-all shadow-sm">
-                    <div>
-                        <p class="text-[11px] font-bold text-gray-800">${i.unit}</p>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold mt-1"><i class="fas fa-user-shield mr-1.5 text-gray-400"></i>${i.name}</p>
-                    </div>
-                    <a href="tel:${i.phone.replace(/[^\d+]/g, '')}" class="text-[11px] font-black text-[#ce181e] bg-red-50 px-3 py-1.5 rounded-lg border border-red-100 hover:bg-red-600 hover:text-white transition-colors">
-                        <i class="fas fa-phone-alt mr-1"></i> Gọi
-                    </a>
-                </div>
-            `).join('');
+            // Cuộn suggest về đầu
+            suggestionBox.scrollLeft = 0;
         }
 
         function toggleModal(show) {
             const m = document.getElementById('infoModal');
             if(show) {
                 m.style.display = 'flex';
-                // Delay chút để CSS transition hoạt động
                 setTimeout(() => m.classList.add('show'), 10);
             } else {
                 m.classList.remove('show');
@@ -1484,169 +627,219 @@ const KNOWLEDGE_BASE = [
             document.getElementById(tabId).classList.remove('hidden');
         }
 
-        function getCurrentTime() {
-            const now = new Date();
-            return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-        }
-
         function addMessage(text, side) {
             const msgDiv = document.createElement('div');
             msgDiv.className = `msg ${side}`;
             
             let formattedText = text;
-            if (side === 'bot') {
-                if (text.includes("Sức khỏe") || text.includes("BMI") || text.includes("chiều cao")) {
+            if (side === 'bot' && !text.includes("<i class=")) {
+                if (text.includes("Khám") || text.includes("Tiêu chuẩn") || text.includes("Mắt")) {
                     formattedText = `<div class="mb-1 text-blue-600"><i class="fas fa-heartbeat mr-1"></i> <b>Y Tế & Thể Lực</b></div>${text}`;
-                } else if (text.includes("Chỉ tiêu") || text.includes("Phương thức")) {
+                } else if (text.includes("Chỉ tiêu") || text.includes("Phương thức") || text.includes("T0")) {
                     formattedText = `<div class="mb-1 text-yellow-600"><i class="fas fa-chart-pie mr-1"></i> <b>Chỉ tiêu Tuyển Sinh</b></div>${text}`;
-                } else if (text.includes("Lịch") || text.includes("thời gian") || text.includes("2026")) {
-                    formattedText = `<div class="mb-1 text-green-600"><i class="fas fa-calendar-check mr-1"></i> <b>Lịch Trình</b></div>${text}`;
                 }
             }
-
-            msgDiv.innerHTML = `
-                <div class="bubble">${formattedText}</div>
-                <div class="timestamp">${getCurrentTime()}</div>
-            `;
+            
+            const time = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+            msgDiv.innerHTML = `<div class="bubble">${formattedText}</div><div class="timestamp">${time}</div>`;
             chatBox.appendChild(msgDiv);
             scrollToBottom();
         }
 
-        function scrollToBottom() {
-            setTimeout(() => {
-                chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
-            }, 50);
-        }
+        function scrollToBottom() { setTimeout(() => { chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' }); }, 50); }
 
-        /****************************************************************
-         * 3. AI FAKE NLP ENGINE & SEARCH
-         ****************************************************************/
-        // Fuse.js setup
-        const fuse = new Fuse(KNOWLEDGE_BASE, {
-            keys: ['keys'],
-            includeScore: true,
-            threshold: 0.4, 
-            ignoreLocation: true,
-            minMatchCharLength: 2
-        });
-
-        // Xóa "từ khóa nhiễu" giúp thuật toán chấm điểm chính xác hơn
-        function normalizeQuery(text) {
-            let lower = text.toLowerCase();
-            const stopwords = ['dạ', 'ạ', 'cho em hỏi', 'cho mình hỏi', 'ad ơi', 'admin', 'trợ lý ơi', 'làm sao', 'thế nào', 'có được không', 'có bị loại không', 'tư vấn', 'cho biết'];
-            stopwords.forEach(word => {
-                lower = lower.replace(new RegExp(word, 'g'), '');
-            });
-            return lower.trim();
-        }
-
-        function showTypingIndicator() {
+        function showTyping() {
             const id = 'typing-' + Date.now();
             const msgDiv = document.createElement('div');
             msgDiv.className = `msg bot`;
             msgDiv.id = id;
-            msgDiv.innerHTML = `
-                <div class="bubble flex items-center gap-2" style="padding: 10px 16px;">
-                    <div class="typing-indicator flex"><span></span><span></span><span></span></div>
-                </div>`;
+            msgDiv.innerHTML = `<div class="bubble flex items-center gap-2" style="padding: 10px 16px;"><div class="typing-indicator flex"><span></span><span></span><span></span></div></div>`;
             chatBox.appendChild(msgDiv);
             scrollToBottom();
             return id;
         }
 
+        // ==========================================
+        // 3. NLP ENGINE & ENTITY RECOGNITION (NÂNG CẤP MẠNH)
+        // ==========================================
+        
+        // Cấu hình Fuse.js
+        const fuse = new Fuse(KNOWLEDGE_BASE.filter(k => !k.hidden), {
+            keys: ['keys'], includeScore: true, threshold: 0.4, minMatchCharLength: 2
+        });
+
+        // Cập nhật hàm chuẩn hóa để xử lý an toàn lỗi "a dơi", "lìa"
+        function normalizeQuery(text) {
+            let lower = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+            // Loại bỏ các dấu câu cơ bản để từ không bị dính vào nhau (VD: "ngày nào?")
+            lower = lower.replace(/[.,!?]/g, ' ');
+            
+            const stopwords = ['da', 'a', 'cho em hoi', 'cho minh hoi', 'ad oi', 'admin', 'tro ly oi', 'lam sao', 'the nao', 'co duoc khong', 'co bi loai khong', 'tu van', 'cho biet', 'cho hoi'];
+            stopwords.forEach(word => {
+                // Dùng ranh giới từ (\b) để chỉ xóa những từ đứng độc lập
+                lower = lower.replace(new RegExp('\\b' + word + '\\b', 'g'), ' ');
+            });
+            return lower.replace(/\s+/g, ' ').trim();
+        }
+
+        // Kỹ thuật NLP 1: Khai thác Thực thể (Entity Extraction)
+        function extractLocation(query) {
+            let foundLoc = null;
+            const normQuery = normalizeQuery(query);
+            // Sắp xếp độ dài từ khóa giảm dần (để "Nam Đông Hà" được ưu tiên quét trước "Đông Hà")
+            const sortedLocations = [...LOCATION_KEYWORDS].sort((a, b) => b.length - a.length);
+            for (let loc of sortedLocations) {
+                const cleanLoc = loc.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/(xa|phuong|thi tran|dac khu)\s+/g, '');
+                if (normQuery.includes(cleanLoc)) {
+                    foundLoc = loc;
+                    break;
+                }
+            }
+            return foundLoc;
+        }
+
+        // Kỹ thuật NLP 2: Trả lời tự động dựa trên Thực Thể Địa Danh
+        function generateLocationResponse(locationName) {
+            const cleanLoc = locationName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/(xa|phuong|thi tran|dac khu)\s+/g, '');
+            // Quét DB ẩn để tìm lịch
+            let scheduleInfo = "Hệ thống đang cập nhật lịch chi tiết cho địa phương này.";
+            for (let item of KNOWLEDGE_BASE) {
+                if (item.hidden && item.keys.some(k => k.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").includes(cleanLoc))) {
+                    scheduleInfo = item.answer;
+                    break;
+                }
+            }
+
+            // Giải mã chuỗi rút gọn trong DB thành câu văn hoàn chỉnh
+            let sk = scheduleInfo.match(/SK:\s*(.*?)\./);
+            let tl = scheduleInfo.match(/TL:\s*(.*?)\./);
+            let vb = scheduleInfo.match(/VB2:\s*(.*?)\./);
+
+            // Xử lý địa chỉ
+            let parseAddress = (str) => {
+                if(str.includes("BX01")) return "Bệnh xá số 01 (đường Điện Biên Phủ, Nam Đông Hà)";
+                if(str.includes("BX02")) return "Bệnh xá số 02 (số 31 Phan Chu Trinh, Đồng Hới)";
+                if(str.includes("TTCĐ")) return "TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, Đồng Hới)";
+                return str;
+            }
+
+            return `
+                <div class="mb-2 text-[#ce181e]"><i class="fas fa-map-marker-alt mr-1"></i> <b>Lịch trình khu vực: ${locationName.toUpperCase()}</b></div>
+                • <b>Khám Sức khỏe ĐH/TC:</b> ${sk ? parseAddress(sk[1]) : "Đang cập nhật"}. (Sáng 07h30, Chiều 13h30)<br>
+                • <b>Khám SK hệ VB2CA:</b> ${vb ? parseAddress(vb[1]) : "Đang cập nhật"}.<br>
+                • <b>Kiểm tra Thể lực:</b> ${tl ? parseAddress(tl[1]) : "Đang cập nhật"}.
+                <div class="mt-2 text-[11px] text-gray-500 border-t pt-1"><i>Lưu ý: Thí sinh cần có mặt trước 15 phút, khi đi khám nhịn ăn sáng.</i></div>
+            `;
+        }
+
         function handleSend() {
             const sendBtn = document.getElementById('sendBtn');
-            // Chặn bấm gửi nhiều lần liên tiếp khi bot đang suy nghĩ
             if (sendBtn.disabled) return;
-
             const rawText = userInput.value.trim();
             if (!rawText) return;
             
             addMessage(rawText, 'user');
-            userInput.value = '';
-            userInput.style.height = '44px'; // reset height
+            userInput.value = ''; userInput.style.height = '44px';
             
-            const typingId = showTypingIndicator();
+            const typingId = showTyping();
             sendBtn.disabled = true;
 
             setTimeout(() => {
-                const el = document.getElementById(typingId);
-                if (el) el.remove();
+                document.getElementById(typingId)?.remove();
                 sendBtn.disabled = false; 
-                
-                // 1. Chuẩn hóa câu hỏi
+
+                // Chuẩn hóa và làm sạch câu hỏi
                 const query = normalizeQuery(rawText);
-                if (!query) {
-                    addMessage("Đồng chí cần tra cứu thông tin gì ạ?", "bot");
+                if (!query) { addMessage("Đồng chí cần tra cứu thông tin gì ạ?", "bot"); return; }
+
+                // Bước 2: Nhận diện thực thể Địa danh (Location NLP)
+                let location = extractLocation(rawText);
+                if (location && (query.includes('kham') || query.includes('ngay') || query.includes('thoi gian') || query.includes('khi nao') || query.includes('o dau') || query.includes('lich'))) {
+                    addMessage(generateLocationResponse(location), 'bot');
+                    updateSuggestions(["Tiêu chuẩn chiều cao", "Mắt cận mấy độ được thi?", "Mang theo giấy tờ gì?"]);
                     return;
                 }
 
-                // 2. Tìm kiếm bằng Fuse
-                const fuseResults = fuse.search(query);
-                
-                // 3. Chấm điểm kết hợp Regex
-                let finalResults = KNOWLEDGE_BASE.map(item => {
-                    let score = 0;
-                    let matchCount = 0; // Thêm biến đếm số lượng từ khóa trùng khớp
+                // Bước 3: Thuật toán so khớp Điểm số (Scoring Match)
+                let finalResults = [];
+                const fuseResults = fuse.search(query); 
+                KNOWLEDGE_BASE.filter(k => !k.hidden).forEach(item => {
+                    let score = 0; let matchCount = 0;
+                    
+                    // Điểm Fuse (chống sai chính tả)
                     const fuseMatch = fuseResults.find(r => r.item === item);
                     if (fuseMatch) score += (1 - fuseMatch.score) * 5; 
-                    
+
+                    // Điểm chứa từ khóa (Keyword match an toàn)
                     item.keys.forEach(k => {
-                        // Regex dùng capture group thay cho lookbehind để an toàn tuyệt đối trên iOS
-                        const regex = new RegExp("(^|[^\\\\p{L}\\\\p{N}_])(" + k + ")([^\\\\p{L}\\\\p{N}_]|$)", "iu");
-                        if (regex.test(query)) {
-                            score += k.length * 3; 
-                            matchCount++;
-                        } else if (query.includes(k)) {
-                            score += k.length * 1; 
-                            matchCount++;
+                        let cleanKey = k.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+                        try {
+                            // Dùng \b để tách từ an toàn trên cả các thiết bị iOS cũ
+                            const regex = new RegExp("(^|\\s)(" + cleanKey + ")(\\s|$)", "i");
+                            if (regex.test(query)) {
+                                score += k.length * 3; matchCount++;
+                            } else if (query.includes(cleanKey)) {
+                                score += k.length * 1; matchCount++;
+                            }
+                        } catch(e) {
+                            if (query.includes(cleanKey)) { score += k.length * 1; matchCount++; }
                         }
                     });
-                    
-                    // Thưởng điểm 1.5x nếu câu hỏi người dùng khớp nhiều từ khóa trong 1 nhóm
-                    if (matchCount > 1) score *= 1.5;
 
-                    return { item, score };
+                    if (matchCount > 1) score *= 1.5; // Combo multiplier
+                    if (score > 3) finalResults.push({ item, score });
                 });
 
-                // Lọc kết quả tốt nhất
-                let matches = finalResults.filter(r => r.score > 2.5).sort((a, b) => b.score - a.score);
-                
-                if (matches.length > 0) {
-                    let bestMatch = matches[0].item;
+                finalResults.sort((a, b) => b.score - a.score);
+
+                // Bước 4: Đưa ra quyết định
+                if (finalResults.length > 0) {
+                    let bestMatch = finalResults[0].item;
                     addMessage(bestMatch.answer, 'bot');
-                    
-                    // Đưa ra gợi ý thông minh nếu có kết quả liên quan
-                    if (matches.length > 1 && matches[1].score >= matches[0].score * 0.5) {
-                        const related = matches[1].item.answer.split('<br>')[0].replace(/<[^>]*>/g, '');
-                        const hint = `<i style="font-size:12px; color:#6b7280;"><i class="fas fa-lightbulb text-[#ffda44] mr-1"></i> <b>Gợi ý thêm:</b> ${related}</i>`;
-                        addMessage(hint, 'bot');
-                    }
+                    updateSuggestions(bestMatch.follows); // Đổi nút bấm theo ngữ cảnh
                 } else {
-                    addMessage("Hệ thống chưa tìm thấy dữ liệu khớp hoàn toàn. Đồng chí hãy thử dùng các từ khóa ngắn gọn: <b>đại học, trung cấp, sức khỏe, mắt, chiều cao, vb2...</b> hoặc vào <b><i class='fas fa-layer-group'></i> Trung tâm dữ liệu</b> để xem chi tiết.", "bot");
+                    addMessage("Xin lỗi đồng chí, tôi chưa hiểu rõ ý này. Đồng chí có thể thử hỏi ngắn gọn hơn (VD: <b>'Xã Lìa khám khi nào'</b>, <b>'Chiều cao'</b>, <b>'IELTS'</b>) hoặc tra cứu trực tiếp tại <b><i class='fas fa-database text-yellow-600'></i> Dữ liệu gốc</b> góc phải trên cùng.", "bot");
+                    updateSuggestions(INITIAL_SUGGESTIONS);
                 }
-            }, 600); // Fake delay tạo cảm giác "AI đang suy nghĩ"
+            }, 700);
         }
 
+        // ==========================================
+        // 4. KHỞI TẠO APP
+        // ==========================================
         window.onload = () => {
-            initApp();
-        };
-
-        function initApp() {
             const wm = document.getElementById('watermark');
             for (let i = 0; i < 16; i++) {
-                const d = document.createElement('div');
-                d.className = 'watermark-item';
-                d.innerText = 'PX01 QUẢNG TRỊ';
-                wm.appendChild(d);
+                const d = document.createElement('div'); d.className = 'watermark-item'; d.innerText = 'PX01 QUẢNG TRỊ'; wm.appendChild(d);
             }
+            updateSuggestions(INITIAL_SUGGESTIONS);
             
-            renderModalData(); 
-            loadSuggestions(); 
-            
+            // Generate Data for Modal
+            document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `<div class="p-3 bg-white border border-red-100 rounded-xl mb-2 shadow-sm hover:shadow-md transition"><p class="text-xs font-bold text-[#ce181e] uppercase">⚕️ ${i.title}</p><p class="text-[12px] text-gray-700 mt-1.5 leading-relaxed">${i.content}</p></div>`).join('');
+            document.getElementById('list-dieukien').innerHTML = DIEU_KIEN_DATA.map(i => `<div class="p-3 bg-white border border-gray-200 rounded-xl mb-2 shadow-sm hover:shadow-md transition"><p class="text-xs font-bold text-[#ce181e] uppercase">📌 ${i.title}</p><p class="text-[12px] text-gray-600 mt-1.5 leading-relaxed">${i.content}</p></div>`).join('');
+            filterContact();
+
             setTimeout(() => {
-                addMessage("<b>Xin chào! Tôi là trợ lý ảo AI - Công an tỉnh Quảng Trị.</b><br>Sẵn sàng hỗ trợ tra cứu tuyển sinh CAND năm 2026. Đồng chí cần tìm thông tin về <b>chỉ tiêu</b>, <b>sức khỏe</b>, <b>thể lực</b> hay <b>điều kiện hồ sơ</b>?", "bot");
-            }, 300);
+                addMessage("<b>Xin chào! Tôi là trợ lý hỗ trợ tư vấn tuyển sinh Công an tỉnh Quảng Trị năm 2026.</b><br>Tôi có thể giúp đồng chí, thí sinh, phụ huynh tra cứu:<br>• <b>Lịch khám</b> (Theo từng Xã/Phường)<br>• <b>Tiêu chuẩn sức khỏe</b> (Chiều cao, Mắt...)<br>• <b>Chỉ tiêu</b> (Từng trường, hệ đào tạo)<br><br>Đồng chí cần hỏi thông tin gì ạ?", "bot");
+            }, 400);
+        };
+
+        function filterContact() {
+            const term = normalizeQuery(document.getElementById('searchContact')?.value || "");
+            const filtered = DANH_BA_DATA.filter(i => {
+                let cleanUnit = i.unit.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+                let cleanName = i.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+                return cleanUnit.includes(term) || cleanName.includes(term);
+            });
+            document.getElementById('list-danhba').innerHTML = filtered.map(i => `
+                <div class="p-3 bg-white border border-gray-100 rounded-xl flex justify-between items-center mb-2 shadow-sm">
+                    <div>
+                        <p class="text-[11px] font-bold text-gray-800">${i.unit}</p>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold mt-1"><i class="fas fa-user-shield mr-1 text-gray-400"></i> ${i.name}</p>
+                    </div>
+                    <a href="tel:${i.phone.replace(/\D/g,'')}" class="text-[11px] font-black text-[#ce181e] bg-red-50 px-3 py-1.5 rounded-lg border border-red-100"><i class="fas fa-phone"></i> Gọi</a>
+                </div>
+            `).join('');
         }
     </script>
 </body>
