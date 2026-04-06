@@ -117,7 +117,6 @@
             </button>
         </div>
     </div>
-
     <!-- MODAL TRUNG TÂM DỮ LIỆU -->
     <div id="infoModal" class="modal-overlay">
         <div class="modal-content">
@@ -161,7 +160,6 @@
             </div>
         </div>
     </div>
-
     <script>
         /****************************************************************
          * 1. CƠ SỞ DỮ LIỆU ĐẦY ĐỦ 
@@ -253,7 +251,6 @@
             { unit: "Trại Tạm giam số 1", name: "Văn Thị Hoài Thanh", phone: "0916.909.557" },
             { unit: "Trại Tạm giam số 2", name: "Phan Thành Đạt", phone: "0369.921.108" }
         ];
-
         // Tự động trích xuất danh sách địa danh từ DANH_BA_DATA để AI tự nhận diện
         const LOCATION_KEYWORDS = [
             "Lìa", "Đồng Hới", "Đồng Thuận", "Đồng Sơn", "Nam Gianh", "Nam Ba Đồn", "Ba Đồn", "Bắc Gianh", "Dân Hóa", 
@@ -266,7 +263,6 @@
             "La Lay", "Tà Rụt", "Đakrông", "Ba Lòng", "Hướng Hiệp", "Cam Lộ", "Hiếu Giang", "Triệu Phong", "Ái Tử", 
             "Triệu Bình", "Triệu Cơ", "Nam Cửa Việt", "Diên Sanh", "Mỹ Thủy", "Hải Lăng", "Vĩnh Định", "Nam Hải Lăng", "Cồn Cỏ"
         ];
-
         // DỮ LIỆU SỨC KHỎE FULL
         const SUC_KHOE_DATA = [
             {
@@ -303,14 +299,13 @@
             },
             {
                 title: "KHÁM SỨC KHỎE - THỜI GIAN VÀ ĐỊA ĐIỂM CHUNG",
-                content: "• <b>Đại học / TC:</b> 16/4 đến 05/5/2026.<br>• <b>VB2CA:</b> 29/6 đến 03/7/2026.<br>• Buổi sáng: <b>07h30</b> (Nhịn ăn sáng). Chiều: <b>13h30</b>.<br>• Khám tại Bệnh xá số 01 (đường Điện Biên Phủ, phường Nam Đông Hà) hoặc Bệnh xá số 02 (31 Phan Chu Trinh, phường Đồng Hới) tùy lịch đơn vị."
+                content: "• <b>Đại học / TC:</b> 16/4 đến 25/4/2026.<br>• <b>VB2CA:</b> 29/6 đến 02/7/2026.<br>• Buổi sáng: <b>07h30</b> (Nhịn ăn sáng). Chiều: <b>13h30</b>.<br>• Khám tại Bệnh xá số 01 (đường Điện Biên Phủ, phường Nam Đông Hà) hoặc Bệnh xá số 02 (31 Phan Chu Trinh, phường Đồng Hới) tùy lịch đơn vị."
             },
             {
                 title: "NGƯỠNG ĐẠT KIỂM TRA THỂ LỰC",
                 content: "• <b>Bật xa tại chỗ:</b> Nam <b>≥ 2,2m</b>; Nữ <b>≥ 1,5m</b>.<br>• <b>Chạy 100m:</b> Nam <b>≤ 16 giây</b>; Nữ <b>≤ 20 giây</b>.<br>• <b>Chạy 800m:</b> Nữ <b>≤ 5 phút 30 giây</b>.<br>• <b>Chạy 1500m:</b> Nam <b>≤ 7 phút 30 giây</b>.<br>• <b>Co tay xà đơn:</b> Nam <b>≥ 12 lần</b>."
             }
         ];
-
         // DỮ LIỆU ĐIỀU KIỆN FULL
         const DIEU_KIEN_DATA = [
             {
@@ -338,7 +333,6 @@
                 content: "• <b>Mã tổ hợp mới:</b> X02 (Toán, Văn, Tin), X03, X04, X26, X27, X28...<br>• <b>Bài thi BCA:</b> CA1 (Văn tự luận + Toán, Sử, Anh, Lý trắc nghiệm); CA2 (thay Lý bằng Hóa); CA3 (thay Lý bằng Sinh); CA4 (thay Lý bằng Địa)."
             }
         ];
-
         // KNOWLEDGE BASE MỞ RỘNG - Thêm trường "follows" để gợi ý câu hỏi tiếp theo
         const KNOWLEDGE_BASE = [
             // --- SỨC KHỎE ---
@@ -388,21 +382,25 @@
                 follows: ["Tiêu chuẩn Mắt", "Lịch khám sức khỏe"]
             },
             {
-                keys: ['khám sức khỏe khi nào', 'lịch khám chung', 'khám ở đâu', 'lịch khám sức khỏe', 'bệnh xá', 'ở đâu'],
-                answer: "<b>Lịch Khám sức khỏe Chung:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 29/6 - 02/7/2026.<br>• Giờ: Sáng 07h30 (nhịn ăn sáng), Chiều 13h30.<br><i>💡 Tip: Đồng chí hãy gõ tên Xã/Phường của mình (VD: 'Xã Lìa') để tôi tra lịch chính xác nhất!</i>",
-                follows: ["Kiểm tra thể lực gồm những gì?", "Khám bù vào ngày nào?"]
+                keys: ['khám sức khỏe khi nào', 'lịch khám chung', 'khám ở đâu', 'lịch khám sức khỏe', 'bệnh xá'],
+                answer: "<b>Lịch Khám sức khỏe Chung:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 29/6 - 02/7/2026.<br>• Giờ: Sáng 07h30 (nhịn ăn sáng), Chiều 13h30.<br><i> 💡  Tip: Đồng chí hãy gõ tên Xã/Phường của mình (VD: 'Xã Lìa') để tôi tra lịch chính xác nhất!</i>",
+                follows: ["Kiểm tra thể lực gồm những gì?", "Lịch kiểm tra thể lực"]
             },
             {
-                keys: ['thể lực', 'chạy', '100m', '1500m', '800m', 'bật xa', 'xà đơn', 'kiểm tra thể lực', 'gồm những gì'],
+                keys: ['lịch kiểm tra thể lực', 'thể lực khi nào', 'ngày kiểm tra thể lực', 'khi nào thi thể lực', 'giờ thi thể lực'],
+                answer: "<b>Lịch Kiểm tra thể lực chung:</b><br>• Đợt 1 (Khu vực Phía Bắc): 20/4 - 21/4/2026 tại TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, phường Đồng Hới).<br>• Đợt 2 (Khu vực Phía Nam): 28/4 - 29/4/2026 tại Trụ sở Công an tỉnh phía Nam (đường Điện Biên Phủ, Nam Đông Hà).<br>• Khám bù: 04 - 05/5/2026 tại TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, phường Đồng Hới).<b>Thời gian:</b> Sáng bắt đầu từ <b>07h00</b>, Chiều bắt đầu từ <b>15h00</b>.<br><i> 💡 Tip: Đồng chí hãy gõ tên Xã/Phường của mình (VD: 'Xã Lìa') để tôi tra lịch chính xác nhất!</i>",
+                follows: ["Kiểm tra thể lực gồm những gì?", "Lịch khám sức khỏe"]
+            },
+            {
+                keys: ['thể lực', 'chạy', '100m', '1500m', '800m', 'bật xa', 'xà đơn', 'kiểm tra thể lực gồm những gì'],
                 answer: "<b>Bài kiểm tra Thể lực:</b><br>• Bật xa: Nam ≥ 2,2m; Nữ ≥ 1,5m.<br>• Chạy 100m: Nam ≤ 16s; Nữ ≤ 20s.<br>• Chạy bền: Nam(1500m) ≤ 7p30s; Nữ(800m) ≤ 5p30s.<br>• Xà đơn: Nam ≥ 12 lần.<br>• Chỉ đăng ký 02/04 nội dung với Nam và 02/03 nội dung với Nữ",
                 follows: ["Lịch kiểm tra thể lực", "Trượt thể lực có sao không?"]
             },
             {
                 keys: ['trượt kiểm tra thể lực có sao không', 'trượt thể lực có sao không', 'không đạt kiểm tra thể lực'],
                 answer: "<b>Bạn đã không qua vòng sơ tuyển và bị loại.</b>",
-                follows: ["Kiểm tra thể lực gồm những gì?", "Khám bù vào ngày nào?"]
+                follows: ["Kiểm tra thể lực gồm những gì?", "Lịch kiểm tra thể lực"]
             },
-
             // --- ĐIỀU KIỆN ---
             {
                 keys: ['học lực', 'hạnh kiểm', 'khá', 'giỏi', 'điểm học bạ', 'csnv tại ngũ', 'quy định', 'điều kiện'],
@@ -419,7 +417,6 @@
                 answer: "<b>Tình trạng hôn nhân</b><br>Đối với học sinh phổ thông yêu cầu: <b>chưa kết hôn</b>, <b>chưa có con đẻ</b>, <b>chưa có con nuôi</b> theo quy định.",
                 follows: ["Độ tuổi dự tuyển", "Chỉ tiêu Đại học"]
             },
-
             // --- CHỈ TIÊU & PHƯƠNG THỨC ---
             {
                 keys: ['điều kiện dự tuyển đại học', 'dieu kien dai hoc', 'tiêu chuẩn đại học', 'tuổi', 'kết hôn', 'chính quy', 'đại học', 'thế nào', 'dự tuyển'],
@@ -466,7 +463,6 @@
                 answer: "<b>Các tổ hợp mới:</b><br>• X02: Toán, Văn, Tin học.<br>• X03: Toán, Văn, Công nghệ CN.<br>• X04: Toán, Văn, Công nghệ NN.<br>• X26: Toán, Anh, Tin học.<br>• X27: Toán, Anh, Công nghệ CN.<br>• X28: Toán, Anh, Công nghệ NN.",
                 follows: ["Tổ hợp xét tuyển đại học cand"]
             },
-
             // --- CÁC TRƯỜNG ĐẠI HỌC ---
             {
                 keys: ['chỉ tiêu đại học t01', 'chỉ tiêu đại học học viện annd', 'chỉ tiêu học viện annd', 'học viện an ninh nhân dân', 't01', 'anh', 'tôi muốn hỏi', '2026'],
@@ -503,7 +499,6 @@
                 answer: "<b>Học viện Kỹ thuật & Công nghệ AN (T07): 300 chỉ tiêu</b><br>• Kỹ thuật Hậu cần: 200.<br>• Y khoa (Gửi đào tạo QY & ĐHQGHN): 80.<br>• KT Điện tử viễn thông: 20.",
                 follows: ["Ngành Y khoa công an", "Chỉ tiêu T01"]
             },
-
             // --- VB2 & TRUNG CẤP ---
             {
                 keys: ['vb2', 'vb2ca', 'văn bằng 2', 'đại học vb2', 'điều kiện'],
@@ -526,7 +521,7 @@
                 follows: ["Chỉ tiêu T09", "Điểm cộng Trung cấp"]
             },
             {
-                keys: ['hồ sơ đăng ký sơ tuyển', 'hồ sơ cơ bản gồm những gì'],
+                keys: ['hồ sơ đăng ký sơ tuyển', 'hồ sơ cơ bản gồm những gì', 'hồ sơ gồm những gì'],
                 answer: "<b>Hồ sơ đăng ký sơ tuyển gồm:</b><br>1. Phiếu đăng ký (nhận tại CA xã).<br>2. Học bạ THPT (Công chứng).<br>3. CCCD (Công chứng).<br>4. Giấy khai sinh.<br>5. 4 ảnh 4x6.<br><i>Nộp kèm lệ phí sơ tuyển 300.000đ (đối với ĐH).</i>",
                 follows: ["Khám sức khỏe khi nào", "Điều kiện đại học"]
             },
@@ -537,7 +532,7 @@
             },
             {
                 keys: ['điều kiện vb2ca', 'tiêu chuẩn vb2ca', 'lĩnh vực dự tuyển vb2ca', 'tôi tốt nghiệp đại học', 'dự thi', 'dự tuyển', 'điều kiện'],
-                answer: "<b>Điều kiện dự tuyển VB2CA:</b><br>• Bằng ĐH chính quy loại Khá trở lên.<br>• Tuổi không quá 30.<br>• Ngành NV An ninh/Cảnh sát: Không quy định ngành học đại học trước đó.<br>• Các ngành Kỹ thuật/ATTT: Phải đúng mã lĩnh vực.",
+                answer: "<b>Điều kiện dự tuyển VB2CA:</b><br>• Bằng ĐH chính quy loại Khá trở lên.<br>• Tuổi không quá 30.<br>• Ngành NV An ninh/Cảnh sát: Không quy định ngành học đại học trước đó.<br>• Ngành An toàn thông tin tại Học viện ANND: Phải đúng mã lĩnh vực 748.<br>• Ngành PCCC tại Trường T06 PCCC: Phải đúng mã lĩnh vực 738, 742, 744, 746... .<br>• Tại Học viện KT&CNAN: Phải đúng mã lĩnh vực 748, 751, 752, 738... ",
                 follows: ["Phương thức 1 vb2", "Phương thức 2 vb2"]
             },
             {
@@ -555,7 +550,6 @@
                 answer: "<b>Ưu tiên VB2CA:</b><br>• IELTS 6.5+ được cộng 1.0đ; IELTS 6.0+ được cộng 0.5đ.<br>• Con đẻ cán bộ Công an: cộng 1.0đ.<br><i>Lưu ý: Nếu có nhiều diện điểm thưởng thì chỉ hưởng mức cao nhất.</i>",
                 follows: ["Phương thức 2 vb2"]
             },
-
             // --- DATABASE TRA CỨU NGÀY KHÁM THEO ĐỊA ĐIỂM DÀNH CHO AI NHẬN DIỆN (ẨN) ---
             { keys: ['dân hoá', 'kim điền', 'kim phú', 'minh hoá', 'tuyên lâm', 'tuyên sơn', 'đồng lê', 'tuyên hoá', 'tuyên bình', 'tuyên phú', 'tân thành'], answer: "SK: 16/4 tại BX02. TL: Sáng 20/4 tại TTCĐ. VB2: 29/6 tại BX02.", follows: [], hidden: true },
             { keys: ['tân gianh', 'trung thuần', 'quảng trạch', 'hoà trạch', 'phú trạch', 'ba đồn', 'bắc gianh', 'nam gianh', 'nam ba đồn', 'thượng trạch'], answer: "SK: 17/4 tại BX02. TL: Chiều 20/4 tại TTCĐ. VB2: 29/6 tại BX02.", follows: [], hidden: true },
@@ -566,30 +560,25 @@
             { keys: ['lao bảo', 'lìa', 'a dơi', 'triệu phong', 'ái tử', 'triệu bình', 'triệu cơ', 'nam cửa việt', 'diên sanh', 'mỹ thuỷ'], answer: "SK: 24/4 tại BX01. TL: Sáng 29/4 tại BX01. VB2: 02/7 tại BX01.", follows: [], hidden: true },
             { keys: ['hải lăng', 'nam hải lăng', 'vĩnh định', 'đông hà', 'nam đông hà', 'quảng trị', 'cồn cỏ'], answer: "SK: 25/4 tại BX01. TL: Chiều 29/4 tại BX01. VB2: 02/7 tại BX01.", follows: [], hidden: true }
         ];
-
         // Mặc định lúc mở App
-        const INITIAL_SUGGESTIONS = ["Khám sức khỏe khi nào?", "Xã Lìa khám ngày nào?", "Mắt cận 3 độ được thi?", "Quy đổi điểm IELTS", "Chỉ tiêu Học viện ANND"];
-
+        const INITIAL_SUGGESTIONS = ["Khám sức khỏe khi nào?", "Xã Lìa khám ngày nào?", "Lịch kiểm tra thể lực", "Quy đổi điểm IELTS", "Chỉ tiêu Học viện ANND"];
         // ==========================================
         // 2. GIAO DIỆN & TƯƠNG TÁC
         // ==========================================
         const chatBox = document.getElementById('chatBox');
         const userInput = document.getElementById('userInput');
         const suggestionBox = document.getElementById('suggestionBox');
-
         userInput.addEventListener('input', function() {
             this.style.height = '44px';
             this.style.height = (this.scrollHeight) + 'px';
             if(this.value.trim() === '') this.style.height = '44px';
         });
-
         userInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 if (!document.getElementById('sendBtn').disabled) handleSend();
             }
         });
-
         function updateSuggestions(suggestionsArray) {
             suggestionBox.innerHTML = '';
             if (!suggestionsArray || suggestionsArray.length === 0) suggestionsArray = INITIAL_SUGGESTIONS;
@@ -608,7 +597,6 @@
             // Cuộn suggest về đầu
             suggestionBox.scrollLeft = 0;
         }
-
         function toggleModal(show) {
             const m = document.getElementById('infoModal');
             if(show) {
@@ -619,14 +607,12 @@
                 setTimeout(() => m.style.display = 'none', 300);
             }
         }
-
         function switchTab(btn, tabId) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             btn.classList.add('active');
             document.getElementById(tabId).classList.remove('hidden');
         }
-
         function addMessage(text, side) {
             const msgDiv = document.createElement('div');
             msgDiv.className = `msg ${side}`;
@@ -645,9 +631,7 @@
             chatBox.appendChild(msgDiv);
             scrollToBottom();
         }
-
         function scrollToBottom() { setTimeout(() => { chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' }); }, 50); }
-
         function showTyping() {
             const id = 'typing-' + Date.now();
             const msgDiv = document.createElement('div');
@@ -658,7 +642,6 @@
             scrollToBottom();
             return id;
         }
-
         // ==========================================
         // 3. NLP ENGINE & ENTITY RECOGNITION (NÂNG CẤP MẠNH)
         // ==========================================
@@ -667,7 +650,6 @@
         const fuse = new Fuse(KNOWLEDGE_BASE.filter(k => !k.hidden), {
             keys: ['keys'], includeScore: true, threshold: 0.4, minMatchCharLength: 2
         });
-
         // Cập nhật hàm chuẩn hóa để xử lý an toàn lỗi "a dơi", "lìa"
         function normalizeQuery(text) {
             let lower = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
@@ -681,7 +663,6 @@
             });
             return lower.replace(/\s+/g, ' ').trim();
         }
-
         // Kỹ thuật NLP 1: Khai thác Thực thể (Entity Extraction)
         function extractLocation(query) {
             let foundLoc = null;
@@ -697,8 +678,7 @@
             }
             return foundLoc;
         }
-
-        // Kỹ thuật NLP 2: Trả lời tự động dựa trên Thực Thể Địa Danh
+        // Kỹ thuật NLP 2: Trả lời tự động dựa trên Thực Thể Địa Danh (Nâng cấp Giờ/Ngày chi tiết)
         function generateLocationResponse(locationName) {
             const cleanLoc = locationName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/(xa|phuong|thi tran|dac khu)\s+/g, '');
             // Quét DB ẩn để tìm lịch
@@ -709,29 +689,49 @@
                     break;
                 }
             }
+            
+            if (scheduleInfo === "Hệ thống đang cập nhật lịch chi tiết cho địa phương này.") {
+                return scheduleInfo;
+            }
 
             // Giải mã chuỗi rút gọn trong DB thành câu văn hoàn chỉnh
             let sk = scheduleInfo.match(/SK:\s*(.*?)\./);
             let tl = scheduleInfo.match(/TL:\s*(.*?)\./);
             let vb = scheduleInfo.match(/VB2:\s*(.*?)\./);
-
-            // Xử lý địa chỉ
+            
+            // Xử lý địa chỉ để nó trả về một chuỗi dễ đọc
             let parseAddress = (str) => {
-                if(str.includes("BX01")) return "Bệnh xá số 01 (đường Điện Biên Phủ, Nam Đông Hà)";
-                if(str.includes("BX02")) return "Bệnh xá số 02 (số 31 Phan Chu Trinh, Đồng Hới)";
-                if(str.includes("TTCĐ")) return "TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, Đồng Hới)";
-                return str;
+                let res = str;
+                if(res.includes("BX01")) res = res.replace("BX01", "Bệnh xá số 01 (đường Điện Biên Phủ, Nam Đông Hà)");
+                if(res.includes("BX02")) res = res.replace("BX02", "Bệnh xá số 02 (số 31 Phan Chu Trinh, Đồng Hới)");
+                if(res.includes("TTCĐ")) res = res.replace("TTCĐ", "TT Văn hóa Điện ảnh tỉnh (đường Trần Phú, Đồng Hới)");
+                return res;
+            }
+
+            let skStr = sk ? parseAddress(sk[1]) : "Đang cập nhật";
+            let vbStr = vb ? parseAddress(vb[1]) : "Đang cập nhật";
+            
+            // Phân tích "Sáng" / "Chiều" và thay bằng giờ cụ thể cho Kiểm tra thể lực
+            let tlStr = tl ? parseAddress(tl[1]) : "Đang cập nhật";
+            if (tlStr.includes("Sáng")) {
+                tlStr = tlStr.replace("Sáng", "<b>Buổi sáng (từ 07h00)</b> ngày");
+            } else if (tlStr.includes("Chiều")) {
+                tlStr = tlStr.replace("Chiều", "<b>Buổi chiều (từ 15h00)</b> ngày");
             }
 
             return `
                 <div class="mb-2 text-[#ce181e]"><i class="fas fa-map-marker-alt mr-1"></i> <b>Lịch trình khu vực: ${locationName.toUpperCase()}</b></div>
-                • <b>Khám Sức khỏe ĐH/TC:</b> ${sk ? parseAddress(sk[1]) : "Đang cập nhật"}. (Sáng 07h30, Chiều 13h30)<br>
-                • <b>Khám SK hệ VB2CA:</b> ${vb ? parseAddress(vb[1]) : "Đang cập nhật"}.<br>
-                • <b>Kiểm tra Thể lực:</b> ${tl ? parseAddress(tl[1]) : "Đang cập nhật"}.
-                <div class="mt-2 text-[11px] text-gray-500 border-t pt-1"><i>Lưu ý: Thí sinh cần có mặt trước 15 phút, khi đi khám nhịn ăn sáng.</i></div>
+                • <b>Khám Sức khỏe ĐH/TC:</b> Ngày ${skStr} <i>(Sáng: 07h30 | Chiều: 13h30)</i><br>
+                • <b>Khám SK hệ VB2CA:</b> Ngày ${vbStr} <i>(Sáng: 07h30 | Chiều: 13h30)</i><br>
+                • <b>Kiểm tra Thể lực:</b> ${tlStr}.
+                <div class="mt-3 text-[12px] text-gray-700 bg-yellow-50 p-2.5 rounded-lg border border-yellow-200 shadow-sm leading-relaxed">
+                    <b class="text-[#ce181e]"><i class="fas fa-exclamation-triangle"></i> Lưu ý quan trọng:</b><br>
+                    - <b>Khám sức khỏe:</b> Thí sinh yêu cầu nhịn ăn sáng để tiến hành xét nghiệm máu.<br>
+                    - <b>Thể lực:</b> Có mặt trước 15 phút để khởi động, mặc trang phục và đi giày thể thao.
+                </div>
             `;
         }
-
+        
         function handleSend() {
             const sendBtn = document.getElementById('sendBtn');
             if (sendBtn.disabled) return;
@@ -743,23 +743,19 @@
             
             const typingId = showTyping();
             sendBtn.disabled = true;
-
             setTimeout(() => {
                 document.getElementById(typingId)?.remove();
                 sendBtn.disabled = false; 
-
                 // Chuẩn hóa và làm sạch câu hỏi
                 const query = normalizeQuery(rawText);
                 if (!query) { addMessage("Đồng chí cần tra cứu thông tin gì ạ?", "bot"); return; }
-
                 // Bước 2: Nhận diện thực thể Địa danh (Location NLP)
                 let location = extractLocation(rawText);
-                if (location && (query.includes('kham') || query.includes('ngay') || query.includes('thoi gian') || query.includes('khi nao') || query.includes('o dau') || query.includes('lich'))) {
+                if (location && (query.includes('kham') || query.includes('ngay') || query.includes('thoi gian') || query.includes('khi nao') || query.includes('o dau') || query.includes('lich') || query.includes('the luc'))) {
                     addMessage(generateLocationResponse(location), 'bot');
                     updateSuggestions(["Tiêu chuẩn chiều cao", "Mắt cận mấy độ được thi?", "Mang theo giấy tờ gì?"]);
                     return;
                 }
-
                 // Bước 3: Thuật toán so khớp Điểm số (Scoring Match)
                 let finalResults = [];
                 const fuseResults = fuse.search(query); 
@@ -769,7 +765,6 @@
                     // Điểm Fuse (chống sai chính tả)
                     const fuseMatch = fuseResults.find(r => r.item === item);
                     if (fuseMatch) score += (1 - fuseMatch.score) * 5; 
-
                     // Điểm chứa từ khóa (Keyword match an toàn)
                     item.keys.forEach(k => {
                         let cleanKey = k.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
@@ -785,13 +780,10 @@
                             if (query.includes(cleanKey)) { score += k.length * 1; matchCount++; }
                         }
                     });
-
                     if (matchCount > 1) score *= 1.5; // Combo multiplier
                     if (score > 3) finalResults.push({ item, score });
                 });
-
                 finalResults.sort((a, b) => b.score - a.score);
-
                 // Bước 4: Đưa ra quyết định
                 if (finalResults.length > 0) {
                     let bestMatch = finalResults[0].item;
@@ -803,7 +795,6 @@
                 }
             }, 700);
         }
-
         // ==========================================
         // 4. KHỞI TẠO APP
         // ==========================================
@@ -815,15 +806,13 @@
             updateSuggestions(INITIAL_SUGGESTIONS);
             
             // Generate Data for Modal
-            document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `<div class="p-3 bg-white border border-red-100 rounded-xl mb-2 shadow-sm hover:shadow-md transition"><p class="text-xs font-bold text-[#ce181e] uppercase">⚕️ ${i.title}</p><p class="text-[12px] text-gray-700 mt-1.5 leading-relaxed">${i.content}</p></div>`).join('');
-            document.getElementById('list-dieukien').innerHTML = DIEU_KIEN_DATA.map(i => `<div class="p-3 bg-white border border-gray-200 rounded-xl mb-2 shadow-sm hover:shadow-md transition"><p class="text-xs font-bold text-[#ce181e] uppercase">📌 ${i.title}</p><p class="text-[12px] text-gray-600 mt-1.5 leading-relaxed">${i.content}</p></div>`).join('');
+            document.getElementById('list-suckhoe').innerHTML = SUC_KHOE_DATA.map(i => `<div class="p-3 bg-white border border-red-100 rounded-xl mb-2 shadow-sm hover:shadow-md transition"><p class="text-xs font-bold text-[#ce181e] uppercase"> ⚕️  ${i.title}</p><p class="text-[12px] text-gray-700 mt-1.5 leading-relaxed">${i.content}</p></div>`).join('');
+            document.getElementById('list-dieukien').innerHTML = DIEU_KIEN_DATA.map(i => `<div class="p-3 bg-white border border-gray-200 rounded-xl mb-2 shadow-sm hover:shadow-md transition"><p class="text-xs font-bold text-[#ce181e] uppercase"> 📌  ${i.title}</p><p class="text-[12px] text-gray-600 mt-1.5 leading-relaxed">${i.content}</p></div>`).join('');
             filterContact();
-
             setTimeout(() => {
                 addMessage("<b>Xin chào! Tôi là trợ lý hỗ trợ tư vấn tuyển sinh Công an tỉnh Quảng Trị năm 2026.</b><br>Tôi có thể giúp đồng chí, thí sinh, phụ huynh tra cứu:<br>• <b>Lịch khám</b> (Theo từng Xã/Phường)<br>• <b>Tiêu chuẩn sức khỏe</b> (Chiều cao, Mắt...)<br>• <b>Chỉ tiêu</b> (Từng trường, hệ đào tạo)<br><br>Đồng chí cần hỏi thông tin gì ạ?", "bot");
             }, 400);
         };
-
         function filterContact() {
             const term = normalizeQuery(document.getElementById('searchContact')?.value || "");
             const filtered = DANH_BA_DATA.filter(i => {
