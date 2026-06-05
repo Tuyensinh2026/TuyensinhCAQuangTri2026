@@ -299,7 +299,7 @@
             },
             {
                 title: "KHÁM SỨC KHỎE - THỜI GIAN VÀ ĐỊA ĐIỂM CHUNG",
-                content: "• <b>Đại học / TC:</b> 16/4 đến 25/4/2026.<br>• <b>VB2CA:</b> 29/6 đến 02/7/2026.<br>• Buổi sáng: <b>07h30</b> (Nhịn ăn sáng). Chiều: <b>13h30</b>.<br>• Khám tại Bệnh xá số 01 (đường Điện Biên Phủ, phường Nam Đông Hà) hoặc Bệnh xá số 02 (31 Phan Chu Trinh, phường Đồng Hới) tùy lịch đơn vị."
+                content: "• <b>Đại học / TC:</b> 16/4 đến 25/4/2026.<br>• <b>VB2CA:</b> 17/6 đến 19/6/2026.<br>• Buổi sáng: <b>07h30</b> (Nhịn ăn sáng). Chiều: <b>13h30</b>.<br>• Khám tại Bệnh xá số 01 (đường Điện Biên Phủ, phường Nam Đông Hà) hoặc Bệnh xá số 02 (31 Phan Chu Trinh, phường Đồng Hới) tùy lịch đơn vị."
             },
             {
                 title: "NGƯỠNG ĐẠT KIỂM TRA THỂ LỰC",
@@ -383,7 +383,7 @@
             },
             {
                 keys: ['khám sức khỏe khi nào', 'lịch khám chung', 'khám ở đâu', 'lịch khám sức khỏe', 'bệnh xá'],
-                answer: "<b>Lịch Khám sức khỏe Chung:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 29/6 - 02/7/2026.<br>• Giờ: Sáng 07h30 (nhịn ăn sáng), Chiều 13h30.<br><i> 💡  Tip: Đồng chí hãy gõ tên Xã/Phường của mình (VD: 'Xã Lìa') để tôi tra lịch chính xác nhất!</i>",
+                answer: "<b>Lịch Khám sức khỏe Chung:</b><br>• <b>ĐH/TC:</b> 16/4 - 25/4/2026 (Khám bù: 04-05/5).<br>• <b>VB2CA:</b> 17/6 - 19/6/2026.<br>• Giờ: Sáng 07h30 (nhịn ăn sáng), Chiều 13h30.<br><i> 💡  Tip: Đồng chí hãy gõ tên Xã/Phường của mình (VD: 'Xã Lìa') để tôi tra lịch chính xác nhất!</i>",
                 follows: ["Kiểm tra thể lực gồm những gì?", "Lịch kiểm tra thể lực"]
             },
             {
@@ -531,6 +531,11 @@
                 follows: ["Chỉ tiêu VB2 T07", "Điều kiện VB2CA"]
             },
             {
+                keys: ['bài thi đánh giá vb2', 'bài thi đánh giá vb2ca', 'đánh giá năng lực vb2', 'quy định về bài thi đánh giá vb2ca', 'mã bài thi', 'vb2', 'VB2', 'VB2CA', 'ca1', 'ca2', 'ca3', 'ca4', 'thời gian'],
+                answer: "<b>Bài thi đánh giá VB2CA chính quy tuyển mới (20/9/2026):</b><br>Thi trên máy tính với tổng thời gian là 150 phút.<br>• CA1: Nghị luận về chính trị, kinh tế, văn hóa - xã hội tự luận bắt buộc; Toán cao cấp trắc nghiệm.<br>• CA2: Tương tự CA1, thay Toán cao cấp bằng Kinh tế vĩ mô.<br>• CA3: Tương tự CA1, thay Toán cao cấp bằng Triết học.<br>• CA4: Tương tự CA1, thay Toán cao cấp bằng Lý luận Nhà nước và pháp luật.",
+                follows: ["Chỉ tiêu VB2 Học viện ANND", "Thời gian thi VB2"]
+            },
+            {
                 keys: ['trung cấp', 'hệ trung cấp', 't08', 't09', 't10', 'cao đẳng an ninh nhân dân I', 'cao đẳng cảnh sát nhân dân I', 'cao đẳng cảnh sát nhân dân II', 'chỉ tiêu', '2026', 'tôi muốn hỏi'],
                 answer: "<b>Trung cấp CAND chính quy (280 chỉ tiêu):</b><br>• Đối tượng: CSNV, Hoàn thành NVCA, Thí sinh trượt ĐH CAND.<br>• Phân bổ: T08 (80), T09 (100), T10 (100).",
                 follows: ["Chỉ tiêu T09", "Điểm cộng Trung cấp"]
@@ -566,14 +571,14 @@
                 follows: ["Phương thức 2 vb2"]
             },
             // --- DATABASE TRA CỨU NGÀY KHÁM THEO ĐỊA ĐIỂM DÀNH CHO AI NHẬN DIỆN (ẨN) ---
-            { keys: ['dân hoá', 'kim điền', 'kim phú', 'minh hoá', 'tuyên lâm', 'tuyên sơn', 'đồng lê', 'tuyên hoá', 'tuyên bình', 'tuyên phú', 'tân thành'], answer: "SK: 16/4 tại BX02. TL: Sáng 20/4 tại TTCĐ. VB2: 29/6 tại BX02.", follows: [], hidden: true },
-            { keys: ['tân gianh', 'trung thuần', 'quảng trạch', 'hoà trạch', 'phú trạch', 'ba đồn', 'bắc gianh', 'nam gianh', 'nam ba đồn', 'thượng trạch'], answer: "SK: 17/4 tại BX02. TL: Chiều 20/4 tại TTCĐ. VB2: 29/6 tại BX02.", follows: [], hidden: true },
-            { keys: ['phong nha', 'bắc trạch', 'đông trạch', 'hoàn lão', 'bố trạch', 'nam trạch', 'đồng hới', 'đồng thuận', 'đồng sơn', 'quảng ninh'], answer: "SK: 18/4 tại BX02. TL: Sáng 21/4 tại TTCĐ. VB2: 30/6 tại BX02.", follows: [], hidden: true },
-            { keys: ['ninh châu', 'trường ninh', 'trường sơn', 'lệ thuỷ', 'cam hồng', 'sen ngư', 'tân mỹ', 'trường phú', 'lệ ninh', 'kim ngân'], answer: "SK: 19/4 tại BX02. TL: Chiều 21/4 tại TTCĐ. VB2: 30/6 tại BX02.", follows: [], hidden: true },
-            { keys: ['vĩnh linh', 'cửa tùng', 'vĩnh hoàng', 'vĩnh thuỷ', 'bến quan', 'cồn tiên', 'cửa việt', 'gio linh', 'bến hải', 'cam lộ'], answer: "SK: 22/4 tại BX01. TL: Sáng 28/4 tại BX01. VB2: 01/7 tại BX01.", follows: [], hidden: true },
-            { keys: ['hiếu giang', 'la lay', 'tà rụt', 'đakrông', 'ba lòng', 'hướng hiệp', 'hướng lập', 'hướng phùng', 'khe sanh', 'tân lập'], answer: "SK: 23/4 tại BX01. TL: Chiều 28/4 tại BX01. VB2: 01/7 tại BX01.", follows: [], hidden: true },
-            { keys: ['lao bảo', 'lìa', 'a dơi', 'triệu phong', 'ái tử', 'triệu bình', 'triệu cơ', 'nam cửa việt', 'diên sanh', 'mỹ thuỷ'], answer: "SK: 24/4 tại BX01. TL: Sáng 29/4 tại BX01. VB2: 02/7 tại BX01.", follows: [], hidden: true },
-            { keys: ['hải lăng', 'nam hải lăng', 'vĩnh định', 'đông hà', 'nam đông hà', 'quảng trị', 'cồn cỏ'], answer: "SK: 25/4 tại BX01. TL: Chiều 29/4 tại BX01. VB2: 02/7 tại BX01.", follows: [], hidden: true }
+            { keys: ['dân hoá', 'kim điền', 'kim phú', 'minh hoá', 'tuyên lâm', 'tuyên sơn', 'đồng lê', 'tuyên hoá', 'tuyên bình', 'tuyên phú', 'tân thành'], answer: "SK: 16/4 tại BX02. TL: Sáng 20/4 tại TTCĐ. VB2: 17/6 tại BX02.", follows: [], hidden: true },
+            { keys: ['tân gianh', 'trung thuần', 'quảng trạch', 'hoà trạch', 'phú trạch', 'ba đồn', 'bắc gianh', 'nam gianh', 'nam ba đồn', 'thượng trạch'], answer: "SK: 17/4 tại BX02. TL: Chiều 20/4 tại TTCĐ. VB2: 17/6 tại BX02.", follows: [], hidden: true },
+            { keys: ['phong nha', 'bắc trạch', 'đông trạch', 'hoàn lão', 'bố trạch', 'nam trạch', 'đồng hới', 'đồng thuận', 'đồng sơn', 'quảng ninh'], answer: "SK: 18/4 tại BX02. TL: Sáng 21/4 tại TTCĐ. VB2: 17/6 tại BX02.", follows: [], hidden: true },
+            { keys: ['ninh châu', 'trường ninh', 'trường sơn', 'lệ thuỷ', 'cam hồng', 'sen ngư', 'tân mỹ', 'trường phú', 'lệ ninh', 'kim ngân'], answer: "SK: 19/4 tại BX02. TL: Chiều 21/4 tại TTCĐ. VB2: 17/6 tại BX02.", follows: [], hidden: true },
+            { keys: ['vĩnh linh', 'cửa tùng', 'vĩnh hoàng', 'vĩnh thuỷ', 'bến quan', 'cồn tiên', 'cửa việt', 'gio linh', 'bến hải', 'cam lộ'], answer: "SK: 22/4 tại BX01. TL: Sáng 28/4 tại BX01. VB2: 18/6 tại BX01.", follows: [], hidden: true },
+            { keys: ['hiếu giang', 'la lay', 'tà rụt', 'đakrông', 'ba lòng', 'hướng hiệp', 'hướng lập', 'hướng phùng', 'khe sanh', 'tân lập'], answer: "SK: 23/4 tại BX01. TL: Chiều 28/4 tại BX01. VB2: 18/6 tại BX01.", follows: [], hidden: true },
+            { keys: ['lao bảo', 'lìa', 'a dơi', 'triệu phong', 'ái tử', 'triệu bình', 'triệu cơ', 'nam cửa việt', 'diên sanh', 'mỹ thuỷ'], answer: "SK: 24/4 tại BX01. TL: Sáng 29/4 tại BX01. VB2: 18/6 tại BX01.", follows: [], hidden: true },
+            { keys: ['hải lăng', 'nam hải lăng', 'vĩnh định', 'đông hà', 'nam đông hà', 'quảng trị', 'cồn cỏ'], answer: "SK: 25/4 tại BX01. TL: Chiều 29/4 tại BX01. VB2: 18/6 tại BX01.", follows: [], hidden: true }
         ];
         // Mặc định lúc mở App
         const INITIAL_SUGGESTIONS = ["Khám sức khỏe khi nào?", "Xã Lìa khám ngày nào?", "Lịch kiểm tra thể lực", "Quy đổi điểm IELTS", "Chỉ tiêu Học viện ANND"];
